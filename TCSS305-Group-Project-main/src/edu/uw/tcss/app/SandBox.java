@@ -4,8 +4,17 @@ import edu.uw.tcss.model.TetrisGame;
 
 public class SandBox {
 
+    private SandBox() {
+
+    }
+
+    /**
+     * stub doc
+     *
+     * @param theArgs
+     */
     public static void main(final String[] theArgs) {
-        TetrisGame game = new TetrisGame();
+        final TetrisGame game = new TetrisGame();
         game.newGame();
         System.out.println(game);
 
