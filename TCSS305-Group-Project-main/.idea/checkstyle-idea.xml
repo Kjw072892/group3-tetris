@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CheckStyle-IDEA" serialisationVersion="2">
+    <checkstyleVersion>10.12.2</checkstyleVersion>
+    <scanScope>JavaOnlyWithTests</scanScope>
+    <option name="thirdPartyClasspath" />
+    <option name="activeLocationIds">
+      <option value="4bdb44e1-91b9-40d6-925b-e7052ad29c13" />
+    </option>
+    <option name="locations">
+      <list>
+        <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
+        <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
+        <ConfigurationLocation id="242d1407-ed2b-4389-9c4b-2f0bdfaa36c7" type="PROJECT_RELATIVE" scope="All" description="TCSS 305 Nextline">$PROJECT_DIR$/.idea/tcss305_checkstyle_nextline.xml</ConfigurationLocation>
+        <ConfigurationLocation id="4bdb44e1-91b9-40d6-925b-e7052ad29c13" type="PROJECT_RELATIVE" scope="All" description="TCSS 305 Sameline">$PROJECT_DIR$/.idea/tcss305_checkstyle_sameline.xml</ConfigurationLocation>
+      </list>
+    </option>
+  </component>
+</project>
