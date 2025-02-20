@@ -5,17 +5,18 @@ Group Project
 Winter 2025
 
 ## Assignment Overview:
-	
+	test test test
 
 
 ## Technical Impression:
-
+    test thing
 	
 ## Unresolved problems in my submission:
-
+    lorem ipsum dolor set amet
 	
 ## Citations and Collaborations:
-	
+	blah blah blah asdf
 	
 ## Questions:
-This is a test!
+    a.sjkdjhfalksdfa;lkjsd;falkjsd
+	
