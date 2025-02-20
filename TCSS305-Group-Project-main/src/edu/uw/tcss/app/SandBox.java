@@ -2,6 +2,10 @@ package edu.uw.tcss.app;
 
 import edu.uw.tcss.model.TetrisGame;
 
+/**
+ * stub doc
+ *
+ */
 public class SandBox {
 
     private SandBox() {
