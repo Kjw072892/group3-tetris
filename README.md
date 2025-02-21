@@ -15,4 +15,3 @@ able to figure out the basic functionality of Git, GitHub, and intellij's Git fu
 Each of us made commits, merge-request, pull-requests, editing the readme.md file in the group3-tetris project 
 repository.
 
-
