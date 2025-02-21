@@ -3,13 +3,13 @@ package edu.uw.tcss.app;
 import edu.uw.tcss.model.TetrisGame;
 
 /**
- * SandBox Class
+ * SandBox Class.
  *
  * @author James, Kassie, Roman, Zainab
  * @version 02.20.25
  */
-public class SandBox {
-    private SandBox(){}
+public final class SandBox {
+    private SandBox() { }
 
     /**
      * Main method that prints the tetris game board and pieces to the console.
