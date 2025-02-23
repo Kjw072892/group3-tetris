@@ -5,7 +5,10 @@ import java.util.Scanner;
 /**
  * Group Project 3 Tetris.
  *
- * @author James, Kassie, Roman, Zainab
+ * @author James 
+ * @author Kassie 
+ * @author Roman 
+ * @author Zainab
  * @version 2.21.25
  */
 public final class Main {
