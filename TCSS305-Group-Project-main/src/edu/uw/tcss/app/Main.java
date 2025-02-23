@@ -1,6 +1,6 @@
 package edu.uw.tcss.app;
-import java.util.Scanner;
 import edu.uw.tcss.model.TetrisGame;
+import java.util.Scanner;
 
 /**
  * Group Project 3 Tetris.
@@ -8,14 +8,18 @@ import edu.uw.tcss.model.TetrisGame;
  * @author James, Kassie, Roman, Zainab
  * @version 2.21.25
  */
-public class Main extends TetrisGame {
+public final class Main {
 
+    private Main() {
+
+    }
 
     /**
      * Ensures the console is only focusing on current game frame.
      */
     public static void clearConsole() {
-        for(int i = 0; i < 30; i++) {
+        final int thirtyLines = 30;
+        for (int i = 0; i < thirtyLines; i++) {
             System.out.println(" ");
         }
     }
@@ -24,9 +28,9 @@ public class Main extends TetrisGame {
      * The main method initialized the game, takes user input in a loop.
      * Updates the game state. The loop continues until the user Quits the game.
      *
-     * @param args (unused)
+     * @param theArgs (unused)
      */
-    public static void main(String[] args) {
+    public static void main(final String[] theArgs) {
 
 
         //boolean to control game.
@@ -36,10 +40,10 @@ public class Main extends TetrisGame {
         boolean isPaused = false;
 
         //Scanner to get user input.
-        Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in);
 
         //Instantiate the TetrisGame with the board dimensions.
-        TetrisGame game = new TetrisGame(20, 20);
+        final TetrisGame game = new TetrisGame(20, 20);
 
         // Starts a new game by initializing the game state.
         game.newGame();
@@ -58,11 +62,12 @@ public class Main extends TetrisGame {
             }
 
             // Display the available commands.
-            System.out.println("A: move left, D: move right, S: move down, Quit: Quit, Q: Rotate Counter ClockWise, " +
-                    "E: Rotate C ClockWise, P: Pause Game");
+            System.out.println("A: move left, D: move right, S: move down,"
+                    + " Quit: Quit, Q: Rotate Counter ClockWise, "
+                    + "E: Rotate C ClockWise, P: Pause Game");
 
             // Stores users input into a variable. and converts to uppercase.
-            String userInput = scanner.nextLine().toUpperCase();
+            final String userInput = scanner.nextLine().toUpperCase();
 
             // Processes the command using a switch expression.
             switch (userInput) {
