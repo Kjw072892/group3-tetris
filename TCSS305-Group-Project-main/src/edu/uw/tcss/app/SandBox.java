@@ -5,10 +5,10 @@ import edu.uw.tcss.model.TetrisGame;
 /**
  * Sandbox class. Used to test git pulling and pushing. Nothing more, nothing less.
  *
- * @author Kassie
- * @author James
- * @author Roman
- * @author Zainab
+ * @author Kassie Whitney
+ * @author James Strand
+ * @author Roman Bureacov
+ * @author Zainab Stanikzy
  * @version February 2025
  */
 public final class SandBox {

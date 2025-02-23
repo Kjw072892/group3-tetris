@@ -1,6 +1,14 @@
 # Group Project Tetris
 
-### James, Kassie, Roman, Zainab
+### Students
+
+- Kassie Whitney
+
+- James Strand
+
+- Roman Bureacov 
+
+- Zainab Stanikzy
 
 ### Winter 2025
 
