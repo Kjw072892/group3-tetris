@@ -58,6 +58,6 @@ On 02/21/25 we completed part-C of the sprint 0.
 and their functionality. 
 - User Interface: The console was functioning well, however we faced some challenges with feedback that the game
 was paused. As a team, we figured out how to display the paused message such that on successive prints,
-there is feedback that the game is paused.
+there is feedback that the game is actually paused.
 - Team Collaboration: Overall, Our team worked cohesively, balancing both in person and remote efforts.
 
