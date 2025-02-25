@@ -3,19 +3,26 @@ package edu.uw.tcss.app;
 import edu.uw.tcss.model.TetrisGame;
 
 /**
- * SandBox Class.
+ * Sandbox class. Used to test git pulling and pushing. Nothing more, nothing less.
  *
- * @author James, Kassie, Roman, Zainab
- * @version 02.20.25
+ * @author Kassie Whitney
+ * @author James Strand
+ * @author Roman Bureacov
+ * @author Zainab Stanikzy
+ * @version February 2025
  */
 public final class SandBox {
-    private SandBox() { }
+
+    private SandBox() {
+
+    }
 
     /**
-     * Main method that prints the tetris game board and pieces to the console.
+     * The running method to showcase the tetris API.
+     *
+     * @param theArgs string arguments. Not used in this main method.
      */
     public static void main(final String[] theArgs) {
-
 
         final TetrisGame game = new TetrisGame();
         game.newGame();
