@@ -23,10 +23,11 @@ public final class SandBox {
      * @param theArgs string arguments. Not used in this main method.
      */
     public static void main(final String[] theArgs) {
+
         final TetrisGame game = new TetrisGame();
         game.newGame();
-        System.out.println(game);
 
+        System.out.println(game);
         game.step();
         System.out.println(game);
         game.step();

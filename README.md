@@ -60,4 +60,3 @@ and their functionality.
 was paused. As a team, we figured out how to display the paused message such that on successive prints,
 there is feedback that the game is actually paused.
 - Team Collaboration: Overall, Our team worked cohesively, balancing both in person and remote efforts.
-
