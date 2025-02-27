@@ -65,14 +65,16 @@ public final class BaseLayout extends JPanel {
 
         final JPanel eastPanel = new JPanel();
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
-        eastPanel.setPreferredSize(new Dimension(100, GAME_BOARD_HEIGHT));
+        eastPanel.setPreferredSize(new Dimension(133, GAME_BOARD_HEIGHT));
 
         eastPanel.setBorder(BorderFactory.createEmptyBorder(0,7,0,0));
 
-        final JPanel nextPiece = new JPanel();
-        nextPiece.setPreferredSize(new Dimension(100, GAME_BOARD_HEIGHT/3));
-        nextPiece.setBackground(Color.BLUE);
-        eastPanel.add(nextPiece);
+        //final JPanel nextPiece = new JPanel();
+        //nextPiece.setPreferredSize(new Dimension(100, GAME_BOARD_HEIGHT/3));
+        //nextPiece.setBackground(Color.BLUE);
+
+        // now just calls our next class... -James
+        eastPanel.add(new NextPiece());
 
         eastPanel.add(filler(new Dimension(5,5)));
 
