@@ -58,13 +58,16 @@ public class NextPiece extends JPanel {
     /**
      * helper method for drawing the rectangle center styled,
      * rather than x to width, and y to height
-     * @param theX
-     * @param theY
-     * @param theWidth
-     * @param theHeight
-     * @return
+     * @param theX where the rectangle goes in the x coordinate.
+     * @param theY where the rectangle goes in the y coordinate.
+     * @param theWidth width rectangle has
+     * @param theHeight height the rectangle has
+     * @return gives you you you the rectangle object in the
+     * form the rectangle is drawn in the middle.
      */
-    private Rectangle2D.Double createCenteredRectangle(final double theX, final double theY, final double theWidth, final double theHeight) {
+    private Rectangle2D.Double createCenteredRectangle(final double theX, final double theY,
+                                                       final double theWidth,
+                                                       final double theHeight) {
         final double topLeftX = theX - theWidth / 2.0;
         final double topLeftY = theY - theHeight / 2.0;
         return new Rectangle2D.Double(topLeftX, topLeftY, theWidth, theHeight);
@@ -74,8 +77,8 @@ public class NextPiece extends JPanel {
      * helper method for taking a single point, and making
      * sure to center on screen like the regular cartesian coordinate.
      * plane
-     * @param thePoint
-     * @return
+     * @param thePoint the point to convert to center.
+     * @return the point is now converted to cartesian coordinate point.
      */
     private Point takePointToCenter(final Point thePoint) {
 
