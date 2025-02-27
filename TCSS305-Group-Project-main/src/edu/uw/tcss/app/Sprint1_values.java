@@ -1,8 +1,25 @@
-import java.util.List;
+package edu.uw.tcss.app;
 
-private IndividualPiece[] pieces() {
+import java.util.List;
+import edu.uw.tcss.model.GameControls.IndividualPiece;
+import edu.uw.tcss.model.GameControls.Block;
+import edu.uw.tcss.model.GameControls.Point;
+import edu.uw.tcss.model.GameControls;
+
+public final class Sprint1_values {
+
+    private Sprint1_values() {
+
+    }
+
+    /**
+     * get the sample pieces to place up top of the game board.
+     *
+     * @return array of pieces
+     */
+    public static IndividualPiece[] pieces() {
         return new IndividualPiece[]{
-            new IndividualPiece(new Point[]{new Point(9, 17), new Point(7, 16), new Point(8, 16), new Point(9, 16)}, Block.L),
+            new IndividualPiece(new GameControls.Point[]{new Point(9, 17), new Point(7, 16), new Point(8, 16), new Point(9, 16)}, Block.L),
             new IndividualPiece(new Point[]{new Point(5, 17), new Point(6, 17), new Point(5, 16), new Point(6, 16)}, Block.O),
             new IndividualPiece(new Point[]{new Point(2, 16), new Point(3, 16), new Point(3, 15), new Point(4, 15)}, Block.Z),
             new IndividualPiece(new Point[]{new Point(0, 16), new Point(0, 15), new Point(0, 14), new Point(0, 13)}, Block.I),
@@ -12,9 +29,14 @@ private IndividualPiece[] pieces() {
         };
     }
 
-    private GameControls.FrozenBlocks frozenBlocks() {
+    /**
+     * get the frozen blocks to be place at the bottom of the game board
+     *
+     * @return array of frozen blocks
+     */
+    public static GameControls.FrozenBlocks frozenBlocks() {
         return new GameControls.FrozenBlocks(List.of(
-                new Block[]{null, Block.I, Block.I, Block.J, Block.Z, Block.T, Block.T, Block.T, Block.Z, Block.Z},
+                new GameControls.Block[]{null, Block.I, Block.I, Block.J, Block.Z, Block.T, Block.T, Block.T, Block.Z, Block.Z},
                 new Block[]{null, Block.I, Block.I, Block.J, Block.Z, Block.Z, Block.T, Block.Z, Block.Z, null},
                 new Block[]{null, Block.I, Block.I, Block.J, Block.J, Block.Z, Block.L, Block.L, Block.L, Block.L},
                 new Block[]{null, Block.I, Block.I, Block.J, Block.J, Block.J, Block.Z, Block.Z, Block.L, Block.L},
@@ -36,6 +58,18 @@ private IndividualPiece[] pieces() {
                 new Block[]{null, null, null, null, null, null, null, null, null, null}));
     }
 
-    private IndividualPiece nextPiece() {
-        return new IndividualPiece(new Point[] {new Point(1, 2),new Point(0, 1),new Point(1, 1),new Point(2, 1)}, Block.T);
+    /**
+     * get a sample tetromino.
+     *
+     * @return T-tetromino
+     */
+    public static IndividualPiece nextPiece() {
+        return new IndividualPiece(
+                new Point[] {
+                    new Point(1, 2),
+                    new Point(0, 1),
+                    new Point(1, 1),
+                    new Point(2, 1)},
+                Block.T);
     }
+}
