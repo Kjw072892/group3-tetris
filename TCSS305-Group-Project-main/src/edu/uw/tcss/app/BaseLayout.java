@@ -2,6 +2,7 @@ package edu.uw.tcss.app;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 
 /**
@@ -28,7 +29,8 @@ public final class BaseLayout extends JPanel {
     private static final int MINOR_PADDING = 5;
     private static final int MAJOR_PADDING = 10;
 
-    private static final int EAST_PANEL_WIDTH = (int) (J_FRAME_WIDTH * (1 - WEST_BOARD_PERCENTAGE));
+    private static final int EAST_PANEL_WIDTH = (int) (J_FRAME_WIDTH - WEST_BOARD_WIDTH);
+    private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
     /**
      * Constructor for Base Layout.
@@ -56,24 +58,24 @@ public final class BaseLayout extends JPanel {
         eastPanel.setBorder(BorderFactory.createEmptyBorder(0, MAJOR_PADDING, 0, 0));
 
         final JPanel nextPiecePanel = new JPanel();
-        nextPiecePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, GAME_BOARD_HEIGHT / 3));
+        nextPiecePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
         nextPiecePanel.setBackground(Color.BLUE);
-        eastPanel.add(nextPiecePanel);
 
-        nextPiecePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, MINOR_PADDING, 0));
+        eastPanel.add(nextPiecePanel);
+        eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
         final JPanel controlsPanel = new JPanel();
-        controlsPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, GAME_BOARD_HEIGHT / 3));
+        controlsPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
         controlsPanel.setBackground(Color.GREEN);
+
         eastPanel.add(controlsPanel);
-        
-        controlsPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, MINOR_PADDING, 0));
+        eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
         final JPanel scorePanel = new JPanel();
-        scorePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, GAME_BOARD_HEIGHT/3));
+        scorePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
         scorePanel.setBackground(Color.GREEN);
-        eastPanel.add(scorePanel);
 
+        eastPanel.add(scorePanel);
 
         add(westBoard, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
