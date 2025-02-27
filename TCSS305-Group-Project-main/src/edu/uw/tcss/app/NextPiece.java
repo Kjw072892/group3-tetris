@@ -51,11 +51,13 @@ public class NextPiece extends JPanel {
     }
 
     private IndividualPiece nextPiece() {
-        return new IndividualPiece(new Point[] {new Point(1, 2),new Point(0, 1),new Point(1, 1),new Point(2, 1)}, Block.T);
+        return new IndividualPiece(new Point[] {new Point(1, 2),
+            new Point(0, 1), new Point(1, 1), new Point(2, 1)}, Block.T);
     }
 
     /**
-     * helper method for drawing the rectangle center styled, rather than x to width, and y to height
+     * helper method for drawing the rectangle center styled,
+     * rather than x to width, and y to height
      * @param theX
      * @param theY
      * @param theWidth
@@ -63,34 +65,35 @@ public class NextPiece extends JPanel {
      * @return
      */
     private Rectangle2D.Double createCenteredRectangle(final double theX, final double theY, final double theWidth, final double theHeight) {
-        double topLeftX = theX - theWidth / 2.0;
-        double topLeftY = theY - theHeight / 2.0;
+        final double topLeftX = theX - theWidth / 2.0;
+        final double topLeftY = theY - theHeight / 2.0;
         return new Rectangle2D.Double(topLeftX, topLeftY, theWidth, theHeight);
     }
 
     /**
-     * helper method for taking a single point, and making sure to center on screen like the regular cartesian coordinate
+     * helper method for taking a single point, and making
+     * sure to center on screen like the regular cartesian coordinate.
      * plane
      * @param thePoint
      * @return
      */
     private Point takePointToCenter(final Point thePoint) {
 
-        int centeredX = (this.getWidth() / 2) + thePoint.x();
+        final int centeredX = (this.getWidth() / 2) + thePoint.x();
 
-        int centeredY = (this.getHeight() / 2) + thePoint.y();
+        final int centeredY = (this.getHeight() / 2) + thePoint.y();
 
-        return new Point(centeredX,centeredY);
+        return new Point(centeredX, centeredY);
     }
 
-    private double findXOffset(Point[] points) {
+    private double findXOffset(final Point[] thePoints) {
 
-        Set<Integer> uniqueX = new HashSet<>();
+        final Set<Integer> uniqueX = new HashSet<>();
 
         double total = 0.0;
 
-        for(Point point : points) {
-            if(!uniqueX.contains(point.x())) {
+        for (Point point : thePoints) {
+            if (!uniqueX.contains(point.x())) {
                 total += point.x();
                 uniqueX.add(point.x());
             }
@@ -98,14 +101,14 @@ public class NextPiece extends JPanel {
         return total / uniqueX.size();
     }
 
-    private double findYOffset(Point[] points) {
+    private double findYOffset(final Point[] thePoints) {
 
-        Set<Integer> uniqueY = new HashSet<>();
+        final Set<Integer> uniqueY = new HashSet<>();
 
         double total = 0.0;
 
-        for(Point point : points) {
-            if(!uniqueY.contains(point.x())) {
+        for (Point point : thePoints) {
+            if (!uniqueY.contains(point.x())) {
                 total += point.y();
                 uniqueY.add(point.y());
             }
@@ -130,26 +133,30 @@ public class NextPiece extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        IndividualPiece nextPieceTest = nextPiece();
+        final IndividualPiece nextPieceTest = nextPiece();
 
         // individual pieces have offsets to ensure they are centered
-        double xOffset = findXOffset(nextPieceTest.location());
-        double yOffset = findYOffset(nextPieceTest.location());
+        final double xOffset = findXOffset(nextPieceTest.location());
+        final double yOffset = findYOffset(nextPieceTest.location());
 
-        for(int i = 0; i < nextPieceTest.location().length; i++) {
+        for (int i = 0; i < nextPieceTest.location().length; i++) {
 
 
             // point in space is not centered to screen yet, but let's
             // just get our points seperated into equal spaces for our drawing.
-            int xToPlace = (int) ((nextPieceTest.location()[i].x() - xOffset)*(RECTANGLE_WIDTH));
-            int yToPlace = (int) ((nextPieceTest.location()[i].y() - yOffset)*(RECTANGLE_HEIGHT));
+            final int xToPlace = (int) ((nextPieceTest.location()[i].x() - xOffset)
+                    * RECTANGLE_WIDTH);
+            final int yToPlace = (int) ((nextPieceTest.location()[i].y() - yOffset)
+                    * RECTANGLE_HEIGHT);
 
-            Point pointToPlace = new Point(xToPlace,-yToPlace);
+            final Point pointToPlace = new Point(xToPlace, -yToPlace);
 
             // finally ensures it's centered
-            Point pointToTakeCenter = takePointToCenter(pointToPlace);
+            final Point pointToTakeCenter = takePointToCenter(pointToPlace);
 
-            final Shape rectangle = createCenteredRectangle(pointToTakeCenter.x(), pointToTakeCenter.y(), RECTANGLE_WIDTH - (STROKE_WIDTH - 1), RECTANGLE_HEIGHT - (STROKE_WIDTH - 1));
+            final Shape rectangle = createCenteredRectangle(pointToTakeCenter.x(),
+                    pointToTakeCenter.y(),
+                    RECTANGLE_WIDTH - (STROKE_WIDTH - 1), RECTANGLE_HEIGHT - (STROKE_WIDTH - 1));
 
             g2d.setPaint(Color.BLACK);
             g2d.setStroke(new BasicStroke(STROKE_WIDTH));
