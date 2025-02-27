@@ -2,14 +2,17 @@ package edu.uw.tcss.app;
 
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
-import edu.uw.tcss.model.GameControls.Block;
-
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.JPanel;
 
 /**
  * The Panel that draws the next tetris piece upcoming.
