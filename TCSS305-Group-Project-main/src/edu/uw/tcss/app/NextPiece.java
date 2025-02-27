@@ -11,7 +11,12 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
 import java.util.Set;
 
-
+/**
+ * The Panel that draws the next tetris piece upcoming.
+ *
+ * @author James Parker Strand
+ * @version 1
+ */
 public class NextPiece extends JPanel {
 
     /** The width of the panel. */
@@ -51,16 +56,16 @@ public class NextPiece extends JPanel {
 
     /**
      * helper method for drawing the rectangle center styled, rather than x to width, and y to height
-     * @param x
-     * @param y
-     * @param width
-     * @param height
+     * @param theX
+     * @param theY
+     * @param theWidth
+     * @param theHeight
      * @return
      */
-    private Rectangle2D.Double createCenteredRectangle(double x, double y, double width, double height) {
-        double topLeftX = x - width / 2.0;
-        double topLeftY = y - height / 2.0;
-        return new Rectangle2D.Double(topLeftX, topLeftY, width, height);
+    private Rectangle2D.Double createCenteredRectangle(final double theX, final double theY, final double theWidth, final double theHeight) {
+        double topLeftX = theX - theWidth / 2.0;
+        double topLeftY = theY - theHeight / 2.0;
+        return new Rectangle2D.Double(topLeftX, topLeftY, theWidth, theHeight);
     }
 
     /**
