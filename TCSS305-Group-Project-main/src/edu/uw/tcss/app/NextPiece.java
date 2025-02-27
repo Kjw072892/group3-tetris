@@ -7,9 +7,9 @@ import edu.uw.tcss.model.GameControls.Block;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class NextPiece extends JPanel {
@@ -78,6 +78,36 @@ public class NextPiece extends JPanel {
         return new Point(centeredX,centeredY);
     }
 
+    private double findXOffset(Point[] points) {
+
+        Set<Integer> uniqueX = new HashSet<>();
+
+        double total = 0.0;
+
+        for(Point point : points) {
+            if(!uniqueX.contains(point.x())) {
+                total += point.x();
+                uniqueX.add(point.x());
+            }
+        }
+        return total / uniqueX.size();
+    }
+
+    private double findYOffset(Point[] points) {
+
+        Set<Integer> uniqueY = new HashSet<>();
+
+        double total = 0.0;
+
+        for(Point point : points) {
+            if(!uniqueY.contains(point.x())) {
+                total += point.y();
+                uniqueY.add(point.y());
+            }
+        }
+        return total / uniqueY.size();
+    }
+
 
 
     /**
@@ -98,21 +128,16 @@ public class NextPiece extends JPanel {
         IndividualPiece nextPieceTest = nextPiece();
 
         // individual pieces have offsets to ensure they are centered
-        double xOffset = 0;
-        double yOffset = 0;
-
-        if(nextPieceTest.block() == Block.T) {
-            xOffset = -1;
-            yOffset = -1.5;
-        }
+        double xOffset = findXOffset(nextPieceTest.location());
+        double yOffset = findYOffset(nextPieceTest.location());
 
         for(int i = 0; i < nextPieceTest.location().length; i++) {
 
 
             // point in space is not centered to screen yet, but let's
             // just get our points seperated into equal spaces for our drawing.
-            int xToPlace = (int) ((nextPieceTest.location()[i].x() + xOffset)*(RECTANGLE_WIDTH));
-            int yToPlace = (int) ((nextPieceTest.location()[i].y() + yOffset)*(RECTANGLE_HEIGHT));
+            int xToPlace = (int) ((nextPieceTest.location()[i].x() - xOffset)*(RECTANGLE_WIDTH));
+            int yToPlace = (int) ((nextPieceTest.location()[i].y() - yOffset)*(RECTANGLE_HEIGHT));
 
             Point pointToPlace = new Point(xToPlace,-yToPlace);
 
