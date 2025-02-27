@@ -84,14 +84,24 @@ public final class BaseLayout extends JPanel {
         this.setOpaque(true);
     }
 
-    private static void enableAntiAliasing(final Component theCont) {
-        final Graphics2D g = (Graphics2D) (theCont.getGraphics());
+    /**
+     * Enables antialiasing on a component.
+     *
+     * @param theComp the component to enable antialiasing on
+     */
+    private static void enableAntiAliasing(final Component theComp) {
+        final Graphics2D g = (Graphics2D) (theComp.getGraphics());
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
-    // recursive function to enable antialiasing on all components and subcomponents
-    private static void setAllAntiAliasing(final Container theComp) {
-        for (final Component comp : theComp.getComponents()) {
+    /**
+     * Recursive function that enables the antialiasing on components, containers,
+     * and components within containers.
+     *
+     * @param theCont the container component to recursively go through
+     */
+    private static void setAllAntiAliasing(final Container theCont) {
+        for (final Component comp : theCont.getComponents()) {
             if (comp instanceof Container) {
                 setAllAntiAliasing((Container) comp);
             }
