@@ -28,7 +28,7 @@ public final class BaseLayout extends JPanel {
     private static final int MINOR_PADDING = 5;
     private static final int MAJOR_PADDING = 10;
 
-    private static final int EAST_PANEL_WIDTH = (J_FRAME_WIDTH - WEST_BOARD_WIDTH);
+    private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_BOARD_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
     /**
