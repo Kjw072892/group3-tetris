@@ -2,7 +2,6 @@ package edu.uw.tcss.app;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 
 /**
@@ -16,7 +15,7 @@ public final class BaseLayout extends JPanel {
 
     private static final int J_FRAME_WIDTH = 500;
 
-    private static final int J_FRAME_HEIGHT = 700;
+    // private static final int J_FRAME_HEIGHT = 700;
 
     // the amount the west panel should take up on the screen
     private static final double WEST_BOARD_PERCENTAGE = 3.0 / 5;
@@ -29,7 +28,7 @@ public final class BaseLayout extends JPanel {
     private static final int MINOR_PADDING = 5;
     private static final int MAJOR_PADDING = 10;
 
-    private static final int EAST_PANEL_WIDTH = (int) (J_FRAME_WIDTH - WEST_BOARD_WIDTH);
+    private static final int EAST_PANEL_WIDTH = (J_FRAME_WIDTH - WEST_BOARD_WIDTH);
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
     /**
@@ -43,7 +42,9 @@ public final class BaseLayout extends JPanel {
     private void layoutComponents() {
         setLayout(new BorderLayout());
 
-        setBorder(BorderFactory.createEmptyBorder(MAJOR_PADDING, MAJOR_PADDING, MAJOR_PADDING, MAJOR_PADDING));
+        setBorder(BorderFactory.createEmptyBorder(
+                MAJOR_PADDING, MAJOR_PADDING,
+                MAJOR_PADDING, MAJOR_PADDING));
 
         // game board lives on the west
         final JPanel westBoard = new JPanel();
