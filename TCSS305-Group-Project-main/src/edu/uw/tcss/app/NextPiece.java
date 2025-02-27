@@ -50,11 +50,6 @@ public class NextPiece extends JPanel {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
-    private IndividualPiece nextPiece() {
-        return new IndividualPiece(new Point[] {new Point(1, 2),
-            new Point(0, 1), new Point(1, 1), new Point(2, 1)}, Block.T);
-    }
-
     /**
      * helper method for drawing the rectangle center styled,
      * rather than x to width, and y to height
@@ -122,11 +117,10 @@ public class NextPiece extends JPanel {
 
 
     /**
-     * Paints the tetromino.
+     * Paints the puzzle piece for Tetris.
      *
      * @param theGraphics The graphics context to use for painting.
      */
-    @SuppressWarnings("CommentedOutCode") //suppressed for the demo.
     @Override
     public void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
@@ -136,7 +130,7 @@ public class NextPiece extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        final IndividualPiece nextPieceTest = nextPiece();
+        final IndividualPiece nextPieceTest = Sprint1_values.nextPiece();
 
         // individual pieces have offsets to ensure they are centered
         final double xOffset = findXOffset(nextPieceTest.location());
