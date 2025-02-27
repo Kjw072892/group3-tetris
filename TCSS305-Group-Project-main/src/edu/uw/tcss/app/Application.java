@@ -1,0 +1,30 @@
+package edu.uw.tcss.app;
+
+import static javax.swing.SwingUtilities.invokeLater;
+
+import javax.swing.JPanel;
+
+
+/**
+ * Group Project 3 Tetris.
+ *
+ * @author Kassie Whitney
+ * @author James Strand
+ * @author Roman Bureacov
+ * @author Zainab Stanikzy
+ * @version 2.26.25
+ */
+public final class Application extends JPanel {
+
+    /**
+     * The main method initialized the game, takes user input in a loop.
+     * Updates the game state. The loop continues until the user Quits the game.
+     *
+     * @param theArgs (unused)
+     */
+    public static void main(final String[] theArgs) {
+
+        invokeLater(BaseLayout::createAndShowGui);
+
+    }
+}
