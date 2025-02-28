@@ -58,11 +58,13 @@ public final class BaseLayout extends JPanel {
 
         eastPanel.setBorder(BorderFactory.createEmptyBorder(0, MAJOR_PADDING, 0, 0));
 
-        final JPanel nextPiecePanel = new JPanel();
+
+
+        final JPanel nextPiecePanel = new NextPiece();
         nextPiecePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
         nextPiecePanel.setBackground(Color.BLUE);
-
         eastPanel.add(nextPiecePanel);
+
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
         final JPanel controlsPanel = new JPanel();
