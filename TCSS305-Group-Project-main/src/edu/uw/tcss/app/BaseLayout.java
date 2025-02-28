@@ -2,17 +2,12 @@ package edu.uw.tcss.app;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Insets;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
-
 
 /**
  * BorderLayout base Panel.
@@ -22,23 +17,17 @@ import javax.swing.border.Border;
  */
 public final class BaseLayout extends JPanel {
 
-    private static final int J_FRAME_WIDTH = 500;
+    private static final int J_FRAME_WIDTH = 510;
 
-    private static final int J_FRAME_HEIGHT = 700;
+    private static final int J_FRAME_HEIGHT = 610;
 
-    private static final int GAME_BOARD_WIDTH = 200;
+    private static final int GAME_BOARD_WIDTH = 270;
 
     private static final int GAME_BOARD_HEIGHT = GAME_BOARD_WIDTH * 2;
 
+    private static final int SEVEN = 7;
 
-    private static final int SIDE_PANEL_WIDTH = 100;
-
-    private static final int SIDE_PANEL_HEIGHT = 200;
-    
-
-
-
-
+    private static final int THREE = 3;
 
 
     /**
@@ -52,54 +41,49 @@ public final class BaseLayout extends JPanel {
     private void layoutComponents() {
         setLayout(new BorderLayout());
 
-        setBorder(BorderFactory.createEmptyBorder(7,7,7,7));
+        setBorder(BorderFactory.createEmptyBorder(SEVEN, SEVEN, SEVEN, SEVEN));
 
         //WEST
         final JPanel gameBoard = new JPanel();
         gameBoard.setPreferredSize(new Dimension(GAME_BOARD_WIDTH, GAME_BOARD_HEIGHT));
         gameBoard.setBackground(Color.RED);
 
-
-
-
-
         final JPanel eastPanel = new JPanel();
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
-        eastPanel.setPreferredSize(new Dimension(133, GAME_BOARD_HEIGHT));
+        eastPanel.setBorder(BorderFactory.createEmptyBorder(0, 45, 0,
+                0));
+        eastPanel.setPreferredSize(new Dimension(250,
+                GAME_BOARD_HEIGHT / 2));
 
-        eastPanel.setBorder(BorderFactory.createEmptyBorder(0,7,0,0));
 
-        //final JPanel nextPiece = new JPanel();
-        //nextPiece.setPreferredSize(new Dimension(100, GAME_BOARD_HEIGHT/3));
-        //nextPiece.setBackground(Color.BLUE);
 
-        // now just calls our next class... -James
-        eastPanel.add(new NextPiece());
+        final NextPiece nextPiece = new NextPiece();
+        eastPanel.add(nextPiece);
+        nextPiece.setBackground(Color.BLUE);
+        nextPiece.setPreferredSize(new Dimension(200,
+                GAME_BOARD_HEIGHT - 310));
+
 
         eastPanel.add(filler(new Dimension(5,5)));
 
         final JPanel controls = new JPanel();
-        controls.setPreferredSize(new Dimension(100, GAME_BOARD_HEIGHT/3));
+        controls.setPreferredSize(new Dimension(GAME_BOARD_HEIGHT / THREE,
+                GAME_BOARD_HEIGHT / THREE));
         controls.setBackground(Color.GREEN);
         eastPanel.add(controls);
 
-
-        
         eastPanel.add(filler(new Dimension(5,5)));
 
-
         final JPanel score = new JPanel();
-        score.setPreferredSize(new Dimension(100, GAME_BOARD_HEIGHT/3));
+        score.setPreferredSize(new Dimension(GAME_BOARD_HEIGHT / THREE,
+                GAME_BOARD_HEIGHT / THREE));
         score.setBackground(Color.GREEN);
         eastPanel.add(score);
-
 
         add(gameBoard, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
 
-
         this.setOpaque(true);
-
 
     }
     private static Box.Filler filler(final Dimension theDim) {
@@ -115,15 +99,16 @@ public final class BaseLayout extends JPanel {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         final FileMenu menuBar = new FileMenu(window);
-        
+
 
         window.setJMenuBar(menuBar);
 
-        window.setSize(J_FRAME_WIDTH, J_FRAME_HEIGHT);
+        window.setPreferredSize(new Dimension(J_FRAME_WIDTH, J_FRAME_HEIGHT));
 
         window.setContentPane(mainPanel);
 
         window.pack();
         window.setVisible(true);
+        window.setResizable(false);
     }
 }
