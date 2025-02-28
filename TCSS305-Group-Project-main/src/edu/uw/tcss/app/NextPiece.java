@@ -2,16 +2,24 @@ package edu.uw.tcss.app;
 
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
-import edu.uw.tcss.model.GameControls.Block;
-
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.JPanel;
 
-
+/**
+ * The Panel that draws the next tetris piece upcoming.
+ *
+ * @author James Parker Strand
+ * @version 1
+ */
 public class NextPiece extends JPanel {
 
     /** The width of the panel. */
@@ -45,47 +53,48 @@ public class NextPiece extends JPanel {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
-    private IndividualPiece nextPiece() {
-        return new IndividualPiece(new Point[] {new Point(1, 2),new Point(0, 1),new Point(1, 1),new Point(2, 1)}, Block.T);
-    }
-
     /**
-     * helper method for drawing the rectangle center styled, rather than x to width, and y to height
-     * @param x
-     * @param y
-     * @param width
-     * @param height
-     * @return
+     * helper method for drawing the rectangle center styled,
+     * rather than x to width, and y to height
+     * @param theX where the rectangle goes in the x coordinate.
+     * @param theY where the rectangle goes in the y coordinate.
+     * @param theWidth width rectangle has
+     * @param theHeight height the rectangle has
+     * @return gives you you you the rectangle object in the
+     * form the rectangle is drawn in the middle.
      */
-    private Rectangle2D.Double createCenteredRectangle(double x, double y, double width, double height) {
-        double topLeftX = x - width / 2.0;
-        double topLeftY = y - height / 2.0;
-        return new Rectangle2D.Double(topLeftX, topLeftY, width, height);
+    private Rectangle2D.Double createCenteredRectangle(final double theX, final double theY,
+                                                       final double theWidth,
+                                                       final double theHeight) {
+        final double topLeftX = theX - theWidth / 2.0;
+        final double topLeftY = theY - theHeight / 2.0;
+        return new Rectangle2D.Double(topLeftX, topLeftY, theWidth, theHeight);
     }
 
     /**
-     * helper method for taking a single point, and making sure to center on screen like the regular cartesian coordinate
+     * helper method for taking a single point, and making
+     * sure to center on screen like the regular cartesian coordinate.
      * plane
-     * @param thePoint
-     * @return
+     * @param thePoint the point to convert to center.
+     * @return the point is now converted to cartesian coordinate point.
      */
     private Point takePointToCenter(final Point thePoint) {
 
-        int centeredX = (this.getWidth() / 2) + thePoint.x();
+        final int centeredX = (this.getWidth() / 2) + thePoint.x();
 
-        int centeredY = (this.getHeight() / 2) + thePoint.y();
+        final int centeredY = (this.getHeight() / 2) + thePoint.y();
 
-        return new Point(centeredX,centeredY);
+        return new Point(centeredX, centeredY);
     }
 
-    private double findXOffset(Point[] points) {
+    private double findXOffset(final Point[] thePoints) {
 
-        Set<Integer> uniqueX = new HashSet<>();
+        final Set<Integer> uniqueX = new HashSet<>();
 
         double total = 0.0;
 
-        for(Point point : points) {
-            if(!uniqueX.contains(point.x())) {
+        for (Point point : thePoints) {
+            if (!uniqueX.contains(point.x())) {
                 total += point.x();
                 uniqueX.add(point.x());
             }
@@ -93,14 +102,14 @@ public class NextPiece extends JPanel {
         return total / uniqueX.size();
     }
 
-    private double findYOffset(Point[] points) {
+    private double findYOffset(final Point[] thePoints) {
 
-        Set<Integer> uniqueY = new HashSet<>();
+        final Set<Integer> uniqueY = new HashSet<>();
 
         double total = 0.0;
 
-        for(Point point : points) {
-            if(!uniqueY.contains(point.x())) {
+        for (Point point : thePoints) {
+            if (!uniqueY.contains(point.x())) {
                 total += point.y();
                 uniqueY.add(point.y());
             }
@@ -111,11 +120,10 @@ public class NextPiece extends JPanel {
 
 
     /**
-     * Paints the tetromino.
+     * Paints the puzzle piece for Tetris.
      *
      * @param theGraphics The graphics context to use for painting.
      */
-    @SuppressWarnings("CommentedOutCode") //suppressed for the demo.
     @Override
     public void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
@@ -125,26 +133,30 @@ public class NextPiece extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        IndividualPiece nextPieceTest = nextPiece();
+        final IndividualPiece nextPieceTest = Sprint1_values.nextPiece();
 
         // individual pieces have offsets to ensure they are centered
-        double xOffset = findXOffset(nextPieceTest.location());
-        double yOffset = findYOffset(nextPieceTest.location());
+        final double xOffset = findXOffset(nextPieceTest.location());
+        final double yOffset = findYOffset(nextPieceTest.location());
 
-        for(int i = 0; i < nextPieceTest.location().length; i++) {
+        for (int i = 0; i < nextPieceTest.location().length; i++) {
 
 
             // point in space is not centered to screen yet, but let's
             // just get our points seperated into equal spaces for our drawing.
-            int xToPlace = (int) ((nextPieceTest.location()[i].x() - xOffset)*(RECTANGLE_WIDTH));
-            int yToPlace = (int) ((nextPieceTest.location()[i].y() - yOffset)*(RECTANGLE_HEIGHT));
+            final int xToPlace = (int) ((nextPieceTest.location()[i].x() - xOffset)
+                    * RECTANGLE_WIDTH);
+            final int yToPlace = (int) ((nextPieceTest.location()[i].y() - yOffset)
+                    * RECTANGLE_HEIGHT);
 
-            Point pointToPlace = new Point(xToPlace,-yToPlace);
+            final Point pointToPlace = new Point(xToPlace, -yToPlace);
 
             // finally ensures it's centered
-            Point pointToTakeCenter = takePointToCenter(pointToPlace);
+            final Point pointToTakeCenter = takePointToCenter(pointToPlace);
 
-            final Shape rectangle = createCenteredRectangle(pointToTakeCenter.x(), pointToTakeCenter.y(), RECTANGLE_WIDTH - (STROKE_WIDTH - 1), RECTANGLE_HEIGHT - (STROKE_WIDTH - 1));
+            final Shape rectangle = createCenteredRectangle(pointToTakeCenter.x(),
+                    pointToTakeCenter.y(),
+                    RECTANGLE_WIDTH - (STROKE_WIDTH - 1), RECTANGLE_HEIGHT - (STROKE_WIDTH - 1));
 
             g2d.setPaint(Color.BLACK);
             g2d.setStroke(new BasicStroke(STROKE_WIDTH));
