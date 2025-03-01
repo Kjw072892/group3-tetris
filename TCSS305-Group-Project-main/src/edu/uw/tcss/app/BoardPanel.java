@@ -4,7 +4,6 @@ import java.awt.*;
 import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Block;
-import edu.uw.tcss.model.GameControls.FrozenBlocks;
 
 
 
@@ -104,15 +103,13 @@ public class BoardPanel extends JPanel {
         for (IndividualPiece piece : myTetrisPiece) {
             // Loop through sprint 1 pieces.
             for (Point block : piece.location()) {
-
-                int x = block.x() * (BOARD_WIDTH / COLUMNS);
-                int y = ( (ROWS - 1) - block.y() ) *  (BOARD_HEIGHT / ROWS);
+                int x = block.x() * (BOARD_WIDTH/COLUMNS);
+                int y = block.y() *  (BOARD_WIDTH/ROWS);
 
                 g2d.setPaint(getBlockColor(piece.block()));
-                g.fillRect(x, y, (BOARD_WIDTH / COLUMNS), (BOARD_HEIGHT / ROWS));
+                g.fillRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
                 g2d.setPaint(Color.BLACK);
-                g2d.drawRect(x, y, (BOARD_WIDTH / COLUMNS), (BOARD_HEIGHT / ROWS));
-
+                g2d.drawRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
             }
         }
     }
