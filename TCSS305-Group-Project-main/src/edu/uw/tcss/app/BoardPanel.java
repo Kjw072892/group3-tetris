@@ -54,6 +54,8 @@ public class BoardPanel extends JPanel {
         drawGrid(g2d); //draw the grid lines on the board.
         // drawFrozenBlocks(g2d);
 
+        //test
+
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
     }
 
