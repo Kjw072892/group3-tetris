@@ -87,34 +87,19 @@ public class NextPiece extends JPanel {
         return new Point(centeredX, centeredY);
     }
 
-    private double findXOffset(final Point[] thePoints) {
-
-        final Set<Integer> uniqueX = new HashSet<>();
-
-        double total = 0.0;
-
-        for (Point point : thePoints) {
-            if (!uniqueX.contains(point.x())) {
-                total += point.x();
-                uniqueX.add(point.x());
-            }
+    private double[] findOffsetPoint(final Point[] thePoints) {
+        double minX = thePoints[0].x();
+        double maxX = minX;
+        double minY = thePoints[0].y();
+        double maxY = minY;
+        for (int i = 1; i < thePoints.length; i++) {
+            minX = Math.min(thePoints[i].x(), minX);
+            maxX = Math.max(thePoints[i].x(), maxX);
+            minY = Math.min(thePoints[i].y(), minY);
+            maxY = Math.max(thePoints[i].y(), maxY);
         }
-        return total / uniqueX.size();
-    }
 
-    private double findYOffset(final Point[] thePoints) {
-
-        final Set<Integer> uniqueY = new HashSet<>();
-
-        double total = 0.0;
-
-        for (Point point : thePoints) {
-            if (!uniqueY.contains(point.x())) {
-                total += point.y();
-                uniqueY.add(point.y());
-            }
-        }
-        return total / uniqueY.size();
+        return new double[]{(minX + maxX) / 2, (minY + maxY) / 2};
     }
 
 
@@ -135,9 +120,13 @@ public class NextPiece extends JPanel {
 
         final IndividualPiece nextPieceTest = Sprint1_values.nextPiece();
 
+
+        final double[] pointOffset = findOffsetPoint(nextPieceTest.location());
+
+
         // individual pieces have offsets to ensure they are centered
-        final double xOffset = findXOffset(nextPieceTest.location());
-        final double yOffset = findYOffset(nextPieceTest.location());
+        final double xOffset = pointOffset[0];
+        final double yOffset = pointOffset[1];
 
         for (int i = 0; i < nextPieceTest.location().length; i++) {
 
