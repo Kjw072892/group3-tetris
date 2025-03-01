@@ -13,8 +13,8 @@ import edu.uw.tcss.model.GameControls.Block;
 public class BoardPanel extends JPanel {
 
     //Properties of the board & blocks.
-    private static final int BOARD_WIDTH = 200; // Width & Height of board matching 'BaseLayout'
-    private static final int BOARD_HEIGHT = BOARD_WIDTH * 2;
+    private static final int BOARD_WIDTH =300;
+    private static final int BOARD_HEIGHT = 600;
     private static final int COLUMNS = 10;         // Number of columns & rows.
     private static final int ROWS = 20;
     private static final int PIECE_SIZE = 20;       // The size of each Piece.
@@ -26,7 +26,7 @@ public class BoardPanel extends JPanel {
     /*Construct game board */
     public BoardPanel() {
         setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT)); //Preferred size set to fit in layout.
-        setBackground(new Color(161, 13, 13)); //background red.
+        setBackground(new Color(187, 53, 53)); //background red.
 
         spawnNewPiece(); // Load all Sprint 1 pieces to the board.
 
@@ -83,13 +83,16 @@ public class BoardPanel extends JPanel {
      */
     private void drawGrid(Graphics g) {
         g.setColor(Color.BLACK);
-        for (int column = 0; column <= COLUMNS; column++) { //vertical lines for column, starting at 0 & increasing upto #of columns
-            g.drawLine(column * PIECE_SIZE, 0, column * PIECE_SIZE, ROWS * PIECE_SIZE);
+        for (int column = 0; column <= COLUMNS; column++) { //vertical lines for column
+            int x = column * (BOARD_WIDTH / COLUMNS);
+            g.drawLine(x, 0, x, BOARD_HEIGHT);
         }
-        // horizontal line for rows, increasing by one upto the height of the board - 20
+        // horizontal line for rows
         for (int row = 0; row < ROWS; row++) {
-            g.drawLine(0, row * PIECE_SIZE, COLUMNS * PIECE_SIZE, row * PIECE_SIZE);
+            int y = row * (BOARD_HEIGHT / ROWS);
+            g.drawLine(0, y, BOARD_WIDTH, y);
         }
+
     }
 
 // draw the pieces.
@@ -100,12 +103,13 @@ public class BoardPanel extends JPanel {
         for (IndividualPiece piece : myTetrisPiece) {
             // Loop through sprint 1 pieces.
             for (Point block : piece.location()) {
-                int x = block.x() * PIECE_SIZE;
-                int y = block.y() * PIECE_SIZE;
+                int x = block.x() * (BOARD_WIDTH/COLUMNS);
+                int y = block.y() *  (BOARD_WIDTH/ROWS);
+
                 g2d.setPaint(getBlockColor(piece.block()));
-                g.fillRect(x, y, PIECE_SIZE, PIECE_SIZE);
+                g.fillRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
                 g2d.setPaint(Color.BLACK);
-                g2d.drawRect(x, y, PIECE_SIZE, PIECE_SIZE);
+                g2d.drawRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
             }
         }
     }
