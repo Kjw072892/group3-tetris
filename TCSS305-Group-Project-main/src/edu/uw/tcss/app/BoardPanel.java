@@ -104,7 +104,7 @@ public class BoardPanel extends JPanel {
             // Loop through sprint 1 pieces.
             for (Point block : piece.location()) {
                 int x = block.x() * (BOARD_WIDTH / COLUMNS);
-                int y = (( ROWS - 1 ) - block.y()) *  (BOARD_HEIGHT / ROWS);
+                int y = (( ROWS - 1 ) - block.y()) * (BOARD_HEIGHT / ROWS);
 
                 g2d.setPaint(getBlockColor(piece.block()));
                 g.fillRect(x, y, (BOARD_WIDTH / COLUMNS), (BOARD_WIDTH / COLUMNS));
