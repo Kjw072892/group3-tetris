@@ -54,8 +54,6 @@ public class BoardPanel extends JPanel {
         drawGrid(g2d); //draw the grid lines on the board.
         // drawFrozenBlocks(g2d);
 
-        //test
-
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
     }
 
@@ -105,13 +103,13 @@ public class BoardPanel extends JPanel {
         for (IndividualPiece piece : myTetrisPiece) {
             // Loop through sprint 1 pieces.
             for (Point block : piece.location()) {
-                int x = block.x() * (BOARD_WIDTH/COLUMNS);
-                int y = block.y() *  (BOARD_WIDTH/ROWS);
+                int x = block.x() * (BOARD_WIDTH / COLUMNS);
+                int y = (( ROWS - 1 ) block.y()) *  (BOARD_HEIGHT / ROWS);
 
                 g2d.setPaint(getBlockColor(piece.block()));
-                g.fillRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
+                g.fillRect(x, y, (BOARD_WIDTH / COLUMNS), (BOARD_WIDTH / COLUMNS));
                 g2d.setPaint(Color.BLACK);
-                g2d.drawRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
+                g2d.drawRect(x, y, (BOARD_HEIGHT / ROWS), (BOARD_HEIGHT / ROWS));
             }
         }
     }
