@@ -3,7 +3,6 @@ package edu.uw.tcss.app;
 import edu.uw.tcss.util.LabelTextBuilder;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -31,11 +30,15 @@ public class ScorePanel extends JPanel {
 
     private static final String DIALOG_FONT_NAME = "DIALOG_INPUT";
 
-    private static final String SERIF_FONT_NAME = "SERIF";
+    private static final String SERIF_FONT_NAME = "DIALOG";
 
     private final int myBoldFontSize = 25;
 
     private final int myFontSize = 19;
+
+    private final Font myBoldFont = new Font(DIALOG_FONT_NAME, Font.BOLD, myBoldFontSize);
+
+    private final Font myPlainFont = new Font(SERIF_FONT_NAME, Font.PLAIN, myFontSize);
 
 
     /**
@@ -62,19 +65,27 @@ public class ScorePanel extends JPanel {
      * @param theScore integer of the current score.
      */
     public void setMyScore(final int theScore) {
-        MY_SCORE = theScore;
+        MY_SCORE = Math.max(theScore, 0);
+        if (theScore < 0) {
+            throw new IllegalArgumentException("Minimum score must be 0!");
+        }
     }
 
     private void setMyCurrentLines(final int theCurrentLines) {
-        MY_CURRENT_LINES = theCurrentLines;
+        MY_CURRENT_LINES = Math.max(theCurrentLines, 0);
+
+        if (theCurrentLines < 0) {
+            throw new IllegalArgumentException("Number of lines must be "
+                    + "greater than or equal to 0!");
+        }
     }
 
-
     private void setMyCurrentLevel(final int theCurrentLevel) {
-        if (theCurrentLevel <= 0) {
-            MY_CURRENT_LEVEL = 1;
-        } else {
-            MY_CURRENT_LEVEL = theCurrentLevel;
+        MY_CURRENT_LEVEL = Math.max(theCurrentLevel, 1);
+
+        if (theCurrentLevel < 1) {
+
+            throw new IllegalArgumentException("The lowest starting level must be 1!");
         }
     }
 
@@ -86,16 +97,13 @@ public class ScorePanel extends JPanel {
         final String scoreFormated = formatter.format(MY_SCORE);
 
         final JLabel boldScoreLabel = new JLabel("Score: ");
-        boldScoreLabel.setFont(new Font(DIALOG_FONT_NAME, Font.BOLD, myBoldFontSize));
+        boldScoreLabel.setFont(myBoldFont);
 
         final JLabel currentScoreLabel = new JLabel(scoreFormated);
-        currentScoreLabel.setFont(new Font(SERIF_FONT_NAME, Font.PLAIN, myFontSize));
+        currentScoreLabel.setFont(myPlainFont);
 
-         // Use HTML to maintain both fonts
-        final String htmlText = LabelTextBuilder.htmlLabelCreator(boldScoreLabel,
-                currentScoreLabel);
-
-        return new JLabel(htmlText);
+        return new JLabel(LabelTextBuilder.htmlLabelCreator(boldScoreLabel,
+                currentScoreLabel));
     }
 
     private JLabel currentLevel() {
@@ -105,14 +113,12 @@ public class ScorePanel extends JPanel {
         final String levelFormated = formatter.format(MY_CURRENT_LEVEL);
 
         final JLabel boldLevelLabel = new JLabel("Level: ");
-        boldLevelLabel.setFont(new Font(DIALOG_FONT_NAME, Font.BOLD, myBoldFontSize));
+        boldLevelLabel.setFont(myBoldFont);
 
         final JLabel levelLabel = new JLabel(levelFormated);
-        levelLabel.setFont(new Font(SERIF_FONT_NAME, Font.PLAIN, myFontSize));
+        levelLabel.setFont(myPlainFont);
 
-        final String htmlText = LabelTextBuilder.htmlLabelCreator(boldLevelLabel, levelLabel);
-
-        return new JLabel(htmlText);
+        return new JLabel(LabelTextBuilder.htmlLabelCreator(boldLevelLabel, levelLabel));
     }
 
     private JLabel currentLines() {
@@ -122,52 +128,41 @@ public class ScorePanel extends JPanel {
         final String linesFormated = formatter.format(MY_CURRENT_LINES);
 
         final JLabel boldLinesLabel = new JLabel("Lines: ");
-        boldLinesLabel.setFont(new Font(DIALOG_FONT_NAME, Font.BOLD, myBoldFontSize));
+        boldLinesLabel.setFont(myBoldFont);
 
         final JLabel linesLabel = new JLabel(linesFormated);
-        linesLabel.setFont(new Font(SERIF_FONT_NAME, Font.PLAIN, myFontSize));
+        linesLabel.setFont(myPlainFont);
 
-        final String htmlText = LabelTextBuilder.htmlLabelCreator(boldLinesLabel, linesLabel);
-
-        return new JLabel(htmlText);
+        return new JLabel(LabelTextBuilder.htmlLabelCreator(boldLinesLabel, linesLabel));
     }
 
+
     private void scorePanel() {
-        final int fontSize = 15;
+        final int fontSize = 12;
         final int spacer = 20;
         final int borderThickness = 3;
         final int padding = 10;
 
-
-        final JLabel message = new JLabel("Levels increase every 5 lines");
-        message.setFont(new Font(SERIF_FONT_NAME, Font.BOLD, fontSize));
-        message.setAlignmentX(Component.LEFT_ALIGNMENT);
-
+        final JLabel message = new JLabel("   Levels Increase Every 5 Lines");
+        message.setFont(new Font(SERIF_FONT_NAME, Font.PLAIN, fontSize));
+        message.setAlignmentY(CENTER_ALIGNMENT);
 
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createLineBorder(Color.BLACK, borderThickness));
-
 
         final JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
         labelPanel.setBorder(BorderFactory.createEmptyBorder(padding, 0, padding, 0));
 
-
         final JLabel levelLabel = currentLevel();
         final JLabel linesLabel = currentLines();
         final JLabel scoreLabel = currentScore();
-
-        levelLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        linesLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        scoreLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        message.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         labelPanel.add(levelLabel);
         labelPanel.add(Box.createVerticalStrut(spacer));
         labelPanel.add(linesLabel);
         labelPanel.add(Box.createVerticalStrut(spacer));
         labelPanel.add(scoreLabel);
-
 
         add(labelPanel, BorderLayout.CENTER);
         add(message, BorderLayout.SOUTH);

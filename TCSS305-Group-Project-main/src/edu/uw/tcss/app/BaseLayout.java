@@ -41,7 +41,7 @@ public final class BaseLayout extends JPanel {
     private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_BOARD_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
-    private static final int CURRENT_SCORE = 1000;
+    private static final int CURRENT_SCORE = 0;
 
     private static final int CURRENT_LINE = 0;
 
@@ -58,9 +58,8 @@ public final class BaseLayout extends JPanel {
     private void layoutComponents() {
         setLayout(new BorderLayout());
 
-        setBorder(BorderFactory.createEmptyBorder(
-                MAJOR_PADDING, MAJOR_PADDING,
-                MAJOR_PADDING, MAJOR_PADDING));
+        setBorder(BorderFactory.createEmptyBorder(MAJOR_PADDING, MAJOR_PADDING, MAJOR_PADDING,
+                MAJOR_PADDING));
 
         // game board lives on the west
         final JPanel westBoard = new JPanel();
@@ -86,16 +85,15 @@ public final class BaseLayout extends JPanel {
 
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final JPanel controlsPanel = new JPanel();
-        controlsPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH,
-                EAST_PANEL_COMP_HEIGHT));
-        controlsPanel.setBackground(Color.GREEN);
+        final JPanel controlsPanel = new DirectionLabels();
+        controlsPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
+
 
         eastPanel.add(controlsPanel);
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final JPanel scorePanel = new ScorePanel(CURRENT_SCORE, CURRENT_LINE,
-                CURRENT_LEVEL);
+        final JPanel scorePanel = new ScorePanel(CURRENT_SCORE, CURRENT_LINE, CURRENT_LEVEL);
+
         scorePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
 
