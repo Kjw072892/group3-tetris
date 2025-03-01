@@ -1,6 +1,8 @@
 package edu.uw.tcss.app;
 
 import java.awt.*;
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.swing.*;
 
 
@@ -31,6 +33,12 @@ public final class BaseLayout extends JPanel {
     private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_BOARD_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
+    private static final int CURRENT_SCORE = 1000;
+
+    private static final int CURRENT_LINE = 0;
+
+    private static final int CURRENT_LEVEL = 1;
+
     /**
      * Constructor for Base Layout.
      */
@@ -56,8 +64,8 @@ public final class BaseLayout extends JPanel {
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
         eastPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, GAME_BOARD_HEIGHT));
 
-        eastPanel.setBorder(BorderFactory.createEmptyBorder(0, MAJOR_PADDING, 0, 0));
-
+        eastPanel.setBorder(BorderFactory.createEmptyBorder(0, MAJOR_PADDING, 0,
+                0));
 
 
         final JPanel nextPiecePanel = new NextPiece();
@@ -68,15 +76,17 @@ public final class BaseLayout extends JPanel {
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
         final JPanel controlsPanel = new JPanel();
-        controlsPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
+        controlsPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH,
+                EAST_PANEL_COMP_HEIGHT));
         controlsPanel.setBackground(Color.GREEN);
 
         eastPanel.add(controlsPanel);
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final JPanel scorePanel = new JPanel();
+        final JPanel scorePanel = new ScorePanel(CURRENT_SCORE, CURRENT_LINE,
+                CURRENT_LEVEL);
         scorePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
-        scorePanel.setBackground(Color.GREEN);
+
 
         eastPanel.add(scorePanel);
 

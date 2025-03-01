@@ -12,6 +12,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /**
@@ -37,21 +38,18 @@ public class NextPiece extends JPanel {
     /** The height for the rectangle. */
     private static final int RECTANGLE_HEIGHT = 20;
 
+
+
     /**
      * Constructs a new ellipse panel.
      */
     public NextPiece() {
         super();
-        layoutComponents();
+        final int borderThickness = 3;
+        setBorder(BorderFactory.createLineBorder(Color.BLACK, borderThickness));
     }
 
-    /**
-     * Lay out the components and makes this frame visible.
-     */
-    private void layoutComponents() {
-        setBackground(Color.BLUE);
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
-    }
+
 
     /**
      * helper method for drawing the rectangle center styled,
@@ -143,7 +141,7 @@ public class NextPiece extends JPanel {
 
 
             // point in space is not centered to screen yet, but let's
-            // just get our points seperated into equal spaces for our drawing.
+            // just get our points separated into equal spaces for our drawing.
             final int xToPlace = (int) ((nextPieceTest.location()[i].x() - xOffset)
                     * RECTANGLE_WIDTH);
             final int yToPlace = (int) ((nextPieceTest.location()[i].y() - yOffset)
