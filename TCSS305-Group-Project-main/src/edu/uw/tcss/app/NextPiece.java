@@ -10,8 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.JPanel;
 
 /**
@@ -32,10 +30,10 @@ public class NextPiece extends JPanel {
     private static final int STROKE_WIDTH = 3;
 
     /** The width for the rectangle. */
-    private static final int RECTANGLE_WIDTH = 20;
+    private static final int RECTANGLE_WIDTH = 30;
 
     /** The height for the rectangle. */
-    private static final int RECTANGLE_HEIGHT = 20;
+    private static final int RECTANGLE_HEIGHT = 30;
 
     /**
      * Constructs a new ellipse panel.
