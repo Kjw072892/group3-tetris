@@ -17,7 +17,7 @@ public class BoardPanel extends JPanel {
     private static final int BOARD_HEIGHT = 600;
     private static final int COLUMNS = 10;         // Number of columns & rows.
     private static final int ROWS = 20;
-    private static final int PIECE_SIZE = 20;       // The size of each Piece.
+    private static final int PIECE_SIZE = BOARD_WIDTH / COLUMNS;       // The size of each Piece.
 
     private IndividualPiece[] myTetrisPiece;
 
@@ -26,7 +26,7 @@ public class BoardPanel extends JPanel {
     /*Construct game board */
     public BoardPanel() {
         setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT)); //Preferred size set to fit in layout.
-        setBackground(new Color(187, 53, 53)); //background red.
+        setBackground(new Color(162, 33, 33)); //background red.
 
         spawnNewPiece(); // Load all Sprint 1 pieces to the board.
 
@@ -84,12 +84,12 @@ public class BoardPanel extends JPanel {
     private void drawGrid(Graphics g) {
         g.setColor(Color.BLACK);
         for (int column = 0; column <= COLUMNS; column++) { //vertical lines for column
-            int x = column * (BOARD_WIDTH / COLUMNS);
+            int x = column * PIECE_SIZE;
             g.drawLine(x, 0, x, BOARD_HEIGHT);
         }
         // horizontal line for rows
         for (int row = 0; row < ROWS; row++) {
-            int y = row * (BOARD_HEIGHT / ROWS);
+            int y = row * PIECE_SIZE;
             g.drawLine(0, y, BOARD_WIDTH, y);
         }
 
@@ -98,18 +98,16 @@ public class BoardPanel extends JPanel {
 // draw the pieces.
     private void drawPiece(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-
-
         for (IndividualPiece piece : myTetrisPiece) {
-            // Loop through sprint 1 pieces.
+            // Loop
             for (Point block : piece.location()) {
-                int x = block.x() * (BOARD_WIDTH/COLUMNS);
-                int y = block.y() *  (BOARD_WIDTH/ROWS);
+                int x = block.x() * PIECE_SIZE;
+                int y = block.y() *  PIECE_SIZE;
 
                 g2d.setPaint(getBlockColor(piece.block()));
-                g.fillRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
+                g.fillRect(x, y, PIECE_SIZE, PIECE_SIZE);
                 g2d.setPaint(Color.BLACK);
-                g2d.drawRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
+                g2d.drawRect(x, y, PIECE_SIZE, PIECE_SIZE);
             }
         }
     }
