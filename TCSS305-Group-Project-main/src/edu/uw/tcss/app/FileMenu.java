@@ -1,6 +1,5 @@
 package edu.uw.tcss.app;
 
-import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -17,13 +16,16 @@ import javax.swing.JOptionPane;
  * @version 2.28.25
  */
 public class FileMenu extends JMenuBar {
+    private final String myVersion = "2.28.25";
 
-//    private boolean myGameShouldStart;
-     // Create menu items
     private final JMenuItem myGameStart = new JMenuItem("Start Game");
     private final JMenuItem myAbout = new JMenuItem("About");
     private final JMenuItem myExitGame = new JMenuItem("Exit");
     private final JMenuItem myColorChooser = new JMenuItem("Choose Color");
+    private final JMenu myFileMenu = new JMenu("File");
+    private final JMenu myFeatureMenu = new JMenu("Feature");
+    private final JMenu myHelpMenu = new JMenu("Help");
+
 
     /**
      * Constructor for file menu class.
@@ -31,53 +33,51 @@ public class FileMenu extends JMenuBar {
      */
     public FileMenu(final JFrame theFrame) {
         super();
-        //adds file j-menu
-        final JMenu fileMenu = new JMenu("File");
-        fileMenuCreation(fileMenu);
-        //adds feature j-menu
-        final JMenu featureMenu = new JMenu("Feature");
-        featureMenuCreation(featureMenu);
-
-        final JMenu helpMenuItem = new JMenu("Help");
-        helpMenuCreation(helpMenuItem);
+        // Adds the file menu items on the bar
+        fileMenuCreation();
+        featureMenuCreation();
+        helpMenuCreation();
 
         //invokes the listeners
         addListeners(theFrame);
 
         // Add a File menu to menu bar
-        this.add(fileMenu);
-        this.add(featureMenu);
-        this.add(helpMenuItem);
+        add(myFileMenu);
+        add(myFeatureMenu);
+        add(myHelpMenu);
     }
 
-    private void fileMenuCreation(final JMenu theJMenu) {
+    private void fileMenuCreation() {
         // Add items to the File menu
-        theJMenu.add(myGameStart);
-        theJMenu.add(myExitGame);
+        myFileMenu.add(myGameStart);
+        myFileMenu.add(myExitGame);
     }
 
-    private void featureMenuCreation(final JMenu theJmenu) {
+    private void featureMenuCreation() {
         // Add items to the Feature Menu
         final JMenu innerColorMenu = new JMenu("Color");
         innerColorMenu.add(myColorChooser);
-        theJmenu.add(innerColorMenu);
+        myFeatureMenu.add(innerColorMenu);
     }
 
-    private void helpMenuCreation(final JMenu theJmenu) {
+    private void helpMenuCreation() {
         // Add items to the Help menu
 
-        theJmenu.add(myAbout);
+        myHelpMenu.add(myAbout);
     }
 
     private void addListeners(final JFrame theFrame) {
          // Add action listeners
-        myGameStart.addActionListener(e -> setGameShouldStart(theFrame));
+        //myGameStart.addActionListener(ActionEvent -> setGameShouldStart(theFrame));
 
-        myAbout.addActionListener(e -> JOptionPane.showMessageDialog(theFrame,
-                "Made by James, Kassie, Roman, Zainab. \nCurrent version: 2.28.25"));
+        myAbout.addActionListener(ActionEvent ->
+                JOptionPane.showMessageDialog(theFrame,
+                "Made by James, Kassie, Roman, Zainab. \nCurrent version: "
+                        + myVersion));
 
-        myExitGame.addActionListener(e -> System.exit(0));
-        myColorChooser.addActionListener(e ->
+        myExitGame.addActionListener(ActionEvent -> System.exit(0));
+
+        myColorChooser.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
                 "This option is currently unavailable in this version!"));
 
@@ -85,9 +85,6 @@ public class FileMenu extends JMenuBar {
     }
 
     //  This method currently does nothing, will use later.
-    private void setGameShouldStart(final JFrame theFrame) {
 
-      // myGameShouldStart = true;
-    }
 
 }
