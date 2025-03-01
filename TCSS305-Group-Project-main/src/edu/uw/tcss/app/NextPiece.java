@@ -4,14 +4,12 @@ import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
-import java.util.HashSet;
-import java.util.Set;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /**
@@ -32,23 +30,26 @@ public class NextPiece extends JPanel {
     private static final int STROKE_WIDTH = 3;
 
     /** The width for the rectangle. */
-    private static final int RECTANGLE_WIDTH = 20;
+    private static final int RECTANGLE_WIDTH = 30;
 
     /** The height for the rectangle. */
-    private static final int RECTANGLE_HEIGHT = 20;
-
-
+    private static final int RECTANGLE_HEIGHT = 30;
 
     /**
      * Constructs a new ellipse panel.
      */
     public NextPiece() {
         super();
-        final int borderThickness = 3;
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, borderThickness));
+        layoutComponents();
     }
 
-
+    /**
+     * Lay out the components and makes this frame visible.
+     */
+    private void layoutComponents() {
+        setBackground(Color.BLUE);
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+    }
 
     /**
      * helper method for drawing the rectangle center styled,
@@ -84,34 +85,19 @@ public class NextPiece extends JPanel {
         return new Point(centeredX, centeredY);
     }
 
-    private double findXOffset(final Point[] thePoints) {
-
-        final Set<Integer> uniqueX = new HashSet<>();
-
-        double total = 0.0;
-
-        for (Point point : thePoints) {
-            if (!uniqueX.contains(point.x())) {
-                total += point.x();
-                uniqueX.add(point.x());
-            }
+    private double[] findOffsetPoint(final Point[] thePoints) {
+        double minX = thePoints[0].x();
+        double maxX = minX;
+        double minY = thePoints[0].y();
+        double maxY = minY;
+        for (int i = 1; i < thePoints.length; i++) {
+            minX = Math.min(thePoints[i].x(), minX);
+            maxX = Math.max(thePoints[i].x(), maxX);
+            minY = Math.min(thePoints[i].y(), minY);
+            maxY = Math.max(thePoints[i].y(), maxY);
         }
-        return total / uniqueX.size();
-    }
 
-    private double findYOffset(final Point[] thePoints) {
-
-        final Set<Integer> uniqueY = new HashSet<>();
-
-        double total = 0.0;
-
-        for (Point point : thePoints) {
-            if (!uniqueY.contains(point.x())) {
-                total += point.y();
-                uniqueY.add(point.y());
-            }
-        }
-        return total / uniqueY.size();
+        return new double[]{(minX + maxX) / 2, (minY + maxY) / 2};
     }
 
 
@@ -132,15 +118,19 @@ public class NextPiece extends JPanel {
 
         final IndividualPiece nextPieceTest = Sprint1_values.nextPiece();
 
+
+        final double[] pointOffset = findOffsetPoint(nextPieceTest.location());
+
+
         // individual pieces have offsets to ensure they are centered
-        final double xOffset = findXOffset(nextPieceTest.location());
-        final double yOffset = findYOffset(nextPieceTest.location());
+        final double xOffset = pointOffset[0];
+        final double yOffset = pointOffset[1];
 
         for (int i = 0; i < nextPieceTest.location().length; i++) {
 
 
             // point in space is not centered to screen yet, but let's
-            // just get our points separated into equal spaces for our drawing.
+            // just get our points seperated into equal spaces for our drawing.
             final int xToPlace = (int) ((nextPieceTest.location()[i].x() - xOffset)
                     * RECTANGLE_WIDTH);
             final int yToPlace = (int) ((nextPieceTest.location()[i].y() - yOffset)

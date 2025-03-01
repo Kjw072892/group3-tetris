@@ -67,6 +67,9 @@ public final class BaseLayout extends JPanel {
         westBoard.setPreferredSize(new Dimension(WEST_BOARD_WIDTH, GAME_BOARD_HEIGHT));
         westBoard.setBackground(Color.RED);
 
+        westBoard.setLayout(new BorderLayout());
+        westBoard.add(new BoardPanel(), BorderLayout.CENTER);
+
         // information, such as the next piece, controls, and score, live on the east
         final JPanel eastPanel = new JPanel();
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
