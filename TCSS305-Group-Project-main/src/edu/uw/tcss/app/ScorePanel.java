@@ -41,6 +41,8 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
 
     private final Font myPlainFont = new Font(SERIF_FONT_NAME, Font.PLAIN, myPlainFontSize);
 
+    private final NumberFormat myFormatter = NumberFormat.getInstance(Locale.US);
+
 
     /**
      * Constructor for score panel class.
@@ -96,9 +98,7 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
 
     private JLabel currentScore() {
 
-        final NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-
-        final String scoreFormated = formatter.format(MY_SCORE);
+        final String scoreFormated = myFormatter.format(MY_SCORE);
 
         final JLabel boldScoreLabel = new JLabel("Score: ");
         boldScoreLabel.setFont(myBoldFont);
@@ -112,9 +112,9 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
 
     private JLabel currentLevel() {
 
-        final NumberFormat formatter = NumberFormat.getInstance(Locale.US);
 
-        final String levelFormated = formatter.format(MY_CURRENT_LEVEL);
+
+        final String levelFormated = myFormatter.format(MY_CURRENT_LEVEL);
 
         final JLabel boldLevelLabel = new JLabel("Level: ");
         boldLevelLabel.setFont(myBoldFont);
@@ -128,9 +128,7 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
 
     private JLabel linesCleared() {
 
-        final NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-
-        final String linesFormatted = formatter.format(MY_CURRENT_LINES);
+        final String linesFormatted = myFormatter.format(MY_CURRENT_LINES);
 
         final JLabel boldLinesLabel = new JLabel("Lines: ");
         boldLinesLabel.setFont(myBoldFont);
