@@ -41,7 +41,7 @@ She also added two JMenuItems "Feature" and "Help" where the Feature item will s
 and background colors, and the Help item will store the "about" and other possible helpful instructions.
 
 ## James 
-
+James had worked on getting the FileMenu class started so that a new game can be started, can exit the program, and having an about page. He had also worked on making the nextPiece Gui componenet working, ensuring that every tetromino that gets inputted is centered on the spot. He also helped Zainab with bugfixing the problem of the game screen not displaying the tetrominos correctly on the start screen. James also made sure to listen to feedback of Roma, particulary on how to find the center of a tetromino piece on a cartesian coordinate graph. James lastly did project management on what should get done.
 
 ## Roman
 
