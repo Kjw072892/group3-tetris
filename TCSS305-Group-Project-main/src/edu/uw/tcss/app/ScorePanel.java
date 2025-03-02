@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * @author Zainab
  * @version 2.28.25
  */
-public class ScorePanel extends JPanel {
+public class ScorePanel extends JPanel /* implements ScoreHandler */ {
 
     private static int MY_SCORE;
 
