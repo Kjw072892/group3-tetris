@@ -93,7 +93,8 @@ public final class BaseLayout extends JPanel {
         add(eastPanel, BorderLayout.EAST);
     }
 
-    // TODO: this might not work as I expected: components might actually need manual antialiasing enabled each time
+    // TODO: this might not work as I expected: components might actually need
+    //  anual antialiasing enabled each time
     /**
      * Enables antialiasing on a component.
      *

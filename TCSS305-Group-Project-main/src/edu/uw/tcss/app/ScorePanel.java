@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
  * @author James
  * @author Roman
  * @author Zainab
- * @version 2.28.25
+ * @version 3.2.25
  */
 public class ScorePanel extends JPanel /* implements ScoreHandler */ {
 
@@ -61,7 +61,6 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
         scorePanel();
 
     }
-
 
     /**
      * Sets the current score.
@@ -110,9 +109,8 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
                 currentScoreLabel));
     }
 
+
     private JLabel currentLevel() {
-
-
 
         final String levelFormated = myFormatter.format(MY_CURRENT_LEVEL);
 

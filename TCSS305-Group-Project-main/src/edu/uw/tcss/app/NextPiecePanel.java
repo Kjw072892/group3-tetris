@@ -141,12 +141,13 @@ public class NextPiecePanel extends JPanel {
 
             final Point pointToPlace = new Point(xToPlace, -yToPlace);
 
-            // finally ensures it's centered
+            // finally, ensures it's centered
             final Point pointToTakeCenter = takePointToCenter(pointToPlace);
 
             final Shape rectangle = createCenteredRectangle(pointToTakeCenter.x(),
                     pointToTakeCenter.y(),
-                    RECTANGLE_WIDTH - (STROKE_WIDTH - 1), RECTANGLE_HEIGHT - (STROKE_WIDTH - 1));
+                    RECTANGLE_WIDTH - (STROKE_WIDTH - 1), RECTANGLE_HEIGHT
+                            - (STROKE_WIDTH - 1));
 
             g2d.setPaint(Color.BLACK);
             g2d.setStroke(new BasicStroke(STROKE_WIDTH));
