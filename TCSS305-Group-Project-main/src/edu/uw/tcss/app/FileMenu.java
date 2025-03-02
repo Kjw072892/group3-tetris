@@ -1,43 +1,90 @@
 package edu.uw.tcss.app;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
+/**
+ * FileMenu creation class.
+ *
+ * @author James
+ * @author Kassie
+ * @author Roman
+ * @author Zainab
+ * @version 2.28.25
+ */
 public class FileMenu extends JMenuBar {
+    private final String myVersion = "2.28.25";
 
-    private boolean myGameShouldStart;
-    private final JMenuItem myGameStart;
+    private final JMenuItem myGameStart = new JMenuItem("Start Game");
+    private final JMenuItem myAbout = new JMenuItem("About");
+    private final JMenuItem myExitGame = new JMenuItem("Exit");
+    private final JMenuItem myColorChooser = new JMenuItem("Choose Color");
+    private final JMenu myFileMenu = new JMenu("File");
+    private final JMenu myFeatureMenu = new JMenu("Feature");
+    private final JMenu myHelpMenu = new JMenu("Help");
 
+
+    /**
+     * Constructor for file menu class.
+     * @param theFrame the main JFrame object.
+     */
     public FileMenu(final JFrame theFrame) {
         super();
-        final JMenu fileMenu = new JMenu("Options");
+        // Adds the file menu items on the bar
+        fileMenuCreation();
+        featureMenuCreation();
+        helpMenuCreation();
 
-        // Create menu items
-        myGameStart = new JMenuItem("Start Game");
-        final JMenuItem about = new JMenuItem("About");
-        final JMenuItem exitItem = new JMenuItem("Exit");
+        //invokes the listeners
+        addListeners(theFrame);
 
-        // Add action listeners
-        myGameStart.addActionListener(e -> setGameShouldStart(theFrame));
-        about.addActionListener(e -> JOptionPane.showMessageDialog(theFrame, "Made by Zainab, James, Roma, and Kassie."));
-        exitItem.addActionListener(e -> System.exit(0));
-
-        // Add items to File menu
-        fileMenu.add(myGameStart);
-        fileMenu.add(about);
-        fileMenu.add(exitItem);
-
-        // Add File menu to menu bar
-        this.add(fileMenu);
+        // Add a File menu to menu bar
+        add(myFileMenu);
+        add(myFeatureMenu);
+        add(myHelpMenu);
     }
 
-    private void setGameShouldStart(final JFrame theFrame) {
-        JOptionPane.showMessageDialog(theFrame, "The game will start upon exit of window.");
-        System.out.println("Stopped running Infinite Loop");
-        myGameShouldStart = true;
+    private void fileMenuCreation() {
+        // Add items to the File menu
+        myFileMenu.add(myGameStart);
+        myFileMenu.add(myExitGame);
     }
 
-    public boolean GetGameShouldStart() {
-        return myGameShouldStart;
+    private void featureMenuCreation() {
+        // Add items to the Feature Menu
+        final JMenu innerColorMenu = new JMenu("Color");
+        innerColorMenu.add(myColorChooser);
+        myFeatureMenu.add(innerColorMenu);
     }
+
+    private void helpMenuCreation() {
+        // Add items to the Help menu
+
+        myHelpMenu.add(myAbout);
+    }
+
+    private void addListeners(final JFrame theFrame) {
+         // Add action listeners
+        //myGameStart.addActionListener(ActionEvent -> setGameShouldStart(theFrame));
+
+        myAbout.addActionListener(ActionEvent ->
+                JOptionPane.showMessageDialog(theFrame,
+                "Made by James, Kassie, Roman, Zainab. \nCurrent version: "
+                        + myVersion));
+
+        myExitGame.addActionListener(ActionEvent -> System.exit(0));
+
+        myColorChooser.addActionListener(ActionEvent ->
+                JOptionPane.showMessageDialog(theFrame,
+                "This option is currently unavailable in this version!"));
+
+       //myGameStart.addActionListener(e->setGameShouldStart(theFrame));
+    }
+
+    //  This method currently does nothing, will use later.
+
 
 }
