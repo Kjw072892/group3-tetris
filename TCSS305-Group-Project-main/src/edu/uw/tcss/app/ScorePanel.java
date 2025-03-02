@@ -11,6 +11,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * ScorePanel class.
@@ -34,11 +35,11 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
 
     private final int myBoldFontSize = 25;
 
-    private final int myFontSize = 19; // TODO: maybe "myNormalFontSize"? "myPlainFontSize"? - RB
+    private final int myPlainFontSize = 19;
 
     private final Font myBoldFont = new Font(DIALOG_FONT_NAME, Font.BOLD, myBoldFontSize);
 
-    private final Font myPlainFont = new Font(SERIF_FONT_NAME, Font.PLAIN, myFontSize);
+    private final Font myPlainFont = new Font(SERIF_FONT_NAME, Font.PLAIN, myPlainFontSize);
 
 
     /**
@@ -76,7 +77,6 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
     private void setMyCurrentLines(final int theCurrentLines) {
         MY_CURRENT_LINES = Math.max(theCurrentLines, 0);
 
-        // TODO: maybe rename this to linesCleared? - RB
         if (theCurrentLines < 0) {
             throw new IllegalArgumentException("Number of lines must be "
                     + "greater than or equal to 0!");
@@ -97,7 +97,7 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
     private JLabel currentScore() {
 
         final NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-        // TODO: why use a number formatter if we're using integer values for a score? - RB
+
         final String scoreFormated = formatter.format(MY_SCORE);
 
         final JLabel boldScoreLabel = new JLabel("Score: ");
@@ -113,7 +113,7 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
     private JLabel currentLevel() {
 
         final NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-        // TODO: why use a number formatter if we're using integer values for the level? - RB
+
         final String levelFormated = formatter.format(MY_CURRENT_LEVEL);
 
         final JLabel boldLevelLabel = new JLabel("Level: ");
@@ -125,11 +125,11 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
         return new JLabel(LabelTextBuilder.htmlLabelCreator(boldLevelLabel, levelLabel));
     }
 
-    // TODO: might want to rename to linesCleared to be more clear - RB
-    private JLabel currentLines() {
+
+    private JLabel linesCleared() {
 
         final NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-        // TODO: why use a number formatter if we're using integer values for the lines cleared?
+
         final String linesFormatted = formatter.format(MY_CURRENT_LINES);
 
         final JLabel boldLinesLabel = new JLabel("Lines: ");
@@ -148,20 +148,22 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
         final int borderThickness = 3;
         final int padding = 10;
 
-        // TODO: what are the extra spaces for? - RB
-        final JLabel message = new JLabel("   Levels Increase Every 5 Lines");
-        message.setFont(new Font(SERIF_FONT_NAME, Font.PLAIN, fontSize));
-        message.setAlignmentY(CENTER_ALIGNMENT);
-
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createLineBorder(Color.BLACK, borderThickness));
+
+        final JLabel message = new JLabel("Levels Increase Every 5 Lines");
+        message.setFont(new Font(SERIF_FONT_NAME, Font.PLAIN, fontSize));
+        message.setHorizontalAlignment(SwingConstants.CENTER);
 
         final JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
         labelPanel.setBorder(BorderFactory.createEmptyBorder(padding, 0, padding, 0));
 
+        final JPanel messagePanel = new JPanel();
+        messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
+
         final JLabel levelLabel = currentLevel();
-        final JLabel linesLabel = currentLines();
+        final JLabel linesLabel = linesCleared();
         final JLabel scoreLabel = currentScore();
 
         labelPanel.add(levelLabel);
@@ -169,6 +171,8 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
         labelPanel.add(linesLabel);
         labelPanel.add(Box.createVerticalStrut(spacer));
         labelPanel.add(scoreLabel);
+
+        messagePanel.add(message);
 
         add(labelPanel, BorderLayout.CENTER);
         add(message, BorderLayout.SOUTH);
