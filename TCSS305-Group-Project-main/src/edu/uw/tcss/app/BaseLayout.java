@@ -69,9 +69,7 @@ public final class BaseLayout extends JPanel {
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
         eastPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, GAME_BOARD_HEIGHT));
 
-        eastPanel.setBorder(BorderFactory.createEmptyBorder(0, MAJOR_PADDING, 0,
-                0));
-
+        eastPanel.setBorder(BorderFactory.createEmptyBorder(0, MAJOR_PADDING, 0, 0));
 
         final JPanel nextPiecePanel = new NextPiece();
         nextPiecePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
@@ -80,18 +78,18 @@ public final class BaseLayout extends JPanel {
 
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final JPanel controlsPanel = new DirectionLabels();
-        controlsPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
+        final JPanel controlsInfoPanel = new DirectionLabels();
+        controlsInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
-        eastPanel.add(controlsPanel);
+        eastPanel.add(controlsInfoPanel);
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final JPanel scorePanel = new ScorePanel(CURRENT_SCORE, CURRENT_LINE, CURRENT_LEVEL);
+        final JPanel scoreInfoPanel = new ScorePanel(CURRENT_SCORE, CURRENT_LINE, CURRENT_LEVEL);
                                                     // see note above on these constants
 
-        scorePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
+        scoreInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
-        eastPanel.add(scorePanel);
+        eastPanel.add(scoreInfoPanel);
 
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
