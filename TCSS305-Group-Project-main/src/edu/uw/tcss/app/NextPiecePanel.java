@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  * @author James Parker Strand
  * @version 1
  */
-public class NextPiece extends JPanel {
+public class NextPiecePanel extends JPanel {
 
     /** The width of the panel. */
     private static final int WIDTH = 100;
@@ -38,7 +38,7 @@ public class NextPiece extends JPanel {
     /**
      * Constructs a new ellipse panel.
      */
-    public NextPiece() {
+    public NextPiecePanel() {
         super();
         layoutComponents();
     }
