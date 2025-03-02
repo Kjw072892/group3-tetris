@@ -25,27 +25,23 @@ public final class BaseLayout extends JPanel {
 
     private static final int J_FRAME_WIDTH = 500;
 
-    // private static final int J_FRAME_HEIGHT = 700;
-
     // the amount the west panel should take up on the screen
-    private static final double WEST_BOARD_PERCENTAGE = 3.0 / 5;
+    private static final double WEST_PANEL_PERCENTAGE = 3.0 / 5;
 
-    private static final int WEST_BOARD_WIDTH = (int) (J_FRAME_WIDTH * WEST_BOARD_PERCENTAGE);
+    private static final int WEST_PANEL_WIDTH = (int) (J_FRAME_WIDTH * WEST_PANEL_PERCENTAGE);
 
     // aspect ratio for the game board should be 2:1
-    private static final int GAME_BOARD_HEIGHT = WEST_BOARD_WIDTH * 2;
+    private static final int GAME_BOARD_HEIGHT = WEST_PANEL_WIDTH * 2;
 
     private static final int MINOR_PADDING = 5;
     private static final int MAJOR_PADDING = 10;
 
-    private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_BOARD_WIDTH;
+    private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_PANEL_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
-    private static final int CURRENT_SCORE = 0;
-
-    private static final int CURRENT_LINE = 0;
-
-    private static final int CURRENT_LEVEL = 1;
+    private static final int CURRENT_SCORE = 0;     // these could probably be set by the
+    private static final int CURRENT_LINE = 0;      // game board when we pass the score panel in
+    private static final int CURRENT_LEVEL = 1;     // - Roman
 
     /**
      * Constructor for Base Layout.
@@ -62,12 +58,11 @@ public final class BaseLayout extends JPanel {
                 MAJOR_PADDING));
 
         // game board lives on the west
-        final JPanel westBoard = new JPanel();
-        westBoard.setPreferredSize(new Dimension(WEST_BOARD_WIDTH, GAME_BOARD_HEIGHT));
-        westBoard.setBackground(Color.RED);
+        final JPanel westPanel = new JPanel();
+        westPanel.setPreferredSize(new Dimension(WEST_PANEL_WIDTH, GAME_BOARD_HEIGHT));
+        westPanel.setBackground(Color.RED);
 
-        westBoard.setLayout(new BorderLayout());
-        westBoard.add(new BoardPanel(), BorderLayout.CENTER);
+        westPanel.add(new BoardPanel(), BorderLayout.WEST);
 
         // information, such as the next piece, controls, and score, live on the east
         final JPanel eastPanel = new JPanel();
@@ -88,21 +83,18 @@ public final class BaseLayout extends JPanel {
         final JPanel controlsPanel = new DirectionLabels();
         controlsPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
-
         eastPanel.add(controlsPanel);
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
         final JPanel scorePanel = new ScorePanel(CURRENT_SCORE, CURRENT_LINE, CURRENT_LEVEL);
+                                                    // see note above on these constants
 
         scorePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
-
         eastPanel.add(scorePanel);
 
-        add(westBoard, BorderLayout.WEST);
+        add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
-
-        this.setOpaque(true);
     }
 
     /**
@@ -143,8 +135,6 @@ public final class BaseLayout extends JPanel {
         final FileMenu menuBar = new FileMenu(window);
 
         window.setJMenuBar(menuBar);
-
-        // window.setSize(J_FRAME_WIDTH, J_FRAME_HEIGHT);
 
         window.setContentPane(mainPanel);
 
