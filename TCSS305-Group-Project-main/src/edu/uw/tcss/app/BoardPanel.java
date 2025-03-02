@@ -1,5 +1,6 @@
 package edu.uw.tcss.app;
 
+import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.Block;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
@@ -7,6 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.List;
 import javax.swing.JPanel;
 
 
@@ -25,9 +27,8 @@ public class BoardPanel extends JPanel {
     private static final int BOARD_HEIGHT = 600;
     private static final int COLUMNS = 10;         // Number of columns & rows.
     private static final int ROWS = 20;
-    //private static final int PIECE_SIZE = 20;       // The size of each Piece.
-
     private IndividualPiece[] myTetrisPiece;
+    private Block[][] frozenBlocks = new Block[COLUMNS][ROWS];
 
     /**
      * Constructs the game board.
@@ -41,15 +42,29 @@ public class BoardPanel extends JPanel {
 
     }
 
-   //Gets all the Sprint 1 pieces and stores them for display.
+    //Gets all the Sprint 1 pieces and stores them for display.
     private void spawnNewPiece() {
-        myTetrisPiece = Sprint1_values.pieces(); //Store Pieces in myTetrisPiece
+        myTetrisPiece = Sprint1_values.pieces();   //Store Pieces in myTetrisPiece
+
         //System.out.println("Spawning New Piece"+ myTetrisPiece.length);
         repaint(); // Repaint board with pieces.
+        GameControls.FrozenBlocks frozen = Sprint1_values.frozenBlocks();
+        List<Block[]> frozenGrid = frozen.blocks();
 
+
+        for (int row = 0; row < frozenGrid.size(); row++) {
+            Block[] blocks =  frozenGrid.get(row);
+                 for (int column = 0; column < blocks.length; column++) {
+                if (blocks[column] != null) {
+                    frozenBlocks[column][row] = blocks[column];
+                }
+            }
+        }
     }
 
-    /**
+
+
+/**
      * Paints the board grid lines and pieces.
      *
      * @param theGraphics the Graphics object for drawing.
@@ -58,13 +73,27 @@ public class BoardPanel extends JPanel {
     protected void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
-
         drawGrid(g2d); //draw the grid lines on the board.
         // drawFrozenBlocks(g2d);
-
+        drawFrozenBlocks(g2d);
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
     }
+    private void drawFrozenBlocks(Graphics g) {
+        for (int column = 0; column < COLUMNS; column++) {
+            for (int row = 0; row < ROWS; row++) {
+                if (frozenBlocks[column][row] != null) {
+                    g.setColor(getBlockColor(frozenBlocks[column][row]));
 
+                    int x = column * (BOARD_WIDTH / COLUMNS);
+                    int y =  ((ROWS -1) - row) * (BOARD_HEIGHT / ROWS);
+
+                    g.fillRect(x, y, BOARD_WIDTH / COLUMNS,  BOARD_HEIGHT / ROWS);
+                    g.setColor(Color.BLACK);
+                    g.drawRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
+                }
+            }
+        }
+    }
 
     /**
      * Get the correct color for blocks

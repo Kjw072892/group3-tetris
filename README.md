@@ -44,10 +44,27 @@ and background colors, and the Help item will store the "about" and other possib
 James had worked on getting the FileMenu class started so that a new game can be started, can exit the program, and having an about page. He had also worked on making the nextPiece Gui componenet working, ensuring that every tetromino that gets inputted is centered on the spot. He also helped Zainab with bugfixing the problem of the game screen not displaying the tetrominos correctly on the start screen. James also made sure to listen to feedback of Roma, particulary on how to find the center of a tetromino piece on a cartesian coordinate graph. James lastly did project management on what should get done.
 
 ## Roman
+Roman played a essential role in refining the structure of the classes and layout of the game board.
+One of his primary contributions was eliminating magic numbers in the base layout class by introducing well defined
+Constance and this improved the overall clarity and readability of the code. It really cleaned things up by replacing hardcoded
+values. He also worked on design designing and structuring the borders. This helped allow for better spacing and clear visual distinctions
+Between the different regions of the game. His attention to clean code organization and consistent formatting really helped maintain a structured
+Foundation. 
 
 
 ## Zainab 
- 
+Zainab was responsible for implementing the board panel class to ensure that individual Tetris pieces
+Properly displayed on the game board. She worked on retrieving and rendering the defined sprint one tetromino,
+From the sprint One values class. She made sure they aligned and displayed correctly with the grid. Through multiple
+Trial and errors + lots of debugging she fine-tune the positioning of each shape. 
+She collaborated with  teammates to resolve display issues to ensure the game board accurately represented the
+individual tetromino peices.
+James assisted her in correcting the x,y coordinate calculations because the pieces were originally displayed upside down.
+By refining the peace placement logic the blocks were than positioned and aligned correctly, right side up.
+She also actively participated in team discussions, reviewed code implementation and
+Insured her class in integrated smoothly with the overall project and made changes when and where necessary
+Her work in displaying the pieces lead a crucial function, setting up the game board for next sprint where movement
+Game logic will be implemented.
 
 ## Sprint 1 Comments
 
