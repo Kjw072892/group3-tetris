@@ -34,7 +34,7 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
 
     private final int myBoldFontSize = 25;
 
-    private final int myFontSize = 19;
+    private final int myFontSize = 19; // TODO: maybe "myNormalFontSize"? "myPlainFontSize"? - RB
 
     private final Font myBoldFont = new Font(DIALOG_FONT_NAME, Font.BOLD, myBoldFontSize);
 
@@ -64,6 +64,7 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
      * Sets the current score.
      * @param theScore integer of the current score.
      */
+    // TODO: we need to refactor this in the future, right now this only updates an integer - RB
     public void setMyScore(final int theScore) {
         MY_SCORE = Math.max(theScore, 0);
         if (theScore < 0) {
@@ -71,15 +72,18 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
         }
     }
 
+    // TODO: we need to refactor this in the future, right now this only updates an integer - RB
     private void setMyCurrentLines(final int theCurrentLines) {
         MY_CURRENT_LINES = Math.max(theCurrentLines, 0);
 
+        // TODO: maybe rename this to linesCleared? - RB
         if (theCurrentLines < 0) {
             throw new IllegalArgumentException("Number of lines must be "
                     + "greater than or equal to 0!");
         }
     }
 
+    // TODO: we need to refactor this in the future, right now this only updates an integer - RB
     private void setMyCurrentLevel(final int theCurrentLevel) {
         MY_CURRENT_LEVEL = Math.max(theCurrentLevel, 1);
 
@@ -93,7 +97,7 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
     private JLabel currentScore() {
 
         final NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-
+        // TODO: why use a number formatter if we're using integer values for a score? - RB
         final String scoreFormated = formatter.format(MY_SCORE);
 
         final JLabel boldScoreLabel = new JLabel("Score: ");
@@ -109,7 +113,7 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
     private JLabel currentLevel() {
 
         final NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-
+        // TODO: why use a number formatter if we're using integer values for the level? - RB
         final String levelFormated = formatter.format(MY_CURRENT_LEVEL);
 
         final JLabel boldLevelLabel = new JLabel("Level: ");
@@ -121,16 +125,17 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
         return new JLabel(LabelTextBuilder.htmlLabelCreator(boldLevelLabel, levelLabel));
     }
 
+    // TODO: might want to rename to linesCleared to be more clear - RB
     private JLabel currentLines() {
 
         final NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-
-        final String linesFormated = formatter.format(MY_CURRENT_LINES);
+        // TODO: why use a number formatter if we're using integer values for the lines cleared?
+        final String linesFormatted = formatter.format(MY_CURRENT_LINES);
 
         final JLabel boldLinesLabel = new JLabel("Lines: ");
         boldLinesLabel.setFont(myBoldFont);
 
-        final JLabel linesLabel = new JLabel(linesFormated);
+        final JLabel linesLabel = new JLabel(linesFormatted);
         linesLabel.setFont(myPlainFont);
 
         return new JLabel(LabelTextBuilder.htmlLabelCreator(boldLinesLabel, linesLabel));
@@ -143,6 +148,7 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
         final int borderThickness = 3;
         final int padding = 10;
 
+        // TODO: what are the extra spaces for? - RB
         final JLabel message = new JLabel("   Levels Increase Every 5 Lines");
         message.setFont(new Font(SERIF_FONT_NAME, Font.PLAIN, fontSize));
         message.setAlignmentY(CENTER_ALIGNMENT);

@@ -23,12 +23,18 @@ import javax.swing.JPanel;
 public class BoardPanel extends JPanel {
 
     //Properties of the board & blocks.
+    // TODO: might want to refrain from hard-coding these dimensions - RB
     private static final int BOARD_WIDTH = 300;
     private static final int BOARD_HEIGHT = 600;
     private static final int COLUMNS = 10;         // Number of columns & rows.
     private static final int ROWS = 20;
-    private IndividualPiece[] myTetrisPiece;
-    private Block[][] frozenBlocks = new Block[COLUMNS][ROWS];
+    // TODO: there's constant use of BOARD_WIDTH / COLUMNS and similar, perhaps those could be constants
+    private final  IndividualPiece[] myTetrisPieces;
+    private final Block[][] myFrozenBlocks = new Block[COLUMNS][ROWS];
+
+    {
+        myTetrisPieces = Sprint1_values.pieces();   // Store Pieces in myTetrisPiece
+    }
 
     /**
      * Constructs the game board.
@@ -36,6 +42,7 @@ public class BoardPanel extends JPanel {
     public BoardPanel() {
         //Preferred size set to fit in layout.
         setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
+        // TODO: for later, we could consider making a class that houses the preferences or something
         setBackground(Color.RED); //background red.
 
         spawnNewPiece(); // Load all Sprint 1 pieces to the board.
@@ -44,19 +51,18 @@ public class BoardPanel extends JPanel {
 
     //Gets all the Sprint 1 pieces and stores them for display.
     private void spawnNewPiece() {
-        myTetrisPiece = Sprint1_values.pieces();   //Store Pieces in myTetrisPiece
 
         //System.out.println("Spawning New Piece"+ myTetrisPiece.length);
         repaint(); // Repaint board with pieces.
-        GameControls.FrozenBlocks frozen = Sprint1_values.frozenBlocks();
-        List<Block[]> frozenGrid = frozen.blocks();
+        final GameControls.FrozenBlocks frozen = Sprint1_values.frozenBlocks();
+        final List<Block[]> frozenGrid = frozen.blocks();
 
 
         for (int row = 0; row < frozenGrid.size(); row++) {
-            Block[] blocks =  frozenGrid.get(row);
-                 for (int column = 0; column < blocks.length; column++) {
+            final Block[] blocks =  frozenGrid.get(row);
+            for (int column = 0; column < blocks.length; column++) {
                 if (blocks[column] != null) {
-                    frozenBlocks[column][row] = blocks[column];
+                    myFrozenBlocks[column][row] = blocks[column];
                 }
             }
         }
@@ -64,7 +70,7 @@ public class BoardPanel extends JPanel {
 
 
 
-/**
+    /**
      * Paints the board grid lines and pieces.
      *
      * @param theGraphics the Graphics object for drawing.
@@ -74,22 +80,22 @@ public class BoardPanel extends JPanel {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
         drawGrid(g2d); //draw the grid lines on the board.
-        // drawFrozenBlocks(g2d);
         drawFrozenBlocks(g2d);
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
     }
-    private void drawFrozenBlocks(Graphics g) {
+    private void drawFrozenBlocks(final Graphics theGraphics) {
         for (int column = 0; column < COLUMNS; column++) {
             for (int row = 0; row < ROWS; row++) {
-                if (frozenBlocks[column][row] != null) {
-                    g.setColor(getBlockColor(frozenBlocks[column][row]));
+                // TODO: variable declarations could make this more concise - RB
+                if (myFrozenBlocks[column][row] != null) {
+                    theGraphics.setColor(getBlockColor(myFrozenBlocks[column][row]));
 
-                    int x = column * (BOARD_WIDTH / COLUMNS);
-                    int y =  ((ROWS -1) - row) * (BOARD_HEIGHT / ROWS);
+                    final int x = column * (BOARD_WIDTH / COLUMNS);
+                    final int y =  ((ROWS - 1) - row) * (BOARD_HEIGHT / ROWS);
 
-                    g.fillRect(x, y, BOARD_WIDTH / COLUMNS,  BOARD_HEIGHT / ROWS);
-                    g.setColor(Color.BLACK);
-                    g.drawRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
+                    theGraphics.fillRect(x, y, BOARD_WIDTH / COLUMNS,  BOARD_HEIGHT / ROWS);
+                    theGraphics.setColor(Color.BLACK);
+                    theGraphics.drawRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
                 }
             }
         }
@@ -137,7 +143,7 @@ public class BoardPanel extends JPanel {
         final Graphics2D g2d = (Graphics2D) theGraphics;
 
 
-        for (IndividualPiece piece : myTetrisPiece) {
+        for (IndividualPiece piece : myTetrisPieces) {
             // Loop through sprint 1 piece.
             for (Point block : piece.location()) {
                 final int x = block.x() * (BOARD_WIDTH / COLUMNS);
@@ -145,6 +151,7 @@ public class BoardPanel extends JPanel {
 
                 g2d.setPaint(getBlockColor(piece.block()));
                 theGraphics.fillRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_WIDTH / COLUMNS);
+                // TODO: maybe we could remove this and have the grid drawn after the blocks - RB
                 g2d.setPaint(Color.BLACK);
                 g2d.drawRect(x, y, BOARD_HEIGHT / ROWS, BOARD_HEIGHT / ROWS);
             }

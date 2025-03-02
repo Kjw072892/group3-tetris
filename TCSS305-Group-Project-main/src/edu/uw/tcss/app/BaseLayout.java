@@ -54,8 +54,8 @@ public final class BaseLayout extends JPanel {
     private void layoutComponents() {
         setLayout(new BorderLayout());
 
-        setBorder(BorderFactory.createEmptyBorder(MAJOR_PADDING, MAJOR_PADDING, MAJOR_PADDING,
-                MAJOR_PADDING));
+        setBorder(BorderFactory.createEmptyBorder(
+                MAJOR_PADDING, MAJOR_PADDING, MAJOR_PADDING, MAJOR_PADDING));
 
         // game board lives on the west
         final JPanel westPanel = new JPanel();

@@ -20,6 +20,7 @@ import javax.swing.JPanel;
  */
 public class NextPiecePanel extends JPanel {
 
+    // TODO: might want to refrain from hard-coding these dimensions - RB
     /** The width of the panel. */
     private static final int WIDTH = 100;
 
@@ -64,15 +65,15 @@ public class NextPiecePanel extends JPanel {
     private Rectangle2D.Double createCenteredRectangle(final double theX, final double theY,
                                                        final double theWidth,
                                                        final double theHeight) {
-        final double topLeftX = theX - theWidth / 2.0;
-        final double topLeftY = theY - theHeight / 2.0;
+        final double topLeftX = theX - theWidth / 2d;
+        final double topLeftY = theY - theHeight / 2d;
         return new Rectangle2D.Double(topLeftX, topLeftY, theWidth, theHeight);
     }
 
     /**
      * helper method for taking a single point, and making
-     * sure to center on screen like the regular cartesian coordinate.
-     * plane
+     * sure to center on screen like the regular cartesian coordinate
+     * plane.
      * @param thePoint the point to convert to center.
      * @return the point is now converted to cartesian coordinate point.
      */
@@ -97,7 +98,7 @@ public class NextPiecePanel extends JPanel {
             maxY = Math.max(thePoints[i].y(), maxY);
         }
 
-        return new double[]{(minX + maxX) / 2, (minY + maxY) / 2};
+        return new double[] {(minX + maxX) / 2, (minY + maxY) / 2};
     }
 
 
@@ -112,22 +113,24 @@ public class NextPiecePanel extends JPanel {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
 
+        System.out.println("Before: " + g2d.getRenderingHints());
+
         // for better graphics display
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
+        System.out.println("After: " + g2d.getRenderingHints());
+
+
         final IndividualPiece nextPieceTest = Sprint1_values.nextPiece();
 
-
         final double[] pointOffset = findOffsetPoint(nextPieceTest.location());
-
 
         // individual pieces have offsets to ensure they are centered
         final double xOffset = pointOffset[0];
         final double yOffset = pointOffset[1];
 
         for (int i = 0; i < nextPieceTest.location().length; i++) {
-
 
             // point in space is not centered to screen yet, but let's
             // just get our points seperated into equal spaces for our drawing.
