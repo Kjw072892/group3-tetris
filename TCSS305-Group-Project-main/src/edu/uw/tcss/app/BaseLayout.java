@@ -26,7 +26,7 @@ public final class BaseLayout extends JPanel {
     private static final int J_FRAME_WIDTH = 500;
 
     // the amount the west panel should take up on the screen
-    private static final double WEST_PANEL_PERCENTAGE = 3.0 / 5;
+    private static final double WEST_PANEL_PERCENTAGE = 3d / 5d;
 
     private static final int WEST_PANEL_WIDTH = (int) (J_FRAME_WIDTH * WEST_PANEL_PERCENTAGE);
 
