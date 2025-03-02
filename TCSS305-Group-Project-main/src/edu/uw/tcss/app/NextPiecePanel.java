@@ -151,6 +151,7 @@ public class NextPiecePanel extends JPanel {
             g2d.setPaint(Color.BLACK);
             g2d.setStroke(new BasicStroke(STROKE_WIDTH));
             g2d.draw(rectangle);
+            // TODO: we'll need a way to later set up how to get the piece color automatically
             g2d.setPaint(Color.MAGENTA);
             g2d.fill(rectangle);
 
