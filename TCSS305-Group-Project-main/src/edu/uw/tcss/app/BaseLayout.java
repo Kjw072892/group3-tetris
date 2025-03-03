@@ -93,33 +93,6 @@ public final class BaseLayout extends JPanel {
         add(eastPanel, BorderLayout.EAST);
     }
 
-    // TODO: this might not work as I expected: components might actually need
-    //  anual antialiasing enabled each time
-    /**
-     * Enables antialiasing on a component.
-     *
-     * @param theComp the component to enable antialiasing on
-     */
-    private static void enableAntiAliasing(final Component theComp) {
-        final Graphics2D g = (Graphics2D) (theComp.getGraphics());
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-    }
-
-    /**
-     * Recursive function that enables the antialiasing on components, containers,
-     * and components within containers.
-     *
-     * @param theCont the container component to recursively go through
-     */
-    private static void setAllAntiAliasing(final Container theCont) {
-        for (final Component comp : theCont.getComponents()) {
-            if (comp instanceof Container) {
-                setAllAntiAliasing((Container) comp);
-            }
-            enableAntiAliasing(comp);
-        }
-    }
-
     /**
      * Creates the JFrame.
      */
@@ -137,8 +110,6 @@ public final class BaseLayout extends JPanel {
         window.setContentPane(mainPanel);
 
         window.pack();
-
-        setAllAntiAliasing(window.getContentPane());
 
         window.setVisible(true);
     }

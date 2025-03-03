@@ -113,14 +113,9 @@ public class NextPiecePanel extends JPanel {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
 
-        System.out.println("Before: " + g2d.getRenderingHints());
-
         // for better graphics display
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-
-        System.out.println("After: " + g2d.getRenderingHints());
-
 
         final IndividualPiece nextPieceTest = Sprint1_values.nextPiece();
 
