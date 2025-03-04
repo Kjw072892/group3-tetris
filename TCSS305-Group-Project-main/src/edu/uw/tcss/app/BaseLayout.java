@@ -1,17 +1,12 @@
 package edu.uw.tcss.app;
 
+import edu.uw.tcss.model.TetrisGame;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.event.ActionEvent;
+import javax.swing.*;
 
 
 /**
@@ -39,9 +34,7 @@ public final class BaseLayout extends JPanel {
     private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_PANEL_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
-    private static final int CURRENT_SCORE = 0;     // these could probably be set by the
-    private static final int CURRENT_LINE = 0;      // game board when we pass the score panel in
-    private static final int CURRENT_LEVEL = 1;     // - Roman
+    private static final TetrisGame game = new TetrisGame();
 
     /**
      * Constructor for Base Layout.
@@ -82,7 +75,7 @@ public final class BaseLayout extends JPanel {
         eastPanel.add(controlsInfoPanel);
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final JPanel scoreInfoPanel = new ScorePanel(CURRENT_SCORE, CURRENT_LINE, CURRENT_LEVEL);
+        final JPanel scoreInfoPanel = new ScorePanel(0, 0, 1);
                                                     // see note above on these constants
 
         scoreInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
@@ -91,6 +84,12 @@ public final class BaseLayout extends JPanel {
 
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
+
+        final InputMap imap = westPanel.getInputMap();
+        imap.put(KeyStroke.getKeyStroke('a'), "left");
+        final ActionMap amap = westPanel.getActionMap();
+        amap.put("left", new GameControlsAction(GameControlsAction.Controls.LEFT));
+
     }
 
     /**
@@ -112,5 +111,63 @@ public final class BaseLayout extends JPanel {
         window.pack();
 
         window.setVisible(true);
+    }
+
+    // key listeners, created using abstract action
+    private static class GameControlsAction extends AbstractAction {
+        enum Controls {
+            LEFT,
+            RIGHT,
+            DOWN,
+            DROP,
+            ROTATE_CW,
+            ROTATE_CCW,
+        }
+
+        GameControlsAction(final Controls theControlBind) {
+            putValue(Action.NAME, "Control Bind");
+            putValue("bind", theControlBind);
+        }
+
+        @Override
+        public void actionPerformed(final ActionEvent theEvent) {
+            final Controls control = (Controls) getValue("bind");
+            switch (control) {
+                case Controls.LEFT -> game.left();
+                case Controls.RIGHT -> game.right();
+                case Controls.DOWN -> game.down();
+                case Controls.DROP -> game.drop();
+                case Controls.ROTATE_CW -> game.rotateCW();
+                case Controls.ROTATE_CCW -> game.rotateCCW();
+                default -> throw new EnumConstantNotPresentException(Controls.class, control.name());
+            }
+            System.out.println("Action: " + control);
+        }
+    }
+
+    private static class GameActions extends AbstractAction {
+        enum Controls {
+            END_GAME,
+            NEW_GAME,
+            PAUSE,
+            UNPAUSE,
+            TOGGLE_PAUSE,
+        }
+
+        GameActions(final int theControlBind) {
+            putValue(Action.NAME, "Control Bind");
+            putValue("bind", theControlBind);
+        }
+
+        @Override
+        public void actionPerformed(final ActionEvent theEvent) {
+            switch (getValue("bind")) {
+                case Controls.END_GAME -> game.endGame();
+                case Controls.NEW_GAME -> game.newGame();
+                case Controls.PAUSE -> game.pause();
+                case Controls.UNPAUSE -> game.unPause();
+                default -> game.togglePause();
+            }
+        }
     }
 }
