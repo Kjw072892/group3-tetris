@@ -85,10 +85,11 @@ public final class BaseLayout extends JPanel {
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
 
+        final String leftKey = "left";
         final InputMap imap = westPanel.getInputMap();
-        imap.put(KeyStroke.getKeyStroke('a'), "left");
+        imap.put(KeyStroke.getKeyStroke('a'), 'l');
         final ActionMap amap = westPanel.getActionMap();
-        amap.put("left", new GameControlsAction(GameControlsAction.Controls.LEFT));
+        amap.put('l', new GameControlsAction(GameControlsAction.Controls.LEFT));
 
     }
 
