@@ -4,6 +4,7 @@ import edu.uw.tcss.model.TetrisGame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Class specifically designed to map key inputs to a JComponent
@@ -131,6 +132,7 @@ public final class KeyMapper {
     }
 
     // key listeners, created using abstract action
+    // TODO: consider revising this to only be one class per action?
     private class TetrominoAction extends AbstractAction {
 
         TetrominoAction(final TetrominoControls theControlBind) {
@@ -167,12 +169,18 @@ public final class KeyMapper {
 
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
-            switch (getValue(BIND)) {
+            final GameControls control = (GameControls) getValue(BIND);
+
+            switch (control) {
                 case GameControls.END_GAME -> myTetrisGame.endGame();
                 case GameControls.NEW_GAME -> myTetrisGame.newGame();
                 case GameControls.PAUSE -> myTetrisGame.pause();
                 case GameControls.UNPAUSE -> myTetrisGame.unPause();
-                default -> myTetrisGame.togglePause();
+                case GameControls.TOGGLE_PAUSE -> myTetrisGame.togglePause();
+                default -> throw
+                        new EnumConstantNotPresentException(
+                                GameControls.class,
+                                control.name());
             }
         }
     }
