@@ -43,8 +43,8 @@ public final class KeyMapper {
     }
 
     /**
-     * Maps a keystroke to a control for the tetromino. See the `TetrominoControls`
-     * enum for possible mappings.
+     * Maps a keystroke to a control for the tetromino. See the Controls enum inside
+     * the TetrominoAction class for possible mappings.
      *
      * @param theKeyStroke the keystroke to map from
      * @param theControl the control to map to
@@ -64,8 +64,8 @@ public final class KeyMapper {
     }
 
     /**
-     * Maps a keystroke to a control for the game. See the `GameControls`
-     * enum for mappings.
+     * Maps a keystroke to a control for the game. See the Controls enum inside
+     * the GameControl class for possible mappings.
      *
      * @param theKeyStroke the keystroke to map from
      * @param theControl the control to map to
