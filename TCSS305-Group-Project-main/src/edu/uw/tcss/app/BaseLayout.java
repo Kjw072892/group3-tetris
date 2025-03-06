@@ -51,21 +51,7 @@ public final class BaseLayout extends JPanel {
         layoutComponents();
 
         myKeyMapper = new KeyMapper(this, myTetrisGame);
-
-        InputMap imap = this.getInputMap();
-        ActionMap amap = this.getActionMap();
-
-        imap.put(KeyStroke.getKeyStroke("a"), "A");
-        amap.put("A", new act());
-
         setupKeys();
-    }
-
-    private class act extends AbstractAction {
-        @Override
-        public void actionPerformed(ActionEvent theEvent) {
-            System.out.println("Action!");
-        }
     }
 
     private void layoutComponents() {
@@ -113,9 +99,9 @@ public final class BaseLayout extends JPanel {
 
     private void setupKeys() {
         System.out.println("Key strokes are being set");
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke("a"), TetrominoControls.LEFT);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke("s"), TetrominoControls.DOWN);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke("d"), TetrominoControls.RIGHT);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('a'), TetrominoControls.LEFT);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('s'), TetrominoControls.DOWN);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('d'), TetrominoControls.RIGHT);
         myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke("space"), TetrominoControls.DROP);
     }
 
