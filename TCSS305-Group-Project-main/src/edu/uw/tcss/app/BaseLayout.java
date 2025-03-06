@@ -6,9 +6,6 @@ import edu.uw.tcss.util.GameAction;
 import edu.uw.tcss.util.KeyMapper;
 import edu.uw.tcss.util.TetrominoAction;
 
-import static edu.uw.tcss.util.KeyMapper.TetrominoControls;
-import static edu.uw.tcss.util.KeyMapper.GameControls;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
