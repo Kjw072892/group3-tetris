@@ -78,6 +78,8 @@ public final class KeyMapper {
         myActionMap = theComponent.getActionMap();
         myTetrisGame = theGame;
 
+        myInputMap.put(KeyStroke.getKeyStroke(' '), "A");
+
         buildActionMap();
     }
 
