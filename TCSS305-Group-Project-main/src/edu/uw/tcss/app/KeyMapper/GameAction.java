@@ -5,7 +5,7 @@ import edu.uw.tcss.model.TetrisGame;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class GameAction extends AbstractAction {
+public final class GameAction extends AbstractAction {
 
     private final TetrisGame myTetrisGame;
 
