@@ -56,13 +56,6 @@ public final class BaseLayout extends JPanel {
 
     }
 
-    private class act extends AbstractAction {
-        @Override
-        public void actionPerformed(ActionEvent theEvent) {
-            System.out.println("Action!");
-        }
-    }
-
     private void layoutComponents() {
         setLayout(new BorderLayout());
 
@@ -113,6 +106,7 @@ public final class BaseLayout extends JPanel {
         myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(' '), TetrominoControls.DROP);
         myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('q'), TetrominoControls.ROTATE_CW);
         myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('e'), TetrominoControls.ROTATE_CCW);
+        myKeyMapper.mapGameAction(KeyStroke.getKeyStroke('p'), GameControls.TOGGLE_PAUSE);
     }
 
     /**

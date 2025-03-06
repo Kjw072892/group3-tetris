@@ -4,7 +4,6 @@ import edu.uw.tcss.model.TetrisGame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Class specifically designed to map key inputs to a JComponent
@@ -155,8 +154,6 @@ public final class KeyMapper {
                                 TetrominoControls.class,
                                 control.name());
             }
-
-            System.out.println("Action: " + control);
         }
     }
 
