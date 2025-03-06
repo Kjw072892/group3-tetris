@@ -2,15 +2,13 @@ package edu.uw.tcss.app;
 
 
 import edu.uw.tcss.model.TetrisGame;
-import edu.uw.tcss.util.GameAction;
-import edu.uw.tcss.util.KeyMapper;
-import edu.uw.tcss.util.TetrominoAction;
+import edu.uw.tcss.app.KeyMapper.GameAction;
+import edu.uw.tcss.app.KeyMapper.KeyMapper;
+import edu.uw.tcss.app.KeyMapper.TetrominoAction;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.security.Key;
 import javax.swing.*;
 
 

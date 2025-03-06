@@ -1,4 +1,4 @@
-package edu.uw.tcss.util;
+package edu.uw.tcss.app.KeyMapper;
 
 import edu.uw.tcss.model.TetrisGame;
 

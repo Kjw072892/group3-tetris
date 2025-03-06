@@ -1,10 +1,8 @@
-package edu.uw.tcss.util;
+package edu.uw.tcss.app.KeyMapper;
 
 import edu.uw.tcss.model.TetrisGame;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.util.EnumMap;
 
 /**
  * Class specifically designed to map key inputs to a JComponent
