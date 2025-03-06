@@ -2,7 +2,9 @@ package edu.uw.tcss.app;
 
 
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.GameAction;
 import edu.uw.tcss.util.KeyMapper;
+import edu.uw.tcss.util.TetrominoAction;
 
 import static edu.uw.tcss.util.KeyMapper.TetrominoControls;
 import static edu.uw.tcss.util.KeyMapper.GameControls;
@@ -100,13 +102,13 @@ public final class BaseLayout extends JPanel {
     }
 
     private void setupKeys() {
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('a'), TetrominoControls.LEFT);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('s'), TetrominoControls.DOWN);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('d'), TetrominoControls.RIGHT);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(' '), TetrominoControls.DROP);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('q'), TetrominoControls.ROTATE_CW);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('e'), TetrominoControls.ROTATE_CCW);
-        myKeyMapper.mapGameAction(KeyStroke.getKeyStroke('p'), GameControls.TOGGLE_PAUSE);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('a'), TetrominoAction.Controls.LEFT);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('s'), TetrominoAction.Controls.DOWN);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('d'), TetrominoAction.Controls.RIGHT);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(' '), TetrominoAction.Controls.DROP);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('q'), TetrominoAction.Controls.ROTATE_CW);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('e'), TetrominoAction.Controls.ROTATE_CCW);
+        myKeyMapper.mapGameAction(KeyStroke.getKeyStroke('p'), GameAction.Controls.TOGGLE_PAUSE);
     }
 
     /**

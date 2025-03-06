@@ -4,6 +4,7 @@ import edu.uw.tcss.model.TetrisGame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.EnumMap;
 
 /**
  * Class specifically designed to map key inputs to a JComponent
@@ -20,54 +21,8 @@ public final class KeyMapper {
     private final TetrisGame myTetrisGame;
 
     /**
-     * The possible tetromino controls.
-     */
-    public enum TetrominoControls {
-        /**
-         * action to move the tetromino left.
-         */
-        LEFT,
-        /**
-         * action to move the tetromino right.
-         */
-        RIGHT,
-        /**
-         * action to move the tetromino down.
-         */
-        DOWN,
-        /**
-         * action to move the tetromino down until it freezes.
-         */
-        DROP,
-        /**
-         * action to rotate the tetromino clockwise.
-         */
-        ROTATE_CW,
-        /**
-         * action to rotate the tetromino counter-clockwise.
-         */
-        ROTATE_CCW,
-    }
-
-    /**
-     * The possible game controls.
-     */
-    public enum GameControls {
-        /** action to rotate the tetromino counter-clockwise. */
-        END_GAME,
-        /** action to start a new game. */
-        NEW_GAME,
-        /** action to pause the game. */
-        PAUSE,
-        /** action to unpause the game. */
-        UNPAUSE,
-        /** action to toggle-pause the game. */
-        TOGGLE_PAUSE,
-    }
-
-    /**
      * Constructs a key mapper with the given component that will listen for keystrokes
-     * (as ancestor of focused component) and call action on the game based on those keystrokes
+     * (as ancestor of focused component) and call action on the game based on those keystrokes.
      *
      * @param theComponent the listening component
      * @param theGame the game to call actions on
@@ -81,11 +36,11 @@ public final class KeyMapper {
     }
 
     private void buildActionMap() {
-        for (final TetrominoControls control : TetrominoControls.values()) {
-            myActionMap.put(control, new TetrominoAction(control));
+        for (final TetrominoAction.Controls control : TetrominoAction.Controls.values()) {
+            myActionMap.put(control, new TetrominoAction(control, myTetrisGame));
         }
-        for (final GameControls control : GameControls.values()) {
-            myActionMap.put(control, new GameAction(control));
+        for (final GameAction.Controls control : GameAction.Controls.values()) {
+            myActionMap.put(control, new GameAction(control, myTetrisGame));
         }
     }
 
@@ -97,7 +52,7 @@ public final class KeyMapper {
      * @param theControl the control to map to
      */
     public void mapTetrominoAction(final KeyStroke theKeyStroke,
-                                   final TetrominoControls theControl) {
+                                   final TetrominoAction.Controls theControl) {
         myInputMap.put(theKeyStroke, theControl);
     }
 
@@ -117,7 +72,7 @@ public final class KeyMapper {
      * @param theKeyStroke the keystroke to map from
      * @param theControl the control to map to
      */
-    public void mapGameAction(final KeyStroke theKeyStroke, final GameControls theControl) {
+    public void mapGameAction(final KeyStroke theKeyStroke, final GameAction.Controls theControl) {
         myInputMap.put(theKeyStroke, theControl);
     }
 
@@ -132,53 +87,7 @@ public final class KeyMapper {
 
     // key listeners, created using abstract action
     // TODO: consider revising this to only be one class per action?
-    private class TetrominoAction extends AbstractAction {
 
-        TetrominoAction(final TetrominoControls theControlBind) {
-            putValue(BIND, theControlBind);
-        }
 
-        @Override
-        public void actionPerformed(final ActionEvent theEvent) {
-            final TetrominoControls control = (TetrominoControls) getValue(BIND);
 
-            switch (control) {
-                case TetrominoControls.LEFT -> myTetrisGame.left();
-                case TetrominoControls.RIGHT -> myTetrisGame.right();
-                case TetrominoControls.DOWN -> myTetrisGame.down();
-                case TetrominoControls.DROP -> myTetrisGame.drop();
-                case TetrominoControls.ROTATE_CW -> myTetrisGame.rotateCW();
-                case TetrominoControls.ROTATE_CCW -> myTetrisGame.rotateCCW();
-                default -> throw
-                        new EnumConstantNotPresentException(
-                                TetrominoControls.class,
-                                control.name());
-            }
-        }
-    }
-
-    private class GameAction extends AbstractAction {
-
-        GameAction(final GameControls theControlBind) {
-            putValue(Action.NAME, "Control Bind");
-            putValue(BIND, theControlBind);
-        }
-
-        @Override
-        public void actionPerformed(final ActionEvent theEvent) {
-            final GameControls control = (GameControls) getValue(BIND);
-
-            switch (control) {
-                case GameControls.END_GAME -> myTetrisGame.endGame();
-                case GameControls.NEW_GAME -> myTetrisGame.newGame();
-                case GameControls.PAUSE -> myTetrisGame.pause();
-                case GameControls.UNPAUSE -> myTetrisGame.unPause();
-                case GameControls.TOGGLE_PAUSE -> myTetrisGame.togglePause();
-                default -> throw
-                        new EnumConstantNotPresentException(
-                                GameControls.class,
-                                control.name());
-            }
-        }
-    }
 }
