@@ -84,10 +84,4 @@ public final class KeyMapper {
     public void unmapGameAction(final KeyStroke theKeyStroke) {
         myInputMap.remove(theKeyStroke);
     }
-
-    // key listeners, created using abstract action
-    // TODO: consider revising this to only be one class per action?
-
-
-
 }
