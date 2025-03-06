@@ -74,11 +74,9 @@ public final class KeyMapper {
      * @param theGame the game to call actions on
      */
     public KeyMapper(final JComponent theComponent, final TetrisGame theGame) {
-        myInputMap = theComponent.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        myInputMap = theComponent.getInputMap(JComponent.WHEN_FOCUSED);
         myActionMap = theComponent.getActionMap();
         myTetrisGame = theGame;
-
-        myInputMap.put(KeyStroke.getKeyStroke(' '), "A");
 
         buildActionMap();
     }

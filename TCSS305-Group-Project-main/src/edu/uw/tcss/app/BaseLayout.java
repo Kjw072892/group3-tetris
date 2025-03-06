@@ -50,19 +50,16 @@ public final class BaseLayout extends JPanel {
         super();
         layoutComponents();
 
-        InputMap imap = this.getInputMap();
-        //ActionMap amap = this.getActionMap();
-        imap.put(KeyStroke.getKeyStroke('z'), "A"); // leaving this uncommented fixes things?
-        //amap.put("A", new act());
-
         myKeyMapper = new KeyMapper(this, myTetrisGame);
 
         setupKeys();
 
-        imap = this.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
 
-        for (KeyStroke mapping : imap.keys()) {
-            System.out.println(mapping);
+    private class act extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent theEvent) {
+            System.out.println("Action!");
         }
     }
 
@@ -114,6 +111,8 @@ public final class BaseLayout extends JPanel {
         myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('s'), TetrominoControls.DOWN);
         myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('d'), TetrominoControls.RIGHT);
         myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(' '), TetrominoControls.DROP);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('q'), TetrominoControls.ROTATE_CW);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('e'), TetrominoControls.ROTATE_CCW);
     }
 
     /**
