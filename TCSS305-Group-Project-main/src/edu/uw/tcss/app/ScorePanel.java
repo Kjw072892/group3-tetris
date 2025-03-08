@@ -1,5 +1,7 @@
 package edu.uw.tcss.app;
 
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
+
 
 /**
  * ScorePanel class.
@@ -39,12 +41,6 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
     private final int myBoldFontSize = 25;
 
     private final int myPlainFontSize = 19;
-
-    private final Font myBoldFont = new Font(DIALOG_FONT_NAME, Font.BOLD, myBoldFontSize);
-
-    private final Font myPlainFont = new Font(SERIF_FONT_NAME, Font.PLAIN, myPlainFontSize);
-
-    private final NumberFormat myFormatter = NumberFormat.getInstance(Locale.US);
 
     private final GameLogic myGameLogic;
 
