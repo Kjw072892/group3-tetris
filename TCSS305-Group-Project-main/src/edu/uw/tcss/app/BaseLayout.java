@@ -114,13 +114,20 @@ public final class BaseLayout extends JPanel {
 
     private void setupKeys() {
         // getKeyStroke is method KeyStroke.getKeyStroke, statically imported (see imports)
-        myKeyMapper.mapTetrominoAction(getKeyStroke('a'), TetrominoAction.Controls.LEFT);
-        myKeyMapper.mapTetrominoAction(getKeyStroke('s'), TetrominoAction.Controls.DOWN);
-        myKeyMapper.mapTetrominoAction(getKeyStroke('d'), TetrominoAction.Controls.RIGHT);
-        myKeyMapper.mapTetrominoAction(getKeyStroke(' '), TetrominoAction.Controls.DROP);
-        myKeyMapper.mapTetrominoAction(getKeyStroke('q'), TetrominoAction.Controls.ROTATE_CW);
-        myKeyMapper.mapTetrominoAction(getKeyStroke('e'), TetrominoAction.Controls.ROTATE_CCW);
-        myKeyMapper.mapGameAction(getKeyStroke('p'), GameAction.Controls.TOGGLE_PAUSE);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed A"), TetrominoAction.Controls.LEFT);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed S"), TetrominoAction.Controls.DOWN);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed D"), TetrominoAction.Controls.RIGHT);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed SPACE"), TetrominoAction.Controls.DROP);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed Q"), TetrominoAction.Controls.ROTATE_CW);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed E"), TetrominoAction.Controls.ROTATE_CCW);
+        myKeyMapper.mapGameAction(
+                getKeyStroke("pressed P"), GameAction.Controls.TOGGLE_PAUSE);
     }
 
     /**
