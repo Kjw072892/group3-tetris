@@ -70,8 +70,7 @@ public class FileMenu extends JMenuBar {
     }
 
     private void addListeners(final JFrame theFrame) {
-         // Add action listeners
-        //myGameStart.addActionListener(ActionEvent -> setGameShouldStart(theFrame));
+
 
         myAbout.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
@@ -84,7 +83,7 @@ public class FileMenu extends JMenuBar {
                 JOptionPane.showMessageDialog(theFrame,
                 "This option is currently unavailable in this version!"));
 
-       //myGameStart.addActionListener(e->setGameShouldStart(theFrame));
+
     }
 
     //  This method currently does nothing, will use later.

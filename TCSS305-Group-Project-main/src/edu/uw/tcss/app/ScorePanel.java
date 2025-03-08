@@ -92,6 +92,8 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
 
         if (theCurrentLevel < 1) {
 
+            System.out.println(theCurrentLevel);
+
             throw new IllegalArgumentException("The lowest starting level must be 1!");
         }
     }
