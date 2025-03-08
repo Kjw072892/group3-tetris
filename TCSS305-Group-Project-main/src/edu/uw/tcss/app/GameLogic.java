@@ -5,6 +5,7 @@ import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
 import edu.uw.tcss.model.TetrisGame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import javax.swing.Timer;
 
 /**
@@ -52,8 +53,8 @@ public final class GameLogic implements PropertyChangeListener {
 
             myCurrentLevel = 1;
 
-
         }
+
 
     }
 

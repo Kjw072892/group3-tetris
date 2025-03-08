@@ -58,6 +58,8 @@ public final class BaseLayout extends JPanel {
 
         setupKeys();
 
+
+
     }
 
     private void layoutComponents() {
