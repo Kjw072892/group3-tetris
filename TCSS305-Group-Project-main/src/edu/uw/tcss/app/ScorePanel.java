@@ -186,8 +186,7 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         if (theEvent.getPropertyName().equals(PROPERTY_ROWS_CLEARED)) {
             setMyClearedLines(myGameLogic.getLinesCleared());
             setMyCurrentLevel(myGameLogic.getLevel());
-
-            theScorePanel();
+            setMyScore(myGameLogic.getScore());
 
             System.out.println("Lines Cleared: " + myGameLogic.getLinesCleared());
             System.out.println("Current Score: " + myGameLogic.getScore());
