@@ -1,21 +1,21 @@
 package edu.uw.tcss.app;
 
+
+import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
+import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.app.KeyMapper.GameAction;
+import edu.uw.tcss.app.KeyMapper.KeyMapper;
+import edu.uw.tcss.app.KeyMapper.TetrominoAction;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 
 /**
  * BorderLayout base Panel.
+ *
  * @author Roman Bureacov
  * @author Zainab Stanikzy
  * @author Kassie Whitney
@@ -39,16 +39,22 @@ public final class BaseLayout extends JPanel {
     private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_PANEL_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
-    private static final int CURRENT_SCORE = 0;     // these could probably be set by the
-    private static final int CURRENT_LINE = 0;      // game board when we pass the score panel in
-    private static final int CURRENT_LEVEL = 1;     // - Roman
+    private final TetrisGame myTetrisGame;
+    private final KeyMapper myKeyMapper;
 
     /**
      * Constructor for Base Layout.
      */
-    public BaseLayout() {
+    public BaseLayout(final TetrisGame theGame) {
         super();
+        myTetrisGame = theGame;
+
         layoutComponents();
+
+        myKeyMapper = new KeyMapper(this, myTetrisGame);
+
+        setupKeys();
+
     }
 
     private void layoutComponents() {
@@ -59,8 +65,9 @@ public final class BaseLayout extends JPanel {
 
         // game board lives on the west
         final JPanel westPanel = new JPanel();
+        final GameBoardPanel gameBoard = new GameBoardPanel();
 
-        westPanel.add(new BoardPanel(), BorderLayout.WEST);
+        westPanel.add(gameBoard, BorderLayout.WEST);
 
         // information, such as the next piece, controls, and score, live on the east
         final JPanel eastPanel = new JPanel();
@@ -69,7 +76,7 @@ public final class BaseLayout extends JPanel {
 
         eastPanel.setBorder(BorderFactory.createEmptyBorder(0, MAJOR_PADDING, 0, 0));
 
-        final JPanel nextPiecePanel = new NextPiecePanel();
+        final NextPiecePanel nextPiecePanel = new NextPiecePanel();
         nextPiecePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
         nextPiecePanel.setBackground(Color.BLUE);
         eastPanel.add(nextPiecePanel);
@@ -82,8 +89,8 @@ public final class BaseLayout extends JPanel {
         eastPanel.add(controlsInfoPanel);
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final JPanel scoreInfoPanel = new ScorePanel(CURRENT_SCORE, CURRENT_LINE, CURRENT_LEVEL);
-                                                    // see note above on these constants
+        final GameLogic gameLogicHandler = new GameLogic(myTetrisGame);
+        final ScorePanel scoreInfoPanel = new ScorePanel(gameLogicHandler);
 
         scoreInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
@@ -91,46 +98,42 @@ public final class BaseLayout extends JPanel {
 
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
+
+        // add property change listeners
+        myTetrisGame.addPropertyChangeListener(
+                PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED, gameLogicHandler);
+        myTetrisGame.addPropertyChangeListener(
+                PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED, scoreInfoPanel);
+        myTetrisGame.addPropertyChangeListener(gameBoard);
+        myTetrisGame.addPropertyChangeListener(
+                PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE, nextPiecePanel);
+
+
     }
 
-    // TODO: this might not work as I expected: components might actually need
-    //  anual antialiasing enabled each time
-    /**
-     * Enables antialiasing on a component.
-     *
-     * @param theComp the component to enable antialiasing on
-     */
-    private static void enableAntiAliasing(final Component theComp) {
-        final Graphics2D g = (Graphics2D) (theComp.getGraphics());
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-    }
-
-    /**
-     * Recursive function that enables the antialiasing on components, containers,
-     * and components within containers.
-     *
-     * @param theCont the container component to recursively go through
-     */
-    private static void setAllAntiAliasing(final Container theCont) {
-        for (final Component comp : theCont.getComponents()) {
-            if (comp instanceof Container) {
-                setAllAntiAliasing((Container) comp);
-            }
-            enableAntiAliasing(comp);
-        }
+    private void setupKeys() {
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('a'), TetrominoAction.Controls.LEFT);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('s'), TetrominoAction.Controls.DOWN);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('d'), TetrominoAction.Controls.RIGHT);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(' '), TetrominoAction.Controls.DROP);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('q'), TetrominoAction.Controls.ROTATE_CW);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('e'), TetrominoAction.Controls.ROTATE_CCW);
+        myKeyMapper.mapGameAction(KeyStroke.getKeyStroke('p'), GameAction.Controls.TOGGLE_PAUSE);
     }
 
     /**
      * Creates the JFrame.
      */
     public static void createAndShowGui() {
-        final BaseLayout mainPanel = new BaseLayout();
+        final TetrisGame tetris = new TetrisGame();
+
+        final BaseLayout mainPanel = new BaseLayout(tetris);
 
         final JFrame window = new JFrame("Group 3 Tetris");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
 
-        final FileMenu menuBar = new FileMenu(window);
+        final FileMenu menuBar = new FileMenu(window, tetris);
 
         window.setJMenuBar(menuBar);
 
@@ -138,8 +141,7 @@ public final class BaseLayout extends JPanel {
 
         window.pack();
 
-        setAllAntiAliasing(window.getContentPane());
-
         window.setVisible(true);
     }
+
 }

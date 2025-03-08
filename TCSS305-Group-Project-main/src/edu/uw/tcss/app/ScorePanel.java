@@ -4,6 +4,8 @@ import edu.uw.tcss.util.LabelTextBuilder;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.BorderFactory;
@@ -21,7 +23,7 @@ import javax.swing.SwingConstants;
  * @author Zainab
  * @version 3.2.25
  */
-public class ScorePanel extends JPanel /* implements ScoreHandler */ {
+public class ScorePanel extends JPanel implements PropertyChangeListener  {
 
     private static int MY_SCORE;
 
@@ -43,20 +45,23 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
 
     private final NumberFormat myFormatter = NumberFormat.getInstance(Locale.US);
 
+    private final GameLogic myGameLogic;
 
     /**
      * Constructor for score panel class.
      * Stores the current score.
-     * @param theScore The current score.
+     * @param theGameLogic the game logic which keeps track of the scoring and game state.
      */
-    public ScorePanel(final int theScore, final int theCurrentLines,
-                      final int theCurrentLevel) {
+    public ScorePanel(final GameLogic theGameLogic) {
         super();
-        setMyScore(theScore);
 
-        setMyCurrentLevel(theCurrentLevel);
+        myGameLogic = theGameLogic;
 
-        setMyCurrentLines(theCurrentLines);
+        setMyScore(theGameLogic.getScore());
+
+        setMyCurrentLevel(theGameLogic.getLevel());
+
+        setMyCurrentLines(theGameLogic.getLinesCleared());
 
         scorePanel();
 
@@ -66,7 +71,6 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
      * Sets the current score.
      * @param theScore integer of the current score.
      */
-    // TODO: we need to refactor this in the future, right now this only updates an integer - RB
     public void setMyScore(final int theScore) {
         MY_SCORE = Math.max(theScore, 0);
         if (theScore < 0) {
@@ -74,7 +78,6 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
         }
     }
 
-    // TODO: we need to refactor this in the future, right now this only updates an integer - RB
     private void setMyCurrentLines(final int theCurrentLines) {
         MY_CURRENT_LINES = Math.max(theCurrentLines, 0);
 
@@ -84,7 +87,6 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
         }
     }
 
-    // TODO: we need to refactor this in the future, right now this only updates an integer - RB
     private void setMyCurrentLevel(final int theCurrentLevel) {
         MY_CURRENT_LEVEL = Math.max(theCurrentLevel, 1);
 
@@ -181,4 +183,25 @@ public class ScorePanel extends JPanel /* implements ScoreHandler */ {
     }
 
 
+    /**
+     * @param theEvent A PropertyChangeEvent object describing the event source
+     *            and the property that has changed.
+     */
+    @Override
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+
+        final int currentLevel = myGameLogic.getLevel();
+
+        final int currentLinesCleared = myGameLogic.getLinesCleared();
+
+        final int currentScore = myGameLogic.getScore();
+
+        setMyCurrentLevel(currentLevel);
+
+        setMyCurrentLines(currentLinesCleared);
+
+        setMyScore(currentScore);
+
+
+    }
 }

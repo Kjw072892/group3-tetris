@@ -60,7 +60,7 @@ He also worked on design designing and structuring the borders.
 This helped allow for better spacing and clear visual distinctions
 Between the different regions of the game. 
 His attention to clean code organization and consistent formatting really helped maintain a structured
-foundation. 
+foundation. He reviewed the code written and provided valuable feedback on what could possibly be improved or changed.
 
 
 ## Zainab 
