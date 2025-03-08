@@ -25,7 +25,7 @@ final class GameLogic implements PropertyChangeListener {
     GameLogic(final TetrisGame theTetrisGame) {
         myTetrisGame = theTetrisGame;
         myTimer = new Timer(DEFAULT_DELAY,
-                theEvent -> { myTetrisGame.step(); System.out.println("Hello World!");});
+                theEvent -> { myTetrisGame.step();});
         myTimer.start();
     }
 

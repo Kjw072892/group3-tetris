@@ -83,7 +83,13 @@ public class FileMenu extends JMenuBar {
                 JOptionPane.showMessageDialog(theFrame,
                 "This option is currently unavailable in this version!"));
 
+        myGameStart.addActionListener(e->setGameShouldStart());
 
+
+    }
+
+    private void setGameShouldStart() {
+        myTetris.newGame();
     }
 
     //  This method currently does nothing, will use later.

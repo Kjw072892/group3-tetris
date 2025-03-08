@@ -1,5 +1,6 @@
 package edu.uw.tcss.app;
 
+import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
 import java.awt.BasicStroke;
@@ -38,12 +39,15 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     /** The height for the rectangle. */
     private static final int RECTANGLE_HEIGHT = 30;
 
+    private IndividualPiece nextPiece;
+
     /**
      * Constructs a new ellipse panel.
      */
     public NextPiecePanel() {
         super();
         layoutComponents();
+        nextPiece = Sprint1_values.nextPiece();
     }
 
     /**
@@ -119,21 +123,52 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        final IndividualPiece nextPieceTest = Sprint1_values.nextPiece();
+        drawTheNextPiece(g2d);
 
-        final double[] pointOffset = findOffsetPoint(nextPieceTest.location());
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName() == "This is the new next piece!" && evt.getNewValue() != null) {
+            nextPiece = (IndividualPiece) evt.getNewValue();
+            repaint();
+        }
+    }
+
+    /**
+     * Get the correct color for blocks
+     * @param theBlock the theBlock types
+     * @return the color related to theBlock
+     */
+    private Color getBlockColor(final GameControls.Block theBlock) {
+        return switch (theBlock) {
+            case I -> Color.CYAN;
+            case O -> Color.YELLOW;
+            case T -> Color.MAGENTA;
+            case Z -> Color.WHITE;
+            case L -> Color.ORANGE;
+            case S -> Color.GREEN;
+            case J -> Color.BLUE;
+            default -> Color.DARK_GRAY;
+        };
+    }
+
+    private void drawTheNextPiece(final Graphics theGraphics) {
+        final Graphics2D g2d = (Graphics2D) theGraphics;
+
+        final double[] pointOffset = findOffsetPoint(nextPiece.location());
 
         // individual pieces have offsets to ensure they are centered
         final double xOffset = pointOffset[0];
         final double yOffset = pointOffset[1];
 
-        for (int i = 0; i < nextPieceTest.location().length; i++) {
+        for (int i = 0; i < nextPiece.location().length; i++) {
 
             // point in space is not centered to screen yet, but let's
             // just get our points seperated into equal spaces for our drawing.
-            final int xToPlace = (int) ((nextPieceTest.location()[i].x() - xOffset)
+            final int xToPlace = (int) ((nextPiece.location()[i].x() - xOffset)
                     * RECTANGLE_WIDTH);
-            final int yToPlace = (int) ((nextPieceTest.location()[i].y() - yOffset)
+            final int yToPlace = (int) ((nextPiece.location()[i].y() - yOffset)
                     * RECTANGLE_HEIGHT);
 
             final Point pointToPlace = new Point(xToPlace, -yToPlace);
@@ -150,15 +185,9 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
             g2d.setStroke(new BasicStroke(STROKE_WIDTH));
             g2d.draw(rectangle);
             // TODO: we'll need a way to later set up how to get the piece color automatically
-            g2d.setPaint(Color.MAGENTA);
+            g2d.setPaint(getBlockColor(nextPiece.block()));
             g2d.fill(rectangle);
 
         }
-
-    }
-
-    @Override
-    public void propertyChange(final PropertyChangeEvent theEvent) {
-        // TODO: the event
     }
 }

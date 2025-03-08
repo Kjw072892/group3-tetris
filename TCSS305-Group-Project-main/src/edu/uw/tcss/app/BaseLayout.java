@@ -109,6 +109,10 @@ public final class BaseLayout extends JPanel {
                 PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE, nextPiecePanel);
 
 
+        //myTetrisGame.newGame();
+        //myTetrisGame.step();
+
+
     }
 
     private void setupKeys() {
