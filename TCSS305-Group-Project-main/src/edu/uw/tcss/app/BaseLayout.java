@@ -1,16 +1,19 @@
 package edu.uw.tcss.app;
 
-
-import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
-import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.app.KeyMapper.GameAction;
 import edu.uw.tcss.app.KeyMapper.KeyMapper;
 import edu.uw.tcss.app.KeyMapper.TetrominoAction;
-
+import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
+import edu.uw.tcss.model.TetrisGame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 
 /**
@@ -99,30 +102,42 @@ public final class BaseLayout extends JPanel {
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
 
-        // add property change listeners
+
         myTetrisGame.addPropertyChangeListener(
                 PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED, gameLogicHandler);
+
         myTetrisGame.addPropertyChangeListener(
                 PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED, scoreInfoPanel);
+
         myTetrisGame.addPropertyChangeListener(gameBoard);
+
         myTetrisGame.addPropertyChangeListener(
                 PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE, nextPiecePanel);
-
-
-        //myTetrisGame.newGame();
-        //myTetrisGame.step();
 
 
     }
 
     private void setupKeys() {
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('a'), TetrominoAction.Controls.LEFT);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('s'), TetrominoAction.Controls.DOWN);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('d'), TetrominoAction.Controls.RIGHT);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(' '), TetrominoAction.Controls.DROP);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('q'), TetrominoAction.Controls.ROTATE_CW);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('e'), TetrominoAction.Controls.ROTATE_CCW);
-        myKeyMapper.mapGameAction(KeyStroke.getKeyStroke('p'), GameAction.Controls.TOGGLE_PAUSE);
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('a'),
+                TetrominoAction.Controls.LEFT);
+
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('s'),
+                TetrominoAction.Controls.DOWN);
+
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('d'),
+                TetrominoAction.Controls.RIGHT);
+
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(' '),
+                TetrominoAction.Controls.DROP);
+
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('q'),
+                TetrominoAction.Controls.ROTATE_CW);
+
+        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('e'),
+                TetrominoAction.Controls.ROTATE_CCW);
+
+        myKeyMapper.mapGameAction(KeyStroke.getKeyStroke('p'),
+                GameAction.Controls.TOGGLE_PAUSE);
     }
 
     /**

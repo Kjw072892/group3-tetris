@@ -1,12 +1,20 @@
 package edu.uw.tcss.app;
 
+import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
 import edu.uw.tcss.model.TetrisGame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.Timer;
 
-final class GameLogic implements PropertyChangeListener {
+/**
+ * @author James
+ * @author Kassie
+ * @author Romain
+ * @author Zainab
+ * @version 3.7.25
+ */
+public final class GameLogic implements PropertyChangeListener {
 
     private static final int SCORE_PER_ROW_CLEARED = 100;
     private static final int SCORE_PER_ADD_ROW = 50;
@@ -23,9 +31,10 @@ final class GameLogic implements PropertyChangeListener {
     private int myLinesCleared;
 
     GameLogic(final TetrisGame theTetrisGame) {
+        super();
         myTetrisGame = theTetrisGame;
         myTimer = new Timer(DEFAULT_DELAY,
-                theEvent -> { myTetrisGame.step();});
+                theEvent -> myTetrisGame.step());
         myTimer.start();
     }
 
@@ -42,7 +51,10 @@ final class GameLogic implements PropertyChangeListener {
             updateScore(rowsCleared);
 
             myCurrentLevel = 1;
+
+
         }
+
     }
 
     /**
@@ -79,7 +91,7 @@ final class GameLogic implements PropertyChangeListener {
     }
 
     /**
-     * Gets the current amount of lines cleared in the tetris game.
+     * Gets the current number of lines cleared in the tetris game.
      *
      * @return the number of lines cleared in the tetris game thus far.
      */

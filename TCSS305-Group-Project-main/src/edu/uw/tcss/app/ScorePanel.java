@@ -1,5 +1,6 @@
 package edu.uw.tcss.app;
 
+import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.util.LabelTextBuilder;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,6 +15,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
 
 /**
  * ScorePanel class.
@@ -63,7 +66,7 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
 
         setMyCurrentLines(theGameLogic.getLinesCleared());
 
-        scorePanel();
+        theScorePanel();
 
     }
 
@@ -81,10 +84,12 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
     private void setMyCurrentLines(final int theCurrentLines) {
         MY_CURRENT_LINES = Math.max(theCurrentLines, 0);
 
+
         if (theCurrentLines < 0) {
             throw new IllegalArgumentException("Number of lines must be "
                     + "greater than or equal to 0!");
         }
+
     }
 
     private void setMyCurrentLevel(final int theCurrentLevel) {
@@ -96,6 +101,7 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
 
             throw new IllegalArgumentException("The lowest starting level must be 1!");
         }
+
     }
 
 
@@ -117,6 +123,8 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
     private JLabel currentLevel() {
 
         final String levelFormated = myFormatter.format(MY_CURRENT_LEVEL);
+
+        System.out.println("Levelsformated: " + levelFormated);
 
         final JLabel boldLevelLabel = new JLabel("Level: ");
         boldLevelLabel.setFont(myBoldFont);
@@ -142,7 +150,7 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
     }
 
 
-    private void scorePanel() {
+    private void theScorePanel() {
         final int fontSize = 12;
         final int spacer = 20;
         final int borderThickness = 3;
@@ -162,6 +170,7 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
         final JPanel messagePanel = new JPanel();
         messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
 
+        System.out.println("calling current levels and data methods");
         final JLabel levelLabel = currentLevel();
         final JLabel linesLabel = linesCleared();
         final JLabel scoreLabel = currentScore();
@@ -182,6 +191,7 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
 
         setVisible(true);
         setOpaque(true);
+
     }
 
 
@@ -192,18 +202,15 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
 
+        final String propertyName = theEvent.getPropertyName();
+
+        final Object newValue = theEvent.getNewValue();
+
         final int currentLevel = myGameLogic.getLevel();
 
         final int currentLinesCleared = myGameLogic.getLinesCleared();
 
         final int currentScore = myGameLogic.getScore();
-
-        setMyCurrentLevel(currentLevel);
-
-        setMyCurrentLines(currentLinesCleared);
-
-        setMyScore(currentScore);
-
 
     }
 }
