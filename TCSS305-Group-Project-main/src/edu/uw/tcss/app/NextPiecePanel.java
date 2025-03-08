@@ -135,6 +135,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
         }
     }
 
+    // TODO: maybe these constants should be defined in another file as static constants? - RB
     /**
      * Get the correct color for blocks
      * @param theBlock the theBlock types

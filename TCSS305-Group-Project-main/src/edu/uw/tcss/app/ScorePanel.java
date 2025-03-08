@@ -193,17 +193,11 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
     public void propertyChange(final PropertyChangeEvent theEvent) {
 
         final int currentLevel = myGameLogic.getLevel();
-
         final int currentLinesCleared = myGameLogic.getLinesCleared();
-
         final int currentScore = myGameLogic.getScore();
 
         setMyCurrentLevel(currentLevel);
-
         setMyCurrentLines(currentLinesCleared);
-
         setMyScore(currentScore);
-
-
     }
 }
