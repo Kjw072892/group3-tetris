@@ -10,7 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
+import java.util.Objects;
 import javax.swing.JPanel;
 
 
@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * @author James
  * @author Kassie
  * @author Roman
- * @version 2.28.25
+ * @version 3.7.25
  */
 public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
@@ -30,11 +30,11 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private static final int BOARD_HEIGHT = 600;
     private static final int COLUMNS = 10;         // Number of columns & rows.
     private static final int ROWS = 20;
-    private static final int BLOCK_WIDTH = BOARD_WIDTH / COLUMNS;
-    private static final int BLOCK_HEIGHT = BOARD_HEIGHT / ROWS;
-
-    private final  IndividualPiece[] myTetrisPieces;
-    private final Block[][] myFrozenBlocks = new Block[COLUMNS][ROWS];
+    // TODO: there's constant use of
+    //  BOARD_WIDTH / COLUMNS and similar, perhaps those could be constants
+    private IndividualPiece[] myTetrisPieces;
+    //private Block[][] myFrozenBlocks = new Block[COLUMNS][ROWS];
+    private GameControls.FrozenBlocks myFrozen = Sprint1_values.frozenBlocks();
 
     {
         myTetrisPieces = Sprint1_values.pieces();   // Store Pieces in myTetrisPiece
@@ -46,30 +46,12 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     public GameBoardPanel() {
         //Preferred size set to fit in layout.
         setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
-        // TODO: for later, we could consider making a class that houses the preferences or something
+        // TODO: for later, we could consider making
+        //  a class that houses the preferences or something
         setBackground(Color.RED); //background red.
 
-        spawnNewPiece(); // Load all Sprint 1 pieces to the board.
+        // Load all Sprint 1 pieces to the board.
 
-    }
-
-    //Gets all the Sprint 1 pieces and stores them for display.
-    private void spawnNewPiece() {
-
-        //System.out.println("Spawning New Piece"+ myTetrisPiece.length);
-        repaint(); // Repaint board with pieces.
-        final GameControls.FrozenBlocks frozen = Sprint1_values.frozenBlocks();
-        final List<Block[]> frozenGrid = frozen.blocks();
-
-
-        for (int row = 0; row < frozenGrid.size(); row++) {
-            final Block[] blocks =  frozenGrid.get(row);
-            for (int column = 0; column < blocks.length; column++) {
-                if (blocks[column] != null) {
-                    myFrozenBlocks[column][row] = blocks[column];
-                }
-            }
-        }
     }
 
 
@@ -91,15 +73,15 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         for (int column = 0; column < COLUMNS; column++) {
             for (int row = 0; row < ROWS; row++) {
                 // TODO: variable declarations could make this more concise - RB
-                if (myFrozenBlocks[column][row] != null) {
-                    theGraphics.setColor(getBlockColor(myFrozenBlocks[column][row]));
+                if (myFrozen.blocks().get(row)[column] != null) {
+                    theGraphics.setColor(getBlockColor(myFrozen.blocks().get(row)[column]));
 
-                    final int x = column * BLOCK_WIDTH;
-                    final int y =  ((ROWS - 1) - row) * BLOCK_HEIGHT;
+                    final int x = column * (BOARD_WIDTH / COLUMNS);
+                    final int y =  ((ROWS - 1) - row) * (BOARD_HEIGHT / ROWS);
 
-                    theGraphics.fillRect(x, y, BLOCK_WIDTH,  BLOCK_HEIGHT);
+                    theGraphics.fillRect(x, y, BOARD_WIDTH / COLUMNS,  BOARD_HEIGHT / ROWS);
                     theGraphics.setColor(Color.BLACK);
-                    theGraphics.drawRect(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
+                    theGraphics.drawRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
                 }
             }
         }
@@ -131,12 +113,12 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private void drawGrid(final Graphics theGraphics) {
         theGraphics.setColor(Color.BLACK);
         for (int column = 0; column <= COLUMNS; column++) { //vertical lines for column
-            final int x = column * BLOCK_WIDTH;
+            final int x = column * (BOARD_WIDTH / COLUMNS);
             theGraphics.drawLine(x, 0, x, BOARD_HEIGHT);
         }
         // horizontal line for rows
         for (int row = 0; row < ROWS; row++) {
-            final int y = row * BLOCK_HEIGHT;
+            final int y = row * (BOARD_HEIGHT / ROWS);
             theGraphics.drawLine(0, y, BOARD_WIDTH, y);
         }
 
@@ -149,22 +131,41 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
         for (IndividualPiece piece : myTetrisPieces) {
             // Loop through sprint 1 piece.
+            if (piece == null) {
+                break;
+            }
             for (Point block : piece.location()) {
-                final int x = block.x() * BLOCK_WIDTH;
-                final int y = ((ROWS - 1) - block.y()) * BLOCK_HEIGHT;
+                final int x = block.x() * (BOARD_WIDTH / COLUMNS);
+                final int y = ((ROWS - 1) - block.y()) * (BOARD_HEIGHT / ROWS);
 
                 g2d.setPaint(getBlockColor(piece.block()));
-                theGraphics.fillRect(x, y, BLOCK_WIDTH, BLOCK_WIDTH);
+                theGraphics.fillRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_WIDTH / COLUMNS);
                 // TODO: maybe we could remove this and have the grid drawn after the blocks - RB
                 g2d.setPaint(Color.BLACK);
-                g2d.drawRect(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
+                g2d.drawRect(x, y, BOARD_HEIGHT / ROWS, BOARD_HEIGHT / ROWS);
             }
         }
     }
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        // TODO: stub method
+
+        if (Objects.equals(theEvent.getPropertyName(), "The Game State has updated "
+                + "to something new!")) {
+            myTetrisPieces = new IndividualPiece[1];
+        }
+        if (Objects.equals(theEvent.getPropertyName(), "This is the current piece!")
+                && theEvent.getNewValue() != null) {
+            myTetrisPieces[0] = (IndividualPiece) theEvent.getNewValue();
+            repaint();
+        }
+
+        if (Objects.equals(theEvent.getPropertyName(), "These are the frozen blocks!")
+                && theEvent.getNewValue() != null) {
+            myFrozen = (GameControls.FrozenBlocks) theEvent.getNewValue();
+            repaint();
+        }
+
     }
 }
 

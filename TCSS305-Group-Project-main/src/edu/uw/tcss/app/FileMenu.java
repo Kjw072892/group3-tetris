@@ -1,11 +1,8 @@
 package edu.uw.tcss.app;
 
 import edu.uw.tcss.model.TetrisGame;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
 
 /**
  * FileMenu creation class.
@@ -17,7 +14,8 @@ import javax.swing.JOptionPane;
  * @version 2.28.25
  */
 public class FileMenu extends JMenuBar {
-    private final String myVersion = "2.28.25";
+    private static final int DEFAULT_DELAY = 1000;
+    private final String myVersion = "3.8.25";
 
     private final JMenuItem myGameStart = new JMenuItem("Start Game");
     private final JMenuItem myAbout = new JMenuItem("About");
@@ -27,6 +25,7 @@ public class FileMenu extends JMenuBar {
     private final JMenu myFeatureMenu = new JMenu("Feature");
     private final JMenu myHelpMenu = new JMenu("Help");
     private final TetrisGame myTetris;
+
 
 
     /**
@@ -70,8 +69,7 @@ public class FileMenu extends JMenuBar {
     }
 
     private void addListeners(final JFrame theFrame) {
-         // Add action listeners
-        //myGameStart.addActionListener(ActionEvent -> setGameShouldStart(theFrame));
+
 
         myAbout.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
@@ -84,10 +82,18 @@ public class FileMenu extends JMenuBar {
                 JOptionPane.showMessageDialog(theFrame,
                 "This option is currently unavailable in this version!"));
 
-       //myGameStart.addActionListener(e->setGameShouldStart(theFrame));
+        myGameStart.addActionListener(theEvent -> myTetris.newGame());
+        myGameStart.addActionListener(theEvent -> startTimer());
+
     }
 
-    //  This method currently does nothing, will use later.
+    private void startTimer() {
+        final TetrisGame tetrisGame = new TetrisGame();
+        final Timer timer;
+        timer = new Timer(DEFAULT_DELAY, theEvent -> tetrisGame.step());
+        timer.start();
+
+    }
 
 
 }
