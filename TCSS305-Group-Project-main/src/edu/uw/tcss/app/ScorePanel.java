@@ -189,5 +189,10 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
             setMyScore(myGameLogic.getScore());
         }
 
+        System.out.println();
+        System.out.println("Lines Cleared: " + myGameLogic.getLinesCleared());
+        System.out.println("Levels: " + myGameLogic.getLevel());
+        System.out.println("Score: " + myGameLogic.getScore());
+
     }
 }
