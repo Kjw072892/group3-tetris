@@ -125,8 +125,14 @@ public final class BaseLayout extends JPanel {
                 getKeyStroke("pressed Q"), TetrominoAction.Controls.ROTATE_CW);
         myKeyMapper.mapTetrominoAction(
                 getKeyStroke("pressed E"), TetrominoAction.Controls.ROTATE_CCW);
+
         myKeyMapper.mapGameAction(
                 getKeyStroke("pressed P"), GameAction.Controls.TOGGLE_PAUSE);
+        myKeyMapper.mapGameAction(
+                getKeyStroke("pressed N"), GameAction.Controls.NEW_GAME);
+        myKeyMapper.mapGameAction(
+                getKeyStroke("pressed M"), GameAction.Controls.END_GAME
+        );
     }
 
     /**
