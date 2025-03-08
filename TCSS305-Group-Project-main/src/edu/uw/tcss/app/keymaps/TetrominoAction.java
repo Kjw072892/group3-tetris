@@ -1,10 +1,16 @@
-package edu.uw.tcss.app.KeyMapper;
+package edu.uw.tcss.app.keymaps;
 
 import edu.uw.tcss.model.TetrisGame;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 
+/**
+ * Class that is responsible for running a tetromino
+ * action based on a bind instantiated with.
+ *
+ * @author Roman Bureacov
+ * @version 2025-03-08
+ */
 public final class TetrominoAction extends AbstractAction {
 
     private final TetrisGame myTetrisGame;
@@ -41,6 +47,13 @@ public final class TetrominoAction extends AbstractAction {
 
     private final Controls myBind;
 
+    /**
+     * Instantiates this action object with the bind that corresponds to a tetromino
+     * action when action performed is called.
+     *
+     * @param theControlBind the enum constant key
+     * @param theTetrisGame the tetris game that will have actions called on
+     */
     TetrominoAction(final Controls theControlBind, final TetrisGame theTetrisGame) {
         myBind = theControlBind;
         myTetrisGame = theTetrisGame;

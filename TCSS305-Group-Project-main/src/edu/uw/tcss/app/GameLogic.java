@@ -6,6 +6,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.Timer;
 
+/**
+ * Class that handles some game logic, specifically how the game is scored,
+ * calling the steps, and advancing levels.
+ *
+ * @author Roman Bureacov
+ * @author Kassie Whitney
+ * @version 2025-03-08
+ */
 final class GameLogic implements PropertyChangeListener {
 
     private static final int SCORE_PER_ROW_CLEARED = 100;
@@ -18,13 +26,15 @@ final class GameLogic implements PropertyChangeListener {
 
     private final Timer myTimer;
     private final TetrisGame myTetrisGame;
-    private int myCurrentLevel;
+    private int myCurrentLevel = 1;
     private int myScore;
     private int myLinesCleared;
 
     GameLogic(final TetrisGame theTetrisGame) {
         myTetrisGame = theTetrisGame;
-        myTimer = new Timer(DEFAULT_DELAY, theEvent -> myTetrisGame.step());
+        myTimer = new Timer(DEFAULT_DELAY,
+                theEvent -> { myTetrisGame.step();});
+        myTimer.start();
     }
 
     @Override

@@ -1,16 +1,20 @@
 package edu.uw.tcss.app;
 
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE;
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
+import static javax.swing.KeyStroke.getKeyStroke;
 
-import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
+import edu.uw.tcss.app.keymaps.GameAction;
+import edu.uw.tcss.app.keymaps.KeyMapper;
+import edu.uw.tcss.app.keymaps.TetrominoAction;
 import edu.uw.tcss.model.TetrisGame;
-import edu.uw.tcss.app.KeyMapper.GameAction;
-import edu.uw.tcss.app.KeyMapper.KeyMapper;
-import edu.uw.tcss.app.KeyMapper.TetrominoAction;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.*;
+import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
 /**
@@ -100,25 +104,29 @@ public final class BaseLayout extends JPanel {
         add(eastPanel, BorderLayout.EAST);
 
         // add property change listeners
-        myTetrisGame.addPropertyChangeListener(
-                PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED, gameLogicHandler);
-        myTetrisGame.addPropertyChangeListener(
-                PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED, scoreInfoPanel);
+        myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, gameLogicHandler);
+        myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
-        myTetrisGame.addPropertyChangeListener(
-                PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE, nextPiecePanel);
-
-
+        myTetrisGame.addPropertyChangeListener(PROPERTY_NEXT_PIECE, nextPiecePanel);
+        
     }
 
     private void setupKeys() {
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('a'), TetrominoAction.Controls.LEFT);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('s'), TetrominoAction.Controls.DOWN);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('d'), TetrominoAction.Controls.RIGHT);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(' '), TetrominoAction.Controls.DROP);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('q'), TetrominoAction.Controls.ROTATE_CW);
-        myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke('e'), TetrominoAction.Controls.ROTATE_CCW);
-        myKeyMapper.mapGameAction(KeyStroke.getKeyStroke('p'), GameAction.Controls.TOGGLE_PAUSE);
+        // getKeyStroke is method KeyStroke.getKeyStroke, statically imported (see imports)
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed A"), TetrominoAction.Controls.LEFT);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed S"), TetrominoAction.Controls.DOWN);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed D"), TetrominoAction.Controls.RIGHT);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed SPACE"), TetrominoAction.Controls.DROP);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed Q"), TetrominoAction.Controls.ROTATE_CW);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed E"), TetrominoAction.Controls.ROTATE_CCW);
+        myKeyMapper.mapGameAction(
+                getKeyStroke("pressed P"), GameAction.Controls.TOGGLE_PAUSE);
     }
 
     /**
@@ -134,12 +142,16 @@ public final class BaseLayout extends JPanel {
         window.setResizable(false);
 
         final FileMenu menuBar = new FileMenu(window, tetris);
-
         window.setJMenuBar(menuBar);
 
         window.setContentPane(mainPanel);
-
         window.pack();
+
+        final Toolkit tk = Toolkit.getDefaultToolkit();
+        window.setLocation(
+                (tk.getScreenSize().width - window.getWidth()) / 2,
+                (tk.getScreenSize().height - window.getHeight()) / 2
+        );
 
         window.setVisible(true);
     }

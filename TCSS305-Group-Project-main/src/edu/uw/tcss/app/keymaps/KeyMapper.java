@@ -1,8 +1,10 @@
-package edu.uw.tcss.app.KeyMapper;
+package edu.uw.tcss.app.keymaps;
 
 import edu.uw.tcss.model.TetrisGame;
-
-import javax.swing.*;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 /**
  * Class specifically designed to map key inputs to a JComponent
@@ -12,7 +14,7 @@ import javax.swing.*;
  * @version 03-05-2025
  */
 public final class KeyMapper {
-    private static final  String BIND = "bind";
+    private static final String BIND = "bind";
 
     private final InputMap myInputMap;
     private final ActionMap myActionMap;
@@ -20,7 +22,7 @@ public final class KeyMapper {
 
     /**
      * Constructs a key mapper with the given component that will listen for keystrokes
-     * (as ancestor of focused component) and call action on the game based on those keystrokes.
+     * and call action on the game based on those keystrokes.
      *
      * @param theComponent the listening component
      * @param theGame the game to call actions on

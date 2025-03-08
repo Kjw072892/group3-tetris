@@ -92,6 +92,8 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
 
         if (theCurrentLevel < 1) {
 
+            System.out.println(theCurrentLevel);
+
             throw new IllegalArgumentException("The lowest starting level must be 1!");
         }
     }
@@ -191,17 +193,11 @@ public class ScorePanel extends JPanel implements PropertyChangeListener  {
     public void propertyChange(final PropertyChangeEvent theEvent) {
 
         final int currentLevel = myGameLogic.getLevel();
-
         final int currentLinesCleared = myGameLogic.getLinesCleared();
-
         final int currentScore = myGameLogic.getScore();
 
         setMyCurrentLevel(currentLevel);
-
         setMyCurrentLines(currentLinesCleared);
-
         setMyScore(currentScore);
-
-
     }
 }
