@@ -3,9 +3,9 @@ package edu.uw.tcss.app;
 
 import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
 import edu.uw.tcss.model.TetrisGame;
-import edu.uw.tcss.app.KeyMapper.GameAction;
-import edu.uw.tcss.app.KeyMapper.KeyMapper;
-import edu.uw.tcss.app.KeyMapper.TetrominoAction;
+import edu.uw.tcss.app.keymaps.GameAction;
+import edu.uw.tcss.app.keymaps.KeyMapper;
+import edu.uw.tcss.app.keymaps.TetrominoAction;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -138,11 +138,9 @@ public final class BaseLayout extends JPanel {
         window.setResizable(false);
 
         final FileMenu menuBar = new FileMenu(window, tetris);
-
         window.setJMenuBar(menuBar);
 
         window.setContentPane(mainPanel);
-
         window.pack();
 
         window.setVisible(true);
