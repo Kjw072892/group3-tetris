@@ -8,9 +8,8 @@ import edu.uw.tcss.app.keymaps.GameAction;
 import edu.uw.tcss.app.keymaps.KeyMapper;
 import edu.uw.tcss.app.keymaps.TetrominoAction;
 import edu.uw.tcss.model.TetrisGame;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
+
+import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -147,6 +146,12 @@ public final class BaseLayout extends JPanel {
 
         window.setContentPane(mainPanel);
         window.pack();
+
+        final Toolkit tk = Toolkit.getDefaultToolkit();
+        window.setLocation(
+                (tk.getScreenSize().width - window.getWidth()) / 2,
+                (tk.getScreenSize().height - window.getHeight()) / 2
+        );
 
         window.setVisible(true);
     }
