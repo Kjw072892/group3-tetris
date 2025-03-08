@@ -13,6 +13,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Objects;
 import javax.swing.JPanel;
 
 /**
@@ -128,9 +129,10 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName() == "This is the new next piece!" && evt.getNewValue() != null) {
-            nextPiece = (IndividualPiece) evt.getNewValue();
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+        if (Objects.equals(theEvent.getPropertyName(), "This is the new next piece!")
+                && theEvent.getNewValue() != null) {
+            nextPiece = (IndividualPiece) theEvent.getNewValue();
             repaint();
         }
     }

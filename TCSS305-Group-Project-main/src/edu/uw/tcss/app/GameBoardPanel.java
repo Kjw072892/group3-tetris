@@ -10,7 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
+import java.util.Objects;
 import javax.swing.JPanel;
 
 
@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * @author James
  * @author Kassie
  * @author Roman
- * @version 2.28.25
+ * @version 3.7.25
  */
 public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
@@ -30,10 +30,11 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private static final int BOARD_HEIGHT = 600;
     private static final int COLUMNS = 10;         // Number of columns & rows.
     private static final int ROWS = 20;
-    // TODO: there's constant use of BOARD_WIDTH / COLUMNS and similar, perhaps those could be constants
+    // TODO: there's constant use of
+    //  BOARD_WIDTH / COLUMNS and similar, perhaps those could be constants
     private IndividualPiece[] myTetrisPieces;
-    private Block[][] myFrozenBlocks = new Block[COLUMNS][ROWS];
-    private GameControls.FrozenBlocks frozen = Sprint1_values.frozenBlocks();
+    //private Block[][] myFrozenBlocks = new Block[COLUMNS][ROWS];
+    private GameControls.FrozenBlocks myFrozen = Sprint1_values.frozenBlocks();
 
     {
         myTetrisPieces = Sprint1_values.pieces();   // Store Pieces in myTetrisPiece
@@ -45,7 +46,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     public GameBoardPanel() {
         //Preferred size set to fit in layout.
         setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
-        // TODO: for later, we could consider making a class that houses the preferences or something
+        // TODO: for later, we could consider making
+        //  a class that houses the preferences or something
         setBackground(Color.RED); //background red.
 
         // Load all Sprint 1 pieces to the board.
@@ -71,8 +73,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         for (int column = 0; column < COLUMNS; column++) {
             for (int row = 0; row < ROWS; row++) {
                 // TODO: variable declarations could make this more concise - RB
-                if (frozen.blocks().get(row)[column] != null) {
-                    theGraphics.setColor(getBlockColor(frozen.blocks().get(row)[column]));
+                if (myFrozen.blocks().get(row)[column] != null) {
+                    theGraphics.setColor(getBlockColor(myFrozen.blocks().get(row)[column]));
 
                     final int x = column * (BOARD_WIDTH / COLUMNS);
                     final int y =  ((ROWS - 1) - row) * (BOARD_HEIGHT / ROWS);
@@ -146,19 +148,21 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(final PropertyChangeEvent theEvent) {
 
-        if (evt.getPropertyName() == "The Game State has updated to something new!") {
-            //System.out.println("test");
+        if (Objects.equals(theEvent.getPropertyName(), "The Game State has updated "
+                + "to something new!")) {
             myTetrisPieces = new IndividualPiece[1];
         }
-        if (evt.getPropertyName() == "This is the current piece!" && evt.getNewValue() != null) {
-            myTetrisPieces[0] = (IndividualPiece) evt.getNewValue();
+        if (Objects.equals(theEvent.getPropertyName(), "This is the current piece!")
+                && theEvent.getNewValue() != null) {
+            myTetrisPieces[0] = (IndividualPiece) theEvent.getNewValue();
             repaint();
         }
 
-        if (evt.getPropertyName() == "These are the frozen blocks!" && evt.getNewValue() != null) {
-            frozen = (GameControls.FrozenBlocks) evt.getNewValue();
+        if (Objects.equals(theEvent.getPropertyName(), "These are the frozen blocks!")
+                && theEvent.getNewValue() != null) {
+            myFrozen = (GameControls.FrozenBlocks) theEvent.getNewValue();
             repaint();
         }
 
