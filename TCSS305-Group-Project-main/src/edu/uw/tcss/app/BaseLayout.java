@@ -113,6 +113,9 @@ public final class BaseLayout extends JPanel {
 
     private void setupKeys() {
         // getKeyStroke is method KeyStroke.getKeyStroke, statically imported (see imports)
+        // NOTE: get keystroke is a method that treats the key code as VK_[keycode]
+        // getKeyStroke("pressed LEFT") parses and the "VK_" is appended to form "VK_LEFT"
+        // see the list of Java virtual keys with regard to forming keystrokes
         myKeyMapper.mapTetrominoAction(
                 getKeyStroke("pressed A"), TetrominoAction.Controls.LEFT);
         myKeyMapper.mapTetrominoAction(
@@ -121,6 +124,14 @@ public final class BaseLayout extends JPanel {
                 getKeyStroke("pressed D"), TetrominoAction.Controls.RIGHT);
         myKeyMapper.mapTetrominoAction(
                 getKeyStroke("pressed SPACE"), TetrominoAction.Controls.DROP);
+
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed LEFT"), TetrominoAction.Controls.LEFT);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed DOWN"), TetrominoAction.Controls.DOWN);
+        myKeyMapper.mapTetrominoAction(
+                getKeyStroke("pressed RIGHT"), TetrominoAction.Controls.RIGHT);
+
         myKeyMapper.mapTetrominoAction(
                 getKeyStroke("pressed Q"), TetrominoAction.Controls.ROTATE_CW);
         myKeyMapper.mapTetrominoAction(
