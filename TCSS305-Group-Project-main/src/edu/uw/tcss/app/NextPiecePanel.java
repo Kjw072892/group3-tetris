@@ -10,6 +10,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 
 /**
@@ -18,7 +20,7 @@ import javax.swing.JPanel;
  * @author James Parker Strand
  * @version 1
  */
-public class NextPiecePanel extends JPanel {
+public class NextPiecePanel extends JPanel implements PropertyChangeListener {
 
     // TODO: might want to refrain from hard-coding these dimensions - RB
     /** The width of the panel. */
@@ -155,4 +157,8 @@ public class NextPiecePanel extends JPanel {
 
     }
 
+    @Override
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+        // TODO: the event
+    }
 }

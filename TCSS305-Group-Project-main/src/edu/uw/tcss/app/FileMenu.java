@@ -1,5 +1,6 @@
 package edu.uw.tcss.app;
 
+import edu.uw.tcss.model.TetrisGame;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -25,14 +26,16 @@ public class FileMenu extends JMenuBar {
     private final JMenu myFileMenu = new JMenu("File");
     private final JMenu myFeatureMenu = new JMenu("Feature");
     private final JMenu myHelpMenu = new JMenu("Help");
+    private final TetrisGame myTetris;
 
 
     /**
      * Constructor for file menu class.
      * @param theFrame the main JFrame object.
      */
-    public FileMenu(final JFrame theFrame) {
+    public FileMenu(final JFrame theFrame, final TetrisGame theGame) {
         super();
+        myTetris = theGame;
         // Adds the file menu items on the bar
         fileMenuCreation();
         featureMenuCreation();

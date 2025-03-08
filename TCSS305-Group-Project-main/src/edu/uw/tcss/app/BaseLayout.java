@@ -1,6 +1,7 @@
 package edu.uw.tcss.app;
 
 
+import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.app.KeyMapper.GameAction;
 import edu.uw.tcss.app.KeyMapper.KeyMapper;
@@ -14,6 +15,7 @@ import javax.swing.*;
 
 /**
  * BorderLayout base Panel.
+ *
  * @author Roman Bureacov
  * @author Zainab Stanikzy
  * @author Kassie Whitney
@@ -37,14 +39,16 @@ public final class BaseLayout extends JPanel {
     private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_PANEL_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
-    private final TetrisGame myTetrisGame = new TetrisGame();
+    private final TetrisGame myTetrisGame;
     private final KeyMapper myKeyMapper;
 
     /**
      * Constructor for Base Layout.
      */
-    public BaseLayout() {
+    public BaseLayout(final TetrisGame theGame) {
         super();
+        myTetrisGame = theGame;
+
         layoutComponents();
 
         myKeyMapper = new KeyMapper(this, myTetrisGame);
@@ -61,8 +65,9 @@ public final class BaseLayout extends JPanel {
 
         // game board lives on the west
         final JPanel westPanel = new JPanel();
+        final GameBoardPanel gameBoard = new GameBoardPanel();
 
-        westPanel.add(new BoardPanel(), BorderLayout.WEST);
+        westPanel.add(gameBoard, BorderLayout.WEST);
 
         // information, such as the next piece, controls, and score, live on the east
         final JPanel eastPanel = new JPanel();
@@ -71,7 +76,7 @@ public final class BaseLayout extends JPanel {
 
         eastPanel.setBorder(BorderFactory.createEmptyBorder(0, MAJOR_PADDING, 0, 0));
 
-        final JPanel nextPiecePanel = new NextPiecePanel();
+        final NextPiecePanel nextPiecePanel = new NextPiecePanel();
         nextPiecePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
         nextPiecePanel.setBackground(Color.BLUE);
         eastPanel.add(nextPiecePanel);
@@ -84,8 +89,8 @@ public final class BaseLayout extends JPanel {
         eastPanel.add(controlsInfoPanel);
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final JPanel scoreInfoPanel = new ScorePanel(0, 0, 1);
-                                                    // see note above on these constants
+        final GameLogic gameLogicHandler = new GameLogic(myTetrisGame);
+        final ScorePanel scoreInfoPanel = new ScorePanel(gameLogicHandler);
 
         scoreInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
@@ -93,6 +98,16 @@ public final class BaseLayout extends JPanel {
 
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
+
+        // add property change listeners
+        myTetrisGame.addPropertyChangeListener(
+                PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED, gameLogicHandler);
+        myTetrisGame.addPropertyChangeListener(
+                PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED, scoreInfoPanel);
+        myTetrisGame.addPropertyChangeListener(gameBoard);
+        myTetrisGame.addPropertyChangeListener(
+                PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE, nextPiecePanel);
+
 
     }
 
@@ -110,13 +125,15 @@ public final class BaseLayout extends JPanel {
      * Creates the JFrame.
      */
     public static void createAndShowGui() {
-        final BaseLayout mainPanel = new BaseLayout();
+        final TetrisGame tetris = new TetrisGame();
+
+        final BaseLayout mainPanel = new BaseLayout(tetris);
 
         final JFrame window = new JFrame("Group 3 Tetris");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
 
-        final FileMenu menuBar = new FileMenu(window);
+        final FileMenu menuBar = new FileMenu(window, tetris);
 
         window.setJMenuBar(menuBar);
 

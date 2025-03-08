@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JPanel;
 
@@ -20,7 +22,7 @@ import javax.swing.JPanel;
  * @author Roman
  * @version 2.28.25
  */
-public class BoardPanel extends JPanel {
+public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     //Properties of the board & blocks.
     // TODO: might want to refrain from hard-coding these dimensions - RB
@@ -28,7 +30,9 @@ public class BoardPanel extends JPanel {
     private static final int BOARD_HEIGHT = 600;
     private static final int COLUMNS = 10;         // Number of columns & rows.
     private static final int ROWS = 20;
-    // TODO: there's constant use of BOARD_WIDTH / COLUMNS and similar, perhaps those could be constants
+    private static final int BLOCK_WIDTH = BOARD_WIDTH / COLUMNS;
+    private static final int BLOCK_HEIGHT = BOARD_HEIGHT / ROWS;
+
     private final  IndividualPiece[] myTetrisPieces;
     private final Block[][] myFrozenBlocks = new Block[COLUMNS][ROWS];
 
@@ -39,7 +43,7 @@ public class BoardPanel extends JPanel {
     /**
      * Constructs the game board.
      */
-    public BoardPanel() {
+    public GameBoardPanel() {
         //Preferred size set to fit in layout.
         setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
         // TODO: for later, we could consider making a class that houses the preferences or something
@@ -90,12 +94,12 @@ public class BoardPanel extends JPanel {
                 if (myFrozenBlocks[column][row] != null) {
                     theGraphics.setColor(getBlockColor(myFrozenBlocks[column][row]));
 
-                    final int x = column * (BOARD_WIDTH / COLUMNS);
-                    final int y =  ((ROWS - 1) - row) * (BOARD_HEIGHT / ROWS);
+                    final int x = column * BLOCK_WIDTH;
+                    final int y =  ((ROWS - 1) - row) * BLOCK_HEIGHT;
 
-                    theGraphics.fillRect(x, y, BOARD_WIDTH / COLUMNS,  BOARD_HEIGHT / ROWS);
+                    theGraphics.fillRect(x, y, BLOCK_WIDTH,  BLOCK_HEIGHT);
                     theGraphics.setColor(Color.BLACK);
-                    theGraphics.drawRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
+                    theGraphics.drawRect(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
                 }
             }
         }
@@ -127,12 +131,12 @@ public class BoardPanel extends JPanel {
     private void drawGrid(final Graphics theGraphics) {
         theGraphics.setColor(Color.BLACK);
         for (int column = 0; column <= COLUMNS; column++) { //vertical lines for column
-            final int x = column * (BOARD_WIDTH / COLUMNS);
+            final int x = column * BLOCK_WIDTH;
             theGraphics.drawLine(x, 0, x, BOARD_HEIGHT);
         }
         // horizontal line for rows
         for (int row = 0; row < ROWS; row++) {
-            final int y = row * (BOARD_HEIGHT / ROWS);
+            final int y = row * BLOCK_HEIGHT;
             theGraphics.drawLine(0, y, BOARD_WIDTH, y);
         }
 
@@ -146,16 +150,21 @@ public class BoardPanel extends JPanel {
         for (IndividualPiece piece : myTetrisPieces) {
             // Loop through sprint 1 piece.
             for (Point block : piece.location()) {
-                final int x = block.x() * (BOARD_WIDTH / COLUMNS);
-                final int y = ((ROWS - 1) - block.y()) * (BOARD_HEIGHT / ROWS);
+                final int x = block.x() * BLOCK_WIDTH;
+                final int y = ((ROWS - 1) - block.y()) * BLOCK_HEIGHT;
 
                 g2d.setPaint(getBlockColor(piece.block()));
-                theGraphics.fillRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_WIDTH / COLUMNS);
+                theGraphics.fillRect(x, y, BLOCK_WIDTH, BLOCK_WIDTH);
                 // TODO: maybe we could remove this and have the grid drawn after the blocks - RB
                 g2d.setPaint(Color.BLACK);
-                g2d.drawRect(x, y, BOARD_HEIGHT / ROWS, BOARD_HEIGHT / ROWS);
+                g2d.drawRect(x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
             }
         }
+    }
+
+    @Override
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+        // TODO: stub method
     }
 }
 
