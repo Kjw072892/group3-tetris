@@ -12,71 +12,33 @@
 
 ### Winter 2025
 
-## Sprint 1 Meeting Agenda
-Agenda #1: Determine who's responsible for which part for sprint 1.
-
-Agenda #2: Discuss basic project requirements for sprint 1.
-
-Agenda #3: Discuss ideas about how we want to create this project including project layout, code base format, classes, 
-and setting up for sprint 2 and beyond.
-
-Agenda #4: Draft a basic outlines on what our tetris board will look like.
+## Sprint 2 Meeting Agenda
+[Sprint2 SCRUM](https://docs.google.com/document/d/1Ym6V50Ek3UeEYz6Bx8C-IV6a5gg_2qsMza1JJ3IMQBc/edit?usp=sharing)
 
 
 ## Sprint 1 Contribution
-For sprint 1, we were able to get together and present our own vision and ideas on what our project would look like at 
-the end of sprint 1. On the first day we were able to code with each other, trying out each other's ideas on creating
-a basic layout of our tetris game board.
-During this same meeting, we agreed on who would do what, and what the result should look like.
+For sprint 2, we were tasked to make the game board functional by implementing property change listeners.
+Roman was in charge of overseeing the final production of our code for sprint 2, Kassie was in charge of creating the SCRUM document, and to be acting scribe of the SCRUM meeting. 
+She was also responsible for adding change listeners to the score panel. Zainab was responsible for making necessary changes to her game board code production, while also implementing property change listeners. James was responsible for implementing the property change listeners for next-piece.
 
 ## Kassie 
-Kassie was responsible for creating the ScorePanel class and DirectionLabel class. 
-She also helped with refactoring code for potential reusability, clarity, 
-and making sure that checkstyle warnings were cleared.
-She also created a utility class that takes in any number of JLabels, extracts the labels font attributes, 
-and concatenates the labels together; such that each section of the output string would have the same font data as the 
-labels that were passed, and that-string would then be used to create the new JLabel text.
-She also helped design an outline of the game board. 
-She also added two JMenuItems "Feature" and "Help" where the Feature item will store different game background music, 
-and background colors, and the Help item will store the "about" and other possible helpful instructions.
+Kassie and the rest of the members worked cohesively together 
+to come up with the design layout of our code to implement the property change listeners. 
+She struggled with the conception of property change listeners, and Roman and James guided her through it. 
+She was responsible for implementing what she learned about property change listeners to the Score panel, 
+even though it's not a requirement for sprint 3. She still hasn't gotten the score to increment yet, 
+so she will be responsible for seeing that through in sprint 3. She did however layout the property change listener foundation for the score panel, so now all she has to do is to get the labels to change when a player scores by clearing a line. 
+She and Roman made the game logic class that produces these changes.
 
 ## James 
-James had worked on getting the FileMenu class started so that a new game can be started, can exit the program, and 
- have an about page. 
-He had also worked on making the nextPiece Gui component working, ensuring that every 
-metronomic that gets inputted is centered on the spot. 
-He also helped Zainab with bugfix the problem of the game screen 
-not displaying the metronomes correctly on the start screen. 
-James also made sure to listen to feedback of Roman, 
- particularly on how to find the center of a tetromino piece on a cartesian coordinate graph. 
-James lastly was the project manager.
 
 ## Roman
-Roman played an essential role in refining the structure of the classes and layout of the game board.
-One of his primary contributions was eliminating magic numbers in the base layout class by introducing well-defined
-Constance, and this improved the overall clarity and readability of the code. 
-He cleaned things up by replacing hardcoded values. 
-He also worked on design designing and structuring the borders. 
-This helped allow for better spacing and clear visual distinctions
-Between the different regions of the game. 
-His attention to clean code organization and consistent formatting really helped maintain a structured
-foundation. He reviewed the code written and provided valuable feedback on what could possibly be improved or changed.
+
 
 
 ## Zainab 
-Zainab was responsible for implementing the board panel class to ensure that individual Tetris pieces are 
-Properly displayed on the game board. She worked on retrieving and rendering the defined sprint one tetromino,
-From the sprint One values class. She made sure they aligned and displayed correctly with the grid. Through multiple
-Trial and errors + lots of debugging she fine-tunes the positioning of each shape. 
-She collaborated with teammates to resolve display issues to ensure the game board accurately represented the
-individual tetromino pieces.
-James assisted her in correcting the x,y coordinate calculations because the pieces were originally displayed upside down.
-By refining the peace placement logic, the blocks were then positioned and aligned correctly, right side up.
-She also actively participated in team discussions, reviewed code implementation and
-insured her class integrated smoothly with the overall project, and made changes when and where necessary.
-Her work on displaying the pieces leads a crucial function, setting up the game board for the next sprint where movement
-Game logic will be implemented.
 
-## Sprint 1 Comments
+
+## Sprint 2 Comments
 
 
