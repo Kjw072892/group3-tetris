@@ -13,6 +13,8 @@ import static edu.uw.tcss.model.GameControls.Block.O;
 import static edu.uw.tcss.model.GameControls.Block.S;
 import static edu.uw.tcss.model.GameControls.Block.T;
 import static edu.uw.tcss.model.GameControls.Block.Z;
+import static edu.uw.tcss.model.GameControls.Block;
+
 
 /**
  * Factory class that creates a color scheme for the tetrominoes.
@@ -31,7 +33,7 @@ public final class ColorScheme {
      *
      * @return color scheme.
      */
-    public static Map<GameControls.Block, Color> getGenericColors() {
+    public static Map<Block, Color> getGenericColors() {
         return Map.of(
                 I, Color.CYAN,
                 J, Color.BLUE,
@@ -48,7 +50,7 @@ public final class ColorScheme {
      *
      * @return color scheme.
      */
-    public static Map<GameControls.Block, Color> getEdgyColors() {
+    public static Map<Block, Color> getEdgyColors() {
         return Map.of(
                 I, Color.RED,
                 J, Color.BLACK,

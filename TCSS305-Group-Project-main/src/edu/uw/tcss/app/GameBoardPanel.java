@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 import java.util.Objects;
 import javax.swing.JPanel;
 
@@ -31,7 +32,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private final int myBlockWidth;
     private final int myBlockHeight;
     private IndividualPiece[] myTetrisPieces;
-    //private Block[][] myFrozenBlocks = new Block[COLUMNS][ROWS];
+    private Map<Block, Color> myColorScheme;
+
     private GameControls.FrozenBlocks myFrozen = Sprint1_values.frozenBlocks();
 
     {
@@ -50,6 +52,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
         myBlockWidth = theWidth / COLUMNS;
         myBlockHeight = theHeight / ROWS;
+
+        myColorScheme = ColorScheme.getGenericColors();
     }
 
 
@@ -70,7 +74,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private void drawFrozenBlocks(final Graphics theGraphics) {
         for (int column = 0; column < COLUMNS; column++) {
             for (int row = 0; row < ROWS; row++) {
-                // TODO: variable declarations could make this more concise - RB
                 if (myFrozen.blocks().get(row)[column] != null) {
                     theGraphics.setColor(getBlockColor(myFrozen.blocks().get(row)[column]));
 
@@ -91,16 +94,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
      * @return the color related to theBlock
      */
     private Color getBlockColor(final Block theBlock) {
-        return switch (theBlock) {
-            case I -> Color.CYAN;
-            case O -> Color.YELLOW;
-            case T -> Color.MAGENTA;
-            case Z -> Color.WHITE;
-            case L -> Color.ORANGE;
-            case S -> Color.GREEN;
-            case J -> Color.BLUE;
-            default -> Color.DARK_GRAY;
-        };
+        return myColorScheme.getOrDefault(theBlock, Color.PINK);
     }
 
     /**
