@@ -6,13 +6,6 @@ import edu.uw.tcss.model.TetrisGame;
 import java.awt.*;
 import java.util.Map;
 
-import static edu.uw.tcss.model.GameControls.Block.I;
-import static edu.uw.tcss.model.GameControls.Block.J;
-import static edu.uw.tcss.model.GameControls.Block.L;
-import static edu.uw.tcss.model.GameControls.Block.O;
-import static edu.uw.tcss.model.GameControls.Block.S;
-import static edu.uw.tcss.model.GameControls.Block.T;
-import static edu.uw.tcss.model.GameControls.Block.Z;
 import static edu.uw.tcss.model.GameControls.Block;
 
 // TODO: what if we return a record, where one color scheme is for the tetrominos and the other is for the backgrounds?
@@ -36,13 +29,13 @@ public final class ColorScheme {
      */
     public static Map<Block, Color> getGenericColors() {
         return Map.of(
-                I, Color.CYAN,
-                J, Color.BLUE,
-                L, Color.ORANGE,
-                O, Color.YELLOW,
-                S, Color.GREEN,
-                T, Color.MAGENTA,
-                Z, Color.WHITE
+                Block.I, Color.CYAN,
+                Block.J, Color.BLUE,
+                Block.L, Color.ORANGE,
+                Block.O, Color.YELLOW,
+                Block.S, Color.GREEN,
+                Block.T, Color.MAGENTA,
+                Block.Z, Color.WHITE
         );
     }
 
@@ -53,13 +46,13 @@ public final class ColorScheme {
      */
     public static Map<Block, Color> getEdgyColors() {
         return Map.of(
-                I, Color.RED,
-                J, Color.BLACK,
-                L, Color.RED,
-                O, Color.BLACK,
-                S, Color.RED,
-                T, Color.BLACK,
-                Z, Color.RED
+                Block.I, Color.RED,
+                Block.J, Color.BLACK,
+                Block.L, Color.RED,
+                Block.O, Color.BLACK,
+                Block.S, Color.RED,
+                Block.T, Color.BLACK,
+                Block.Z, Color.RED
         );
     }
 
