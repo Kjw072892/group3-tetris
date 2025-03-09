@@ -83,17 +83,5 @@ public class FileMenu extends JMenuBar {
                 "This option is currently unavailable in this version!"));
 
         myGameStart.addActionListener(theEvent -> myTetris.newGame());
-        myGameStart.addActionListener(theEvent -> startTimer());
-
     }
-
-    private void startTimer() {
-        final TetrisGame tetrisGame = new TetrisGame();
-        final Timer timer;
-        timer = new Timer(DEFAULT_DELAY, theEvent -> tetrisGame.step());
-        timer.start();
-
-    }
-
-
 }
