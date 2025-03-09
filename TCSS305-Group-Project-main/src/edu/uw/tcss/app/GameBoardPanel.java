@@ -52,8 +52,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         myBlockHeight = theHeight / ROWS;
     }
 
-
-
     /**
      * Paints the board grid lines and pieces.
      *
@@ -90,8 +88,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
      * @return the color related to theBlock
      */
     private Color getBlockColor(final Block theBlock) {
-        final ColorSchemeFactory.ColorScheme scheme = ColorSchemeFactory.getCurrentColorScheme();
-        return scheme.blockColors().getOrDefault(theBlock, Color.PINK);
+        return ColorSchemeFactory.getBlockColors().getOrDefault(theBlock, Color.PINK);
     }
 
     /**
