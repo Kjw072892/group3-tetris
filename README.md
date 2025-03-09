@@ -34,12 +34,12 @@ She and Roman made the game logic class that produces these changes.
 James implemented property change listener into gameboard and nextpiece. He also made the filemenu be able to start a game once a button inside there is clicked to "start game". He then also made sure the nextpiece panel properly draws whatever next piece gets thrown by property changes. He also had fixed a big where gameboard wouldn't properly draw the frozen pieces upon start of the game, and the gameboard functions properly.
 
 ## Roman
-
-
+Implemented the key handling, specifically via the `InputMap` and `ActionMap` API of Swing JComponents. Implemented, 
+with the help of Kassie, the `GameLogic` class that handles the game logic. Worked with Kassie to improve
+the `ScorePanel` class. 
 
 ## Zainab 
 
 
 ## Sprint 2 Comments
-
-
+How much abstraction can sometimes be too much abstraction? - Roman Bureacov
