@@ -139,6 +139,15 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Sets the color scheme for the tetris pieces.
+     *
+     * @param theColorScheme the color scheme for the tetris pieces to follow.
+     */
+    public void setColorScheme(final Map<Block, Color> theColorScheme) {
+        myColorScheme = theColorScheme;
+    }
+
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
 
