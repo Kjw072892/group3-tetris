@@ -108,6 +108,7 @@ public final class BaseLayout extends JPanel {
         myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, gameLogicHandler);
         myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, gameLogicHandler);
         myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, scoreInfoPanel);
+        myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
         myTetrisGame.addPropertyChangeListener(PROPERTY_NEXT_PIECE, nextPiecePanel);
         

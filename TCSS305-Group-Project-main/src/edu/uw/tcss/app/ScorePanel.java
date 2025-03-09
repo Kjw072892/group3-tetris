@@ -1,5 +1,7 @@
 package edu.uw.tcss.app;
 
+import edu.uw.tcss.model.GameControls;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
 
 /**
@@ -182,11 +185,8 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-
-        if (theEvent.getPropertyName().equals(PROPERTY_ROWS_CLEARED)) {
-            setMyClearedLines(myGameLogic.getLinesCleared());
-            setMyCurrentLevel(myGameLogic.getLevel());
-            setMyScore(myGameLogic.getScore());
-        }
+        setMyClearedLines(myGameLogic.getLinesCleared());
+        setMyCurrentLevel(myGameLogic.getLevel());
+        setMyScore(myGameLogic.getScore());
     }
 }

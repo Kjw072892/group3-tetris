@@ -54,7 +54,13 @@ final class GameLogic implements PropertyChangeListener {
                     (GameControls.GameState) theEvent.getNewValue();
 
             switch (newGameState) {
-                case GameControls.GameState.NEW -> myTimer.restart();
+                case GameControls.GameState.NEW -> {
+                    myScore = 0;
+                    myLinesCleared = 0;
+                    myCurrentLevel = 1;
+
+                    myTimer.restart();
+                }
                 case GameControls.GameState.PAUSED,
                      GameControls.GameState.OVER -> myTimer.stop();
                 case GameControls.GameState.RUNNING -> {
