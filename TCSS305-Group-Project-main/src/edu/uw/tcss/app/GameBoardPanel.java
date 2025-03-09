@@ -4,7 +4,7 @@ import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.Block;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
-import edu.uw.tcss.util.ColorScheme;
+import edu.uw.tcss.util.ColorSchemeFactory;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -91,8 +91,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
      * @return the color related to theBlock
      */
     private Color getBlockColor(final Block theBlock) {
-        final Map<Block, Color> scheme = ColorScheme.getColorScheme();
-        return scheme.getOrDefault(theBlock, Color.PINK);
+        final ColorSchemeFactory.ColorScheme scheme = ColorSchemeFactory.getColorScheme();
+        return scheme.blockColors().getOrDefault(theBlock, Color.PINK);
     }
 
     /**
