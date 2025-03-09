@@ -1,6 +1,9 @@
 package edu.uw.tcss.app;
 
-import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
+
+import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -29,24 +32,42 @@ final class GameLogic implements PropertyChangeListener {
     private int myCurrentLevel = 1;
     private int myScore;
     private int myLinesCleared;
+    private GameControls.GameState myLastGameState = GameControls.GameState.NEW;
 
     GameLogic(final TetrisGame theTetrisGame) {
         myTetrisGame = theTetrisGame;
         myTimer = new Timer(DEFAULT_DELAY, theEvent -> myTetrisGame.step());
-        myTimer.start();
     }
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (theEvent.getPropertyName()
-                .equals(PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED)) {
-
+        if (theEvent.getPropertyName().equals(PROPERTY_ROWS_CLEARED)) {
             final Integer rowsCleared = (Integer) theEvent.getNewValue();
 
             myLinesCleared += rowsCleared;
 
             updateLevel();
             updateScore(rowsCleared);
+
+        } else if (PROPERTY_GAME_STATE.equals(theEvent.getPropertyName())) {
+            final GameControls.GameState newGameState =
+                    (GameControls.GameState) theEvent.getNewValue();
+
+            switch (newGameState) {
+                case GameControls.GameState.NEW -> myTimer.restart();
+                case GameControls.GameState.PAUSED,
+                     GameControls.GameState.OVER -> myTimer.stop();
+                case GameControls.GameState.RUNNING -> {
+                    if (!GameControls.GameState.RUNNING.equals(myLastGameState)) {
+                        myTimer.start();
+                    }
+                }
+                default -> throw
+                        new EnumConstantNotPresentException(
+                                GameControls.GameState.class, String.valueOf(newGameState));
+            }
+
+            myLastGameState = newGameState;
         }
     }
 

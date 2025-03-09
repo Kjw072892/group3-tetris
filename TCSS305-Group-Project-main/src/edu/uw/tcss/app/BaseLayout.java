@@ -1,5 +1,6 @@
 package edu.uw.tcss.app;
 
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
 import static javax.swing.KeyStroke.getKeyStroke;
@@ -105,6 +106,7 @@ public final class BaseLayout extends JPanel {
 
         // add property change listeners
         myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, gameLogicHandler);
+        myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, gameLogicHandler);
         myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
         myTetrisGame.addPropertyChangeListener(PROPERTY_NEXT_PIECE, nextPiecePanel);
