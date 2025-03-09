@@ -11,7 +11,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Map;
 import java.util.Objects;
 import javax.swing.JPanel;
 
@@ -91,7 +90,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
      * @return the color related to theBlock
      */
     private Color getBlockColor(final Block theBlock) {
-        final ColorSchemeFactory.ColorScheme scheme = ColorSchemeFactory.getColorScheme();
+        final ColorSchemeFactory.ColorScheme scheme = ColorSchemeFactory.getCurrentColorScheme();
         return scheme.blockColors().getOrDefault(theBlock, Color.PINK);
     }
 

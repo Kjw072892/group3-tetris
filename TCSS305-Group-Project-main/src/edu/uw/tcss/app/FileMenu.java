@@ -1,12 +1,9 @@
 package edu.uw.tcss.app;
 
-import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.util.ColorSchemeFactory;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.Map;
 
 /**
  * FileMenu creation class.
@@ -111,12 +108,12 @@ public class FileMenu extends JMenuBar {
                             ColorSchemeFactory.getGenericColors(),
                             ColorSchemeFactory.getEdgyColors()
                     },
-                    ColorSchemeFactory.getColorScheme()
+                    ColorSchemeFactory.getCurrentColorScheme()
             );
 
             if (scheme != null) {
-                ColorSchemeFactory.setColorScheme((ColorSchemeFactory.ColorScheme) scheme);
-                System.out.println("Set Color Scheme " + ColorSchemeFactory.getColorScheme());
+                ColorSchemeFactory.setCurrentColorScheme((ColorSchemeFactory.ColorScheme) scheme);
+                System.out.println("Set Color Scheme " + ColorSchemeFactory.getCurrentColorScheme());
             }
         });
 

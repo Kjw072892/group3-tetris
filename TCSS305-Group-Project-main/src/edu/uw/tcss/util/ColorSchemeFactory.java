@@ -5,8 +5,6 @@ import java.util.Map;
 
 import static edu.uw.tcss.model.GameControls.Block;
 
-// TODO: what if we return a record, where one color scheme is for the tetrominos and the other is for the backgrounds?
-
 /**
  * Factory class that creates a color scheme for the tetrominoes.
  * 
@@ -79,8 +77,8 @@ public final class ColorSchemeFactory {
                     Block.Z, Color.RED
                 ),
                 Map.of(
-                      MainColors.Primary, Color.RED,
-                      MainColors.Secondary, Color.RED,
+                      MainColors.Primary, Color.RED.darker(),
+                      MainColors.Secondary, Color.RED.brighter(),
                       MainColors.Tertiary, Color.RED
                 ));
     }
@@ -90,7 +88,7 @@ public final class ColorSchemeFactory {
      *
      * @param theScheme the color scheme
      */
-    public static void setColorScheme(final ColorScheme theScheme) {
+    public static void setCurrentColorScheme(final ColorScheme theScheme) {
         myCurrentColorScheme = theScheme;
     }
 
@@ -99,8 +97,44 @@ public final class ColorSchemeFactory {
      *
      * @return the current color scheme.
      */
-    public static ColorScheme getColorScheme() {
+    public static ColorScheme getCurrentColorScheme() {
         return myCurrentColorScheme;
+    }
+
+    /**
+     * Convenience method to get the primary color of the static color scheme.
+     *
+     * @return primary color of the current color scheme
+     */
+    public static Color getCurrentPrimaryColor() {
+        return myCurrentColorScheme.mainColors.get(MainColors.Primary);
+    }
+
+    /**
+     * Convenience method to get the secondary color of the static color scheme.
+     *
+     * @return secondary color of the current color scheme
+     */
+    public static Color getCurrentSecondaryColor() {
+        return myCurrentColorScheme.mainColors.get(MainColors.Secondary);
+    }
+
+    /**
+     * Convenience method to get the tertiary color of the static color scheme.
+     *
+     * @return tertiary color of the current color scheme
+     */
+    public static Color getCurrentTertiaryColor() {
+        return myCurrentColorScheme.mainColors.get(MainColors.Tertiary);
+    }
+
+    /**
+     * Convenience method to get the map of blocks and colors.
+     *
+     * @return map of blocks and their associated colors of the current color scheme.
+     */
+    public static Map<Block, Color> getBlockColors() {
+        return myCurrentColorScheme.blockColors;
     }
 
     /**
