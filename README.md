@@ -31,6 +31,7 @@ so she will be responsible for seeing that through in sprint 3. She did however 
 She and Roman made the game logic class that produces these changes.
 
 ## James 
+James implemented property change listener into gameboard and nextpiece. He also made the filemenu be able to start a game once a button inside there is clicked to "start game". He then also made sure the nextpiece panel properly draws whatever next piece gets thrown by property changes. He also had fixed a big where gameboard wouldn't properly draw the frozen pieces upon start of the game, and the gameboard functions properly.
 
 ## Roman
 
