@@ -53,7 +53,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         myBlockWidth = theWidth / COLUMNS;
         myBlockHeight = theHeight / ROWS;
 
-        myColorScheme = ColorScheme.getGenericColors();
+        myColorScheme = ColorScheme.getColorScheme();
     }
 
 

@@ -17,10 +17,10 @@ public class FileMenu extends JMenuBar {
     private static final int DEFAULT_DELAY = 1000;
     private final String myVersion = "3.8.25";
 
-    private final JMenuItem myGameStart = new JMenuItem("Start Game");
+    private final JMenuItem myFileMenuGameStart = new JMenuItem("Start Game");
     private final JMenuItem myAbout = new JMenuItem("About");
-    private final JMenuItem myExitGame = new JMenuItem("Exit");
-    private final JMenuItem myColorChooser = new JMenuItem("Choose Color");
+    private final JMenuItem myFileMenuExitGame = new JMenuItem("Exit");
+    private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Color");
     private final JMenu myFileMenu = new JMenu("File");
     private final JMenu myFeatureMenu = new JMenu("Feature");
     private final JMenu myHelpMenu = new JMenu("Help");
@@ -35,6 +35,9 @@ public class FileMenu extends JMenuBar {
     public FileMenu(final JFrame theFrame, final TetrisGame theGame) {
         super();
         myTetris = theGame;
+
+        setMainMnemonics();
+
         // Adds the file menu items on the bar
         fileMenuCreation();
         featureMenuCreation();
@@ -49,39 +52,54 @@ public class FileMenu extends JMenuBar {
         add(myHelpMenu);
     }
 
+    private void setMainMnemonics() {
+        myFileMenu.setMnemonic('f');
+        myFeatureMenu.setMnemonic('e');
+        myHelpMenu.setMnemonic('h');
+    }
+
     private void fileMenuCreation() {
+        // Add mnemonics
+        myFileMenuGameStart.setMnemonic('s');
+        myFileMenuExitGame.setMnemonic('x');
+
         // Add items to the File menu
-        myFileMenu.add(myGameStart);
-        myFileMenu.add(myExitGame);
+        myFileMenu.add(myFileMenuGameStart);
+        myFileMenu.add(myFileMenuExitGame);
     }
 
     private void featureMenuCreation() {
-        // Add items to the Feature Menu
         final JMenu innerColorMenu = new JMenu("Color");
-        innerColorMenu.add(myColorChooser);
+
+        // Add mnemonics
+        innerColorMenu.setMnemonic('c');
+        myFeatureMenuColorChooser.setMnemonic('c');
+
+        // Add items to the Feature Menu
+        innerColorMenu.add(myFeatureMenuColorChooser);
         myFeatureMenu.add(innerColorMenu);
     }
 
     private void helpMenuCreation() {
-        // Add items to the Help menu
+        // Add mnemonics
+        myAbout.setMnemonic('a');
 
+        // Add items to the Help menu
         myHelpMenu.add(myAbout);
     }
 
     private void addListeners(final JFrame theFrame) {
-
-
         myAbout.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
                 "Made by James, Kassie, Roman, Zainab. \nCurrent version: "
                         + myVersion));
 
-        myExitGame.addActionListener(ActionEvent -> System.exit(0));
+        myFileMenuExitGame.addActionListener(ActionEvent -> System.exit(0));
 
-        myColorChooser.addActionListener(ActionEvent ->
+        myFeatureMenuColorChooser.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
                 "This option is currently unavailable in this version!"));
 
-        myGameStart.addActionListener(theEvent -> myTetris.newGame());
+        myFileMenuGameStart.addActionListener(theEvent -> myTetris.newGame());
     }
 }

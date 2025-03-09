@@ -18,6 +18,8 @@ import static edu.uw.tcss.model.GameControls.Block;
  */
 public final class ColorScheme {
 
+    private static Map<Block, Color> myCurrentColorScheme = getGenericColors();
+
     private ColorScheme() {
 
     }
@@ -68,6 +70,15 @@ public final class ColorScheme {
      * @param theTColor
      * @param theZColor
      */
+    public static void customColors() {
 
+    }
 
+    public void setColorScheme(final Map<Block, Color> myScheme) {
+        myCurrentColorScheme = myScheme;
+    }
+
+    public static Map<Block, Color> getColorScheme() {
+        return myCurrentColorScheme;
+    }
 }
