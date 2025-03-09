@@ -70,7 +70,7 @@ public final class BaseLayout extends JPanel {
 
         // game board lives on the west
         final JPanel westPanel = new JPanel();
-        final GameBoardPanel gameBoard = new GameBoardPanel();
+        final GameBoardPanel gameBoard = new GameBoardPanel(WEST_PANEL_WIDTH, GAME_BOARD_HEIGHT);
 
         westPanel.add(gameBoard, BorderLayout.WEST);
 

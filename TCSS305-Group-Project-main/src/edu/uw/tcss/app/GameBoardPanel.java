@@ -26,12 +26,10 @@ import javax.swing.JPanel;
 public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     //Properties of the board & blocks.
-    private static final int BOARD_WIDTH = 300;
-    private static final int BOARD_HEIGHT = 600;
     private static final int COLUMNS = 10;         // Number of columns & rows.
     private static final int ROWS = 20;
-    // TODO: there's constant use of
-    //  BOARD_WIDTH / COLUMNS and similar, perhaps those could be constants
+    private final int myBlockWidth;
+    private final int myBlockHeight;
     private IndividualPiece[] myTetrisPieces;
     //private Block[][] myFrozenBlocks = new Block[COLUMNS][ROWS];
     private GameControls.FrozenBlocks myFrozen = Sprint1_values.frozenBlocks();
@@ -43,14 +41,15 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     /**
      * Constructs the game board.
      */
-    public GameBoardPanel() {
+    public GameBoardPanel(final int theWidth, final int theHeight) {
         //Preferred size set to fit in layout.
-        setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
+        setPreferredSize(new Dimension(theWidth, theHeight));
         // TODO: for later, we could consider making
         //  a class that houses the preferences or something
         setBackground(Color.RED); //background red.
 
-
+        myBlockWidth = theWidth / COLUMNS;
+        myBlockHeight = theHeight / ROWS;
     }
 
 
@@ -75,12 +74,12 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 if (myFrozen.blocks().get(row)[column] != null) {
                     theGraphics.setColor(getBlockColor(myFrozen.blocks().get(row)[column]));
 
-                    final int x = column * (BOARD_WIDTH / COLUMNS);
-                    final int y =  ((ROWS - 1) - row) * (BOARD_HEIGHT / ROWS);
+                    final int x = column * myBlockWidth;
+                    final int y =  ((ROWS - 1) - row) * myBlockHeight;
 
-                    theGraphics.fillRect(x, y, BOARD_WIDTH / COLUMNS,  BOARD_HEIGHT / ROWS);
+                    theGraphics.fillRect(x, y, myBlockWidth,  myBlockHeight);
                     theGraphics.setColor(Color.BLACK);
-                    theGraphics.drawRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_HEIGHT / ROWS);
+                    theGraphics.drawRect(x, y, myBlockWidth, myBlockHeight);
                 }
             }
         }
@@ -112,13 +111,13 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private void drawGrid(final Graphics theGraphics) {
         theGraphics.setColor(Color.BLACK);
         for (int column = 0; column <= COLUMNS; column++) { //vertical lines for column
-            final int x = column * (BOARD_WIDTH / COLUMNS);
-            theGraphics.drawLine(x, 0, x, BOARD_HEIGHT);
+            final int x = column * myBlockWidth;
+            theGraphics.drawLine(x, 0, x, getHeight());
         }
         // horizontal line for rows
         for (int row = 0; row < ROWS; row++) {
-            final int y = row * (BOARD_HEIGHT / ROWS);
-            theGraphics.drawLine(0, y, BOARD_WIDTH, y);
+            final int y = row * myBlockHeight;
+            theGraphics.drawLine(0, y, getWidth(), y);
         }
 
     }
@@ -134,14 +133,14 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 break;
             }
             for (Point block : piece.location()) {
-                final int x = block.x() * (BOARD_WIDTH / COLUMNS);
-                final int y = ((ROWS - 1) - block.y()) * (BOARD_HEIGHT / ROWS);
+                final int x = block.x() * myBlockWidth;
+                final int y = ((ROWS - 1) - block.y()) * myBlockHeight;
 
                 g2d.setPaint(getBlockColor(piece.block()));
-                theGraphics.fillRect(x, y, BOARD_WIDTH / COLUMNS, BOARD_WIDTH / COLUMNS);
+                theGraphics.fillRect(x, y, myBlockWidth, myBlockHeight);
                 // TODO: maybe we could remove this and have the grid drawn after the blocks - RB
                 g2d.setPaint(Color.BLACK);
-                g2d.drawRect(x, y, BOARD_HEIGHT / ROWS, BOARD_HEIGHT / ROWS);
+                g2d.drawRect(x, y, myBlockWidth, myBlockHeight);
             }
         }
     }
