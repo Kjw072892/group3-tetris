@@ -32,7 +32,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private final int myBlockWidth;
     private final int myBlockHeight;
     private IndividualPiece[] myTetrisPieces;
-    private Map<Block, Color> myColorScheme;
 
     private GameControls.FrozenBlocks myFrozen = Sprint1_values.frozenBlocks();
 
@@ -52,8 +51,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
         myBlockWidth = theWidth / COLUMNS;
         myBlockHeight = theHeight / ROWS;
-
-        myColorScheme = ColorScheme.getColorScheme();
     }
 
 
@@ -94,7 +91,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
      * @return the color related to theBlock
      */
     private Color getBlockColor(final Block theBlock) {
-        return myColorScheme.getOrDefault(theBlock, Color.PINK);
+        final Map<Block, Color> scheme = ColorScheme.getColorScheme();
+        return scheme.getOrDefault(theBlock, Color.PINK);
     }
 
     /**
@@ -137,15 +135,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 g2d.drawRect(x, y, myBlockWidth, myBlockHeight);
             }
         }
-    }
-
-    /**
-     * Sets the color scheme for the tetris pieces.
-     *
-     * @param theColorScheme the color scheme for the tetris pieces to follow.
-     */
-    public void setColorScheme(final Map<Block, Color> theColorScheme) {
-        myColorScheme = theColorScheme;
     }
 
     @Override

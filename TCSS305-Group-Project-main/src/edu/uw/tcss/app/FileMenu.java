@@ -1,8 +1,12 @@
 package edu.uw.tcss.app;
 
+import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.ColorScheme;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.Map;
 
 /**
  * FileMenu creation class.
@@ -96,9 +100,25 @@ public class FileMenu extends JMenuBar {
 
         myFileMenuExitGame.addActionListener(ActionEvent -> System.exit(0));
 
-        myFeatureMenuColorChooser.addActionListener(ActionEvent ->
-                JOptionPane.showMessageDialog(theFrame,
-                "This option is currently unavailable in this version!"));
+        myFeatureMenuColorChooser.addActionListener(ActionEvent -> {
+            final Object scheme = JOptionPane.showInputDialog(
+                    this,
+                    "Choose a color scheme",
+                    "Choose Scheme",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    new Object[]{
+                            ColorScheme.getGenericColors(),
+                            ColorScheme.getEdgyColors()
+                    },
+                    ColorScheme.getColorScheme()
+            );
+
+            if (scheme != null) {
+                ColorScheme.setColorScheme((Map<GameControls.Block, Color>) scheme);
+                System.out.println("Set Color Scheme " + ColorScheme.getColorScheme());
+            }
+        });
 
         myFileMenuGameStart.addActionListener(theEvent -> myTetris.newGame());
     }

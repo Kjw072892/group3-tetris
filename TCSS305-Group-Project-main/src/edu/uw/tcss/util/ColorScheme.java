@@ -74,10 +74,20 @@ public final class ColorScheme {
 
     }
 
-    public void setColorScheme(final Map<Block, Color> myScheme) {
-        myCurrentColorScheme = myScheme;
+    /**
+     * Sets the static color scheme that all objects should share.
+     *
+     * @param theScheme the color scheme
+     */
+    public static void setColorScheme(final Map<Block, Color> theScheme) {
+        myCurrentColorScheme = theScheme;
     }
 
+    /**
+     * Gets the static color scheme.
+     *
+     * @return the current color scheme.
+     */
     public static Map<Block, Color> getColorScheme() {
         return myCurrentColorScheme;
     }
