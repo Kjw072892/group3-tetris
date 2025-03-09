@@ -4,6 +4,7 @@ import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.Block;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
+import edu.uw.tcss.util.ColorScheme;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -25,7 +26,6 @@ import javax.swing.JPanel;
 public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     //Properties of the board & blocks.
-    // TODO: might want to refrain from hard-coding these dimensions - RB
     private static final int BOARD_WIDTH = 300;
     private static final int BOARD_HEIGHT = 600;
     private static final int COLUMNS = 10;         // Number of columns & rows.
@@ -50,7 +50,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         //  a class that houses the preferences or something
         setBackground(Color.RED); //background red.
 
-        // Load all Sprint 1 pieces to the board.
 
     }
 
