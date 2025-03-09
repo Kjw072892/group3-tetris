@@ -15,6 +15,7 @@ import static edu.uw.tcss.model.GameControls.Block.T;
 import static edu.uw.tcss.model.GameControls.Block.Z;
 import static edu.uw.tcss.model.GameControls.Block;
 
+// TODO: what if we return a record, where one color scheme is for the tetrominos and the other is for the backgrounds?
 
 /**
  * Factory class that creates a color scheme for the tetrominoes.
