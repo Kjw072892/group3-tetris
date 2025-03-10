@@ -41,7 +41,7 @@ final class GameLogic implements PropertyChangeListener {
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (theEvent.getPropertyName().equals(PROPERTY_ROWS_CLEARED)) {
+        if (PROPERTY_ROWS_CLEARED.equals(theEvent.getPropertyName())) {
             final Integer rowsCleared = (Integer) theEvent.getNewValue();
 
             myLinesCleared += rowsCleared;
