@@ -113,7 +113,6 @@ public class FileMenu extends JMenuBar {
 
             if (scheme != null) {
                 ColorSchemeFactory.setCurrentColorScheme((ColorSchemeFactory.ColorScheme) scheme);
-                System.out.println("Set Color Scheme " + ColorSchemeFactory.getCurrentColorScheme());
             }
         });
 

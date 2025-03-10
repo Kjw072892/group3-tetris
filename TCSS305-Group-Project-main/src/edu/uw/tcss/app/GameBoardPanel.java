@@ -146,6 +146,10 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 myFrozen = (GameControls.FrozenBlocks) theEvent.getNewValue();
                 repaint();
             }
+            case ColorSchemeFactory.PROPERTY_COLOR_SCHEME -> {
+                setBackground(ColorSchemeFactory.getCurrentPrimaryColor());
+                repaint();
+            }
             default -> { }
         }
 

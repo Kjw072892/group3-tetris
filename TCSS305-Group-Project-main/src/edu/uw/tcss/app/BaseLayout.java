@@ -9,6 +9,7 @@ import edu.uw.tcss.app.keymaps.GameAction;
 import edu.uw.tcss.app.keymaps.KeyMapper;
 import edu.uw.tcss.app.keymaps.TetrominoAction;
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.ColorSchemeFactory;
 
 import java.awt.*;
 import javax.swing.BorderFactory;
@@ -111,6 +112,7 @@ public final class BaseLayout extends JPanel {
         myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
         myTetrisGame.addPropertyChangeListener(PROPERTY_NEXT_PIECE, nextPiecePanel);
+        ColorSchemeFactory.addPropertyChangeListener(gameBoard);
         
     }
 
