@@ -101,6 +101,7 @@ public final class ColorSchemeFactory {
      */
     public static void setCurrentColorScheme(final ColorScheme theScheme) {
         myCurrentColorScheme = theScheme;
+        somePropertyChanged();
     }
 
     /**
