@@ -4,6 +4,7 @@ import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.Block;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
+import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.util.ColorSchemeFactory;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -135,21 +136,17 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-
-        if (Objects.equals(theEvent.getPropertyName(), "The Game State has updated "
-                + "to something new!")) {
-            myTetrisPieces = new IndividualPiece[1];
-        }
-        if (Objects.equals(theEvent.getPropertyName(), "This is the current piece!")
-                && theEvent.getNewValue() != null) {
-            myTetrisPieces[0] = (IndividualPiece) theEvent.getNewValue();
-            repaint();
-        }
-
-        if (Objects.equals(theEvent.getPropertyName(), "These are the frozen blocks!")
-                && theEvent.getNewValue() != null) {
-            myFrozen = (GameControls.FrozenBlocks) theEvent.getNewValue();
-            repaint();
+        switch (theEvent.getPropertyName()) {
+            case TetrisGame.PROPERTY_GAME_STATE -> myTetrisPieces = new IndividualPiece[1];
+            case TetrisGame.PROPERTY_CURRENT_PIECE -> {
+                myTetrisPieces[0] = (IndividualPiece) theEvent.getNewValue();
+                repaint();
+            }
+            case TetrisGame.PROPERTY_FROZEN_BLOCKS -> {
+                myFrozen = (GameControls.FrozenBlocks) theEvent.getNewValue();
+                repaint();
+            }
+            default -> { }
         }
 
     }
