@@ -1,8 +1,13 @@
 package edu.uw.tcss.app;
 
+import edu.uw.tcss.model.GameControls;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
+import edu.uw.tcss.util.AudioManager;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+import java.beans.PropertyChangeListener;
 import static javax.swing.KeyStroke.getKeyStroke;
 
 import edu.uw.tcss.app.keymaps.GameAction;
@@ -47,15 +52,17 @@ public final class BaseLayout extends JPanel {
 
     private final TetrisGame myTetrisGame;
     private final KeyMapper myKeyMapper;
+    private final GameLogic myGameLogic;
 
     /**
      * Constructor for Base Layout.
      */
-    public BaseLayout(final TetrisGame theGame) {
+    public BaseLayout(final TetrisGame theGame, final GameLogic theGameLogic) {
         super();
         myTetrisGame = theGame;
+        myGameLogic = theGameLogic;
 
-        layoutComponents();
+        layoutComponents(theGameLogic);
 
         myKeyMapper = new KeyMapper(this, myTetrisGame);
 
@@ -63,7 +70,7 @@ public final class BaseLayout extends JPanel {
 
     }
 
-    private void layoutComponents() {
+    private void layoutComponents(final GameLogic theGameLogicHandler) {
         setLayout(new BorderLayout());
 
         setBorder(BorderFactory.createEmptyBorder(
@@ -95,8 +102,7 @@ public final class BaseLayout extends JPanel {
         eastPanel.add(controlsInfoPanel);
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final GameLogic gameLogicHandler = new GameLogic(myTetrisGame);
-        final ScorePanel scoreInfoPanel = new ScorePanel(gameLogicHandler);
+        final ScorePanel scoreInfoPanel = new ScorePanel(theGameLogicHandler);
 
         scoreInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
@@ -106,14 +112,15 @@ public final class BaseLayout extends JPanel {
         add(eastPanel, BorderLayout.EAST);
 
         // add property change listeners
-        myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, gameLogicHandler);
-        myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, gameLogicHandler);
+        myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, theGameLogicHandler);
+        myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, theGameLogicHandler);
         myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
         myTetrisGame.addPropertyChangeListener(PROPERTY_NEXT_PIECE, nextPiecePanel);
+        myTetrisGame.addPropertyChangeListener(new AudioManager());
         ColorSchemeFactory.addPropertyChangeListener(gameBoard);
-        
+
     }
 
     private void setupKeys() {
@@ -156,8 +163,9 @@ public final class BaseLayout extends JPanel {
      */
     public static void createAndShowGui() {
         final TetrisGame tetris = new TetrisGame();
+        final GameLogic gameLogicHandler = new GameLogic(tetris);
 
-        final BaseLayout mainPanel = new BaseLayout(tetris);
+        final BaseLayout mainPanel = new BaseLayout(tetris, gameLogicHandler);
 
         final JFrame window = new JFrame("Group 3 Tetris");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -175,7 +183,21 @@ public final class BaseLayout extends JPanel {
                 (tk.getScreenSize().height - window.getHeight()) / 2
         );
 
+        window.addWindowFocusListener(new MusicWindowListener());
+
         window.setVisible(true);
     }
 
+    private static class MusicWindowListener implements WindowFocusListener {
+
+        @Override
+        public void windowGainedFocus(WindowEvent e) {
+            AudioManager.startMusic();
+        }
+
+        @Override
+        public void windowLostFocus(WindowEvent e) {
+            AudioManager.stopMusic();
+        }
+    }
 }

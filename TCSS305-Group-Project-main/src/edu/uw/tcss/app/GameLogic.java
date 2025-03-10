@@ -17,7 +17,7 @@ import javax.swing.Timer;
  * @author Kassie Whitney
  * @version 2025-03-08
  */
-final class GameLogic implements PropertyChangeListener {
+public final class GameLogic implements PropertyChangeListener {
 
     private static final int SCORE_PER_ROW_CLEARED = 100;
     private static final int SCORE_PER_ADD_ROW = 50;
@@ -32,7 +32,7 @@ final class GameLogic implements PropertyChangeListener {
     private int myCurrentLevel = 1;
     private int myScore;
     private int myLinesCleared;
-    private GameState myLastGameState = GameState.NEW;
+    private GameState myLastGameState = GameState.OVER;
 
     GameLogic(final TetrisGame theTetrisGame) {
         myTetrisGame = theTetrisGame;
@@ -117,5 +117,14 @@ final class GameLogic implements PropertyChangeListener {
      */
     public int getLinesCleared() {
         return myLinesCleared;
+    }
+
+    /**
+     * Gets the last remembered game state.
+     *
+     * @return last remembered game state.
+     */
+    public GameState getLastGameState() {
+        return myLastGameState;
     }
 }

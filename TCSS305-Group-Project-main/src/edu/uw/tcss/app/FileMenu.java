@@ -1,6 +1,7 @@
 package edu.uw.tcss.app;
 
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.AudioManager;
 import edu.uw.tcss.util.ColorSchemeFactory;
 
 import javax.swing.*;
@@ -22,8 +23,9 @@ public class FileMenu extends JMenuBar {
     private final JMenuItem myAbout = new JMenuItem("About");
     private final JMenuItem myFileMenuExitGame = new JMenuItem("Exit");
     private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Color");
+    private final JMenuItem myFeatureBackGroundMusic = new JMenuItem("Background Music");
     private final JMenu myFileMenu = new JMenu("File");
-    private final JMenu myFeatureMenu = new JMenu("Feature");
+    private final JMenu myFeatureMenu = new JMenu("Features");
     private final JMenu myHelpMenu = new JMenu("Help");
     private final TetrisGame myTetris;
 
@@ -64,6 +66,7 @@ public class FileMenu extends JMenuBar {
         myFileMenuGameStart.setMnemonic('s');
         myFileMenuExitGame.setMnemonic('x');
 
+
         // Add items to the File menu
         myFileMenu.add(myFileMenuGameStart);
         myFileMenu.add(myFileMenuExitGame);
@@ -75,10 +78,12 @@ public class FileMenu extends JMenuBar {
         // Add mnemonics
         innerColorMenu.setMnemonic('c');
         myFeatureMenuColorChooser.setMnemonic('c');
+        myFeatureBackGroundMusic.setMnemonic('b');
 
         // Add items to the Feature Menu
         innerColorMenu.add(myFeatureMenuColorChooser);
         myFeatureMenu.add(innerColorMenu);
+        myFeatureMenu.add(myFeatureBackGroundMusic);
     }
 
     private void helpMenuCreation() {
@@ -113,6 +118,27 @@ public class FileMenu extends JMenuBar {
             }
         });
 
+        myFeatureBackGroundMusic.addActionListener(theEvent -> {
+            final Object music = JOptionPane.showInputDialog(
+                    this,
+                    "Choose a song",
+                    "Songs",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    AudioManager.getBackgroundMusic(),
+                    AudioManager.getMusicEpic()
+            );
+
+            if (music != null) {
+                AudioManager.setMusic((AudioManager.BackgroundMusic) music);
+            }
+        });
+
         myFileMenuGameStart.addActionListener(theEvent -> myTetris.newGame());
+
+        //TODO: Create helper method to work with audio manager
+        //myFeatureBackGroundMusic.addActionListener(theEvent ->);
     }
+
+
 }
