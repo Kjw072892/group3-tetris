@@ -1,7 +1,13 @@
 package edu.uw.tcss.util;
 
+import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.awt.*;
+import java.beans.PropertyChangeListener;
 import java.util.Map;
+import java.util.Set;
 
 import static edu.uw.tcss.model.GameControls.Block;
 
@@ -12,6 +18,11 @@ import static edu.uw.tcss.model.GameControls.Block;
  * @version 2025-03-08
  */
 public final class ColorSchemeFactory {
+
+    public static final String PROPERTY_COLOR_SCHEME = "The color scheme has changed";
+    public static final Object PROPERTY_SOURCE_BEAN = new Object();
+
+    private static final Set<PropertyChangeListener> LISTENERS = new HashSet<>();
 
     /**
      * The keys for what are the main colors.
@@ -135,6 +146,35 @@ public final class ColorSchemeFactory {
      */
     public static Map<Block, Color> getBlockColors() {
         return myCurrentColorScheme.blockColors;
+    }
+
+    /**
+     * Appends the property change listener to the static list of listeners.
+     *
+     * @param theListener the property change listener to append.
+     */
+    public static void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        LISTENERS.add(theListener);
+    }
+
+    /**
+     * Removes the property change listener from the static list of listeners.
+     *
+     * @param theListener the property change listener to remove.
+     */
+    public static void removePropertyChangeListener(final PropertyChangeListener theListener) {
+        LISTENERS.remove(theListener);
+    }
+
+    private static void somePropertyChanged() {
+        for (final PropertyChangeListener listener : LISTENERS) {
+            listener.propertyChange(new PropertyChangeEvent(
+                    PROPERTY_SOURCE_BEAN,
+                    PROPERTY_COLOR_SCHEME,
+                    null,
+                    getCurrentColorScheme()
+                    ));
+        }
     }
 
     /**
