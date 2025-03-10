@@ -150,6 +150,18 @@ public final class ColorSchemeFactory {
     }
 
     /**
+     * Method to get all the possible color schemes.
+     *
+     * @return all color schemes recognized by the factory.
+     */
+    public static ColorScheme[] getColorSchemes() {
+        return new ColorScheme[] {
+                getGenericColors(),
+                getEdgyColors()
+        };
+    }
+
+    /**
      * Appends the property change listener to the static list of listeners.
      *
      * @param theListener the property change listener to append.

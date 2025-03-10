@@ -104,10 +104,7 @@ public class FileMenu extends JMenuBar {
                     "Choose Scheme",
                     JOptionPane.QUESTION_MESSAGE,
                     null,
-                    new Object[]{
-                            ColorSchemeFactory.getGenericColors(),
-                            ColorSchemeFactory.getEdgyColors()
-                    },
+                    ColorSchemeFactory.getColorSchemes(),
                     ColorSchemeFactory.getCurrentColorScheme()
             );
 
