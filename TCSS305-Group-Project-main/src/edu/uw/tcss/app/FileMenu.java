@@ -127,6 +127,7 @@ public class FileMenu extends JMenuBar {
                     null,
                     AudioManager.getBackgroundMusic(),
                     AudioManager.getMusicEpic()
+
             );
 
             if (music != null) {

@@ -66,6 +66,9 @@ public class AudioManager implements PropertyChangeListener {
 
     public static void setMusic(final BackgroundMusic theMusic) {
         try {
+            myMusicChannel.stop();
+            myMusicChannel.close();
+
             final File soundFile = new File(PATH + theMusic.fileName);
             final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
 

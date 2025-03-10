@@ -50,19 +50,23 @@ public final class BaseLayout extends JPanel {
     private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_PANEL_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
-    private final TetrisGame myTetrisGame;
+    private final static TetrisGame myTetrisGame;
     private final KeyMapper myKeyMapper;
-    private final GameLogic myGameLogic;
+    private final static GameLogic myGameLogic;
+
+
+    static {
+        myTetrisGame = new TetrisGame();
+        myGameLogic = new GameLogic(myTetrisGame);
+    }
 
     /**
      * Constructor for Base Layout.
      */
-    public BaseLayout(final TetrisGame theGame, final GameLogic theGameLogic) {
+    public BaseLayout() {
         super();
-        myTetrisGame = theGame;
-        myGameLogic = theGameLogic;
 
-        layoutComponents(theGameLogic);
+        layoutComponents();
 
         myKeyMapper = new KeyMapper(this, myTetrisGame);
 
@@ -70,7 +74,7 @@ public final class BaseLayout extends JPanel {
 
     }
 
-    private void layoutComponents(final GameLogic theGameLogicHandler) {
+    private void layoutComponents() {
         setLayout(new BorderLayout());
 
         setBorder(BorderFactory.createEmptyBorder(
@@ -102,7 +106,7 @@ public final class BaseLayout extends JPanel {
         eastPanel.add(controlsInfoPanel);
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final ScorePanel scoreInfoPanel = new ScorePanel(theGameLogicHandler);
+        final ScorePanel scoreInfoPanel = new ScorePanel(myGameLogic);
 
         scoreInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
@@ -112,8 +116,8 @@ public final class BaseLayout extends JPanel {
         add(eastPanel, BorderLayout.EAST);
 
         // add property change listeners
-        myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, theGameLogicHandler);
-        myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, theGameLogicHandler);
+        myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, myGameLogic);
+        myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, myGameLogic);
         myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
@@ -162,16 +166,13 @@ public final class BaseLayout extends JPanel {
      * Creates the JFrame.
      */
     public static void createAndShowGui() {
-        final TetrisGame tetris = new TetrisGame();
-        final GameLogic gameLogicHandler = new GameLogic(tetris);
-
-        final BaseLayout mainPanel = new BaseLayout(tetris, gameLogicHandler);
+        final BaseLayout mainPanel = new BaseLayout();
 
         final JFrame window = new JFrame("Group 3 Tetris");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
 
-        final FileMenu menuBar = new FileMenu(window, tetris);
+        final FileMenu menuBar = new FileMenu(window, myTetrisGame);
         window.setJMenuBar(menuBar);
 
         window.setContentPane(mainPanel);
@@ -191,12 +192,17 @@ public final class BaseLayout extends JPanel {
     private static class MusicWindowListener implements WindowFocusListener {
 
         @Override
-        public void windowGainedFocus(WindowEvent e) {
-            AudioManager.startMusic();
+        public void windowGainedFocus(final WindowEvent e) {
+            myTetrisGame.unPause();
+
+            if (GameControls.GameState.RUNNING.equals(myGameLogic.getLastGameState())) {
+                AudioManager.startMusic();
+            }
         }
 
         @Override
-        public void windowLostFocus(WindowEvent e) {
+        public void windowLostFocus(final WindowEvent e) {
+            myTetrisGame.pause();
             AudioManager.stopMusic();
         }
     }
