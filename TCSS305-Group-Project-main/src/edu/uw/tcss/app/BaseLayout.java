@@ -124,6 +124,7 @@ public final class BaseLayout extends JPanel {
         myTetrisGame.addPropertyChangeListener(PROPERTY_NEXT_PIECE, nextPiecePanel);
         myTetrisGame.addPropertyChangeListener(new AudioManager());
         ColorSchemeFactory.addPropertyChangeListener(gameBoard);
+        ColorSchemeFactory.addPropertyChangeListener(nextPiecePanel);
 
     }
 

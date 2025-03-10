@@ -120,24 +120,24 @@ public class AudioManager implements PropertyChangeListener {
 
 
     public static BackgroundMusic getMusicKalimba() {
-            return new BackgroundMusic("Kalimba", "Kalimba.wav");
+        return new BackgroundMusic("Kalimba", "Kalimba.wav");
     }
 
     public static BackgroundMusic getMusicRetro() {
-            return new BackgroundMusic("Retro Tetris", "retroTetris.wav");
+        return new BackgroundMusic("Retro Tetris", "retroTetris.wav");
     }
 
     public static BackgroundMusic getMusicEpic() {
-            return new BackgroundMusic("Epic Tetris", "Korobeiniki.wav");
+        return new BackgroundMusic("Epic Tetris", "Korobeiniki.wav");
     }
 
     public static BackgroundMusic getMusicTrap() {
-            return new BackgroundMusic("Trap Tetris", "TrapTetris.wav");
+        return new BackgroundMusic("Trap Tetris", "TrapTetris.wav");
 
     }
 
     public static BackgroundMusic getMusicAlt() {
-            return new BackgroundMusic("Alternative Tetris", "TheSamovars.wav");
+        return new BackgroundMusic("Alternative Tetris", "TheSamovars.wav");
     }
 
     @Override
