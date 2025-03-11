@@ -215,5 +215,3 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     }
 
 }
-
-// test lines 1

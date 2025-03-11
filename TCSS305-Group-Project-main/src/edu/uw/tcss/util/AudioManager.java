@@ -106,7 +106,7 @@ public class AudioManager implements PropertyChangeListener {
     }
 
     public static void startMusic() {
-        myMusicChannel.start();
+        myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public static void stopMusic() {
