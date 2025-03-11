@@ -2,6 +2,7 @@ package edu.uw.tcss.app;
 
 import static edu.uw.tcss.model.GameControls.GameState;
 
+import edu.uw.tcss.app.assets.DirectoryConstants;
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.Block;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
@@ -14,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import javax.swing.*;
 
 
@@ -59,7 +61,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
         myBlockWidth = theWidth / COLUMNS;
         myBlockHeight = theHeight / ROWS;
-        myDeathIcon = new ImageIcon("TCSS305-Group-Project-main\\src\\edu\\uw\\tcss\\app\\oof-noob.gif");
+        myDeathIcon = new ImageIcon(
+                DirectoryConstants.getFilePath(DirectoryConstants.IMAGES_PATH, "oof-noob.gif"));
         myAnimator = new Timer(1000, new BackGroundColorAnimator());
     }
 
@@ -80,13 +83,14 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         }
     }
 
+    // TODO: magic numbers
     private void drawGameOver(final Graphics2D theGraphics) {
         theGraphics.drawImage(myDeathIcon.getImage(), 45, 35, this);
         theGraphics.setColor(Color.BLACK);
         theGraphics.fillRect(45, 350, 220, 80);
 
 
-        Font bigFont = new Font("Arial", Font.BOLD, 36); // 50px size
+        final Font bigFont = new Font("Arial", Font.BOLD, 36); // 50px size
         theGraphics.setFont(bigFont);
 
         theGraphics.setColor(Color.WHITE);

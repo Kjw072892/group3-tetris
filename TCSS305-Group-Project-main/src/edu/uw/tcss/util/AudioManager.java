@@ -2,6 +2,7 @@ package edu.uw.tcss.util;
 
 import static edu.uw.tcss.model.GameControls.GameState;
 
+import edu.uw.tcss.app.assets.DirectoryConstants;
 import edu.uw.tcss.model.TetrisGame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -12,10 +13,6 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 
 public class AudioManager implements PropertyChangeListener {
-
-
-    private final static String PATH =
-            "TCSS305-Group-Project-main\\src\\edu\\uw\\tcss\\sounds\\";
 
     private static Clip myMusicChannel;
     private static Clip myFX1Channel;
@@ -48,7 +45,8 @@ public class AudioManager implements PropertyChangeListener {
 
     public static void playSoundFX(final Channels theChannel, final String theSoundName) {
         try {
-            final File soundFile = new File(PATH + theSoundName);
+            final File soundFile =
+                    DirectoryConstants.getFile(DirectoryConstants.MUSIC_PATH, theSoundName);
 
             final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
 
@@ -69,7 +67,8 @@ public class AudioManager implements PropertyChangeListener {
             myMusicChannel.stop();
             myMusicChannel.close();
 
-            final File soundFile = new File(PATH + theMusic.fileName);
+            final File soundFile =
+                    DirectoryConstants.getFile(DirectoryConstants.MUSIC_PATH, theMusic.fileName);
             final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
 
             myMusicChannel.open(stream);
