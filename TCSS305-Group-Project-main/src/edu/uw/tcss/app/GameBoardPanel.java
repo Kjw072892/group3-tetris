@@ -168,8 +168,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
             case TetrisGame.PROPERTY_GAME_STATE -> {
                 switch (theEvent.getNewValue()) {
-                    case GameState.NEW,
-                         GameState.RUNNING -> {
+                    case GameState.NEW -> {
+                        System.out.println(theEvent.getPropertyName());
                         myTetrisPieces = new IndividualPiece[1];
                         myGameOverDeath = false;
                         if (myAnimator.isRunning()) {
