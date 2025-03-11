@@ -9,7 +9,7 @@ import java.io.File;
  * @author Roman Bureacaov
  * @version 2025-03-11
  */
-public final class DirectoryConstants {
+public final class DirectoryManager {
     /** the URL to the folder with the assets. */
     public static final String PATH;
     /** the URL to the subfolder with the sounds. */
@@ -34,7 +34,7 @@ public final class DirectoryConstants {
         IMAGES_PATH = String.join(SYSTEM_SEPARATOR, PATH, "images");
     }
 
-    private DirectoryConstants() {
+    private DirectoryManager() {
 
     }
 
