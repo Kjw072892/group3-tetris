@@ -1,5 +1,7 @@
 package edu.uw.tcss.app;
 
+import static edu.uw.tcss.model.GameControls.GameState;
+
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.Block;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
@@ -13,7 +15,7 @@ import java.awt.Graphics2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Objects;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 
 /**
@@ -32,6 +34,9 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private final int myBlockWidth;
     private final int myBlockHeight;
     private IndividualPiece[] myTetrisPieces;
+    private boolean GameOverDeath;
+
+    private ImageIcon deathIcon;
 
     private GameControls.FrozenBlocks myFrozen = Sprint1_values.frozenBlocks();
 
@@ -51,6 +56,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
         myBlockWidth = theWidth / COLUMNS;
         myBlockHeight = theHeight / ROWS;
+        deathIcon = new ImageIcon("TCSS305-Group-Project-main\\src\\edu\\uw\\tcss\\app\\oof-noob.gif");
     }
 
     /**
@@ -65,6 +71,9 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         drawGrid(g2d); //draw the grid lines on the board.
         drawFrozenBlocks(g2d);
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
+        if (GameOverDeath) {
+            theGraphics.drawImage(deathIcon.getImage(), 45, 0, this);
+        }
     }
     private void drawFrozenBlocks(final Graphics theGraphics) {
         for (int column = 0; column < COLUMNS; column++) {
@@ -134,10 +143,13 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         }
     }
 
+    private void deathGif() {
+        System.out.println("deathGif");
+    }
+
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
         switch (theEvent.getPropertyName()) {
-            case TetrisGame.PROPERTY_GAME_STATE -> myTetrisPieces = new IndividualPiece[1];
             case TetrisGame.PROPERTY_CURRENT_PIECE -> {
                 myTetrisPieces[0] = (IndividualPiece) theEvent.getNewValue();
                 repaint();
@@ -150,6 +162,24 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 setBackground(ColorSchemeFactory.getCurrentPrimaryColor());
                 repaint();
             }
+
+            case TetrisGame.PROPERTY_GAME_STATE -> {
+                switch (theEvent.getNewValue()) {
+                    case GameState.NEW,
+                         GameState.RUNNING -> {
+                        myTetrisPieces = new IndividualPiece[1];
+                        GameOverDeath = false;
+                        ;
+                    }
+                    case GameState.PAUSED,
+                         GameState.OVER -> {
+                        GameOverDeath = true;
+                        repaint();
+                    }
+                    default -> { }
+                }
+            }
+
             default -> { }
         }
 
