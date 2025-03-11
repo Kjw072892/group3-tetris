@@ -178,8 +178,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                         }
                         repaint();
                     }
-                    case GameState.PAUSED,
-                         GameState.OVER -> {
+                    case GameState.OVER -> {
                         myGameOverDeath = true;
                         if (!myAnimator.isRunning()) {
                             myAnimator.start();
@@ -197,7 +196,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     private final class BackGroundColorAnimator implements ActionListener {
         public void actionPerformed(final ActionEvent theEvent) {
-            if (myFlashColor) {
+            if (!myFlashColor) {
                 setBackground(new Color(182, 103, 103, 169));
                 myFlashColor = !myFlashColor;
             } else {

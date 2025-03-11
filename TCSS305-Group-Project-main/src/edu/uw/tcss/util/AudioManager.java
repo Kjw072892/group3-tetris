@@ -160,8 +160,10 @@ public class AudioManager implements PropertyChangeListener {
                         stopSoundFX(Channels.FX1);
                         startMusic();
                     }
-                    case GameState.PAUSED,
-                         GameState.OVER -> playDeathSound();
+                    case GameState.PAUSED -> stopMusic();
+
+                    case GameState.OVER -> playDeathSound();
+
                     default -> { }
                 }
             }
