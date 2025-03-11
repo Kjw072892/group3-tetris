@@ -76,17 +76,21 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         drawFrozenBlocks(g2d);
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
         if (myGameOverDeath) {
-            theGraphics.drawImage(myDeathIcon.getImage(), 45, 35, this);
-            theGraphics.setColor(Color.BLACK);
-            theGraphics.fillRect(45, 350, 220, 80);
-
-
-            Font bigFont = new Font("Arial", Font.BOLD, 36); // 50px size
-            g2d.setFont(bigFont);
-
-            g2d.setColor(Color.WHITE);
-            g2d.drawString("Game Over!", 53, 400);
+            drawGameOver(g2d);
         }
+    }
+
+    private void drawGameOver(final Graphics2D theGraphics) {
+        theGraphics.drawImage(myDeathIcon.getImage(), 45, 35, this);
+        theGraphics.setColor(Color.BLACK);
+        theGraphics.fillRect(45, 350, 220, 80);
+
+
+        Font bigFont = new Font("Arial", Font.BOLD, 36); // 50px size
+        theGraphics.setFont(bigFont);
+
+        theGraphics.setColor(Color.WHITE);
+        theGraphics.drawString("Game Over!", 53, 400);
     }
 
     private void drawFrozenBlocks(final Graphics theGraphics) {
