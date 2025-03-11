@@ -140,6 +140,11 @@ public class AudioManager implements PropertyChangeListener {
         return new BackgroundMusic("Alternative Tetris", "TheSamovars.wav");
     }
 
+    private void playDeathSound() {
+        stopMusic();
+        playSoundFX(Channels.FX1, "Roblox Death Sound.wav");
+    }
+
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
         switch (theEvent.getPropertyName()) {
@@ -148,7 +153,7 @@ public class AudioManager implements PropertyChangeListener {
                     case GameState.NEW,
                          GameState.RUNNING -> startMusic();
                     case GameState.PAUSED,
-                         GameState.OVER -> stopMusic();
+                         GameState.OVER -> playDeathSound();
                     default -> { }
                 }
             }
