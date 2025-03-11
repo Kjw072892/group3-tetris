@@ -206,7 +206,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 setBackground(new Color(182, 103, 103, 169));
                 myFlashColor = !myFlashColor;
             } else {
-                setBackground(Color.RED);
+                setBackground(ColorSchemeFactory.getCurrentPrimaryColor());
                 myFlashColor = !myFlashColor;
             }
         }
