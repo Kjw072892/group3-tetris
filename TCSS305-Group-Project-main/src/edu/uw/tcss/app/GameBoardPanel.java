@@ -8,10 +8,8 @@ import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.util.ColorSchemeFactory;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -79,6 +77,15 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
         if (myGameOverDeath) {
             theGraphics.drawImage(myDeathIcon.getImage(), 45, 35, this);
+            theGraphics.setColor(Color.BLACK);
+            theGraphics.fillRect(45, 350, 220, 80);
+
+
+            Font bigFont = new Font("Arial", Font.BOLD, 36); // 50px size
+            g2d.setFont(bigFont);
+
+            g2d.setColor(Color.WHITE);
+            g2d.drawString("Game Over!", 53, 400);
         }
     }
 
@@ -169,7 +176,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             case TetrisGame.PROPERTY_GAME_STATE -> {
                 switch (theEvent.getNewValue()) {
                     case GameState.NEW -> {
-                        System.out.println(theEvent.getPropertyName());
                         myTetrisPieces = new IndividualPiece[1];
                         myGameOverDeath = false;
                         if (myAnimator.isRunning()) {
