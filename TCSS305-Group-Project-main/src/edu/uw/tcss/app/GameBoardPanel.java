@@ -74,9 +74,9 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     protected void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
-        drawGrid(g2d); //draw the grid lines on the board.
         drawFrozenBlocks(g2d);
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
+        drawGrid(g2d); //draw the grid lines on the board.
         if (myGameOverDeath) {
             drawGameOver(g2d);
         }

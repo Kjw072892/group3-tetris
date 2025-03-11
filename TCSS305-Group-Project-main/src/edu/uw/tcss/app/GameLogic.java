@@ -5,6 +5,8 @@ import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_
 import static edu.uw.tcss.model.GameControls.GameState;
 
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.AudioManager;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.Timer;
@@ -62,7 +64,9 @@ public final class GameLogic implements PropertyChangeListener {
                     myTimer.restart();
                 }
                 case GameState.PAUSED,
-                     GameState.OVER -> myTimer.stop();
+                     GameState.OVER -> {
+                    myTimer.stop();
+                }
                 case GameState.RUNNING -> {
                     if (!GameState.RUNNING.equals(myLastGameState)) {
                         myTimer.start();
