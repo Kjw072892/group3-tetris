@@ -3,6 +3,8 @@ package edu.uw.tcss.app;
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
+import edu.uw.tcss.util.ColorSchemeFactory;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -144,16 +146,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
      * @return the color related to theBlock
      */
     private Color getBlockColor(final GameControls.Block theBlock) {
-        return switch (theBlock) {
-            case I -> Color.CYAN;
-            case O -> Color.YELLOW;
-            case T -> Color.MAGENTA;
-            case Z -> Color.WHITE;
-            case L -> Color.ORANGE;
-            case S -> Color.GREEN;
-            case J -> Color.BLUE;
-            default -> Color.DARK_GRAY;
-        };
+        return ColorSchemeFactory.getBlockColors().getOrDefault(theBlock, Color.PINK);
     }
 
     private void drawTheNextPiece(final Graphics theGraphics) {

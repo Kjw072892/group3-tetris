@@ -182,7 +182,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                         myGameOverDeath = false;
                         if (myAnimator.isRunning()) {
                             myAnimator.stop();
-                            setBackground(Color.RED);
+                            setBackground(ColorSchemeFactory.getCurrentPrimaryColor());;
                         }
                         repaint();
                     }
