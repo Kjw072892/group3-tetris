@@ -72,7 +72,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         drawFrozenBlocks(g2d);
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
         if (GameOverDeath) {
-            theGraphics.drawImage(deathIcon.getImage(), 45, 0, this);
+            theGraphics.drawImage(deathIcon.getImage(), 45, 35, this);
         }
     }
     private void drawFrozenBlocks(final Graphics theGraphics) {

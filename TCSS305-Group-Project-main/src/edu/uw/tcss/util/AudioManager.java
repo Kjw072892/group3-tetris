@@ -85,6 +85,11 @@ public class AudioManager implements PropertyChangeListener {
             if (theClip.isActive()) {
                 theClip.stop();
             }
+
+            if (theClip.isOpen()) {
+                theClip.close();
+            }
+
             theClip.open(theStream);
             theClip.start();
         } catch (Exception e) {
@@ -151,7 +156,10 @@ public class AudioManager implements PropertyChangeListener {
             case TetrisGame.PROPERTY_GAME_STATE -> {
                 switch (theEvent.getNewValue()) {
                     case GameState.NEW,
-                         GameState.RUNNING -> startMusic();
+                         GameState.RUNNING -> {
+                        stopSoundFX(Channels.FX1);
+                        startMusic();
+                    }
                     case GameState.PAUSED,
                          GameState.OVER -> playDeathSound();
                     default -> { }
