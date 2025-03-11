@@ -2,7 +2,7 @@ package edu.uw.tcss.util;
 
 import static edu.uw.tcss.model.GameControls.GameState;
 
-import edu.uw.tcss.app.assets.DirectoryManager;
+import edu.uw.tcss.app.assets.AssetsManager;
 import edu.uw.tcss.model.TetrisGame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -46,7 +46,7 @@ public class AudioManager implements PropertyChangeListener {
     public static void playSoundFX(final Channels theChannel, final String theSoundName) {
         try {
             final File soundFile =
-                    DirectoryManager.getFile(DirectoryManager.MUSIC_PATH, theSoundName);
+                    AssetsManager.getFile(AssetsManager.MUSIC_PATH, theSoundName);
 
             final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
 
@@ -68,7 +68,7 @@ public class AudioManager implements PropertyChangeListener {
             myMusicChannel.close();
 
             final File soundFile =
-                    DirectoryManager.getFile(DirectoryManager.MUSIC_PATH, theMusic.fileName);
+                    AssetsManager.getFile(AssetsManager.MUSIC_PATH, theMusic.fileName);
             final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
 
             myMusicChannel.open(stream);

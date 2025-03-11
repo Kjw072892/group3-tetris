@@ -2,7 +2,7 @@ package edu.uw.tcss.app;
 
 import static edu.uw.tcss.model.GameControls.GameState;
 
-import edu.uw.tcss.app.assets.DirectoryManager;
+import edu.uw.tcss.app.assets.AssetsManager;
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.Block;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
@@ -61,7 +61,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         myBlockWidth = theWidth / COLUMNS;
         myBlockHeight = theHeight / ROWS;
         myDeathIcon = new ImageIcon(
-                DirectoryManager.getFilePath(DirectoryManager.IMAGES_PATH, "oof-noob.gif"));
+                AssetsManager.getFilePath(AssetsManager.IMAGES_PATH, "oof-noob.gif"));
         myAnimator = new Timer(1000, new BackGroundColorAnimator());
     }
 
