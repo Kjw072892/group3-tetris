@@ -150,6 +150,17 @@ public final class ColorSchemeFactory {
     }
 
     /**
+     * Convenience method to get the color of the specified block.
+     *
+     * @param theBlock the block to get the color or
+     * @return the color of the block specified by the current color scheme.
+     * returns null if the color for the specified block has not been specified.
+     */
+    public static Color getBlockColor(final Block theBlock) {
+        return myCurrentColorScheme.blockColors.getOrDefault(theBlock, null);
+    }
+
+    /**
      * Method to get all the possible color schemes.
      *
      * @return all color schemes recognized by the factory.

@@ -99,8 +99,12 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private void drawFrozenBlocks(final Graphics theGraphics) {
         for (int column = 0; column < COLUMNS; column++) {
             for (int row = 0; row < ROWS; row++) {
-                if (myFrozen.blocks().get(row)[column] != null) {
-                    theGraphics.setColor(getBlockColor(myFrozen.blocks().get(row)[column]));
+                final Block block = myFrozen.blocks().get(row)[column];
+
+                if (block != null) {
+                    final Color blockColor = ColorSchemeFactory.getBlockColor(
+                            block);
+                    theGraphics.setColor(blockColor);
 
                     final int x = column * myBlockWidth;
                     final int y =  ((ROWS - 1) - row) * myBlockHeight;
@@ -111,15 +115,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 }
             }
         }
-    }
-
-    /**
-     * Get the correct color for blocks
-     * @param theBlock the theBlock types
-     * @return the color related to theBlock
-     */
-    private Color getBlockColor(final Block theBlock) {
-        return ColorSchemeFactory.getBlockColors().getOrDefault(theBlock, Color.PINK);
     }
 
     /**
@@ -155,7 +150,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 final int x = block.x() * myBlockWidth;
                 final int y = ((ROWS - 1) - block.y()) * myBlockHeight;
 
-                g2d.setPaint(getBlockColor(piece.block()));
+                g2d.setPaint(ColorSchemeFactory.getBlockColor(piece.block()));
                 theGraphics.fillRect(x, y, myBlockWidth, myBlockHeight);
                 // TODO: maybe we could remove this and have the grid drawn after the blocks - RB
                 g2d.setPaint(Color.BLACK);
