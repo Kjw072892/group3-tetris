@@ -46,13 +46,7 @@ public final class DirectoryManager {
      * @return file object, or null if the file failed to construct
      */
     public static File getFile(final String theDirectory, final String theFileName) {
-        File f = null;
-        try {
-            f = new File(String.join(SYSTEM_SEPARATOR, theDirectory, theFileName));
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-        return f;
+        return new File(String.join(SYSTEM_SEPARATOR, theDirectory, theFileName));
     }
 
     /**
