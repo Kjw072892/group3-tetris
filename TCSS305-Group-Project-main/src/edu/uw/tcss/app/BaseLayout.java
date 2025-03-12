@@ -97,7 +97,6 @@ public final class BaseLayout extends JPanel {
 
         final NextPiecePanel nextPiecePanel = new NextPiecePanel();
         nextPiecePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
-        nextPiecePanel.setBackground(Color.BLUE);
         eastPanel.add(nextPiecePanel);
 
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
@@ -124,7 +123,7 @@ public final class BaseLayout extends JPanel {
         myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
-        myTetrisGame.addPropertyChangeListener(PROPERTY_NEXT_PIECE, nextPiecePanel);
+        myTetrisGame.addPropertyChangeListener(nextPiecePanel);
         myTetrisGame.addPropertyChangeListener(new AudioManager());
         ColorSchemeFactory.addPropertyChangeListener(gameBoard);
         ColorSchemeFactory.addPropertyChangeListener(nextPiecePanel);

@@ -194,3 +194,4 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
         }
     }
 }
+
