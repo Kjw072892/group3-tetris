@@ -51,7 +51,7 @@ public class DirectionLabels extends JPanel {
         final JLabel pauseLabel = new JLabel("Pause:             P/p key");
         pauseLabel.setFont(labelFontFormat());
 
-        final JLabel muteLabel = new JLabel("Mute:               M/m key");
+        final JLabel muteLabel = new JLabel("Quite:               M/m key");
         muteLabel.setFont(labelFontFormat());
 
         setLayout(new BorderLayout());
