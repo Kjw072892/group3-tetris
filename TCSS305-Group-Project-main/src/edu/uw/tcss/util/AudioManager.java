@@ -104,7 +104,8 @@ public class AudioManager  implements PropertyChangeListener {
         if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_GAME_STATE)) {
             switch (theEvent.getNewValue()) {
                 case GameState.NEW, GameState.RUNNING -> startMusic();
-                case GameState.PAUSED, GameState.OVER -> stopMusic();
+                case GameState.PAUSED -> stopMusic();
+                case GameState.OVER -> AudioManagerFX.playFX("end");
                 default -> {
                 }
             }

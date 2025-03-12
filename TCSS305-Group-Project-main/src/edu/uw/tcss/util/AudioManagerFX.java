@@ -121,6 +121,7 @@ public class AudioManagerFX implements PropertyChangeListener {
             case "moved" -> playSoundFX(Channels.CHANGED_POSITION_FX, "changedPositionFX.wav");
             case "dropped" -> playSoundFX(Channels.DROP_FX, "dropFX.wav");
             case "rotated" -> playSoundFX(Channels.ROTATE_FX, "rotateFX.wav");
+            case "end" -> playSoundFX(Channels.ROBLOX_DEATH_SOUND, "Roblox Death Sound.wav");
             default -> { }
         }
     }
@@ -130,7 +131,8 @@ public class AudioManagerFX implements PropertyChangeListener {
 
         if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_GAME_STATE)) {
             if (theEvent.getNewValue().equals(GameControls.GameState.OVER)) {
-                playSoundFX(Channels.ROBLOX_DEATH_SOUND, "robloxDeathSound.wav");
+
+
             }
         }
     }
