@@ -105,8 +105,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 final Block block = myFrozen.blocks().get(row)[column];
 
                 if (block != null) {
-                    final Color blockColor = ColorSchemeFactory.getBlockColor(
-                            block);
+                    final Color blockColor = ColorSchemeFactory.getBlockColor(block);
                     theGraphics.setColor(blockColor);
 
                     final int x = column * myBlockWidth;
