@@ -1,5 +1,7 @@
 package edu.uw.tcss.app;
 
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE;
+
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
@@ -57,7 +59,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
      * Lay out the components and makes this frame visible.
      */
     private void layoutComponents() {
-        setBackground(Color.BLUE);
+        setBackground(ColorSchemeFactory.getCurrentSecondaryColor());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
@@ -132,10 +134,15 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (Objects.equals(theEvent.getPropertyName(), "This is the new next piece!")
-                && theEvent.getNewValue() != null) {
-            nextPiece = (IndividualPiece) theEvent.getNewValue();
-            repaint();
+        switch (theEvent.getPropertyName()) {
+            case PROPERTY_NEXT_PIECE -> {
+                nextPiece = (IndividualPiece) theEvent.getNewValue();
+                repaint();
+            }
+            case ColorSchemeFactory.PROPERTY_COLOR_SCHEME -> {
+                setBackground(ColorSchemeFactory.getCurrentSecondaryColor());
+                repaint();
+            }
         }
     }
 
