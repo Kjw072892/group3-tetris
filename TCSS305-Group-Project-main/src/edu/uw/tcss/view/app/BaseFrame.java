@@ -67,7 +67,7 @@ public class BaseFrame extends JFrame {
     private final class MusicWindowListener implements WindowFocusListener {
 
         @Override
-        public void windowGainedFocus(final WindowEvent e) {
+        public void windowGainedFocus(final WindowEvent theEvent) {
             myTetrisGame.unPause();
 
             if (GameControls.GameState.RUNNING.equals(myGameLogic.getLastGameState())) {
@@ -76,7 +76,7 @@ public class BaseFrame extends JFrame {
         }
 
         @Override
-        public void windowLostFocus(final WindowEvent e) {
+        public void windowLostFocus(final WindowEvent theEvent) {
             myTetrisGame.pause();
             AudioManager.stopMusic();
         }
