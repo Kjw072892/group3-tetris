@@ -2,8 +2,9 @@ package edu.uw.tcss.view.app;
 
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.util.AudioManager;
-import edu.uw.tcss.view.util.ColorSchemeFactory;
 
+import edu.uw.tcss.view.util.ColorSchemeFactory;
+import edu.uw.tcss.view.util.ColorSchemeManager;
 import javax.swing.*;
 
 /**
@@ -110,11 +111,11 @@ public class FileMenu extends JMenuBar {
                     JOptionPane.QUESTION_MESSAGE,
                     null,
                     ColorSchemeFactory.getColorSchemes(),
-                    ColorSchemeFactory.getCurrentColorScheme()
+                    ColorSchemeManager.getCurrentColorScheme()
             );
 
             if (scheme != null) {
-                ColorSchemeFactory.setCurrentColorScheme((ColorSchemeFactory.ColorScheme) scheme);
+                ColorSchemeManager.setCurrentColorScheme((ColorSchemeFactory.ColorScheme) scheme);
             }
         });
 

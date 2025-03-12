@@ -7,6 +7,7 @@ import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.view.util.ColorSchemeFactory;
 
+import edu.uw.tcss.view.util.ColorSchemeManager;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -57,7 +58,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
      * Lay out the components and makes this frame visible.
      */
     private void layoutComponents() {
-        setBackground(ColorSchemeFactory.getCurrentSecondaryColor());
+        setBackground(ColorSchemeManager.getCurrentSecondaryColor());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
@@ -134,8 +135,8 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
                 nextPiece = (IndividualPiece) theEvent.getNewValue();
                 repaint();
             }
-            case ColorSchemeFactory.PROPERTY_COLOR_SCHEME -> {
-                setBackground(ColorSchemeFactory.getCurrentSecondaryColor());
+            case ColorSchemeManager.PROPERTY_COLOR_SCHEME -> {
+                setBackground(ColorSchemeManager.getCurrentSecondaryColor());
                 repaint();
             }
         }
@@ -148,7 +149,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
      * @return the color related to theBlock
      */
     private Color getBlockColor(final GameControls.Block theBlock) {
-        return ColorSchemeFactory.getBlockColors().getOrDefault(theBlock, Color.PINK);
+        return ColorSchemeManager.getBlockColors().getOrDefault(theBlock, Color.PINK);
     }
 
     private void drawTheNextPiece(final Graphics theGraphics) {
