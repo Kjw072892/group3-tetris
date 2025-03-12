@@ -9,6 +9,7 @@ import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
 import edu.uw.tcss.view.util.ColorSchemeFactory;
+import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.GraphicsModifier;
 
 import java.awt.*;
@@ -107,7 +108,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 final Block block = myFrozen.blocks().get(row)[column];
 
                 if (block != null) {
-                    final Color blockColor = ColorSchemeFactory.getBlockColor(block);
+                    final Color blockColor = ColorSchemeManager.getBlockColor(block);
                     theGraphics.setColor(blockColor);
 
                     final int x = column * myBlockWidth;
@@ -154,7 +155,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 final int x = block.x() * myBlockWidth;
                 final int y = ((ROWS - 1) - block.y()) * myBlockHeight;
 
-                g2d.setPaint(ColorSchemeFactory.getBlockColor(piece.block()));
+                g2d.setPaint(ColorSchemeManager.getBlockColor(piece.block()));
                 theGraphics.fillRect(x, y, myBlockWidth, myBlockHeight);
                 // TODO: maybe we could remove this and have the grid drawn after the blocks - RB
                 g2d.setPaint(Color.BLACK);
@@ -174,8 +175,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 myFrozen = (GameControls.FrozenBlocks) theEvent.getNewValue();
                 repaint();
             }
-            case ColorSchemeFactory.PROPERTY_COLOR_SCHEME -> {
-                setBackground(ColorSchemeFactory.getCurrentPrimaryColor());
+            case ColorSchemeManager.PROPERTY_COLOR_SCHEME -> {
+                setBackground(ColorSchemeManager.getCurrentPrimaryColor());
                 repaint();
             }
 
@@ -186,7 +187,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                         myGameOverDeath = false;
                         if (myAnimator.isRunning()) {
                             myAnimator.stop();
-                            setBackground(ColorSchemeFactory.getCurrentPrimaryColor());
+                            setBackground(ColorSchemeManager.getCurrentPrimaryColor());
                         }
                         repaint();
                     }
@@ -212,7 +213,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 setBackground(new Color(182, 103, 103, 169));
                 myFlashColor = !myFlashColor;
             } else {
-                setBackground(ColorSchemeFactory.getCurrentPrimaryColor());
+                setBackground(ColorSchemeManager.getCurrentPrimaryColor());
                 myFlashColor = !myFlashColor;
             }
         }
