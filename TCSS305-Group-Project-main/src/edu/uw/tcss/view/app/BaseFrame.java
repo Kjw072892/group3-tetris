@@ -3,11 +3,11 @@ package edu.uw.tcss.view.app;
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.util.AudioManager;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * The class that is responsible for the frame.
