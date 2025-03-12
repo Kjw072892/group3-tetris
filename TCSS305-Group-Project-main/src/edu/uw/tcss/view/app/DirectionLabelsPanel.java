@@ -17,12 +17,12 @@ import javax.swing.JPanel;
  * @author Zainab
  * @version 03.1.25
  */
-public class DirectionLabels extends JPanel {
+public class DirectionLabelsPanel extends JPanel {
 
     /**
      * Constructor for DirectionLabels class. Invokes directionLabelPanel().
      */
-    public DirectionLabels() {
+    public DirectionLabelsPanel() {
         super();
         directionLabelPanel();
     }

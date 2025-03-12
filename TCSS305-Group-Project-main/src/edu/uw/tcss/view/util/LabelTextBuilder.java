@@ -3,10 +3,13 @@ package edu.uw.tcss.view.util;
 import java.awt.Font;
 import javax.swing.JLabel;
 
+// TODO: maybe remove this since we don't need it anymore? - Roman Bureacov
+
 /**
  * Utilities class that concatenates JLabels.
  * @author Kassie Whitney
  * @version 2.28.25
+ * @deprecated
  */
 public final class LabelTextBuilder {
 

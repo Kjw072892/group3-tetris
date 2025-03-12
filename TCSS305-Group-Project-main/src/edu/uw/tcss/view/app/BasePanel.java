@@ -5,22 +5,17 @@ import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
 import static javax.swing.KeyStroke.getKeyStroke;
 
-import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.keymaps.GameAction;
 import edu.uw.tcss.view.app.keymaps.KeyMapper;
 import edu.uw.tcss.view.app.keymaps.TetrominoAction;
-import edu.uw.tcss.view.util.AudioManager;
-import edu.uw.tcss.view.util.ColorSchemeFactory;
+import edu.uw.tcss.view.util.AudioMusicManager;
+import edu.uw.tcss.view.util.ColorSchemeManager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -31,7 +26,7 @@ import javax.swing.JPanel;
  * @author Kassie Whitney
  * @version 2.26.25
  */
-public final class BaseLayout extends JPanel {
+public final class BasePanel extends JPanel {
 
     private static final int J_FRAME_WIDTH = 500;
 
@@ -49,28 +44,23 @@ public final class BaseLayout extends JPanel {
     private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_PANEL_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
-    private final static TetrisGame myTetrisGame;
+    private final TetrisGame myTetrisGame;
     private final KeyMapper myKeyMapper;
-    private final static GameLogic myGameLogic;
-
-
-    static {
-        myTetrisGame = new TetrisGame();
-        myGameLogic = new GameLogic(myTetrisGame);
-    }
+    private final GameLogic myGameLogic;
 
     /**
      * Constructor for Base Layout.
      */
-    public BaseLayout() {
+    public BasePanel(final TetrisGame theGame, final GameLogic theLogic) {
         super();
+
+        myTetrisGame = theGame;
+        myGameLogic = theLogic;
 
         layoutComponents();
 
-        myKeyMapper = new KeyMapper(this, myTetrisGame);
-
+        myKeyMapper = new KeyMapper(this, theGame);
         setupKeys();
-
     }
 
     private void layoutComponents() {
@@ -98,7 +88,7 @@ public final class BaseLayout extends JPanel {
 
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final JPanel controlsInfoPanel = new DirectionLabels();
+        final JPanel controlsInfoPanel = new DirectionLabelsPanel();
         controlsInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
         eastPanel.add(controlsInfoPanel);
@@ -122,9 +112,9 @@ public final class BaseLayout extends JPanel {
         myTetrisGame.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
         myTetrisGame.addPropertyChangeListener(nextPiecePanel);
-        myTetrisGame.addPropertyChangeListener(new AudioManager());
-        ColorSchemeFactory.addPropertyChangeListener(gameBoard);
-        ColorSchemeFactory.addPropertyChangeListener(nextPiecePanel);
+        myTetrisGame.addPropertyChangeListener(new AudioMusicManager());
+        ColorSchemeManager.addPropertyChangeListener(gameBoard);
+        ColorSchemeManager.addPropertyChangeListener(nextPiecePanel);
 
     }
 
@@ -161,50 +151,5 @@ public final class BaseLayout extends JPanel {
         myKeyMapper.mapGameAction(
                 getKeyStroke("pressed M"), GameAction.Controls.END_GAME
         );
-    }
-
-    /**
-     * Creates the JFrame.
-     */
-    public static void createAndShowGui() {
-        final BaseLayout mainPanel = new BaseLayout();
-
-        final JFrame window = new JFrame("Group 3 Tetris");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-
-        final FileMenu menuBar = new FileMenu(window, myTetrisGame);
-        window.setJMenuBar(menuBar);
-
-        window.setContentPane(mainPanel);
-        window.pack();
-
-        final Toolkit tk = Toolkit.getDefaultToolkit();
-        window.setLocation(
-                (tk.getScreenSize().width - window.getWidth()) / 2,
-                (tk.getScreenSize().height - window.getHeight()) / 2
-        );
-
-        window.addWindowFocusListener(new MusicWindowListener());
-
-        window.setVisible(true);
-    }
-
-    private static class MusicWindowListener implements WindowFocusListener {
-
-        @Override
-        public void windowGainedFocus(final WindowEvent e) {
-            myTetrisGame.unPause();
-
-            if (GameControls.GameState.RUNNING.equals(myGameLogic.getLastGameState())) {
-                AudioManager.startMusic();
-            }
-        }
-
-        @Override
-        public void windowLostFocus(final WindowEvent e) {
-            myTetrisGame.pause();
-            AudioManager.stopMusic();
-        }
     }
 }
