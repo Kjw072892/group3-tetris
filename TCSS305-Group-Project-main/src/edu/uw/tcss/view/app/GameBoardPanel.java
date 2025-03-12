@@ -190,11 +190,17 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                     }
                     case GameState.OVER -> {
                         myGameOverDeath = true;
+                        System.out.println("test2");
                         if (!myAnimator.isRunning()) {
                             myAnimator.start();
                         }
                         repaint();
                     }
+
+                    case GameState.WORRY -> {
+                        System.out.println("test");
+                    }
+
                     default -> { }
                 }
             }

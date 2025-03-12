@@ -69,8 +69,7 @@ public final class GameLogic implements PropertyChangeListener {
 
                     myTimer.restart();
                 }
-                case GameState.PAUSED,
-                     GameState.OVER -> {
+                case GameState.OVER -> {
                     myTimer.stop();
                 }
                 case GameState.RUNNING -> {
@@ -78,6 +77,11 @@ public final class GameLogic implements PropertyChangeListener {
                         myTimer.start();
                     }
                 }
+
+                case GameState.WORRY -> {
+
+                }
+
                 default -> throw
                         new EnumConstantNotPresentException(
                                 GameState.class, String.valueOf(newGameState));

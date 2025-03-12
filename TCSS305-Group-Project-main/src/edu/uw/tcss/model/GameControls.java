@@ -238,6 +238,12 @@ public interface GameControls {
          * It may not become RUNNING without requesting a new game.
          */
         OVER,
+
+        NORMAL,
+
+        WORRY,
+
+        PANIC
     }
 
     /**
