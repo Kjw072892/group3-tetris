@@ -1,6 +1,7 @@
 package edu.uw.tcss.util;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 /**
  * Convenience class for modifying the graphics objects of JComponents.

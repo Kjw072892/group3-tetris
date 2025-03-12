@@ -54,7 +54,7 @@ public final class AssetsManager {
      *
      * @param theDirectory the directory where the file may be located
      * @param theFileName the name of the file of interest
-     * @return file path
+     * @return file a path
      */
     public static String getFilePath(final String theDirectory, final String theFileName) {
         return String.join(SYSTEM_SEPARATOR, theDirectory, theFileName);

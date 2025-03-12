@@ -10,13 +10,18 @@ import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.util.ColorSchemeFactory;
 import edu.uw.tcss.util.GraphicsModifier;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 
 /**
@@ -29,8 +34,21 @@ import javax.swing.*;
  */
 public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
+    private static final int ONE_EIGHT_TWO = 182;
+    private static final int ONE_HUNDRED_THREE = 103;
+    private static final int ONE_HUNDRED_SIXTY_NINE = 169;
+    private static final int FORTY_FIVE = 45;
+    private static final int THIRTY_FIVE = 35;
+    private static final int THREE_HUNDRED_FIFTY = 350;
+    private static final int TWO_TWENTY = 220;
+    private static final int EIGHTY = 80;
+    private static final int DELAY = 100;
+    private static final int THIRTY_SIX = 36;
+    private static final int FIFTY_THREE = 53;
+    private static final int FOUR_HUNDRED = 400;
+
     //Properties of the board & blocks.
-    private static final int COLUMNS = 10;         // Number of columns & rows.
+    private static final int COLUMNS = 10;         // Number of columns and rows.
     private static final int ROWS = 20;
     private final int myBlockWidth;
     private final int myBlockHeight;
@@ -43,10 +61,10 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     private final Timer myAnimator;
 
-    private GameControls.FrozenBlocks myFrozen = Sprint1_values.frozenBlocks();
+    private GameControls.FrozenBlocks myFrozen = Sprint1Values.frozenBlocks();
 
     {
-        myTetrisPieces = Sprint1_values.pieces();   // Store Pieces in myTetrisPiece
+        myTetrisPieces = Sprint1Values.pieces();   // Store Pieces in myTetrisPiece
     }
 
     /**
@@ -63,7 +81,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         myBlockHeight = theHeight / ROWS;
         myDeathIcon = new ImageIcon(
                 AssetsManager.getFilePath(AssetsManager.IMAGES_PATH, "oof-noob.gif"));
-        myAnimator = new Timer(1000, new BackGroundColorAnimator());
+        myAnimator = new Timer(DELAY, new BackGroundColorAnimator());
     }
 
     /**
@@ -85,18 +103,18 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         }
     }
 
-    // TODO: magic numbers
+
     private void drawGameOver(final Graphics2D theGraphics) {
-        theGraphics.drawImage(myDeathIcon.getImage(), 45, 35, this);
+        theGraphics.drawImage(myDeathIcon.getImage(), FORTY_FIVE, THIRTY_FIVE, this);
         theGraphics.setColor(Color.BLACK);
-        theGraphics.fillRect(45, 350, 220, 80);
+        theGraphics.fillRect(FORTY_FIVE, THREE_HUNDRED_FIFTY, TWO_TWENTY, EIGHTY);
 
 
-        final Font bigFont = new Font("Arial", Font.BOLD, 36); // 50px size
+        final Font bigFont = new Font("Arial", Font.BOLD, THIRTY_SIX); // 50 px size
         theGraphics.setFont(bigFont);
 
         theGraphics.setColor(Color.WHITE);
-        theGraphics.drawString("Game Over!", 53, 400);
+        theGraphics.drawString("Game Over!", FIFTY_THREE, FOUR_HUNDRED);
     }
 
     private void drawFrozenBlocks(final Graphics theGraphics) {
@@ -205,14 +223,16 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     }
 
     private final class BackGroundColorAnimator implements ActionListener {
+
+
         public void actionPerformed(final ActionEvent theEvent) {
             if (!myFlashColor) {
-                setBackground(new Color(182, 103, 103, 169));
-                myFlashColor = !myFlashColor;
+                setBackground(new Color(ONE_EIGHT_TWO, ONE_HUNDRED_THREE,
+                        ONE_HUNDRED_THREE, ONE_HUNDRED_SIXTY_NINE));
             } else {
                 setBackground(ColorSchemeFactory.getCurrentPrimaryColor());
-                myFlashColor = !myFlashColor;
             }
+            myFlashColor = !myFlashColor;
         }
     }
 

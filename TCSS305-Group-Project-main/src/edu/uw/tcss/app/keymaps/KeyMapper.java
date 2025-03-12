@@ -14,7 +14,6 @@ import javax.swing.KeyStroke;
  * @version 03-05-2025
  */
 public final class KeyMapper {
-    private static final String BIND = "bind";
 
     private final InputMap myInputMap;
     private final ActionMap myActionMap;

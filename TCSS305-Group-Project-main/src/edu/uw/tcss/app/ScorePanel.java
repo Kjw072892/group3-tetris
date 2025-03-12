@@ -1,8 +1,5 @@
 package edu.uw.tcss.app;
 
-import edu.uw.tcss.model.GameControls;
-
-import edu.uw.tcss.util.AudioManagerFX;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -17,8 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
-import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
 
 /**
  * ScorePanel class.
@@ -39,16 +34,6 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
     private static final Font BOLD_FONT = new Font(DIALOG_FONT_NAME, Font.BOLD, BOLD_FONT_SIZE);
 
     private static final Font PLAIN_FONT = new Font(SERIF_FONT_NAME, Font.PLAIN, PLAIN_FONT_SIZE);
-
-    private final int myBoldFontSize = 25;
-
-    private final int myPlainFontSize = 19;
-
-    private final Font myBoldFont = new Font(DIALOG_FONT_NAME, Font.BOLD, myBoldFontSize);
-
-    private final Font myPlainFont = new Font(SERIF_FONT_NAME, Font.PLAIN, myPlainFontSize);
-
-    private final NumberFormat myFormatter = NumberFormat.getInstance(Locale.US);
 
     private final GameLogic myGameLogic;
 
@@ -112,7 +97,7 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
 
 
     /**
-     * creates a formatted panel that a line will sit on.
+     * Creates a formatted panel that a line will sit on.
      * Helper method to create a "label" of sorts.
      *
      * @param thePrefixString string that the line starts with

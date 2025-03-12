@@ -2,9 +2,9 @@ package edu.uw.tcss.app.keymaps;
 
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.util.AudioManagerFX;
-
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+
 
 /**
  * Class that is responsible for running a tetromino

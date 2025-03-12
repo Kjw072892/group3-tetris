@@ -1,25 +1,23 @@
 package edu.uw.tcss.app;
 
-import edu.uw.tcss.model.GameControls;
-
+import static javax.swing.KeyStroke.getKeyStroke;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_FROZEN_BLOCKS;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
-import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
-import edu.uw.tcss.util.AudioManager;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
-import java.beans.PropertyChangeListener;
-import static javax.swing.KeyStroke.getKeyStroke;
 
 import edu.uw.tcss.app.keymaps.GameAction;
 import edu.uw.tcss.app.keymaps.KeyMapper;
 import edu.uw.tcss.app.keymaps.TetrominoAction;
+import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.AudioManager;
 import edu.uw.tcss.util.AudioManagerFX;
 import edu.uw.tcss.util.ColorSchemeFactory;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -46,21 +44,19 @@ public final class BaseLayout extends JPanel {
 
     // aspect ratio for the game board should be 2:1
     private static final int GAME_BOARD_HEIGHT = WEST_PANEL_WIDTH * 2;
-
+    private static final TetrisGame MY_TETRIS_GAME;
     private static final int MINOR_PADDING = 5;
     private static final int MAJOR_PADDING = 10;
-
     private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_PANEL_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
-    private final static TetrisGame myTetrisGame;
-    private final KeyMapper myKeyMapper;
-    private final static GameLogic myGameLogic;
+    private static final GameLogic MY_GAME_LOGIC;
 
+    private final KeyMapper myKeyMapper;
 
     static {
-        myTetrisGame = new TetrisGame();
-        myGameLogic = new GameLogic(myTetrisGame);
+        MY_TETRIS_GAME = new TetrisGame();
+        MY_GAME_LOGIC = new GameLogic(MY_TETRIS_GAME);
     }
 
     /**
@@ -71,7 +67,7 @@ public final class BaseLayout extends JPanel {
 
         layoutComponents();
 
-        myKeyMapper = new KeyMapper(this, myTetrisGame);
+        myKeyMapper = new KeyMapper(this, MY_TETRIS_GAME);
 
         setupKeys();
 
@@ -108,7 +104,7 @@ public final class BaseLayout extends JPanel {
         eastPanel.add(controlsInfoPanel);
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final ScorePanel scoreInfoPanel = new ScorePanel(myGameLogic);
+        final ScorePanel scoreInfoPanel = new ScorePanel(MY_GAME_LOGIC);
 
         scoreInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
@@ -118,16 +114,16 @@ public final class BaseLayout extends JPanel {
         add(eastPanel, BorderLayout.EAST);
 
         // add property change listeners
-        myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, myGameLogic);
-        myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, myGameLogic);
-        myTetrisGame.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, myGameLogic);
-        myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, scoreInfoPanel);
-        myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, scoreInfoPanel);
-        myTetrisGame.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, scoreInfoPanel);
-        myTetrisGame.addPropertyChangeListener(gameBoard);
-        myTetrisGame.addPropertyChangeListener(nextPiecePanel);
-        myTetrisGame.addPropertyChangeListener(new AudioManager());
-        myTetrisGame.addPropertyChangeListener(new AudioManagerFX());
+        MY_TETRIS_GAME.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, MY_GAME_LOGIC);
+        MY_TETRIS_GAME.addPropertyChangeListener(PROPERTY_GAME_STATE, MY_GAME_LOGIC);
+        MY_TETRIS_GAME.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, MY_GAME_LOGIC);
+        MY_TETRIS_GAME.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, scoreInfoPanel);
+        MY_TETRIS_GAME.addPropertyChangeListener(PROPERTY_GAME_STATE, scoreInfoPanel);
+        MY_TETRIS_GAME.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, scoreInfoPanel);
+        MY_TETRIS_GAME.addPropertyChangeListener(gameBoard);
+        MY_TETRIS_GAME.addPropertyChangeListener(nextPiecePanel);
+        MY_TETRIS_GAME.addPropertyChangeListener(new AudioManager());
+        MY_TETRIS_GAME.addPropertyChangeListener(new AudioManagerFX());
         ColorSchemeFactory.addPropertyChangeListener(gameBoard);
         ColorSchemeFactory.addPropertyChangeListener(nextPiecePanel);
 
@@ -178,7 +174,7 @@ public final class BaseLayout extends JPanel {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
 
-        final FileMenu menuBar = new FileMenu(window, myTetrisGame);
+        final FileMenu menuBar = new FileMenu(window, MY_TETRIS_GAME);
         window.setJMenuBar(menuBar);
 
         window.setContentPane(mainPanel);
@@ -195,20 +191,20 @@ public final class BaseLayout extends JPanel {
         window.setVisible(true);
     }
 
-    private static class MusicWindowListener implements WindowFocusListener {
+    private static final class MusicWindowListener implements WindowFocusListener {
 
         @Override
-        public void windowGainedFocus(final WindowEvent e) {
-            myTetrisGame.unPause();
+        public void windowGainedFocus(final WindowEvent theEvent) {
+            MY_TETRIS_GAME.unPause();
 
-            if (GameControls.GameState.RUNNING.equals(myGameLogic.getLastGameState())) {
+            if (GameControls.GameState.RUNNING.equals(MY_GAME_LOGIC.getLastGameState())) {
                 AudioManager.startMusic();
             }
         }
 
         @Override
-        public void windowLostFocus(final WindowEvent e) {
-            myTetrisGame.pause();
+        public void windowLostFocus(final WindowEvent theEvent) {
+            MY_TETRIS_GAME.pause();
             AudioManager.stopMusic();
         }
     }

@@ -1,14 +1,21 @@
 package edu.uw.tcss.app;
 
-import java.util.List;
-import edu.uw.tcss.model.GameControls.IndividualPiece;
-import edu.uw.tcss.model.GameControls.Block;
-import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.GameControls;
+import edu.uw.tcss.model.GameControls.Block;
+import edu.uw.tcss.model.GameControls.IndividualPiece;
+import edu.uw.tcss.model.GameControls.Point;
+import java.util.List;
 
-public final class Sprint1_values {
+/**
+ * @author Kassie
+ * @author Roman
+ * @author Zainab
+ * @author James
+ * @version 3.1.25
+ */
+public final class Sprint1Values {
 
-    private Sprint1_values() {
+    private Sprint1Values() {
 
     }
 

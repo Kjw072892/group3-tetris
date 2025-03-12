@@ -172,7 +172,8 @@ public class AudioManagerFX extends KeyAdapter implements PropertyChangeListener
 
     /**
      * Plays the soundFX when the direction of type string is called.
-     * Usable strings: moved, soft_dropped, rotated, paused, threeLines, fourLines, newLevel.
+     * Usable strings: "moved", "soft_dropped", "rotated", "paused", "threeLines",
+     * "fourLines", "newLevel".
      * @param theMovement the tetris piece position.
      */
     public static void playFX(final String theMovement) {

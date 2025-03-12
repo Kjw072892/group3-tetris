@@ -13,7 +13,7 @@ import javax.swing.AbstractAction;
  */
 public final class GameAction extends AbstractAction {
 
-    private final static String PAUSED_FX = "paused";
+    private static final String PAUSED_FX = "paused";
 
     private final TetrisGame myTetrisGame;
 
@@ -37,7 +37,8 @@ public final class GameAction extends AbstractAction {
     private final Controls myBind;
 
     /**
-     * Instantiates this action object with the bind that corresponds to a game action when action
+     * Instantiates this action object with the bind that corresponds to a game action when
+     * the action
      * performed is called.
      *
      * @param theControlBind the enum constant key

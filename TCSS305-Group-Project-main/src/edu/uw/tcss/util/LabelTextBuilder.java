@@ -23,14 +23,13 @@ public final class LabelTextBuilder {
         final JLabel[] labelsArray = theLabel.clone();
         String fontStyle;
         final StringBuilder formattedString = new StringBuilder("<html>");
-        // TODO: I think the html tag is unnecessary in JLabels(?) - RB
 
         for (JLabel labels : labelsArray) {
             switch (labels.getFont().getStyle()) {
                 case Font.PLAIN -> fontStyle = "normal";
                 case Font.BOLD -> fontStyle = "bold";
                 case Font.ITALIC -> fontStyle = "italic";
-                default -> fontStyle = "-1"; // TODO: why not default to normal? - RB
+                default -> fontStyle = "-1";
             }
 
             formattedString.append("<span style='font-family:")

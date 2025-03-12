@@ -3,8 +3,11 @@ package edu.uw.tcss.app;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.util.AudioManager;
 import edu.uw.tcss.util.ColorSchemeFactory;
-
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 /**
  * FileMenu creation class.
@@ -16,8 +19,8 @@ import javax.swing.*;
  * @version 2.28.25
  */
 public class FileMenu extends JMenuBar {
-    private static final int DEFAULT_DELAY = 1000;
-    private final String myVersion = "3.8.25";
+
+    private final String myVersion = "3.12.25";
 
     private final JMenuItem myFileMenuGameStart = new JMenuItem("Start Game");
     private final JMenuItem myAbout = new JMenuItem("About");
@@ -137,8 +140,7 @@ public class FileMenu extends JMenuBar {
 
         myFileMenuGameStart.addActionListener(theEvent -> myTetris.newGame());
 
-        //TODO: Create helper method to work with audio manager
-        //myFeatureBackGroundMusic.addActionListener(theEvent ->);
+
     }
 
 
