@@ -1,6 +1,8 @@
 package edu.uw.tcss.app.keymaps;
 
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.AudioManagerFX;
+
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
@@ -12,6 +14,12 @@ import javax.swing.AbstractAction;
  * @version 2025-03-08
  */
 public final class TetrominoAction extends AbstractAction {
+
+    private static final String MOVED = "moved";
+
+    private static final String ROTATED = "rotated";
+
+    private static final String SOFT_DROPPED = "soft_dropped";
 
     private final TetrisGame myTetrisGame;
 
@@ -62,12 +70,34 @@ public final class TetrominoAction extends AbstractAction {
     @Override
     public void actionPerformed(final ActionEvent theEvent) {
         switch (myBind) {
-            case Controls.LEFT -> myTetrisGame.left();
-            case Controls.RIGHT -> myTetrisGame.right();
-            case Controls.DOWN -> myTetrisGame.down();
-            case Controls.DROP -> myTetrisGame.drop();
-            case Controls.ROTATE_CW -> myTetrisGame.rotateCW();
-            case Controls.ROTATE_CCW -> myTetrisGame.rotateCCW();
+            case Controls.LEFT -> {
+                myTetrisGame.left();
+                AudioManagerFX.playFX(MOVED);
+            }
+            case Controls.RIGHT -> {
+                myTetrisGame.right();
+                AudioManagerFX.playFX(MOVED);
+            }
+
+            case Controls.DOWN -> {
+                myTetrisGame.down();
+                AudioManagerFX.playFX(MOVED);
+            }
+            case Controls.DROP -> {
+                myTetrisGame.drop();
+                AudioManagerFX.playFX(SOFT_DROPPED);
+            }
+
+            case Controls.ROTATE_CW -> {
+                myTetrisGame.rotateCW();
+                AudioManagerFX.playFX(ROTATED);
+            }
+
+            case Controls.ROTATE_CCW -> {
+                myTetrisGame.rotateCCW();
+                AudioManagerFX.playFX(ROTATED);
+            }
+
             default -> throw
                     new EnumConstantNotPresentException(
                             Controls.class,

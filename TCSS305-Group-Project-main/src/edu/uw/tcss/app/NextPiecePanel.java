@@ -1,8 +1,12 @@
 package edu.uw.tcss.app;
 
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE;
+
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
+import edu.uw.tcss.util.ColorSchemeFactory;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -55,7 +59,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
      * Lay out the components and makes this frame visible.
      */
     private void layoutComponents() {
-        setBackground(Color.BLUE);
+        setBackground(ColorSchemeFactory.getCurrentSecondaryColor());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
@@ -130,10 +134,15 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (Objects.equals(theEvent.getPropertyName(), "This is the new next piece!")
-                && theEvent.getNewValue() != null) {
-            nextPiece = (IndividualPiece) theEvent.getNewValue();
-            repaint();
+        switch (theEvent.getPropertyName()) {
+            case PROPERTY_NEXT_PIECE -> {
+                nextPiece = (IndividualPiece) theEvent.getNewValue();
+                repaint();
+            }
+            case ColorSchemeFactory.PROPERTY_COLOR_SCHEME -> {
+                setBackground(ColorSchemeFactory.getCurrentSecondaryColor());
+                repaint();
+            }
         }
     }
 
@@ -144,16 +153,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
      * @return the color related to theBlock
      */
     private Color getBlockColor(final GameControls.Block theBlock) {
-        return switch (theBlock) {
-            case I -> Color.CYAN;
-            case O -> Color.YELLOW;
-            case T -> Color.MAGENTA;
-            case Z -> Color.WHITE;
-            case L -> Color.ORANGE;
-            case S -> Color.GREEN;
-            case J -> Color.BLUE;
-            default -> Color.DARK_GRAY;
-        };
+        return ColorSchemeFactory.getBlockColors().getOrDefault(theBlock, Color.PINK);
     }
 
     private void drawTheNextPiece(final Graphics theGraphics) {
@@ -194,3 +194,4 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
         }
     }
 }
+

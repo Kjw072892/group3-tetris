@@ -1,6 +1,8 @@
 package edu.uw.tcss.app;
 
 import edu.uw.tcss.model.GameControls;
+
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_FROZEN_BLOCKS;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
@@ -14,6 +16,7 @@ import edu.uw.tcss.app.keymaps.GameAction;
 import edu.uw.tcss.app.keymaps.KeyMapper;
 import edu.uw.tcss.app.keymaps.TetrominoAction;
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.AudioManagerFX;
 import edu.uw.tcss.util.ColorSchemeFactory;
 
 import java.awt.*;
@@ -95,7 +98,6 @@ public final class BaseLayout extends JPanel {
 
         final NextPiecePanel nextPiecePanel = new NextPiecePanel();
         nextPiecePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
-        nextPiecePanel.setBackground(Color.BLUE);
         eastPanel.add(nextPiecePanel);
 
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
@@ -118,12 +120,16 @@ public final class BaseLayout extends JPanel {
         // add property change listeners
         myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, myGameLogic);
         myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, myGameLogic);
+        myTetrisGame.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, myGameLogic);
         myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, scoreInfoPanel);
+        myTetrisGame.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
-        myTetrisGame.addPropertyChangeListener(PROPERTY_NEXT_PIECE, nextPiecePanel);
+        myTetrisGame.addPropertyChangeListener(nextPiecePanel);
         myTetrisGame.addPropertyChangeListener(new AudioManager());
+        myTetrisGame.addPropertyChangeListener(new AudioManagerFX());
         ColorSchemeFactory.addPropertyChangeListener(gameBoard);
+        ColorSchemeFactory.addPropertyChangeListener(nextPiecePanel);
 
     }
 

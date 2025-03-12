@@ -1,0 +1,190 @@
+package edu.uw.tcss.util;
+
+import edu.uw.tcss.app.GameLogic;
+import edu.uw.tcss.app.assets.AssetsManager;
+import edu.uw.tcss.model.GameControls;
+import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
+import edu.uw.tcss.model.TetrisGame;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+
+/**
+ * @author Kassie Whitney
+ * @author Roman Bureacov
+ * @version 3.11.25
+ */
+public class AudioManagerFX implements PropertyChangeListener {
+    private static final Map<String, Long> LAST_SOUND_PLAY_TIME = new HashMap<>();
+    private static final long SOUND_COOLDOWN_MS = 10;
+
+    private static final Logger LOGGER = Logger.getLogger(AudioManagerFX.class.getName());
+
+    private static final Map<Channels, Clip> SOUND_CLIPS = new HashMap<>();
+
+    private static GameControls.GameState myLastGameState = GameControls.GameState.OVER;
+
+
+    static {
+        LOGGER.setLevel(Level.ALL);
+        preloadSounds();
+    }
+    /**
+     * AudioManagerFX constructor.
+     */
+    public AudioManagerFX() {
+        super();
+    }
+
+    /**
+     * FX channels.
+     */
+    public enum Channels {
+        /**
+         * FX sound for roblox death sound.
+         */
+        ROBLOX_DEATH_SOUND,
+        /**
+         * FX sound for changed position FX.
+         */
+        CHANGED_POSITION_FX,
+
+        /**
+         * FX sound for drop FX.
+         */
+        DROP_FX,
+
+        /**
+         * FX sound for rotateFX.
+         */
+        ROTATE_FX,
+
+        /**
+         * FX sound for line Cleared.
+         */
+        LINE_CLEARED_FX,
+
+        /**
+         * FX sound for soft Drop.
+         */
+        SOFT_DROP_FX
+
+    }
+
+    private static void preloadSounds() {
+        for (Channels channels : Channels.values()) {
+            try {
+                final File soundFile = AssetsManager.getFile(AssetsManager.SFX_PATH,
+                        getSoundFileName(channels));
+
+                final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
+
+                final Clip clip = AudioSystem.getClip();
+
+                clip.open(stream);
+
+                SOUND_CLIPS.put(channels, clip);
+
+            } catch (final UnsupportedAudioFileException | IOException
+                           | LineUnavailableException e) {
+                LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
+            }
+        }
+    }
+
+    private static String getSoundFileName(final Channels theChannel) {
+        return switch (theChannel) {
+            case ROBLOX_DEATH_SOUND -> "Roblox Death Sound.wav";
+            case DROP_FX ->  "dropFX.wav";
+            case LINE_CLEARED_FX -> "lineClearedFX.wav";
+            case CHANGED_POSITION_FX -> "moveFX.wav";
+            case ROTATE_FX -> "rotateFX.wav";
+            case SOFT_DROP_FX -> "softDropFX.wav";
+        };
+    }
+
+    /**
+     * Plays the fx sound when invoked.
+     * @param theChannel the fx sound clip.
+     */
+    public static void playSoundFX(final Channels theChannel) {
+        final Clip clip = SOUND_CLIPS.get(theChannel);
+
+        if (clip != null) {
+
+            if (clip.isRunning()) {
+                clip.stop();
+            }
+            clip.setFramePosition(0);
+            clip.start();
+
+
+        }
+    }
+
+
+    /**
+     * Plays the soundFX when the direction of type string is called.
+     * Usable strings: moved, dropped, rotated.
+     * @param theMovement the tetris piece position.
+     */
+    public static void playFX(final String theMovement) {
+        final long currentTime = System.currentTimeMillis();
+
+        final long lastPlayTime = LAST_SOUND_PLAY_TIME.getOrDefault(theMovement, 0L);
+
+        if (currentTime - lastPlayTime >= SOUND_COOLDOWN_MS) {
+            LAST_SOUND_PLAY_TIME.put(theMovement, currentTime);
+
+            switch (theMovement) {
+                case "moved" -> playSoundFX(Channels.CHANGED_POSITION_FX);
+                case "soft_dropped" -> playSoundFX(Channels.SOFT_DROP_FX);
+                case "rotated" -> playSoundFX(Channels.ROTATE_FX);
+                default -> {
+                }
+            }
+        }
+    }
+
+
+
+    @Override
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+
+        if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_GAME_STATE)
+                && theEvent.getNewValue().equals(GameControls.GameState.OVER)) {
+            playSoundFX(Channels.ROBLOX_DEATH_SOUND);
+
+
+        } else if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_ROWS_CLEARED)) {
+
+            playSoundFX(Channels.LINE_CLEARED_FX);
+
+        } else if (PropertyChangeEnabledGameControls.PROPERTY_FROZEN_BLOCKS.
+                equals(theEvent.getPropertyName())
+                && !GameControls.GameState.NEW.equals(myLastGameState)) {
+
+            playSoundFX(Channels.DROP_FX);
+
+        } else if (PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE
+                .equals(theEvent.getPropertyName())) {
+
+            myLastGameState = (GameControls.GameState) theEvent.getNewValue();
+        }
+    }
+
+
+}

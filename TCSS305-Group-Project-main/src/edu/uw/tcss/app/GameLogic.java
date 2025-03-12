@@ -1,5 +1,6 @@
 package edu.uw.tcss.app;
 
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_FROZEN_BLOCKS;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
 import static edu.uw.tcss.model.GameControls.GameState;
@@ -19,13 +20,16 @@ import javax.swing.Timer;
  */
 public final class GameLogic implements PropertyChangeListener {
 
-    private static final int SCORE_PER_ROW_CLEARED = 100;
-    private static final int SCORE_PER_ADD_ROW = 50;
-    private static final int LINES_PER_LEVEL = 5;
+    private static final int ONE_LINE_SCORE = 40;
+    private static final int TWO_LINE_SCORE = 100;
+    private static final int THREE_LINE_SCORE = 300;
+    private static final int FOUR_LINE_SCORE = 1200;
+    private static final int LINES_PER_SCORE = 5;
+    private static final int SCORE_PER_PIECE = 4;
 
     /** Default millisecond delay of the timer */
     private static final int DEFAULT_DELAY = 1000;
-    private static final int DELAY_DECREMENT = 25;
+    private static final int DELAY_DECREMENT = 50;
 
     private final Timer myTimer;
     private final TetrisGame myTetrisGame;
@@ -33,6 +37,7 @@ public final class GameLogic implements PropertyChangeListener {
     private int myScore;
     private int myLinesCleared;
     private GameState myLastGameState = GameState.OVER;
+    private final int myNextLevelTimer = 5;
 
     GameLogic(final TetrisGame theTetrisGame) {
         myTetrisGame = theTetrisGame;
@@ -49,6 +54,10 @@ public final class GameLogic implements PropertyChangeListener {
             updateLevel();
             updateScore(rowsCleared);
 
+        } else if (PROPERTY_FROZEN_BLOCKS.equals(theEvent.getPropertyName())) {
+            if (!GameState.NEW.equals(myLastGameState)) {
+                myScore += SCORE_PER_PIECE;
+            }
         } else if (PROPERTY_GAME_STATE.equals(theEvent.getPropertyName())) {
             final GameState newGameState =
                     (GameState) theEvent.getNewValue();
@@ -62,7 +71,9 @@ public final class GameLogic implements PropertyChangeListener {
                     myTimer.restart();
                 }
                 case GameState.PAUSED,
-                     GameState.OVER -> myTimer.stop();
+                     GameState.OVER -> {
+                    myTimer.stop();
+                }
                 case GameState.RUNNING -> {
                     if (!GameState.RUNNING.equals(myLastGameState)) {
                         myTimer.start();
@@ -75,6 +86,7 @@ public final class GameLogic implements PropertyChangeListener {
 
             myLastGameState = newGameState;
         }
+
     }
 
     /**
@@ -87,7 +99,7 @@ public final class GameLogic implements PropertyChangeListener {
     }
 
     private void updateLevel() {
-        final int newLevel = myLinesCleared / LINES_PER_LEVEL + 1;
+        final int newLevel = myLinesCleared / LINES_PER_SCORE + 1;
 
         if (newLevel > myCurrentLevel) {
             myTimer.setDelay(DEFAULT_DELAY - myCurrentLevel * DELAY_DECREMENT);
@@ -106,12 +118,23 @@ public final class GameLogic implements PropertyChangeListener {
     }
 
     private void updateScore(final int theLinesCleared) {
-        myScore += SCORE_PER_ROW_CLEARED * theLinesCleared;
-        myScore += SCORE_PER_ADD_ROW * (theLinesCleared - 1);
+
+        final int oneLine = 1;
+        final int twoLine = 2;
+        final int threeLine = 3;
+        final int fourLine = 4;
+
+        myScore += switch (theLinesCleared) {
+            case oneLine -> ONE_LINE_SCORE * myCurrentLevel;
+            case twoLine -> TWO_LINE_SCORE * myCurrentLevel;
+            case threeLine -> THREE_LINE_SCORE * myCurrentLevel;
+            case fourLine -> FOUR_LINE_SCORE * myCurrentLevel;
+            default -> 0;
+        };
     }
 
     /**
-     * Gets the current amount of lines cleared in the tetris game.
+     * Gets the current number of lines cleared in the tetris game.
      *
      * @return the number of lines cleared in the tetris game thus far.
      */
