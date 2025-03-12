@@ -49,28 +49,23 @@ public final class BaseLayout extends JPanel {
     private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_PANEL_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
-    private final static TetrisGame myTetrisGame;
+    private final TetrisGame myTetrisGame;
     private final KeyMapper myKeyMapper;
-    private final static GameLogic myGameLogic;
-
-
-    static {
-        myTetrisGame = new TetrisGame();
-        myGameLogic = new GameLogic(myTetrisGame);
-    }
+    private final GameLogic myGameLogic;
 
     /**
      * Constructor for Base Layout.
      */
-    public BaseLayout() {
+    public BaseLayout(final TetrisGame theGame, final GameLogic theLogic) {
         super();
+
+        myTetrisGame = theGame;
+        myGameLogic = theLogic;
 
         layoutComponents();
 
-        myKeyMapper = new KeyMapper(this, myTetrisGame);
-
+        myKeyMapper = new KeyMapper(this, theGame);
         setupKeys();
-
     }
 
     private void layoutComponents() {
@@ -161,50 +156,5 @@ public final class BaseLayout extends JPanel {
         myKeyMapper.mapGameAction(
                 getKeyStroke("pressed M"), GameAction.Controls.END_GAME
         );
-    }
-
-    /**
-     * Creates the JFrame.
-     */
-    public static void createAndShowGui() {
-        final BaseLayout mainPanel = new BaseLayout();
-
-        final JFrame window = new JFrame("Group 3 Tetris");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-
-        final FileMenu menuBar = new FileMenu(window, myTetrisGame);
-        window.setJMenuBar(menuBar);
-
-        window.setContentPane(mainPanel);
-        window.pack();
-
-        final Toolkit tk = Toolkit.getDefaultToolkit();
-        window.setLocation(
-                (tk.getScreenSize().width - window.getWidth()) / 2,
-                (tk.getScreenSize().height - window.getHeight()) / 2
-        );
-
-        window.addWindowFocusListener(new MusicWindowListener());
-
-        window.setVisible(true);
-    }
-
-    private static class MusicWindowListener implements WindowFocusListener {
-
-        @Override
-        public void windowGainedFocus(final WindowEvent e) {
-            myTetrisGame.unPause();
-
-            if (GameControls.GameState.RUNNING.equals(myGameLogic.getLastGameState())) {
-                AudioManager.startMusic();
-            }
-        }
-
-        @Override
-        public void windowLostFocus(final WindowEvent e) {
-            myTetrisGame.pause();
-            AudioManager.stopMusic();
-        }
     }
 }

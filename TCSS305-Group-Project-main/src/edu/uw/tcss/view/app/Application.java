@@ -24,7 +24,7 @@ public final class Application extends JPanel {
      */
     public static void main(final String[] theArgs) {
 
-        invokeLater(BaseLayout::createAndShowGui);
+        invokeLater(BaseFrame::createFrame);
 
     }
 }
