@@ -41,16 +41,21 @@ public class AudioMusicManager implements PropertyChangeListener {
         }
     }
 
+    // TODO: remove or move to FX manager
+    @Deprecated
     public enum Channels {
         FX1,
         FX2
 
     }
 
+    // TODO: might want to make another class to handle listening for property changes
+    // TODO: make private based on above ^^^^
     public AudioMusicManager() {
         super();
     }
 
+    @Deprecated
     public static void playSoundFX(final Channels theChannel, final String theSoundName) {
         try {
             final File soundFile =
@@ -102,6 +107,8 @@ public class AudioMusicManager implements PropertyChangeListener {
         }
     }
 
+    // TODO: remove or move to FX manager
+    @Deprecated
     public static void stopSoundFX(final Channels theChannel) {
         switch (theChannel) {
             case FX1 -> myFX1Channel.stop();
@@ -118,6 +125,7 @@ public class AudioMusicManager implements PropertyChangeListener {
         myMusicChannel.stop();
     }
 
+    // TODO: might want to make another class that handles all of this
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
         switch (theEvent.getPropertyName()) {
