@@ -141,6 +141,16 @@ public final class ColorSchemeFactory {
     }
 
     /**
+     * Convenience method to get the map of main color of the static color scheme.
+     *
+     * @return primary color of the current color scheme.
+     * returns null if the color for the specified main color has not been specified.
+     */
+    public static Color getMainColors(final MainColors theMainColor) {
+        return myCurrentColorScheme.mainColors().getOrDefault(theMainColor, null);
+    }
+
+    /**
      * Convenience method to get the map of blocks and colors.
      *
      * @return map of blocks and their associated colors of the current color scheme.

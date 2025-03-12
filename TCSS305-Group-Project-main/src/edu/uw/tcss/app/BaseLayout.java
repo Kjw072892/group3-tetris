@@ -1,6 +1,8 @@
 package edu.uw.tcss.app;
 
 import edu.uw.tcss.model.GameControls;
+
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_FROZEN_BLOCKS;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
@@ -120,6 +122,7 @@ public final class BaseLayout extends JPanel {
         myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, myGameLogic);
         myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, scoreInfoPanel);
+        myTetrisGame.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
         myTetrisGame.addPropertyChangeListener(PROPERTY_NEXT_PIECE, nextPiecePanel);
         myTetrisGame.addPropertyChangeListener(new AudioManager());

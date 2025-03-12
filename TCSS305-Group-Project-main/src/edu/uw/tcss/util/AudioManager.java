@@ -137,7 +137,6 @@ public class AudioManager implements PropertyChangeListener {
 
     public static BackgroundMusic getMusicTrap() {
         return new BackgroundMusic("Trap Tetris", "TrapTetris.wav");
-
     }
 
     public static BackgroundMusic getMusicAlt() {
