@@ -3,6 +3,7 @@ package edu.uw.tcss.util;
 import static edu.uw.tcss.model.GameControls.GameState;
 
 import edu.uw.tcss.app.assets.AssetsManager;
+import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -17,11 +18,14 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class AudioManager implements PropertyChangeListener {
+/**
+ * @author Kassie Whitney
+ * @author Roman Bureacov
+ * @version 3.11.25
+ */
+public class AudioManager  implements PropertyChangeListener {
 
     private static Clip myMusicChannel;
-    private static Clip myFX1Channel;
-    private static Clip myFX2Channel;
 
     private static final Logger LOGGER = Logger.getLogger(AudioManager.class.getName());
 
@@ -29,9 +33,6 @@ public class AudioManager implements PropertyChangeListener {
         LOGGER.setLevel(Level.ALL);
         try {
             myMusicChannel = AudioSystem.getClip();
-            myFX1Channel = AudioSystem.getClip();
-            myFX2Channel = AudioSystem.getClip();
-
             myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
             setMusic(getMusicEpic());
 
@@ -41,34 +42,19 @@ public class AudioManager implements PropertyChangeListener {
         }
     }
 
-    public enum Channels {
-        FX1,
-        FX2
 
-    }
-
+    /**
+     * AudioManager Constructor.
+     */
     public AudioManager() {
         super();
     }
 
-    public static void playSoundFX(final Channels theChannel, final String theSoundName) {
-        try {
-            final File soundFile =
-                    AssetsManager.getFile(AssetsManager.SFX_PATH, theSoundName);
 
-            final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
-
-            switch (theChannel) {
-                case FX1 -> startSound(myFX1Channel, stream);
-                case FX2 -> startSound(myFX2Channel, stream);
-                default -> { }
-            }
-
-        } catch (final UnsupportedAudioFileException | IOException e) {
-            LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
-        }
-    }
-
+    /**
+     * Sets the background music file to open for access.
+     * @param theMusic the background music clip.
+     */
     public static void setMusic(final BackgroundMusic theMusic) {
         try {
             myMusicChannel.stop();
@@ -85,30 +71,9 @@ public class AudioManager implements PropertyChangeListener {
         }
     }
 
-    private static void startSound(final Clip theClip, final AudioInputStream theStream) {
-        try {
-            if (theClip.isActive()) {
-                theClip.stop();
-            }
 
-            if (theClip.isOpen()) {
-                theClip.close();
-            }
 
-            theClip.open(theStream);
-            theClip.start();
-        } catch (final LineUnavailableException | IOException e) {
-            LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
-        }
-    }
 
-    public static void stopSoundFX(final Channels theChannel) {
-        switch (theChannel) {
-            case FX1 -> myFX1Channel.stop();
-            case FX2 -> myFX2Channel.stop();
-            default -> { }
-        }
-    }
 
     public static void startMusic() {
         myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
@@ -126,6 +91,19 @@ public class AudioManager implements PropertyChangeListener {
                 getMusicTrap(),
                 getMusicAlt()
         };
+    }
+
+    @Override
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+
+        if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_GAME_STATE)) {
+            switch (theEvent.getNewValue()) {
+                case GameState.NEW, GameState.RUNNING -> startMusic();
+                case GameState.PAUSED, GameState.OVER -> stopMusic();
+                default -> {
+                }
+            }
+        }
     }
 
 
@@ -149,27 +127,7 @@ public class AudioManager implements PropertyChangeListener {
         return new BackgroundMusic("Alternative Tetris", "TheSamovars.wav");
     }
 
-    @Override
-    public void propertyChange(final PropertyChangeEvent theEvent) {
-        switch (theEvent.getPropertyName()) {
-            case TetrisGame.PROPERTY_GAME_STATE -> {
-                switch (theEvent.getNewValue()) {
-                    case GameState.NEW,
-                         GameState.RUNNING -> {
-                        stopSoundFX(Channels.FX1);
-                        startMusic();
-                    }
-                    case GameState.PAUSED -> stopMusic();
-                    case GameState.OVER -> {
-                        stopMusic();
-                        playSoundFX(Channels.FX1, "Roblox Death Sound.wav");
-                    }
 
-                    default -> { }
-                }
-            }
-        }
-    }
 
     public record BackgroundMusic(String name, String fileName) {
 

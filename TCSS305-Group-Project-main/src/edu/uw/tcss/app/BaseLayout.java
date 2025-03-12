@@ -16,6 +16,7 @@ import edu.uw.tcss.app.keymaps.GameAction;
 import edu.uw.tcss.app.keymaps.KeyMapper;
 import edu.uw.tcss.app.keymaps.TetrominoAction;
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.AudioManagerFX;
 import edu.uw.tcss.util.ColorSchemeFactory;
 
 import java.awt.*;
@@ -126,6 +127,7 @@ public final class BaseLayout extends JPanel {
         myTetrisGame.addPropertyChangeListener(gameBoard);
         myTetrisGame.addPropertyChangeListener(nextPiecePanel);
         myTetrisGame.addPropertyChangeListener(new AudioManager());
+        myTetrisGame.addPropertyChangeListener(new AudioManagerFX());
         ColorSchemeFactory.addPropertyChangeListener(gameBoard);
         ColorSchemeFactory.addPropertyChangeListener(nextPiecePanel);
 
