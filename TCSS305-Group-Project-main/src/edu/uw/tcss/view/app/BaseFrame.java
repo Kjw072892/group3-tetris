@@ -2,7 +2,7 @@ package edu.uw.tcss.view.app;
 
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
-import edu.uw.tcss.view.util.AudioManager;
+import edu.uw.tcss.view.util.AudioMusicManager;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
@@ -71,14 +71,14 @@ public class BaseFrame extends JFrame {
             myTetrisGame.unPause();
 
             if (GameControls.GameState.RUNNING.equals(myGameLogic.getLastGameState())) {
-                AudioManager.startMusic();
+                AudioMusicManager.startMusic();
             }
         }
 
         @Override
         public void windowLostFocus(final WindowEvent theEvent) {
             myTetrisGame.pause();
-            AudioManager.stopMusic();
+            AudioMusicManager.stopMusic();
         }
     }
 }

@@ -9,8 +9,7 @@ import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.keymaps.GameAction;
 import edu.uw.tcss.view.app.keymaps.KeyMapper;
 import edu.uw.tcss.view.app.keymaps.TetrominoAction;
-import edu.uw.tcss.view.util.AudioManager;
-import edu.uw.tcss.view.util.ColorSchemeFactory;
+import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -113,7 +112,7 @@ public final class BasePanel extends JPanel {
         myTetrisGame.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
         myTetrisGame.addPropertyChangeListener(nextPiecePanel);
-        myTetrisGame.addPropertyChangeListener(new AudioManager());
+        myTetrisGame.addPropertyChangeListener(new AudioMusicManager());
         ColorSchemeManager.addPropertyChangeListener(gameBoard);
         ColorSchemeManager.addPropertyChangeListener(nextPiecePanel);
 

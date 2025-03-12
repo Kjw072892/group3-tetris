@@ -1,6 +1,7 @@
 package edu.uw.tcss.view.util;
 
 import static edu.uw.tcss.model.GameControls.GameState;
+import static edu.uw.tcss.view.util.AudioMusicFactory.BackgroundMusic;
 
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
@@ -17,13 +18,13 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class AudioManager implements PropertyChangeListener {
+public class AudioMusicManager implements PropertyChangeListener {
 
     private static Clip myMusicChannel;
     private static Clip myFX1Channel;
     private static Clip myFX2Channel;
 
-    private static final Logger LOGGER = Logger.getLogger(AudioManager.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AudioMusicManager.class.getName());
 
     static {
         LOGGER.setLevel(Level.ALL);
@@ -33,7 +34,7 @@ public class AudioManager implements PropertyChangeListener {
             myFX2Channel = AudioSystem.getClip();
 
             myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
-            setMusic(getMusicEpic());
+            setMusic(AudioMusicFactory.getMusicEpic());
 
         } catch (final LineUnavailableException e) {
             LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
@@ -46,7 +47,7 @@ public class AudioManager implements PropertyChangeListener {
 
     }
 
-    public AudioManager() {
+    public AudioMusicManager() {
         super();
     }
 
@@ -74,7 +75,7 @@ public class AudioManager implements PropertyChangeListener {
             myMusicChannel.close();
 
             final File soundFile =
-                    AssetsManager.getFile(AssetsManager.MUSIC_PATH, theMusic.fileName);
+                    AssetsManager.getFile(AssetsManager.MUSIC_PATH, theMusic.fileName());
             final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
 
             myMusicChannel.open(stream);
@@ -117,37 +118,6 @@ public class AudioManager implements PropertyChangeListener {
         myMusicChannel.stop();
     }
 
-    public static BackgroundMusic[] getBackgroundMusic() {
-        return new BackgroundMusic[] {
-                getMusicKalimba(),
-                getMusicEpic(),
-                getMusicRetro(),
-                getMusicTrap(),
-                getMusicAlt()
-        };
-    }
-
-
-    public static BackgroundMusic getMusicKalimba() {
-        return new BackgroundMusic("Kalimba", "Kalimba.wav");
-    }
-
-    public static BackgroundMusic getMusicRetro() {
-        return new BackgroundMusic("Retro Tetris", "retroTetris.wav");
-    }
-
-    public static BackgroundMusic getMusicEpic() {
-        return new BackgroundMusic("Epic Tetris", "Korobeiniki.wav");
-    }
-
-    public static BackgroundMusic getMusicTrap() {
-        return new BackgroundMusic("Trap Tetris", "TrapTetris.wav");
-    }
-
-    public static BackgroundMusic getMusicAlt() {
-        return new BackgroundMusic("Alternative Tetris", "TheSamovars.wav");
-    }
-
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
         switch (theEvent.getPropertyName()) {
@@ -167,14 +137,6 @@ public class AudioManager implements PropertyChangeListener {
                     default -> { }
                 }
             }
-        }
-    }
-
-    public record BackgroundMusic(String name, String fileName) {
-
-        @Override
-        public String toString() {
-            return name;
         }
     }
 }
