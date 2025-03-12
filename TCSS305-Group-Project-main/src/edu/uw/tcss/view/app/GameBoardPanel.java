@@ -204,6 +204,10 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                         System.out.println("test");
                     }
 
+                    case GameState.PANIC -> {
+                        System.out.println("PANIC");
+                    }
+
                     default -> { }
                 }
             }

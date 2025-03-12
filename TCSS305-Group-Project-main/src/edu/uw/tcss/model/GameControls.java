@@ -239,8 +239,6 @@ public interface GameControls {
          */
         OVER,
 
-        NORMAL,
-
         WORRY,
 
         PANIC

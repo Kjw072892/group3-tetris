@@ -175,7 +175,7 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
      */
     @Override
     public void endGame() {
-        if (myState == GameState.RUNNING || myState == GameState.PAUSED || myState == GameState.PANIC || myState == GameState.WORRY) {
+        if (isRunning() || myState == GameState.PAUSED) {
             setGameState(GameState.OVER);
         }
     }
@@ -241,7 +241,7 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
      */
     @Override
     public void togglePause() {
-        if (myState == GameState.RUNNING || myState == GameState.PANIC || myState == GameState.WORRY) {
+        if (isRunning()) {
             setGameState(GameState.PAUSED);
 //            System.out.println(
 //                    new IndividualPiece(
@@ -342,6 +342,7 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
                         new FrozenBlocks(List.copyOf(myFrozenBlocks)));
             }
             checkHalfWay();
+            checkThreeFourths();
         }
     }
 
@@ -621,25 +622,54 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
     }
 
     private void checkHalfWay() {
-        int halfway = myFrozenBlocks.size() / 2;
+        final int halfway = myFrozenBlocks.size() / 2;
+
+        boolean foundBlock = false;
 
         if (isRunning()) {
-
-            for(int i = 0; i < myFrozenBlocks.get(halfway).length; i++) {
+            for (int i = 0; i < myFrozenBlocks.get(halfway).length; i++) {
                 if (myFrozenBlocks.get(halfway)[i] != null) {
-
-
-
-                    if(!wasWorried) {
-                        setGameState(GameState.WORRY);
-                    }
-                    wasWorried = true;
-                } else {
-                    setGameState(GameState.RUNNING);
-                    wasWorried = false;
+                    foundBlock = true;
+                    break;
                 }
             }
 
+            if (!wasWorried && foundBlock) {
+                setGameState(GameState.WORRY);
+                wasWorried = true;
+            }
+
+            if (!foundBlock) {
+                setGameState(GameState.RUNNING);
+                wasWorried = false;
+            }
+        }
+    }
+
+    private void checkThreeFourths() {
+        final double threeFourths = myHeight * (double) 3/4;
+
+        final int panicHeight = (int) threeFourths;
+
+        boolean foundBlock = false;
+
+        if (isRunning()) {
+            for (int i = 0; i < myFrozenBlocks.get(panicHeight).length; i++) {
+                if (myFrozenBlocks.get(panicHeight)[i] != null) {
+                    foundBlock = true;
+                    break;
+                }
+            }
+
+            if (!wasPanicing && foundBlock) {
+                setGameState(GameState.PANIC);
+                wasPanicing = true;
+            }
+
+            if (!foundBlock) {
+                setGameState(GameState.RUNNING);
+                wasPanicing = false;
+            }
         }
     }
 
@@ -789,6 +819,7 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
     }
 
     private boolean isRunning() {
-        return myState == GameState.RUNNING || myState == GameState.PANIC || myState == GameState.WORRY;
+        return myState == GameState.RUNNING
+                || myState == GameState.PANIC || myState == GameState.WORRY;
     }
 }

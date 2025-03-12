@@ -82,6 +82,10 @@ public final class GameLogic implements PropertyChangeListener {
 
                 }
 
+                case GameState.PANIC -> {
+
+                }
+
                 default -> throw
                         new EnumConstantNotPresentException(
                                 GameState.class, String.valueOf(newGameState));
