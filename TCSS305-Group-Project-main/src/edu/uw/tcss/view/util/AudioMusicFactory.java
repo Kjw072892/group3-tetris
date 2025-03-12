@@ -13,9 +13,9 @@ public final class AudioMusicFactory {
     }
 
     /**
-     * Method to fetch the list of recognized background music
+     * Method to fetch the list of recognized background music.
      * 
-     * @return list of recognized background music records
+     * @return array of recognized background music records
      */
     public static BackgroundMusic[] getBackgroundMusic() {
         return new BackgroundMusic[] {
@@ -27,28 +27,38 @@ public final class AudioMusicFactory {
         };
     }
 
+    /** The Kalimba music, default music that came with Windows 7. */
     public static BackgroundMusic getMusicKalimba() {
         return new BackgroundMusic("Kalimba", "Kalimba.wav");
     }
 
+    /** Retro music, Game Boy version of the tetris theme. */
     public static BackgroundMusic getMusicRetro() {
         return new BackgroundMusic("Retro Tetris", "retroTetris.wav");
     }
 
+    /** Epic music, specifically the original music the tetris theme is based on,
+     * sung by the Red Army Choir.
+     */
     public static BackgroundMusic getMusicEpic() {
         return new BackgroundMusic("Epic Tetris", "Korobeiniki.wav");
     }
 
+    /** The trap version of the tetris theme. */
     public static BackgroundMusic getMusicTrap() {
         return new BackgroundMusic("Trap Tetris", "TrapTetris.wav");
     }
 
+    /** the "alternative" tetris theme.
+     * In reality, it's just "The Samovars" sung by the Red Army Choir,
+     * completely unrelated to tetris.
+     */
     public static BackgroundMusic getMusicAlt() {
         return new BackgroundMusic("Alternative Tetris", "TheSamovars.wav");
     }
 
     /**
-     * Record for information relating to the music
+     * Record for information relating to the music.
      * 
      * @param name the formal name of the music
      * @param fileName the file name of the music
