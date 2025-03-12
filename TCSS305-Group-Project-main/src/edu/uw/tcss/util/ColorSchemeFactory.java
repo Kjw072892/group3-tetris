@@ -32,23 +32,16 @@ public final class ColorSchemeFactory {
 
     private static final Set<PropertyChangeListener> LISTENERS = new HashSet<>();
 
-    private static final int TWO_FIVE_FIVE = 255;
-    private static final int ONE_NINETY_TWO = 192;
-    private static final int TWO_ZERO_THREE = 203;
-    private static final int TWO_THIRTY_EIGHT = 238;
-    private static final int ONE_THIRTY = 130;
-    private static final int ONE_THIRTY_FIVE = 135;
-    private static final int TWO_ZERO_SIX = 206;
-    private static final int TWO_FIFTY = 250;
-    private static final int TWO_FORTY = 240;
-    private static final int ONE_TWENTY_EIGHT = 128;
-    private static final int ONE_SEVENTY_THREE = 173;
-    private static final int FORTY_SEVEN = 47;
-    private static final int TWO_FORTY_FIVE = 245;
-    private static final int TWO_ONE_SIX = 216;
-    private static final int ONE_NINE_ONE = 191;
-    private static final int TWO_THREE_FIVE = 235;
-    private static final int TWO_ONE_FIVE = 215;
+    private static final Color PRETTY_I_BLOCK_COLOR = new Color(255, 192, 203);
+    private static final Color PRETTY_J_BLOCK_COLOR = new Color(238, 130, 238);
+    private static final Color PRETTY_L_BLOCK_COLOR = new Color(135, 206, 250);
+    private static final Color PRETTY_O_BLOCK_COLOR = new Color(240, 128, 138);
+    private static final Color PRETTY_S_BLOCK_COLOR = new Color(173, 255, 47);
+    private static final Color PRETTY_T_BLOCK_COLOR = new Color(255, 153, 51);
+    private static final Color PRETTY_Z_BLOCK_COLOR = new Color(245, 255, 250);
+    private static final Color PRETTY_PRIMARY_COLOR = new Color(216, 191, 216);
+    private static final Color PRETTY_PANEL_COLOR = new Color(250, 235, 215);
+
 
     /**
      * The keys for what are the main colors.
@@ -107,26 +100,18 @@ public final class ColorSchemeFactory {
         return new ColorScheme(
                 "Pretty <3",
                 Map.of(
-                        Block.I, new Color(TWO_FIVE_FIVE, ONE_NINETY_TWO, TWO_ZERO_THREE), //Pink
-                        Block.J, new Color(TWO_THIRTY_EIGHT, ONE_THIRTY, TWO_THIRTY_EIGHT), //Violet
-                        Block.L, new Color(ONE_THIRTY_FIVE, TWO_ZERO_SIX, TWO_FIFTY), //Light
-                        // Blue
-                        Block.O, new Color(TWO_FORTY, ONE_TWENTY_EIGHT, ONE_TWENTY_EIGHT),
-                        //Light Coral
-                        Block.S, new Color(ONE_SEVENTY_THREE, TWO_FIVE_FIVE, FORTY_SEVEN),
-                        //Green Yellow
-                        Block.T, new Color(TWO_FORTY, TWO_FIVE_FIVE, TWO_FIVE_FIVE), //Azure
-                        Block.Z, new Color(TWO_FORTY_FIVE, TWO_FIVE_FIVE, TWO_FIFTY) //Mint
-                        // Green
+                        Block.I, PRETTY_I_BLOCK_COLOR,
+                        Block.J, PRETTY_J_BLOCK_COLOR,
+                        Block.L, PRETTY_L_BLOCK_COLOR,
+                        Block.O, PRETTY_O_BLOCK_COLOR,
+                        Block.S, PRETTY_S_BLOCK_COLOR,
+                        Block.T, PRETTY_T_BLOCK_COLOR,
+                        Block.Z, PRETTY_Z_BLOCK_COLOR
                 ),
                 Map.of(
-                        MainColors.Primary, new Color(TWO_ONE_SIX, ONE_NINE_ONE,
-                                TWO_ONE_SIX), //snow
-
-                        MainColors.Secondary, new Color(TWO_FIFTY, TWO_THREE_FIVE,
-                                TWO_ONE_FIVE), //antiqueWhite
-
-                        MainColors.Tertiary, Color.WHITE
+                        MainColors.Primary, PRETTY_PRIMARY_COLOR,
+                        MainColors.Secondary, PRETTY_PANEL_COLOR,
+                        MainColors.Tertiary, PRETTY_PANEL_COLOR
                 )
         );
     }

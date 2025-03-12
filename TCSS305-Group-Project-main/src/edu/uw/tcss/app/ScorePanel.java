@@ -1,5 +1,6 @@
 package edu.uw.tcss.app;
 
+import edu.uw.tcss.util.ColorSchemeFactory;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -35,11 +36,14 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
 
     private static final Font PLAIN_FONT = new Font(SERIF_FONT_NAME, Font.PLAIN, PLAIN_FONT_SIZE);
 
+    private final JPanel myLabelPanel = new JPanel();
+
     private final GameLogic myGameLogic;
 
     private final JLabel myCurrentScoreLabel = new JLabel();
     private final JLabel myClearedLinesLabel = new JLabel();
     private final JLabel myCurrentLevelLabel = new JLabel();
+
 
     /**
      * Constructor for score panel class.
@@ -58,6 +62,8 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         setMyClearedLines(theGameLogic.getLinesCleared());
 
         theScorePanel();
+
+        updateTheme();
 
     }
 
@@ -131,22 +137,21 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createLineBorder(Color.BLACK, borderThickness));
 
-        final JPanel labelPanel = new JPanel();
-        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
-        labelPanel.setBorder(BorderFactory.createEmptyBorder(padding, 0, padding, 0));
+        myLabelPanel.setLayout(new BoxLayout(myLabelPanel, BoxLayout.Y_AXIS));
+        myLabelPanel.setBorder(BorderFactory.createEmptyBorder(padding, 0, padding, 0));
 
         final JPanel scorePanel = formattedLine("Score: ", myCurrentScoreLabel);
-        labelPanel.add(scorePanel);
+        myLabelPanel.add(scorePanel);
 
-        labelPanel.add(Box.createVerticalStrut(spacer));
+        myLabelPanel.add(Box.createVerticalStrut(spacer));
 
         final JPanel linesClearedPanel = formattedLine("Lines: ", myClearedLinesLabel);
-        labelPanel.add(linesClearedPanel);
+        myLabelPanel.add(linesClearedPanel);
 
-        labelPanel.add(Box.createVerticalStrut(spacer));
+        myLabelPanel.add(Box.createVerticalStrut(spacer));
 
         final JPanel currentLevelPanel = formattedLine("Level: ", myCurrentLevelLabel);
-        labelPanel.add(currentLevelPanel);
+        myLabelPanel.add(currentLevelPanel);
 
         final JLabel message = new JLabel("Levels Increase Every 5 Lines!");
         message.setFont(new Font(SERIF_FONT_NAME, Font.PLAIN, fontSize));
@@ -155,15 +160,17 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         final JPanel messagePanel = new JPanel();
         messagePanel.add(message);
 
-        add(labelPanel, BorderLayout.CENTER);
+        add(myLabelPanel, BorderLayout.CENTER);
         add(message, BorderLayout.SOUTH);
-
-        labelPanel.setBackground(Color.GREEN);
-        setBackground(Color.GREEN);
 
         setVisible(true);
         setOpaque(true);
 
+    }
+
+    private void updateTheme() {
+        myLabelPanel.setBackground(ColorSchemeFactory.getCurrentTertiaryColor());
+        setBackground(ColorSchemeFactory.getCurrentTertiaryColor());
     }
 
 
@@ -176,5 +183,11 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         setMyClearedLines(myGameLogic.getLinesCleared());
         setMyCurrentLevel(myGameLogic.getLevel());
         setMyScore(myGameLogic.getScore());
+
+        if (theEvent.getPropertyName().equals(ColorSchemeFactory.PROPERTY_COLOR_SCHEME)) {
+            updateTheme();
+        }
+
+
     }
 }

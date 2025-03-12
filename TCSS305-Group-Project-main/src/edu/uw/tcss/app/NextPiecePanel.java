@@ -16,6 +16,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /**
@@ -59,6 +60,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
      * Lay out the components and makes this frame visible.
      */
     private void layoutComponents() {
+        final int padding = 10;
         setBackground(ColorSchemeFactory.getCurrentSecondaryColor());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
