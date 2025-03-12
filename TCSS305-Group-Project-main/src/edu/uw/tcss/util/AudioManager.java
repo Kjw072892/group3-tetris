@@ -3,7 +3,6 @@ package edu.uw.tcss.util;
 import static edu.uw.tcss.model.GameControls.GameState;
 
 import edu.uw.tcss.app.assets.AssetsManager;
-import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -71,18 +70,24 @@ public class AudioManager  implements PropertyChangeListener {
         }
     }
 
-
-
-
-
+    /**
+     * Starts the music loop.
+     */
     public static void startMusic() {
         myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    /**
+     * Stops the music loop.
+     */
     public static void stopMusic() {
         myMusicChannel.stop();
     }
 
+    /**
+     * Retrieves the backgroundMusic from an array.
+     * @return An array BackgroundMusic (of a record type).
+     */
     public static BackgroundMusic[] getBackgroundMusic() {
         return new BackgroundMusic[] {
                 getMusicKalimba(),
@@ -107,28 +112,52 @@ public class AudioManager  implements PropertyChangeListener {
     }
 
 
+    /**
+     * Gets the kalimba music.
+     * @return the kalimba music file.
+     */
     public static BackgroundMusic getMusicKalimba() {
         return new BackgroundMusic("Kalimba", "Kalimba.wav");
     }
 
+    /**
+     * Gets the retro tetris.
+     * @return the retro music file.
+     */
     public static BackgroundMusic getMusicRetro() {
         return new BackgroundMusic("Retro Tetris", "retroTetris.wav");
     }
 
+    /**
+     * Gets the epic tetris music.
+     * @return the retro music file.
+     */
     public static BackgroundMusic getMusicEpic() {
         return new BackgroundMusic("Epic Tetris", "Korobeiniki.wav");
     }
 
+    /**
+     * Gets the trap tetris music.
+     * @return the trap tetris music file.
+     */
     public static BackgroundMusic getMusicTrap() {
         return new BackgroundMusic("Trap Tetris", "TrapTetris.wav");
     }
 
+    /**
+     * Gets the alt tetris music.
+     * @return the alt tetris music file.
+     */
     public static BackgroundMusic getMusicAlt() {
         return new BackgroundMusic("Alternative Tetris", "TheSamovars.wav");
     }
 
 
-
+    /**
+     * Stores the background music file name and song name in record.
+     * @param name the name of the background music.
+     * @param fileName the name of the background music wav file.
+     */
     public record BackgroundMusic(String name, String fileName) {
 
         @Override
