@@ -131,7 +131,6 @@ public class AudioManagerFX implements PropertyChangeListener {
         if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_GAME_STATE)) {
             if (theEvent.getNewValue().equals(GameControls.GameState.OVER)) {
                 playSoundFX(Channels.ROBLOX_DEATH_SOUND, "robloxDeathSound.wav");
-                LOGGER.info(() -> "roblox sound activated");
             }
         }
     }
