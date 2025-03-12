@@ -1,5 +1,6 @@
 package edu.uw.tcss.app;
 
+import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_FROZEN_BLOCKS;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
 import static edu.uw.tcss.model.GameControls.GameState;
@@ -51,6 +52,10 @@ public final class GameLogic implements PropertyChangeListener {
             updateLevel();
             updateScore(rowsCleared);
 
+        } else if (PROPERTY_FROZEN_BLOCKS.equals(theEvent.getPropertyName())) {
+            if (!GameState.NEW.equals(myLastGameState)) {
+                // TODO: add stuff here to add score per piece
+            }
         } else if (PROPERTY_GAME_STATE.equals(theEvent.getPropertyName())) {
             final GameState newGameState =
                     (GameState) theEvent.getNewValue();
