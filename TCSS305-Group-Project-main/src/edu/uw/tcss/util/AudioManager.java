@@ -7,10 +7,15 @@ import edu.uw.tcss.model.TetrisGame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioManager implements PropertyChangeListener {
 
@@ -18,7 +23,10 @@ public class AudioManager implements PropertyChangeListener {
     private static Clip myFX1Channel;
     private static Clip myFX2Channel;
 
+    private static final Logger LOGGER = Logger.getLogger(AudioManager.class.getName());
+
     static {
+        LOGGER.setLevel(Level.ALL);
         try {
             myMusicChannel = AudioSystem.getClip();
             myFX1Channel = AudioSystem.getClip();
@@ -27,9 +35,9 @@ public class AudioManager implements PropertyChangeListener {
             myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
             setMusic(getMusicEpic());
 
-        } catch (LineUnavailableException e) {
-            // TODO: use logger
-            e.printStackTrace();
+        } catch (final LineUnavailableException e) {
+            LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
+
         }
     }
 
@@ -56,9 +64,8 @@ public class AudioManager implements PropertyChangeListener {
                 default -> { }
             }
 
-        } catch (Exception e) {
-            // TODO: catch statement
-            e.printStackTrace();
+        } catch (final UnsupportedAudioFileException | IOException e) {
+            LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -73,9 +80,8 @@ public class AudioManager implements PropertyChangeListener {
 
             myMusicChannel.open(stream);
 
-        } catch (Exception e) {
-            // TODO: ?????
-            e.printStackTrace();
+        } catch (final UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -91,9 +97,8 @@ public class AudioManager implements PropertyChangeListener {
 
             theClip.open(theStream);
             theClip.start();
-        } catch (Exception e) {
-            // TODO: ????
-            e.printStackTrace();
+        } catch (final LineUnavailableException | IOException e) {
+            LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -116,6 +121,7 @@ public class AudioManager implements PropertyChangeListener {
     public static BackgroundMusic[] getBackgroundMusic() {
         return new BackgroundMusic[] {
                 getMusicKalimba(),
+                getMusicEpic(),
                 getMusicRetro(),
                 getMusicTrap(),
                 getMusicAlt()
