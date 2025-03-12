@@ -1,6 +1,7 @@
 package edu.uw.tcss.app.keymaps;
 
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.AudioManagerFX;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
@@ -12,7 +13,10 @@ import javax.swing.AbstractAction;
  */
 public final class GameAction extends AbstractAction {
 
+    private final static String PAUSED_FX = "paused";
+
     private final TetrisGame myTetrisGame;
+
 
     /**
      * The possible game controls.
@@ -49,7 +53,10 @@ public final class GameAction extends AbstractAction {
         switch (myBind) {
             case Controls.END_GAME -> myTetrisGame.endGame();
             case Controls.NEW_GAME -> myTetrisGame.newGame();
-            case Controls.PAUSE -> myTetrisGame.pause();
+            case Controls.PAUSE -> {
+                myTetrisGame.pause();
+                AudioManagerFX.playFX(PAUSED_FX);
+            }
             case Controls.UNPAUSE -> myTetrisGame.unPause();
             case Controls.TOGGLE_PAUSE -> myTetrisGame.togglePause();
             default -> throw

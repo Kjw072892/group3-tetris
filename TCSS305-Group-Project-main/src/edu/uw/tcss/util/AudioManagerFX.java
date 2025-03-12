@@ -1,15 +1,14 @@
 package edu.uw.tcss.util;
 
-import edu.uw.tcss.app.GameLogic;
 import edu.uw.tcss.app.assets.AssetsManager;
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
 import edu.uw.tcss.model.TetrisGame;
+import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +26,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author Roman Bureacov
  * @version 3.11.25
  */
-public class AudioManagerFX implements PropertyChangeListener {
+public class AudioManagerFX extends KeyAdapter implements PropertyChangeListener {
     private static final Map<String, Long> LAST_SOUND_PLAY_TIME = new HashMap<>();
     private static final long SOUND_COOLDOWN_MS = 10;
 
@@ -57,15 +56,11 @@ public class AudioManagerFX implements PropertyChangeListener {
          * FX sound for roblox death sound.
          */
         ROBLOX_DEATH_SOUND,
+
         /**
          * FX sound for changed position FX.
          */
         CHANGED_POSITION_FX,
-
-        /**
-         * FX sound for drop FX.
-         */
-        DROP_FX,
 
         /**
          * FX sound for rotateFX.
@@ -80,7 +75,34 @@ public class AudioManagerFX implements PropertyChangeListener {
         /**
          * FX sound for soft Drop.
          */
-        SOFT_DROP_FX
+        SOFT_DROP_FX,
+
+        /**
+         * FX sound for a piece landing.
+         */
+        LANDING_FX,
+
+        /**
+         * FX sound for when paused.
+         */
+        PAUSE_FX,
+
+        /**
+         * FX sound when three lines gets cleared.
+         */
+        THREE_LINES_FX,
+
+        /**
+         * FX sound when four lines gets cleared.
+         */
+        FOUR_LINES_FX,
+
+        /**
+         * FX sound when a new level is reached.
+         */
+        NEW_LEVEL_FX
+
+
 
     }
 
@@ -105,14 +127,26 @@ public class AudioManagerFX implements PropertyChangeListener {
         }
     }
 
+
     private static String getSoundFileName(final Channels theChannel) {
         return switch (theChannel) {
             case ROBLOX_DEATH_SOUND -> "Roblox Death Sound.wav";
-            case DROP_FX ->  "dropFX.wav";
             case LINE_CLEARED_FX -> "lineClearedFX.wav";
             case CHANGED_POSITION_FX -> "moveFX.wav";
             case ROTATE_FX -> "rotateFX.wav";
+            default -> getSoundFileNameHelper(theChannel);
+        };
+    }
+
+    private static String getSoundFileNameHelper(final Channels theChannel) {
+        return switch (theChannel) {
             case SOFT_DROP_FX -> "softDropFX.wav";
+            case PAUSE_FX -> "pauseFX.wav";
+            case LANDING_FX -> "landingFX.wav";
+            case THREE_LINES_FX -> "threeLineFX.wav";
+            case FOUR_LINES_FX -> "fourLineFX.wav";
+            case NEW_LEVEL_FX -> "newLevelFX.wav";
+            default -> "-1";
         };
     }
 
@@ -138,7 +172,7 @@ public class AudioManagerFX implements PropertyChangeListener {
 
     /**
      * Plays the soundFX when the direction of type string is called.
-     * Usable strings: moved, dropped, rotated.
+     * Usable strings: moved, soft_dropped, rotated, paused, threeLines, fourLines, newLevel.
      * @param theMovement the tetris piece position.
      */
     public static void playFX(final String theMovement) {
@@ -153,6 +187,10 @@ public class AudioManagerFX implements PropertyChangeListener {
                 case "moved" -> playSoundFX(Channels.CHANGED_POSITION_FX);
                 case "soft_dropped" -> playSoundFX(Channels.SOFT_DROP_FX);
                 case "rotated" -> playSoundFX(Channels.ROTATE_FX);
+                case "paused" -> playSoundFX(Channels.PAUSE_FX);
+                case "threeLines" -> playSoundFX(Channels.THREE_LINES_FX);
+                case "fourLines" -> playSoundFX(Channels.FOUR_LINES_FX);
+                case "newLevel" -> playSoundFX(Channels.NEW_LEVEL_FX);
                 default -> {
                 }
             }
@@ -177,12 +215,13 @@ public class AudioManagerFX implements PropertyChangeListener {
                 equals(theEvent.getPropertyName())
                 && !GameControls.GameState.NEW.equals(myLastGameState)) {
 
-            playSoundFX(Channels.DROP_FX);
+            playSoundFX(Channels.LANDING_FX);
 
         } else if (PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE
                 .equals(theEvent.getPropertyName())) {
 
             myLastGameState = (GameControls.GameState) theEvent.getNewValue();
+
         }
     }
 

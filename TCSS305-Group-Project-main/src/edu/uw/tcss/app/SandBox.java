@@ -1,6 +1,7 @@
 package edu.uw.tcss.app;
 
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.AudioManagerFX;
 
 /**
  * Sandbox class. Used to test git pulling and pushing. Nothing more, nothing less.
@@ -27,23 +28,24 @@ public final class SandBox {
         final TetrisGame game = new TetrisGame();
         game.newGame();
 
-        System.out.println(game);
-        game.step();
-        System.out.println(game);
-        game.step();
-        System.out.println(game);
-        game.step();
-        System.out.println(game);
-        game.rotateCW();
-        System.out.println(game);
-        game.rotateCW();
-        System.out.println(game);
-        game.rotateCW();
-        System.out.println(game);
-        game.rotateCW();
-        System.out.println(game);
-        game.drop();
-        System.out.println(game);
+//        System.out.println(game);
+//        game.step();
+//        System.out.println(game);
+//        game.step();
+//        System.out.println(game);
+//        game.step();
+//        System.out.println(game);
+//        game.rotateCW();
+//        System.out.println(game);
+//        game.rotateCW();
+//        System.out.println(game);
+//        game.rotateCW();
+//        System.out.println(game);
+//        game.rotateCW();
+//        System.out.println(game);
+//        game.drop();
+//        System.out.println(game);
+
 
     }
 

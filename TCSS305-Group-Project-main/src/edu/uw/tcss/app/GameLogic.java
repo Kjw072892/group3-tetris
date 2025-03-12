@@ -6,6 +6,7 @@ import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_
 import static edu.uw.tcss.model.GameControls.GameState;
 
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.util.AudioManagerFX;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.Timer;
@@ -26,10 +27,12 @@ public final class GameLogic implements PropertyChangeListener {
     private static final int FOUR_LINE_SCORE = 1200;
     private static final int LINES_PER_SCORE = 5;
     private static final int SCORE_PER_PIECE = 4;
+    private static final int THREE_LINES_CLEARED = 3;
+    private static final int FOUR_LINES_CLEARED = 4;
 
     /** Default millisecond delay of the timer */
     private static final int DEFAULT_DELAY = 1000;
-    private static final int DELAY_DECREMENT = 50;
+    private static final int DELAY_DECREMENT = 100;
 
     private final Timer myTimer;
     private final TetrisGame myTetrisGame;
@@ -37,7 +40,6 @@ public final class GameLogic implements PropertyChangeListener {
     private int myScore;
     private int myLinesCleared;
     private GameState myLastGameState = GameState.OVER;
-    private final int myNextLevelTimer = 5;
 
     GameLogic(final TetrisGame theTetrisGame) {
         myTetrisGame = theTetrisGame;
@@ -68,13 +70,14 @@ public final class GameLogic implements PropertyChangeListener {
                     myLinesCleared = 0;
                     myCurrentLevel = 1;
 
-                    myTimer.restart();
+                    myTimer.setDelay(DEFAULT_DELAY);
+
                 }
                 case GameState.PAUSED,
-                     GameState.OVER -> {
-                    myTimer.stop();
-                }
+                     GameState.OVER -> myTimer.stop();
+
                 case GameState.RUNNING -> {
+
                     if (!GameState.RUNNING.equals(myLastGameState)) {
                         myTimer.start();
                     }
@@ -87,6 +90,16 @@ public final class GameLogic implements PropertyChangeListener {
             myLastGameState = newGameState;
         }
 
+    }
+
+    private void playLinesFX(final int theNumLinesCleared) {
+        if (theNumLinesCleared == THREE_LINES_CLEARED) {
+            AudioManagerFX.playFX("threeLines");
+
+        } else if (theNumLinesCleared == FOUR_LINES_CLEARED) {
+
+            AudioManagerFX.playFX("fourLines");
+        }
     }
 
     /**
@@ -102,10 +115,16 @@ public final class GameLogic implements PropertyChangeListener {
         final int newLevel = myLinesCleared / LINES_PER_SCORE + 1;
 
         if (newLevel > myCurrentLevel) {
+
             myTimer.setDelay(DEFAULT_DELAY - myCurrentLevel * DELAY_DECREMENT);
+
+            AudioManagerFX.playFX("newLevel");
         }
 
         myCurrentLevel = newLevel;
+
+
+
     }
 
     /**
@@ -131,6 +150,8 @@ public final class GameLogic implements PropertyChangeListener {
             case fourLine -> FOUR_LINE_SCORE * myCurrentLevel;
             default -> 0;
         };
+        playLinesFX(theLinesCleared);
+
     }
 
     /**

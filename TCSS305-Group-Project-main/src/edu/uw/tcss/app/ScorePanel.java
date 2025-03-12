@@ -2,6 +2,7 @@ package edu.uw.tcss.app;
 
 import edu.uw.tcss.model.GameControls;
 
+import edu.uw.tcss.util.AudioManagerFX;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -95,6 +96,8 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         }
 
         myClearedLinesLabel.setText(FORMATTER.format(theCurrentLines));
+
+
 
     }
 
