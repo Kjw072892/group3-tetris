@@ -193,7 +193,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                     }
                     case GameState.OVER -> {
                         myGameOverDeath = true;
-                        System.out.println("test2");
                         if (!myAnimator.isRunning()) {
                             myAnimator.start();
                         }
@@ -201,11 +200,19 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                     }
 
                     case GameState.WORRY -> {
-                        System.out.println("test");
+                        Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
+                        currentColor = currentColor.darker();
+                        setBackground(currentColor);
                     }
 
                     case GameState.PANIC -> {
-                        System.out.println("PANIC");
+                        Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
+                        currentColor = currentColor.brighter();
+                        setBackground(currentColor);
+                    }
+
+                    case GameState.RUNNING -> {
+                        setBackground(ColorSchemeManager.getCurrentPrimaryColor());
                     }
 
                     default -> { }
@@ -221,11 +228,10 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         public void actionPerformed(final ActionEvent theEvent) {
             if (!myFlashColor) {
                 setBackground(new Color(182, 103, 103, 169));
-                myFlashColor = !myFlashColor;
             } else {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
-                myFlashColor = !myFlashColor;
             }
+            myFlashColor = !myFlashColor;
         }
     }
 

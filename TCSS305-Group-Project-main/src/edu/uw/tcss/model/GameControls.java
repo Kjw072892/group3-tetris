@@ -239,8 +239,14 @@ public interface GameControls {
          */
         OVER,
 
+        /**
+         * An event where if the board pieces go over half the board.
+         */
         WORRY,
 
+        /**
+         * An event where if the board pieces go over 3/4 of the board.
+         */
         PANIC
     }
 

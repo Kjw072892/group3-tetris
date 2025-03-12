@@ -667,7 +667,9 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
             }
 
             if (!foundBlock) {
-                setGameState(GameState.RUNNING);
+                if (!wasWorried) {
+                    setGameState(GameState.RUNNING);
+                }
                 wasPanicing = false;
             }
         }
