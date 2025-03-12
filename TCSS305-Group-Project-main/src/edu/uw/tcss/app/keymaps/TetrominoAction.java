@@ -15,6 +15,12 @@ import javax.swing.AbstractAction;
  */
 public final class TetrominoAction extends AbstractAction {
 
+    private static final String MOVED = "moved";
+
+    private static final String ROTATED = "rotated";
+
+    private static final String SOFT_DROPPED = "soft_dropped";
+
     private final TetrisGame myTetrisGame;
 
     /**
@@ -66,29 +72,30 @@ public final class TetrominoAction extends AbstractAction {
         switch (myBind) {
             case Controls.LEFT -> {
                 myTetrisGame.left();
-                AudioManagerFX.playFX("moved");
+                AudioManagerFX.playFX(MOVED);
             }
             case Controls.RIGHT -> {
                 myTetrisGame.right();
-                AudioManagerFX.playFX("moved");
+                AudioManagerFX.playFX(MOVED);
             }
 
             case Controls.DOWN -> {
                 myTetrisGame.down();
-                AudioManagerFX.playFX("moved");
+                AudioManagerFX.playFX(MOVED);
             }
             case Controls.DROP -> {
                 myTetrisGame.drop();
-                AudioManagerFX.playFX("dropped");
+                AudioManagerFX.playFX(SOFT_DROPPED);
             }
+
             case Controls.ROTATE_CW -> {
                 myTetrisGame.rotateCW();
-                AudioManagerFX.playFX("rotated");
+                AudioManagerFX.playFX(ROTATED);
             }
 
             case Controls.ROTATE_CCW -> {
                 myTetrisGame.rotateCCW();
-                AudioManagerFX.playFX("rotated");
+                AudioManagerFX.playFX(ROTATED);
             }
 
             default -> throw
