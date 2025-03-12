@@ -59,7 +59,6 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
      * Lay out the components and makes this frame visible.
      */
     private void layoutComponents() {
-        final int padding = 10;
         setBackground(ColorSchemeFactory.getCurrentSecondaryColor());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
