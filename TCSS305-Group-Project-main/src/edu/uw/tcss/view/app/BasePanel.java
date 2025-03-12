@@ -5,7 +5,6 @@ import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
 import static javax.swing.KeyStroke.getKeyStroke;
 
-import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.keymaps.GameAction;
 import edu.uw.tcss.view.app.keymaps.KeyMapper;
@@ -14,13 +13,9 @@ import edu.uw.tcss.view.util.AudioManager;
 import edu.uw.tcss.view.util.ColorSchemeFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -31,7 +26,7 @@ import javax.swing.JPanel;
  * @author Kassie Whitney
  * @version 2.26.25
  */
-public final class BaseLayout extends JPanel {
+public final class BasePanel extends JPanel {
 
     private static final int J_FRAME_WIDTH = 500;
 
@@ -56,7 +51,7 @@ public final class BaseLayout extends JPanel {
     /**
      * Constructor for Base Layout.
      */
-    public BaseLayout(final TetrisGame theGame, final GameLogic theLogic) {
+    public BasePanel(final TetrisGame theGame, final GameLogic theLogic) {
         super();
 
         myTetrisGame = theGame;
@@ -93,7 +88,7 @@ public final class BaseLayout extends JPanel {
 
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final JPanel controlsInfoPanel = new DirectionLabels();
+        final JPanel controlsInfoPanel = new DirectionLabelsPanel();
         controlsInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
         eastPanel.add(controlsInfoPanel);

@@ -30,7 +30,7 @@ public class BaseFrame extends JFrame {
         final FileMenu menuBar = new FileMenu(this, myTetrisGame);
         this.setJMenuBar(menuBar);
 
-        final JPanel mainPanel = new BaseLayout(myTetrisGame, myGameLogic);
+        final JPanel mainPanel = new BasePanel(myTetrisGame, myGameLogic);
         this.setContentPane(mainPanel);
 
         configWindow();

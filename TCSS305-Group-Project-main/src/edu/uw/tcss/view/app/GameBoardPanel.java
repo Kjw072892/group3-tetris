@@ -87,7 +87,9 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     // TODO: magic numbers
     private void drawGameOver(final Graphics2D theGraphics) {
-        theGraphics.drawImage(myDeathIcon.getImage(), 45, 35, this);
+        theGraphics.drawImage(myDeathIcon.getImage(),
+                (getWidth() - myDeathIcon.getIconWidth()) / 2,
+                getHeight() / 10, this);
         theGraphics.setColor(Color.BLACK);
         theGraphics.fillRect(45, 350, 220, 80);
 
