@@ -81,11 +81,15 @@ public final class GameLogic implements PropertyChangeListener {
                 }
 
                 case GameState.WORRY -> {
-
+                    if (!GameState.RUNNING.equals(myLastGameState) && !myTimer.isRunning()) {
+                        myTimer.start();
+                    }
                 }
 
                 case GameState.PANIC -> {
-
+                    if (!GameState.RUNNING.equals(myLastGameState) && !myTimer.isRunning()) {
+                        myTimer.start();
+                    }
                 }
 
                 default -> throw

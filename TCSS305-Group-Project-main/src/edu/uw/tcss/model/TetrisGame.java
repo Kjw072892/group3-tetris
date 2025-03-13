@@ -173,6 +173,7 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
                 PROPERTY_FROZEN_BLOCKS,
                 null,
                 new FrozenBlocks(List.copyOf(myFrozenBlocks)));
+
         setGameState(GameState.RUNNING);
     }
 
@@ -226,7 +227,6 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
     @Override
     public void unPause() {
         if (myState == GameState.PAUSED) {
-
             if (myWorried) {
                 setGameState(GameState.WORRY);
             } else {
@@ -236,7 +236,9 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
             if (myPanicking) {
                 setGameState(GameState.PANIC);
             } else {
-                setGameState(GameState.RUNNING);
+                if (myState != GameState.WORRY) {
+                    setGameState(GameState.RUNNING);
+                }
             }
         }
     }
@@ -255,13 +257,9 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
      */
     @Override
     public void togglePause() {
+
         if (isRunning()) {
             setGameState(GameState.PAUSED);
-//            System.out.println(
-//                    new IndividualPiece(
-//                            myCurrentPiece.getBoardPoints(),
-//                            myCurrentPiece.getTetrisPiece().getBlock()));
-            System.out.println(new FrozenBlocks(myFrozenBlocks));
         } else if (myState == GameState.PAUSED) {
             if (myWorried) {
                 setGameState(GameState.WORRY);
@@ -272,7 +270,9 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
             if (myPanicking) {
                 setGameState(GameState.PANIC);
             } else {
-                setGameState(GameState.RUNNING);
+                if (myState != GameState.WORRY) {
+                    setGameState(GameState.RUNNING);
+                }
             }
         }
     }
