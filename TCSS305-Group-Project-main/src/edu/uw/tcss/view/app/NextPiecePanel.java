@@ -6,7 +6,6 @@ import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
 
 import edu.uw.tcss.view.util.ColorSchemeManager;
-import edu.uw.tcss.view.util.DrawingFactory;
 import edu.uw.tcss.view.util.DrawingObject;
 import edu.uw.tcss.view.util.GraphicsHandler;
 
@@ -41,7 +40,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
 
     private IndividualPiece myNextPiece;
 
-    private DrawingObject myDrawer = GraphicsHandler.getCurrentDrawingObject();
+    private final DrawingObject myDrawer = GraphicsHandler.getCurrentDrawingObject();
 
     /**
      * Constructs a new ellipse panel.
@@ -58,21 +57,6 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     private void layoutComponents() {
         setBackground(ColorSchemeManager.getCurrentSecondaryColor());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-    }
-
-    /**
-     * helper method for drawing the rectangle center styled,
-     * rather than x to width, and y to height
-     * @param theX where the rectangle goes in the x coordinate.
-     * @param theY where the rectangle goes in the y coordinate.
-     * @return gives you you you the rectangle object in the
-     * form the rectangle is drawn in the middle.
-     */
-
-    private void createCenteredRectangle(final Graphics2D graphics2D, final int theX, final int theY, final Color theBaseColor) {
-        final double topLeftX = theX - (double) 28 / 2d;
-        final double topLeftY = theY - (double) 28 / 2d;
-        myDrawer.drawBlock(graphics2D, (int) topLeftX, (int) topLeftY,29,29, theBaseColor);
     }
 
     /**
@@ -116,8 +100,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     @Override
     public void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
-        final Graphics2D g2d = (Graphics2D) theGraphics;
-        GraphicsHandler.enableAntiAliasing(g2d);
+        final Graphics2D g2d = GraphicsHandler.enableAntiAliasingAndReturn(theGraphics);
 
         drawTheNextPiece(g2d);
 
@@ -161,15 +144,28 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
             // finally, ensures it's centered
             final Point pointToTakeCenter = takePointToCenter(pointToPlace);
 
-            createCenteredRectangle(g2d,pointToTakeCenter.x(), pointToTakeCenter.y(),ColorSchemeManager.getBlockColor(myNextPiece.block()));
-
-            //g2d.setPaint(Color.BLACK);
-            //g2d.setStroke(new BasicStroke(STROKE_WIDTH));
-            //g2d.draw(rectangle);
-            //g2d.setPaint(ColorSchemeManager.getBlockColor(myNextPiece.block()));
-            //g2d.fill(rectangle);
-
+            drawCenteredRectangle(g2d,
+                    pointToTakeCenter.x(), pointToTakeCenter.y(),
+                    ColorSchemeManager.getBlockColor(myNextPiece.block()));
         }
+    }
+
+    /**
+     * helper method for drawing the rectangle center styled,
+     * rather than x to width, and y to height
+     * @param theX where the rectangle goes in the x coordinate.
+     * @param theY where the rectangle goes in the y coordinate.
+     * form the rectangle is drawn in the middle.
+     */
+    private void drawCenteredRectangle(final Graphics2D theGraphics,
+                                       final int theX, final int theY,
+                                       final Color theBaseColor) {
+        final int topLeftX = theX - (RECTANGLE_WIDTH - (STROKE_WIDTH - 1)) / 2;
+        final int topLeftY = theY - (RECTANGLE_HEIGHT - (STROKE_WIDTH - 1)) / 2;
+        myDrawer.drawBlock(theGraphics,
+                topLeftX, topLeftY,
+                RECTANGLE_WIDTH - 1, RECTANGLE_HEIGHT - 1,
+                theBaseColor);
     }
 }
 
