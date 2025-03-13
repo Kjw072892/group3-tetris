@@ -47,8 +47,10 @@ public class AdBannerPanel extends JPanel {
     }
 
     private void loadAdvertisements() throws IOException {
-        myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH, "adBanner.jpg")));
-        myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH, "SampleAdvertisement.png")));
+        myAdvertisements.add(
+                ImageIO.read(AssetsManager.getFile(IMAGES_PATH, "adBanner.jpg")));
+        myAdvertisements.add(
+                ImageIO.read(AssetsManager.getFile(IMAGES_PATH, "SampleAdvertisement.png")));
     }
 
     private void changeAdvertisement() {
