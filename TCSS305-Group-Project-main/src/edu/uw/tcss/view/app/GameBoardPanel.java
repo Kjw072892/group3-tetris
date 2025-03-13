@@ -9,8 +9,6 @@ import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
 import edu.uw.tcss.view.util.ColorSchemeManager;
-import edu.uw.tcss.view.util.DrawingFactory;
-import edu.uw.tcss.view.util.DrawingObject;
 import edu.uw.tcss.view.util.GraphicsHandler;
 
 import java.awt.GradientPaint;
@@ -43,12 +41,13 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private boolean myGameOverDeath;
 
     private boolean myFlashColor;
+
     private final ImageIcon myDeathIcon;
+
     private final Timer myAnimator;
 
-    private DrawingObject myDrawer = GraphicsHandler.getCurrentDrawingObject();
-
     private GameControls.FrozenBlocks myFrozen = Sprint1_values.frozenBlocks();
+    private GraphicsHandler GraphicsModifier;
 
     {
         myTetrisPieces = Sprint1_values.pieces();   // Store Pieces in myTetrisPiece
@@ -71,6 +70,65 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         myAnimator = new Timer(1000, new BackGroundColorAnimator());
     }
 
+    private void draw3DBlocks(final Graphics2D graphics2D, final int x, final int y, final int width, final int height, final Color baseColor) {
+        int offset = width / 6;
+
+
+        boolean isPinkMode = ColorSchemeManager.getCurrentColorScheme().name().contains("Pink Mode");
+
+        // Defining the color shades
+        Color lighterShade = baseColor.brighter().brighter();
+        Color darkerShade = baseColor.darker();
+
+
+        GradientPaint topLeft = new GradientPaint(
+                x, y, lighterShade, x + width, y + height, baseColor);
+
+        GradientPaint bottomRight = new GradientPaint(
+                x, y, baseColor, x + width, y + height, darkerShade);
+
+        //draw base block
+        graphics2D.setPaint(topLeft);
+        graphics2D.fillRect(x, y, width, height);
+
+        graphics2D.setPaint(bottomRight);
+        graphics2D.fillRect(x + offset, y + offset, width - offset, height - offset);
+
+
+        //glossy effect
+        GradientPaint gloss = new GradientPaint(x, y, Color.WHITE, x + offset, y + offset, new Color(255, 255, 255, 50));
+        graphics2D.setPaint(gloss);
+        graphics2D.fillRect(x, y, width, height);
+
+
+        // if pink mode is enabled, add sparkles!
+        if (isPinkMode) {
+            drawSparkles(graphics2D, x, y, width, height);
+        }
+
+        //outline
+        graphics2D.setColor(Color.BLACK);
+        graphics2D.drawRect(x, y, width, height);
+
+    }
+    // Sparkle effect only in Pink Mode.
+    private void drawSparkles(final Graphics2D graphics2D, final int x, final int y, final int width, final int height) {
+        graphics2D.setColor(Color.WHITE);
+        for (int i = 0; i < 4; i++) { //Draw 4 tiny sparkles
+            int sparkleX = x + (int) (Math.random() * width);
+            int sparkleY = y + (int) (Math.random() * height);
+            int sparkleSize = 3;
+
+            // Different shapes
+            if (i % 2 == 0) {
+                graphics2D.fillOval(sparkleX, sparkleY, sparkleSize, sparkleSize); // small circles
+            } else {
+                graphics2D.fillRect(sparkleX, sparkleY, sparkleSize, sparkleSize); // small squares
+            }
+
+        }
+    }
+
     /**
      * Paints the board grid lines and pieces.
      *
@@ -80,7 +138,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     protected void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
-        GraphicsHandler.enableAntiAliasing(g2d);
+        GraphicsModifier.enableAntiAliasing(g2d);
 
         drawFrozenBlocks(g2d);
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
@@ -121,7 +179,11 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
                 final int x = column * myBlockWidth;
                 final int y = ((ROWS - 1) - row) * myBlockHeight;
-                myDrawer.drawBlock((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
+                draw3DBlocks((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
+
+                if (ColorSchemeManager.getCurrentColorScheme().name().contains("Pink Mode \uD83C\uDF80✨")) {
+                    drawSparkles((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight);
+                }
             }
         }
     }
@@ -168,9 +230,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                if (blockColor == null) {
                    blockColor = Color.BLACK;
                }
-
-
-               DrawingFactory.drawGlossy((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
+               draw3DBlocks((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
             }
         }
     }
@@ -209,24 +269,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                         }
                         repaint();
                     }
-
-                    case GameState.WORRY -> {
-                        Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
-                        currentColor = currentColor.darker();
-                        setBackground(currentColor);
-                    }
-
-                    case GameState.PANIC -> {
-                        Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
-                        currentColor = currentColor.darker();
-                        currentColor = currentColor.darker();
-                        setBackground(currentColor);
-                    }
-
-                    case GameState.RUNNING -> {
-                        setBackground(ColorSchemeManager.getCurrentPrimaryColor());
-                    }
-
                     default -> { }
                 }
             }
@@ -234,16 +276,17 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             default -> { }
         }
 
-}
+    }
 
     private final class BackGroundColorAnimator implements ActionListener {
         public void actionPerformed(final ActionEvent theEvent) {
             if (!myFlashColor) {
                 setBackground(new Color(182, 103, 103, 169));
+                myFlashColor = !myFlashColor;
             } else {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
+                myFlashColor = !myFlashColor;
             }
-            myFlashColor = !myFlashColor;
         }
     }
 

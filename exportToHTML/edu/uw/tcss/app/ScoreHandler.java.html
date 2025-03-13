@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>ScoreHandler.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c88cdc;}
+.s1 { color: #afb9c3;}
+.s2 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ScoreHandler.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">edu.uw.tcss.app;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Interface that lets an object set the score for an object that implements this</span>
+ <span class="s2">* interface. Intended for the game board to set the score for the JPanel that</span>
+ <span class="s2">* displays the score and stats.</span>
+ <span class="s2">*</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Roman Bureacov</span>
+ <span class="s2">* </span><span class="s0">@version </span><span class="s2">2025-02-28</span>
+ <span class="s2">*/</span>
+<span class="s0">public interface </span><span class="s1">ScoreHandler {</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* Tell the object to set the score information using a record</span>
+     <span class="s2">* of the current scores.</span>
+     <span class="s2">*</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theRecord the record of the score, number of lines cleared, and</span>
+     <span class="s2">*                  current level.</span>
+     <span class="s2">*/</span>
+    <span class="s0">void </span><span class="s1">setScore(ScoreRecord theRecord);</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* The record class of the score, number of lines cleared, and the current</span>
+     <span class="s2">* level.</span>
+     <span class="s2">*</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">score the current score</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">linesCleared the number of lines that have been cleared</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">level the current level</span>
+     <span class="s2">*/</span>
+    <span class="s1">record ScoreRecord(</span><span class="s0">int </span><span class="s1">score, </span><span class="s0">int </span><span class="s1">linesCleared, </span><span class="s0">int </span><span class="s1">level) { }</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

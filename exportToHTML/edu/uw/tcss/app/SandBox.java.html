@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>SandBox.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c88cdc;}
+.s1 { color: #afb9c3;}
+.s2 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+SandBox.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">edu.uw.tcss.app;</span>
+
+<span class="s0">import </span><span class="s1">edu.uw.tcss.model.TetrisGame;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Sandbox class. Used to test git pulling and pushing. Nothing more, nothing less.</span>
+ <span class="s2">*</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Kassie Whitney</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">James Strand</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Roman Bureacov</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Zainab Stanikzy</span>
+ <span class="s2">* </span><span class="s0">@version </span><span class="s2">February 2025</span>
+ <span class="s2">*/</span>
+<span class="s0">public final class </span><span class="s1">SandBox {</span>
+
+    <span class="s0">private </span><span class="s1">SandBox() {</span>
+
+    <span class="s1">}</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* The running method to showcase the tetris API.</span>
+     <span class="s2">*</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theArgs string arguments. Not used in this main method.</span>
+     <span class="s2">*/</span>
+    <span class="s0">public static void </span><span class="s1">main(</span><span class="s0">final </span><span class="s1">String[] theArgs) {</span>
+
+        <span class="s0">final </span><span class="s1">TetrisGame game = </span><span class="s0">new </span><span class="s1">TetrisGame();</span>
+        <span class="s1">game.newGame();</span>
+
+        <span class="s1">System.out.println(game);</span>
+        <span class="s1">game.step();</span>
+        <span class="s1">System.out.println(game);</span>
+        <span class="s1">game.step();</span>
+        <span class="s1">System.out.println(game);</span>
+        <span class="s1">game.step();</span>
+        <span class="s1">System.out.println(game);</span>
+        <span class="s1">game.rotateCW();</span>
+        <span class="s1">System.out.println(game);</span>
+        <span class="s1">game.rotateCW();</span>
+        <span class="s1">System.out.println(game);</span>
+        <span class="s1">game.rotateCW();</span>
+        <span class="s1">System.out.println(game);</span>
+        <span class="s1">game.rotateCW();</span>
+        <span class="s1">System.out.println(game);</span>
+        <span class="s1">game.drop();</span>
+        <span class="s1">System.out.println(game);</span>
+
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

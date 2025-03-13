@@ -36,8 +36,16 @@ public class AudioMusicManager implements PropertyChangeListener {
 
         }
     }
+public static void playMusic() {
+    if (ColorSchemeManager.getCurrentColorScheme().name().contains("Pink Mode \uD83C\uDF80✨")) {
+        setMusic(AudioMusicFactory.getMusicPink());
+    } else {
+        setMusic(AudioMusicFactory.getMusicEpic());
 
+    }
+    myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
 
+}
     /**
      * AudioManager Constructor.
      */

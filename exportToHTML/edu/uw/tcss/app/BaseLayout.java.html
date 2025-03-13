@@ -1,0 +1,167 @@
+<html>
+<head>
+<title>BaseLayout.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c88cdc;}
+.s1 { color: #afb9c3;}
+.s2 { color: #808080;}
+.s3 { color: #96be78;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+BaseLayout.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">edu.uw.tcss.app;</span>
+
+
+<span class="s0">import </span><span class="s1">edu.uw.tcss.model.PropertyChangeEnabledGameControls;</span>
+<span class="s0">import </span><span class="s1">edu.uw.tcss.model.TetrisGame;</span>
+<span class="s0">import </span><span class="s1">edu.uw.tcss.app.KeyMapper.GameAction;</span>
+<span class="s0">import </span><span class="s1">edu.uw.tcss.app.KeyMapper.KeyMapper;</span>
+<span class="s0">import </span><span class="s1">edu.uw.tcss.app.KeyMapper.TetrominoAction;</span>
+
+<span class="s0">import </span><span class="s1">java.awt.BorderLayout;</span>
+<span class="s0">import </span><span class="s1">java.awt.Color;</span>
+<span class="s0">import </span><span class="s1">java.awt.Dimension;</span>
+<span class="s0">import </span><span class="s1">javax.swing.*;</span>
+
+
+<span class="s2">/**</span>
+ <span class="s2">* BorderLayout base Panel.</span>
+ <span class="s2">*</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Roman Bureacov</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Zainab Stanikzy</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Kassie Whitney</span>
+ <span class="s2">* </span><span class="s0">@version </span><span class="s2">2.26.25</span>
+ <span class="s2">*/</span>
+<span class="s0">public final class </span><span class="s1">BaseLayout </span><span class="s0">extends </span><span class="s1">JPanel {</span>
+
+    <span class="s0">private static final int </span><span class="s1">J_FRAME_WIDTH = </span><span class="s3">500</span><span class="s1">;</span>
+
+    <span class="s2">// the amount the west panel should take up on the screen</span>
+    <span class="s0">private static final double </span><span class="s1">WEST_PANEL_PERCENTAGE = </span><span class="s3">3d </span><span class="s1">/ </span><span class="s3">5d</span><span class="s1">;</span>
+
+    <span class="s0">private static final int </span><span class="s1">WEST_PANEL_WIDTH = (</span><span class="s0">int</span><span class="s1">) (J_FRAME_WIDTH * WEST_PANEL_PERCENTAGE);</span>
+
+    <span class="s2">// aspect ratio for the game board should be 2:1</span>
+    <span class="s0">private static final int </span><span class="s1">GAME_BOARD_HEIGHT = WEST_PANEL_WIDTH * </span><span class="s3">2</span><span class="s1">;</span>
+
+    <span class="s0">private static final int </span><span class="s1">MINOR_PADDING = </span><span class="s3">5</span><span class="s1">;</span>
+    <span class="s0">private static final int </span><span class="s1">MAJOR_PADDING = </span><span class="s3">10</span><span class="s1">;</span>
+
+    <span class="s0">private static final int </span><span class="s1">EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_PANEL_WIDTH;</span>
+    <span class="s0">private static final int </span><span class="s1">EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / </span><span class="s3">3</span><span class="s1">;</span>
+
+    <span class="s0">private final </span><span class="s1">TetrisGame myTetrisGame;</span>
+    <span class="s0">private final </span><span class="s1">KeyMapper myKeyMapper;</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* Constructor for Base Layout.</span>
+     <span class="s2">*/</span>
+    <span class="s0">public </span><span class="s1">BaseLayout(</span><span class="s0">final </span><span class="s1">TetrisGame theGame) {</span>
+        <span class="s0">super</span><span class="s1">();</span>
+        <span class="s1">myTetrisGame = theGame;</span>
+
+        <span class="s1">layoutComponents();</span>
+
+        <span class="s1">myKeyMapper = </span><span class="s0">new </span><span class="s1">KeyMapper(</span><span class="s0">this</span><span class="s1">, myTetrisGame);</span>
+
+        <span class="s1">setupKeys();</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">layoutComponents() {</span>
+        <span class="s1">setLayout(</span><span class="s0">new </span><span class="s1">BorderLayout());</span>
+
+        <span class="s1">setBorder(BorderFactory.createEmptyBorder(</span>
+                <span class="s1">MAJOR_PADDING, MAJOR_PADDING, MAJOR_PADDING, MAJOR_PADDING));</span>
+
+        <span class="s2">// game board lives on the west</span>
+        <span class="s0">final </span><span class="s1">JPanel westPanel = </span><span class="s0">new </span><span class="s1">JPanel();</span>
+        <span class="s0">final </span><span class="s1">GameBoardPanel gameBoard = </span><span class="s0">new </span><span class="s1">GameBoardPanel();</span>
+
+        <span class="s1">westPanel.add(gameBoard, BorderLayout.WEST);</span>
+
+        <span class="s2">// information, such as the next piece, controls, and score, live on the east</span>
+        <span class="s0">final </span><span class="s1">JPanel eastPanel = </span><span class="s0">new </span><span class="s1">JPanel();</span>
+        <span class="s1">eastPanel.setLayout(</span><span class="s0">new </span><span class="s1">BoxLayout(eastPanel, BoxLayout.Y_AXIS));</span>
+        <span class="s1">eastPanel.setPreferredSize(</span><span class="s0">new </span><span class="s1">Dimension(EAST_PANEL_WIDTH, GAME_BOARD_HEIGHT));</span>
+
+        <span class="s1">eastPanel.setBorder(BorderFactory.createEmptyBorder(</span><span class="s3">0</span><span class="s1">, MAJOR_PADDING, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">0</span><span class="s1">));</span>
+
+        <span class="s0">final </span><span class="s1">NextPiecePanel nextPiecePanel = </span><span class="s0">new </span><span class="s1">NextPiecePanel();</span>
+        <span class="s1">nextPiecePanel.setPreferredSize(</span><span class="s0">new </span><span class="s1">Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));</span>
+        <span class="s1">nextPiecePanel.setBackground(Color.BLUE);</span>
+        <span class="s1">eastPanel.add(nextPiecePanel);</span>
+
+        <span class="s1">eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));</span>
+
+        <span class="s0">final </span><span class="s1">JPanel controlsInfoPanel = </span><span class="s0">new </span><span class="s1">DirectionLabels();</span>
+        <span class="s1">controlsInfoPanel.setPreferredSize(</span><span class="s0">new </span><span class="s1">Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));</span>
+
+        <span class="s1">eastPanel.add(controlsInfoPanel);</span>
+        <span class="s1">eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));</span>
+
+        <span class="s0">final </span><span class="s1">GameLogic gameLogicHandler = </span><span class="s0">new </span><span class="s1">GameLogic(myTetrisGame);</span>
+        <span class="s0">final </span><span class="s1">ScorePanel scoreInfoPanel = </span><span class="s0">new </span><span class="s1">ScorePanel(gameLogicHandler);</span>
+
+        <span class="s1">scoreInfoPanel.setPreferredSize(</span><span class="s0">new </span><span class="s1">Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));</span>
+
+        <span class="s1">eastPanel.add(scoreInfoPanel);</span>
+
+        <span class="s1">add(westPanel, BorderLayout.WEST);</span>
+        <span class="s1">add(eastPanel, BorderLayout.EAST);</span>
+
+        <span class="s2">// add property change listeners</span>
+        <span class="s1">myTetrisGame.addPropertyChangeListener(</span>
+                <span class="s1">PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED, gameLogicHandler);</span>
+        <span class="s1">myTetrisGame.addPropertyChangeListener(</span>
+                <span class="s1">PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED, scoreInfoPanel);</span>
+        <span class="s1">myTetrisGame.addPropertyChangeListener(gameBoard);</span>
+        <span class="s1">myTetrisGame.addPropertyChangeListener(</span>
+                <span class="s1">PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE, nextPiecePanel);</span>
+
+
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">setupKeys() {</span>
+        <span class="s1">myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(</span><span class="s3">'a'</span><span class="s1">), TetrominoAction.Controls.LEFT);</span>
+        <span class="s1">myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(</span><span class="s3">'s'</span><span class="s1">), TetrominoAction.Controls.DOWN);</span>
+        <span class="s1">myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(</span><span class="s3">'d'</span><span class="s1">), TetrominoAction.Controls.RIGHT);</span>
+        <span class="s1">myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(</span><span class="s3">' '</span><span class="s1">), TetrominoAction.Controls.DROP);</span>
+        <span class="s1">myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(</span><span class="s3">'q'</span><span class="s1">), TetrominoAction.Controls.ROTATE_CW);</span>
+        <span class="s1">myKeyMapper.mapTetrominoAction(KeyStroke.getKeyStroke(</span><span class="s3">'e'</span><span class="s1">), TetrominoAction.Controls.ROTATE_CCW);</span>
+        <span class="s1">myKeyMapper.mapGameAction(KeyStroke.getKeyStroke(</span><span class="s3">'p'</span><span class="s1">), GameAction.Controls.TOGGLE_PAUSE);</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* Creates the JFrame.</span>
+     <span class="s2">*/</span>
+    <span class="s0">public static void </span><span class="s1">createAndShowGui() {</span>
+        <span class="s0">final </span><span class="s1">TetrisGame tetris = </span><span class="s0">new </span><span class="s1">TetrisGame();</span>
+
+        <span class="s0">final </span><span class="s1">BaseLayout mainPanel = </span><span class="s0">new </span><span class="s1">BaseLayout(tetris);</span>
+
+        <span class="s0">final </span><span class="s1">JFrame window = </span><span class="s0">new </span><span class="s1">JFrame(</span><span class="s3">&quot;Group 3 Tetris&quot;</span><span class="s1">);</span>
+        <span class="s1">window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+        <span class="s1">window.setResizable(</span><span class="s0">false</span><span class="s1">);</span>
+
+        <span class="s0">final </span><span class="s1">FileMenu menuBar = </span><span class="s0">new </span><span class="s1">FileMenu(window, tetris);</span>
+
+        <span class="s1">window.setJMenuBar(menuBar);</span>
+
+        <span class="s1">window.setContentPane(mainPanel);</span>
+
+        <span class="s1">window.pack();</span>
+
+        <span class="s1">window.setVisible(</span><span class="s0">true</span><span class="s1">);</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

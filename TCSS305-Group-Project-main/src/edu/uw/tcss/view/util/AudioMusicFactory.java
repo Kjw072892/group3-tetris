@@ -23,7 +23,8 @@ public final class AudioMusicFactory {
                 getMusicEpic(),
                 getMusicRetro(),
                 getMusicTrap(),
-                getMusicAlt()
+                getMusicAlt(),
+                getMusicPink()
         };
     }
 
@@ -57,7 +58,12 @@ public final class AudioMusicFactory {
         return new BackgroundMusic("Alternative Tetris", "TheSamovars.wav");
     }
 
+
+    public static BackgroundMusic getMusicPink() {
+        return new BackgroundMusic("Pink Mode \uD83C\uDF80✨", "pinkTheme.wav");
+    }
     /**
+     *
      * Record for information relating to the music.
      * 
      * @param name the formal name of the music

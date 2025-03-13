@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>DirectionLabels.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c88cdc;}
+.s1 { color: #afb9c3;}
+.s2 { color: #808080;}
+.s3 { color: #96be78;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+DirectionLabels.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">edu.uw.tcss.app;</span>
+
+<span class="s0">import </span><span class="s1">java.awt.BorderLayout;</span>
+<span class="s0">import </span><span class="s1">java.awt.Color;</span>
+<span class="s0">import </span><span class="s1">java.awt.Font;</span>
+<span class="s0">import </span><span class="s1">javax.swing.BorderFactory;</span>
+<span class="s0">import </span><span class="s1">javax.swing.Box;</span>
+<span class="s0">import </span><span class="s1">javax.swing.BoxLayout;</span>
+<span class="s0">import </span><span class="s1">javax.swing.JLabel;</span>
+<span class="s0">import </span><span class="s1">javax.swing.JPanel;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* Direction Label class.</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">James</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Kassie</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Roman</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Zainab</span>
+ <span class="s2">* </span><span class="s0">@version </span><span class="s2">03.1.25</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">DirectionLabels </span><span class="s0">extends </span><span class="s1">JPanel {</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* Constructor for DirectionLabels class. Invokes directionLabelPanel().</span>
+     <span class="s2">*/</span>
+    <span class="s0">public </span><span class="s1">DirectionLabels() {</span>
+        <span class="s0">super</span><span class="s1">();</span>
+        <span class="s1">directionLabelPanel();</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">directionLabelPanel() {</span>
+
+        <span class="s0">final int </span><span class="s1">spacer = </span><span class="s3">11</span><span class="s1">;</span>
+        <span class="s0">final int </span><span class="s1">boarderThickness = </span><span class="s3">3</span><span class="s1">;</span>
+        <span class="s0">final int </span><span class="s1">padding = </span><span class="s3">10</span><span class="s1">;</span>
+
+        <span class="s0">final </span><span class="s1">JLabel moveLeftLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Move Left:     left or A/a key&quot;</span><span class="s1">);</span>
+        <span class="s1">moveLeftLabel.setFont(labelFontFormat());</span>
+
+        <span class="s0">final </span><span class="s1">JLabel moveRightLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Move Right:   right or D/d key&quot;</span><span class="s1">);</span>
+        <span class="s1">moveRightLabel.setFont(labelFontFormat());</span>
+
+        <span class="s0">final </span><span class="s1">JLabel moveDownLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Move Down:  down or S/s key&quot;</span><span class="s1">);</span>
+        <span class="s1">moveDownLabel.setFont(labelFontFormat());</span>
+
+        <span class="s0">final </span><span class="s1">JLabel rotateClockWise = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Move CW:      up or W/w key&quot;</span><span class="s1">);</span>
+        <span class="s1">rotateClockWise.setFont(labelFontFormat());</span>
+
+        <span class="s0">final </span><span class="s1">JLabel dropLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Drop:               space&quot;</span><span class="s1">);</span>
+        <span class="s1">dropLabel.setFont(labelFontFormat());</span>
+
+        <span class="s0">final </span><span class="s1">JLabel pauseLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Pause:             P/p key&quot;</span><span class="s1">);</span>
+        <span class="s1">pauseLabel.setFont(labelFontFormat());</span>
+
+        <span class="s0">final </span><span class="s1">JLabel muteLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Mute:               M/m key&quot;</span><span class="s1">);</span>
+        <span class="s1">muteLabel.setFont(labelFontFormat());</span>
+
+        <span class="s1">setLayout(</span><span class="s0">new </span><span class="s1">BorderLayout());</span>
+        <span class="s1">setBorder(BorderFactory.createLineBorder(Color.BLACK, boarderThickness));</span>
+
+        <span class="s0">final </span><span class="s1">JPanel labelPanel = </span><span class="s0">new </span><span class="s1">JPanel();</span>
+        <span class="s1">labelPanel.setLayout(</span><span class="s0">new </span><span class="s1">BoxLayout(labelPanel, BoxLayout.Y_AXIS));</span>
+        <span class="s1">labelPanel.setBorder(BorderFactory.createEmptyBorder(padding, </span><span class="s3">0</span><span class="s1">, padding, </span><span class="s3">0</span><span class="s1">));</span>
+
+        <span class="s1">labelPanel.add(moveLeftLabel);</span>
+        <span class="s1">labelPanel.add(Box.createVerticalStrut(spacer));</span>
+        <span class="s1">labelPanel.add(moveRightLabel);</span>
+        <span class="s1">labelPanel.add(Box.createVerticalStrut(spacer));</span>
+        <span class="s1">labelPanel.add(moveDownLabel);</span>
+        <span class="s1">labelPanel.add(Box.createVerticalStrut(spacer));</span>
+        <span class="s1">labelPanel.add(rotateClockWise);</span>
+        <span class="s1">labelPanel.add(Box.createVerticalStrut(spacer));</span>
+        <span class="s1">labelPanel.add(dropLabel);</span>
+        <span class="s1">labelPanel.add(Box.createVerticalStrut(spacer));</span>
+        <span class="s1">labelPanel.add(pauseLabel);</span>
+        <span class="s1">labelPanel.add(Box.createVerticalStrut(spacer));</span>
+        <span class="s1">labelPanel.add(muteLabel);</span>
+
+        <span class="s1">add(labelPanel, BorderLayout.CENTER);</span>
+
+        <span class="s1">labelPanel.setBackground(Color.GREEN);</span>
+        <span class="s1">setBackground(Color.GREEN);</span>
+
+        <span class="s1">setVisible(</span><span class="s0">true</span><span class="s1">);</span>
+        <span class="s1">setOpaque(</span><span class="s0">true</span><span class="s1">);</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">private </span><span class="s1">Font labelFontFormat() {</span>
+        <span class="s0">final int </span><span class="s1">fontSize = </span><span class="s3">10</span><span class="s1">;</span>
+        <span class="s0">return new </span><span class="s1">Font(</span><span class="s3">&quot;DIALOG&quot;</span><span class="s1">, Font.BOLD, fontSize);</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -164,7 +164,12 @@ public final class BasePanel extends JPanel {
         myKeyMapper.mapGameAction(
                 getKeyStroke("pressed N"), GameAction.Controls.NEW_GAME);
         myKeyMapper.mapGameAction(
-                getKeyStroke("pressed M"), GameAction.Controls.END_GAME
-        );
+                getKeyStroke("pressed M"), GameAction.Controls.END_GAME);
+
+                myKeyMapper.mapGameAction(
+                        getKeyStroke("pressed B"), GameAction.Controls.TOGGLE_PINK_MODE);
+
+
+
     }
 }

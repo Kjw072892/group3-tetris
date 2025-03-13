@@ -120,6 +120,9 @@ public class FileMenu extends JMenuBar {
 
             if (scheme != null) {
                 ColorSchemeManager.setCurrentColorScheme((ColorSchemeFactory.ColorScheme) scheme);
+                if (scheme.toString().contains("Pink Mode \uD83C\uDF80✨")) {
+                    AudioMusicManager.setMusic(AudioMusicFactory.getMusicPink());
+                }
             }
         });
 
@@ -134,6 +137,8 @@ public class FileMenu extends JMenuBar {
                     AudioMusicFactory.getMusicEpic()
 
             );
+
+
 
             if (music != null) {
                 AudioMusicManager.setMusic((AudioMusicFactory.BackgroundMusic) music);

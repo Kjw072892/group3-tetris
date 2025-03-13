@@ -29,8 +29,10 @@ public final class GameAction extends AbstractAction {
         PAUSE,
         /** action to unpause the game. */
         UNPAUSE,
+
+        TOGGLE_PINK_MODE,
         /** action to toggle-pause the game. */
-        TOGGLE_PAUSE,
+        TOGGLE_PAUSE
     }
 
     private final Controls myBind;

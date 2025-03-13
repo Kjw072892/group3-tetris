@@ -1,0 +1,227 @@
+<html>
+<head>
+<title>ScorePanel.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c88cdc;}
+.s1 { color: #afb9c3;}
+.s2 { color: #808080;}
+.s3 { color: #96be78;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ScorePanel.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">edu.uw.tcss.app;</span>
+
+<span class="s0">import </span><span class="s1">edu.uw.tcss.util.LabelTextBuilder;</span>
+<span class="s0">import </span><span class="s1">java.awt.BorderLayout;</span>
+<span class="s0">import </span><span class="s1">java.awt.Color;</span>
+<span class="s0">import </span><span class="s1">java.awt.Font;</span>
+<span class="s0">import </span><span class="s1">java.beans.PropertyChangeEvent;</span>
+<span class="s0">import </span><span class="s1">java.beans.PropertyChangeListener;</span>
+<span class="s0">import </span><span class="s1">java.text.NumberFormat;</span>
+<span class="s0">import </span><span class="s1">java.util.Locale;</span>
+<span class="s0">import </span><span class="s1">javax.swing.BorderFactory;</span>
+<span class="s0">import </span><span class="s1">javax.swing.Box;</span>
+<span class="s0">import </span><span class="s1">javax.swing.BoxLayout;</span>
+<span class="s0">import </span><span class="s1">javax.swing.JLabel;</span>
+<span class="s0">import </span><span class="s1">javax.swing.JPanel;</span>
+<span class="s0">import </span><span class="s1">javax.swing.SwingConstants;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* ScorePanel class.</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Kassie</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">James</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Roman</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Zainab</span>
+ <span class="s2">* </span><span class="s0">@version </span><span class="s2">3.2.25</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">ScorePanel </span><span class="s0">extends </span><span class="s1">JPanel </span><span class="s0">implements </span><span class="s1">PropertyChangeListener  {</span>
+
+    <span class="s0">private static int </span><span class="s1">MY_SCORE;</span>
+
+    <span class="s0">private static int </span><span class="s1">MY_CURRENT_LEVEL;</span>
+
+    <span class="s0">private static int </span><span class="s1">MY_CURRENT_LINES;</span>
+
+    <span class="s0">private static final </span><span class="s1">String DIALOG_FONT_NAME = </span><span class="s3">&quot;DIALOG_INPUT&quot;</span><span class="s1">;</span>
+
+    <span class="s0">private static final </span><span class="s1">String SERIF_FONT_NAME = </span><span class="s3">&quot;DIALOG&quot;</span><span class="s1">;</span>
+
+    <span class="s0">private final int </span><span class="s1">myBoldFontSize = </span><span class="s3">25</span><span class="s1">;</span>
+
+    <span class="s0">private final int </span><span class="s1">myPlainFontSize = </span><span class="s3">19</span><span class="s1">;</span>
+
+    <span class="s0">private final </span><span class="s1">Font myBoldFont = </span><span class="s0">new </span><span class="s1">Font(DIALOG_FONT_NAME, Font.BOLD, myBoldFontSize);</span>
+
+    <span class="s0">private final </span><span class="s1">Font myPlainFont = </span><span class="s0">new </span><span class="s1">Font(SERIF_FONT_NAME, Font.PLAIN, myPlainFontSize);</span>
+
+    <span class="s0">private final </span><span class="s1">NumberFormat myFormatter = NumberFormat.getInstance(Locale.US);</span>
+
+    <span class="s0">private final </span><span class="s1">GameLogic myGameLogic;</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* Constructor for score panel class.</span>
+     <span class="s2">* Stores the current score.</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theGameLogic the game logic which keeps track of the scoring and game state.</span>
+     <span class="s2">*/</span>
+    <span class="s0">public </span><span class="s1">ScorePanel(</span><span class="s0">final </span><span class="s1">GameLogic theGameLogic) {</span>
+        <span class="s0">super</span><span class="s1">();</span>
+
+        <span class="s1">myGameLogic = theGameLogic;</span>
+
+        <span class="s1">setMyScore(theGameLogic.getScore());</span>
+
+        <span class="s1">setMyCurrentLevel(theGameLogic.getLevel());</span>
+
+        <span class="s1">setMyCurrentLines(theGameLogic.getLinesCleared());</span>
+
+        <span class="s1">scorePanel();</span>
+
+    <span class="s1">}</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* Sets the current score.</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theScore integer of the current score.</span>
+     <span class="s2">*/</span>
+    <span class="s0">public void </span><span class="s1">setMyScore(</span><span class="s0">final int </span><span class="s1">theScore) {</span>
+        <span class="s1">MY_SCORE = Math.max(theScore, </span><span class="s3">0</span><span class="s1">);</span>
+        <span class="s0">if </span><span class="s1">(theScore &lt; </span><span class="s3">0</span><span class="s1">) {</span>
+            <span class="s0">throw new </span><span class="s1">IllegalArgumentException(</span><span class="s3">&quot;Minimum score must be 0!&quot;</span><span class="s1">);</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">setMyCurrentLines(</span><span class="s0">final int </span><span class="s1">theCurrentLines) {</span>
+        <span class="s1">MY_CURRENT_LINES = Math.max(theCurrentLines, </span><span class="s3">0</span><span class="s1">);</span>
+
+        <span class="s0">if </span><span class="s1">(theCurrentLines &lt; </span><span class="s3">0</span><span class="s1">) {</span>
+            <span class="s0">throw new </span><span class="s1">IllegalArgumentException(</span><span class="s3">&quot;Number of lines must be &quot;</span>
+                    <span class="s1">+ </span><span class="s3">&quot;greater than or equal to 0!&quot;</span><span class="s1">);</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">setMyCurrentLevel(</span><span class="s0">final int </span><span class="s1">theCurrentLevel) {</span>
+        <span class="s1">MY_CURRENT_LEVEL = Math.max(theCurrentLevel, </span><span class="s3">1</span><span class="s1">);</span>
+
+        <span class="s0">if </span><span class="s1">(theCurrentLevel &lt; </span><span class="s3">1</span><span class="s1">) {</span>
+
+            <span class="s0">throw new </span><span class="s1">IllegalArgumentException(</span><span class="s3">&quot;The lowest starting level must be 1!&quot;</span><span class="s1">);</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">private </span><span class="s1">JLabel currentScore() {</span>
+
+        <span class="s0">final </span><span class="s1">String scoreFormated = myFormatter.format(MY_SCORE);</span>
+
+        <span class="s0">final </span><span class="s1">JLabel boldScoreLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Score: &quot;</span><span class="s1">);</span>
+        <span class="s1">boldScoreLabel.setFont(myBoldFont);</span>
+
+        <span class="s0">final </span><span class="s1">JLabel currentScoreLabel = </span><span class="s0">new </span><span class="s1">JLabel(scoreFormated);</span>
+        <span class="s1">currentScoreLabel.setFont(myPlainFont);</span>
+
+        <span class="s0">return new </span><span class="s1">JLabel(LabelTextBuilder.htmlLabelCreator(boldScoreLabel,</span>
+                <span class="s1">currentScoreLabel));</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">private </span><span class="s1">JLabel currentLevel() {</span>
+
+        <span class="s0">final </span><span class="s1">String levelFormated = myFormatter.format(MY_CURRENT_LEVEL);</span>
+
+        <span class="s0">final </span><span class="s1">JLabel boldLevelLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Level: &quot;</span><span class="s1">);</span>
+        <span class="s1">boldLevelLabel.setFont(myBoldFont);</span>
+
+        <span class="s0">final </span><span class="s1">JLabel levelLabel = </span><span class="s0">new </span><span class="s1">JLabel(levelFormated);</span>
+        <span class="s1">levelLabel.setFont(myPlainFont);</span>
+
+        <span class="s0">return new </span><span class="s1">JLabel(LabelTextBuilder.htmlLabelCreator(boldLevelLabel, levelLabel));</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">private </span><span class="s1">JLabel linesCleared() {</span>
+
+        <span class="s0">final </span><span class="s1">String linesFormatted = myFormatter.format(MY_CURRENT_LINES);</span>
+
+        <span class="s0">final </span><span class="s1">JLabel boldLinesLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Lines: &quot;</span><span class="s1">);</span>
+        <span class="s1">boldLinesLabel.setFont(myBoldFont);</span>
+
+        <span class="s0">final </span><span class="s1">JLabel linesLabel = </span><span class="s0">new </span><span class="s1">JLabel(linesFormatted);</span>
+        <span class="s1">linesLabel.setFont(myPlainFont);</span>
+
+        <span class="s0">return new </span><span class="s1">JLabel(LabelTextBuilder.htmlLabelCreator(boldLinesLabel, linesLabel));</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">private void </span><span class="s1">scorePanel() {</span>
+        <span class="s0">final int </span><span class="s1">fontSize = </span><span class="s3">12</span><span class="s1">;</span>
+        <span class="s0">final int </span><span class="s1">spacer = </span><span class="s3">20</span><span class="s1">;</span>
+        <span class="s0">final int </span><span class="s1">borderThickness = </span><span class="s3">3</span><span class="s1">;</span>
+        <span class="s0">final int </span><span class="s1">padding = </span><span class="s3">10</span><span class="s1">;</span>
+
+        <span class="s1">setLayout(</span><span class="s0">new </span><span class="s1">BorderLayout());</span>
+        <span class="s1">setBorder(BorderFactory.createLineBorder(Color.BLACK, borderThickness));</span>
+
+        <span class="s0">final </span><span class="s1">JLabel message = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Levels Increase Every 5 Lines&quot;</span><span class="s1">);</span>
+        <span class="s1">message.setFont(</span><span class="s0">new </span><span class="s1">Font(SERIF_FONT_NAME, Font.PLAIN, fontSize));</span>
+        <span class="s1">message.setHorizontalAlignment(SwingConstants.CENTER);</span>
+
+        <span class="s0">final </span><span class="s1">JPanel labelPanel = </span><span class="s0">new </span><span class="s1">JPanel();</span>
+        <span class="s1">labelPanel.setLayout(</span><span class="s0">new </span><span class="s1">BoxLayout(labelPanel, BoxLayout.Y_AXIS));</span>
+        <span class="s1">labelPanel.setBorder(BorderFactory.createEmptyBorder(padding, </span><span class="s3">0</span><span class="s1">, padding, </span><span class="s3">0</span><span class="s1">));</span>
+
+        <span class="s0">final </span><span class="s1">JPanel messagePanel = </span><span class="s0">new </span><span class="s1">JPanel();</span>
+        <span class="s1">messagePanel.setLayout(</span><span class="s0">new </span><span class="s1">BoxLayout(messagePanel, BoxLayout.Y_AXIS));</span>
+
+        <span class="s0">final </span><span class="s1">JLabel levelLabel = currentLevel();</span>
+        <span class="s0">final </span><span class="s1">JLabel linesLabel = linesCleared();</span>
+        <span class="s0">final </span><span class="s1">JLabel scoreLabel = currentScore();</span>
+
+        <span class="s1">labelPanel.add(levelLabel);</span>
+        <span class="s1">labelPanel.add(Box.createVerticalStrut(spacer));</span>
+        <span class="s1">labelPanel.add(linesLabel);</span>
+        <span class="s1">labelPanel.add(Box.createVerticalStrut(spacer));</span>
+        <span class="s1">labelPanel.add(scoreLabel);</span>
+
+        <span class="s1">messagePanel.add(message);</span>
+
+        <span class="s1">add(labelPanel, BorderLayout.CENTER);</span>
+        <span class="s1">add(message, BorderLayout.SOUTH);</span>
+
+        <span class="s1">labelPanel.setBackground(Color.GREEN);</span>
+        <span class="s1">setBackground(Color.GREEN);</span>
+
+        <span class="s1">setVisible(</span><span class="s0">true</span><span class="s1">);</span>
+        <span class="s1">setOpaque(</span><span class="s0">true</span><span class="s1">);</span>
+    <span class="s1">}</span>
+
+
+    <span class="s2">/**</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theEvent A PropertyChangeEvent object describing the event source</span>
+     <span class="s2">*            and the property that has changed.</span>
+     <span class="s2">*/</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">propertyChange(</span><span class="s0">final </span><span class="s1">PropertyChangeEvent theEvent) {</span>
+
+        <span class="s0">final int </span><span class="s1">currentLevel = myGameLogic.getLevel();</span>
+
+        <span class="s0">final int </span><span class="s1">currentLinesCleared = myGameLogic.getLinesCleared();</span>
+
+        <span class="s0">final int </span><span class="s1">currentScore = myGameLogic.getScore();</span>
+
+        <span class="s1">setMyCurrentLevel(currentLevel);</span>
+
+        <span class="s1">setMyCurrentLines(currentLinesCleared);</span>
+
+        <span class="s1">setMyScore(currentScore);</span>
+
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
