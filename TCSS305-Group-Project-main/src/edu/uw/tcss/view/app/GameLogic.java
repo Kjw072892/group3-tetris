@@ -91,11 +91,11 @@ public final class GameLogic implements PropertyChangeListener {
 
     private void playLinesFX(final int theNumLinesCleared) {
         if (theNumLinesCleared == THREE_LINES_CLEARED) {
-            AudioFXManager.playFX("threeLines");
+            AudioFXManager.playSoundFX(AudioFXManager.Channels.THREE_LINES_FX);
 
         } else if (theNumLinesCleared == FOUR_LINES_CLEARED) {
 
-            AudioFXManager.playFX("fourLines");
+            AudioFXManager.playSoundFX(AudioFXManager.Channels.FOUR_LINES_FX);
         }
     }
 
@@ -114,7 +114,7 @@ public final class GameLogic implements PropertyChangeListener {
         if (newLevel > myCurrentLevel) {
             myTimer.setDelay(DEFAULT_DELAY - myCurrentLevel * DELAY_DECREMENT);
 
-            AudioFXManager.playFX("newLevel");
+            AudioFXManager.playSoundFX(AudioFXManager.Channels.NEW_LEVEL_FX);
         }
 
         myCurrentLevel = newLevel;

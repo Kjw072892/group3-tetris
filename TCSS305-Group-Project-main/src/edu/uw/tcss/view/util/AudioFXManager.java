@@ -1,9 +1,9 @@
 package edu.uw.tcss.view.util;
 
-import edu.uw.tcss.view.app.assets.AssetsManager;
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.view.app.assets.AssetsManager;
 import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -27,8 +27,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @version 3.11.25
  */
 public class AudioFXManager extends KeyAdapter implements PropertyChangeListener {
-    private static final Map<String, Long> LAST_SOUND_PLAY_TIME = new HashMap<>();
-    private static final long SOUND_COOLDOWN_MS = 10;
 
     private static final Logger LOGGER = Logger.getLogger(AudioFXManager.class.getName());
 
@@ -163,37 +161,6 @@ public class AudioFXManager extends KeyAdapter implements PropertyChangeListener
 
         }
     }
-
-
-    /**
-     * Plays the soundFX when the direction of type string is called.
-     * Usable strings: "moved", "soft_dropped", "rotated", "paused", "threeLines",
-     * "fourLines", "newLevel".
-     * @param theMovement the tetris piece position.
-     */
-    @Deprecated(forRemoval = true)
-    public static void playFX(final String theMovement) {
-        final long currentTime = System.currentTimeMillis();
-
-        final long lastPlayTime = LAST_SOUND_PLAY_TIME.getOrDefault(theMovement, 0L);
-
-        if (currentTime - lastPlayTime >= SOUND_COOLDOWN_MS) {
-            LAST_SOUND_PLAY_TIME.put(theMovement, currentTime);
-
-            switch (theMovement) {
-                case "moved" -> playSoundFX(Channels.CHANGED_POSITION_FX);
-                case "soft_dropped" -> playSoundFX(Channels.SOFT_DROP_FX);
-                case "rotated" -> playSoundFX(Channels.ROTATE_FX);
-                case "paused" -> playSoundFX(Channels.PAUSE_FX);
-                case "threeLines" -> playSoundFX(Channels.THREE_LINES_FX);
-                case "fourLines" -> playSoundFX(Channels.FOUR_LINES_FX);
-                case "newLevel" -> playSoundFX(Channels.NEW_LEVEL_FX);
-                default -> {
-                }
-            }
-        }
-    }
-
 
 
     @Override
