@@ -143,16 +143,6 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
         }
     }
 
-    // TODO: maybe these constants should be defined in another file as static constants? - RB
-    /**
-     * Get the correct color for blocks
-     * @param theBlock the theBlock types
-     * @return the color related to theBlock
-     */
-    private Color getBlockColor(final GameControls.Block theBlock) {
-        return ColorSchemeManager.getBlockColors().getOrDefault(theBlock, Color.PINK);
-    }
-
     private void drawTheNextPiece(final Graphics theGraphics) {
         final Graphics2D g2d = (Graphics2D) theGraphics;
 
@@ -183,8 +173,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
             g2d.setPaint(Color.BLACK);
             g2d.setStroke(new BasicStroke(STROKE_WIDTH));
             g2d.draw(rectangle);
-            // TODO: we'll need a way to later set up how to get the piece color automatically
-            g2d.setPaint(getBlockColor(myNextPiece.block()));
+            g2d.setPaint(ColorSchemeManager.getBlockColor(myNextPiece.block()));
             g2d.fill(rectangle);
 
         }
