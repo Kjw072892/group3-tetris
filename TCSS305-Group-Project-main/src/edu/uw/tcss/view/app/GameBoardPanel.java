@@ -9,7 +9,9 @@ import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
 import edu.uw.tcss.view.util.ColorSchemeManager;
-import edu.uw.tcss.view.util.GraphicsModifier;
+import edu.uw.tcss.view.util.DrawingFactory;
+import edu.uw.tcss.view.util.DrawingObject;
+import edu.uw.tcss.view.util.GraphicsHandler;
 
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -113,7 +115,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     protected void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
-        GraphicsModifier.enableAntiAliasing(g2d);
+        GraphicsHandler.enableAntiAliasing(g2d);
 
         drawFrozenBlocks(g2d);
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
@@ -201,7 +203,9 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                if (blockColor == null) {
                    blockColor = Color.BLACK;
                }
-               draw3DBlocks((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
+
+
+               DrawingFactory.drawGlossy((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
             }
         }
     }

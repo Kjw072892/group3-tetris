@@ -8,8 +8,9 @@ import java.awt.*;
  * @author Roman Bureacov
  * @version 2025-03-11
  */
-public final class GraphicsModifier {
-    private GraphicsModifier() {
+public final class GraphicsHandler {
+
+    private GraphicsHandler() {
 
     }
 
@@ -22,4 +23,16 @@ public final class GraphicsModifier {
         theGraphics.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     }
+
+    /**
+     * Convenience method for enabling antialiasing and returning the cast Graphics2D object.
+     * @param theGraphics the graphics object to modify and return cast.
+     * @return the cast graphics object with antialiasing enabled.
+     */
+    public static Graphics2D enableAntiAliasingAndReturn(final Graphics theGraphics) {
+        final Graphics2D g2d = (Graphics2D) theGraphics;
+        enableAntiAliasing(g2d);
+        return g2d;
+    }
+
 }

@@ -2,21 +2,18 @@ package edu.uw.tcss.view.app;
 
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE;
 
-import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
-import edu.uw.tcss.view.util.ColorSchemeFactory;
 
 import edu.uw.tcss.view.util.ColorSchemeManager;
-import edu.uw.tcss.view.util.GraphicsModifier;
+import edu.uw.tcss.view.util.DrawingFactory;
+import edu.uw.tcss.view.util.DrawingObject;
+import edu.uw.tcss.view.util.GraphicsHandler;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
-
-import edu.uw.tcss.view.app.Sprint1_values;
 
 /**
  * The Panel that draws the next tetris piece upcoming.
@@ -44,40 +41,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
 
     private IndividualPiece myNextPiece;
 
-    private void draw3DBlocks(final Graphics2D graphics2D, final int x, final int y, final int width, final int height, final Color baseColor) {
-        int offset = width / 6;
-
-        // Defining the color shades
-        Color lighterShade = baseColor.brighter().brighter();
-        // Color mediumShade = baseColor.brighter();
-        Color darkerShade = baseColor.darker();
-        // Color reallyDarkerShade = baseColor.darker().darker();
-
-        GradientPaint topLeft = new GradientPaint(
-                x, y, lighterShade, x + width, y + height, baseColor);
-
-        GradientPaint bottomRight = new GradientPaint(
-                x, y, baseColor, x + width, y + height, darkerShade);
-
-        //draw base block
-        graphics2D.setPaint(topLeft);
-        graphics2D.fillRect(x, y, width, height);
-
-        graphics2D.setPaint(bottomRight);
-        graphics2D.fillRect(x + offset, y + offset, width - offset, height - offset);
-
-
-        //glossy effect
-        GradientPaint gloss = new GradientPaint(x, y, Color.WHITE, x + offset, y + offset, new Color(255, 255, 255, 50));
-        graphics2D.setPaint(gloss);
-        graphics2D.fillRect(x, y, width, height);
-
-
-        //outline
-        graphics2D.setColor(Color.BLACK);
-        graphics2D.drawRect(x, y, width, height);
-
-    }
+    private DrawingObject myDrawer = DrawingFactory.getDrawingObject(DrawingFactory.BlockStyle.GLOSSY);
 
     /**
      * Constructs a new ellipse panel.
@@ -108,7 +72,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     private void createCenteredRectangle(final Graphics2D graphics2D, final int theX, final int theY, final Color theBaseColor) {
         final double topLeftX = theX - (double) 28 / 2d;
         final double topLeftY = theY - (double) 28 / 2d;
-        draw3DBlocks(graphics2D,(int)topLeftX,(int)topLeftY,29,29,theBaseColor);
+        myDrawer.drawBlock(graphics2D, (int) topLeftX, (int) topLeftY,29,29, theBaseColor);
     }
 
     /**
@@ -153,7 +117,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     public void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
-        GraphicsModifier.enableAntiAliasing(g2d);
+        GraphicsHandler.enableAntiAliasing(g2d);
 
         drawTheNextPiece(g2d);
 

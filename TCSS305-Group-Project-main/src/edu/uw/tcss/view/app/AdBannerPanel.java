@@ -3,12 +3,11 @@ package edu.uw.tcss.view.app;
 import static edu.uw.tcss.view.app.assets.AssetsManager.IMAGES_PATH;
 import edu.uw.tcss.view.app.assets.AssetsManager;
 
-import edu.uw.tcss.view.util.GraphicsModifier;
+import edu.uw.tcss.view.util.GraphicsHandler;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -68,7 +67,7 @@ public class AdBannerPanel extends JPanel {
     protected void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
-        GraphicsModifier.enableAntiAliasing(g2d);
+        GraphicsHandler.enableAntiAliasing(g2d);
 
         g2d.drawImage(myCurrentAdvertisement, 0, 0, getWidth(), getHeight(), this);
     }
