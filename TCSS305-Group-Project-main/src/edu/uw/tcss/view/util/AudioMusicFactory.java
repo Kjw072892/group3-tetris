@@ -58,6 +58,10 @@ public final class AudioMusicFactory {
         return new BackgroundMusic("Alternative Tetris", "TheSamovars.wav");
     }
 
+    public static BackgroundMusic getCuteSong() {
+        return new BackgroundMusic("Pastel Mode", "cuteSong.wav");
+    }
+
 
     public static BackgroundMusic getMusicPink() {
         return new BackgroundMusic("Pink Mode \uD83C\uDF80✨", "pinkTheme.wav");

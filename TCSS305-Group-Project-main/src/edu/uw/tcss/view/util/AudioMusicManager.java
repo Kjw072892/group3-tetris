@@ -36,16 +36,7 @@ public class AudioMusicManager implements PropertyChangeListener {
 
         }
     }
-public static void playMusic() {
-    if (ColorSchemeManager.getCurrentColorScheme().name().contains("Pink Mode \uD83C\uDF80✨")) {
-        setMusic(AudioMusicFactory.getMusicPink());
-    } else {
-        setMusic(AudioMusicFactory.getMusicEpic());
 
-    }
-    myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
-
-}
     /**
      * AudioManager Constructor.
      */
@@ -53,6 +44,17 @@ public static void playMusic() {
         super();
     }
 
+    public static void playMusic() {
+        if (ColorSchemeManager.getCurrentColorScheme().name().contains("Pink Mode \uD83C\uDF80✨")) {
+            setMusic(AudioMusicFactory.getMusicPink());
+        } else if (ColorSchemeManager.getCurrentColorScheme().name().contains("Pretty <3")) {
+            setMusic(AudioMusicFactory.getCuteSong());
+        } else {
+            setMusic(AudioMusicFactory.getMusicEpic());
+
+        }
+        myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
+    }
 
     /**
      * Sets the background music file to open for access.
