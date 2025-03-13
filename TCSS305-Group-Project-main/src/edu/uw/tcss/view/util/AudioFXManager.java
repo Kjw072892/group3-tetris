@@ -158,7 +158,6 @@ public class AudioFXManager extends KeyAdapter implements PropertyChangeListener
             clip.setFramePosition(0);
             clip.start();
 
-
         }
     }
 
@@ -168,8 +167,8 @@ public class AudioFXManager extends KeyAdapter implements PropertyChangeListener
 
         if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_GAME_STATE)
                 && theEvent.getNewValue().equals(GameControls.GameState.OVER)) {
-            playSoundFX(Channels.ROBLOX_DEATH_SOUND);
 
+            playSoundFX(Channels.ROBLOX_DEATH_SOUND);
 
         } else if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_ROWS_CLEARED)) {
 

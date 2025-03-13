@@ -15,6 +15,7 @@ import edu.uw.tcss.view.util.ColorSchemeManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -106,9 +107,12 @@ public final class BasePanel extends JPanel {
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
 
+        try {
+            final AdBannerPanel banner = new AdBannerPanel();
+            add(banner, BorderLayout.SOUTH);
+        } catch (final IOException exception) {
 
-        final AdBannerPanel banner = new AdBannerPanel();
-        add(banner, BorderLayout.SOUTH);
+        }
 
 
         // add property change listeners
