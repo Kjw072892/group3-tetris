@@ -8,10 +8,12 @@ import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
-import edu.uw.tcss.view.util.ColorSchemeFactory;
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.GraphicsModifier;
 
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,6 +69,41 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         myAnimator = new Timer(1000, new BackGroundColorAnimator());
     }
 
+    private void draw3DBlocks(final Graphics2D graphics2D, final int x, final int y, final int width, final int height, final Color baseColor) {
+        int offset = width / 6;
+
+        // Defining the color shades
+        Color lighterShade = baseColor.brighter().brighter();
+        // Color mediumShade = baseColor.brighter();
+        Color darkerShade = baseColor.darker();
+        // Color reallyDarkerShade = baseColor.darker().darker();
+
+        GradientPaint topLeft = new GradientPaint(
+                x, y, lighterShade, x + width, y + height, baseColor);
+
+        GradientPaint bottomRight = new GradientPaint(
+                x, y, baseColor, x + width, y + height, darkerShade);
+
+        //draw base block
+        graphics2D.setPaint(topLeft);
+        graphics2D.fillRect(x, y, width, height);
+
+        graphics2D.setPaint(bottomRight);
+        graphics2D.fillRect(x + offset, y + offset, width - offset, height - offset);
+
+
+        //glossy effect
+        GradientPaint gloss = new GradientPaint(x, y, Color.WHITE, x + offset, y + offset, new Color(255, 255, 255, 50));
+        graphics2D.setPaint(gloss);
+        graphics2D.fillRect(x, y, width, height);
+
+
+        //outline
+        graphics2D.setColor(Color.BLACK);
+        graphics2D.drawRect(x, y, width, height);
+
+    }
+
     /**
      * Paints the board grid lines and pieces.
      *
@@ -85,8 +122,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             drawGameOver(g2d);
         }
     }
-
-
+    // TODO: magic numbers
     private void drawGameOver(final Graphics2D theGraphics) {
         theGraphics.drawImage(myDeathIcon.getImage(),
                 (getWidth() - myDeathIcon.getIconWidth()) / 2,
@@ -107,20 +143,22 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             for (int row = 0; row < ROWS; row++) {
                 final Block block = myFrozen.blocks().get(row)[column];
 
-                if (block != null) {
-                    final Color blockColor = ColorSchemeManager.getBlockColor(block);
-                    theGraphics.setColor(blockColor);
-
-                    final int x = column * myBlockWidth;
-                    final int y =  ((ROWS - 1) - row) * myBlockHeight;
-
-                    theGraphics.fillRect(x, y, myBlockWidth,  myBlockHeight);
-                    theGraphics.setColor(Color.BLACK);
-                    theGraphics.drawRect(x, y, myBlockWidth, myBlockHeight);
+                if (block == null) {
+                    continue;
                 }
+
+                final Color blockColor = ColorSchemeManager.getBlockColor(block);
+                if (blockColor == null) {
+                    continue;
+                }
+
+                final int x = column * myBlockWidth;
+                final int y = ((ROWS - 1) - row) * myBlockHeight;
+                draw3DBlocks((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
             }
         }
     }
+
 
     /**
      * Drawing the grid, 10 columns, 20 rows.
@@ -149,17 +187,21 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         for (IndividualPiece piece : myTetrisPieces) {
             // Loop through sprint 1 piece.
             if (piece == null) {
-                break;
+                continue;
+            }
+
+            if (piece.block() == null) {
+                continue;
             }
             for (Point block : piece.location()) {
                 final int x = block.x() * myBlockWidth;
                 final int y = ((ROWS - 1) - block.y()) * myBlockHeight;
 
-                g2d.setPaint(ColorSchemeManager.getBlockColor(piece.block()));
-                theGraphics.fillRect(x, y, myBlockWidth, myBlockHeight);
-                // TODO: maybe we could remove this and have the grid drawn after the blocks - RB
-                g2d.setPaint(Color.BLACK);
-                g2d.drawRect(x, y, myBlockWidth, myBlockHeight);
+               Color blockColor = ColorSchemeManager.getBlockColor(piece.block());
+               if (blockColor == null) {
+                   blockColor = Color.BLACK;
+               }
+               draw3DBlocks((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
             }
         }
     }
@@ -210,8 +252,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private final class BackGroundColorAnimator implements ActionListener {
         public void actionPerformed(final ActionEvent theEvent) {
             if (!myFlashColor) {
-                final Color c = ColorSchemeManager.getCurrentPrimaryColor();
-                setBackground(new Color(c.getRed(), c.getGreen(), c.getBlue(), (int) (c.getAlpha() * 0.8)));
+                setBackground(new Color(182, 103, 103, 169));
                 myFlashColor = !myFlashColor;
             } else {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
