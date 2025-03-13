@@ -102,8 +102,6 @@ public class AudioFXManager extends KeyAdapter implements PropertyChangeListener
          */
         NEW_LEVEL_FX
 
-
-
     }
 
     private static void preloadSounds() {
@@ -176,6 +174,7 @@ public class AudioFXManager extends KeyAdapter implements PropertyChangeListener
      * "fourLines", "newLevel".
      * @param theMovement the tetris piece position.
      */
+    @Deprecated(forRemoval = true)
     public static void playFX(final String theMovement) {
         final long currentTime = System.currentTimeMillis();
 

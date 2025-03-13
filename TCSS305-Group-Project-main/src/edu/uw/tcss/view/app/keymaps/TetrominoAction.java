@@ -1,5 +1,7 @@
 package edu.uw.tcss.view.app.keymaps;
 
+import static edu.uw.tcss.view.util.AudioFXManager.Channels;
+
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.util.AudioFXManager;
 import java.awt.event.ActionEvent;
@@ -13,15 +15,6 @@ import javax.swing.AbstractAction;
  * @version 2025-03-08
  */
 public final class TetrominoAction extends AbstractAction {
-
-    // TODO: move these constants to AudioFXManager
-    private static final String MOVED = "moved";
-
-    // TODO: move these constants to AudioFXManager
-    private static final String ROTATED = "rotated";
-
-    // TODO: move these constants to AudioFXManager
-    private static final String SOFT_DROPPED = "soft_dropped";
 
     private final TetrisGame myTetrisGame;
 
@@ -74,30 +67,30 @@ public final class TetrominoAction extends AbstractAction {
         switch (myBind) {
             case Controls.LEFT -> {
                 myTetrisGame.left();
-                AudioFXManager.playFX(MOVED);
+                AudioFXManager.playSoundFX(Channels.CHANGED_POSITION_FX);
             }
             case Controls.RIGHT -> {
                 myTetrisGame.right();
-                AudioFXManager.playFX(MOVED);
+                AudioFXManager.playSoundFX(Channels.CHANGED_POSITION_FX);
             }
 
             case Controls.DOWN -> {
                 myTetrisGame.down();
-                AudioFXManager.playFX(MOVED);
+                AudioFXManager.playSoundFX(Channels.CHANGED_POSITION_FX);
             }
             case Controls.DROP -> {
                 myTetrisGame.drop();
-                AudioFXManager.playFX(SOFT_DROPPED);
+                AudioFXManager.playSoundFX(Channels.SOFT_DROP_FX);
             }
 
             case Controls.ROTATE_CW -> {
                 myTetrisGame.rotateCW();
-                AudioFXManager.playFX(ROTATED);
+                AudioFXManager.playSoundFX(Channels.ROTATE_FX);
             }
 
             case Controls.ROTATE_CCW -> {
                 myTetrisGame.rotateCCW();
-                AudioFXManager.playFX(ROTATED);
+                AudioFXManager.playSoundFX(Channels.ROTATE_FX);
             }
 
             default -> throw
