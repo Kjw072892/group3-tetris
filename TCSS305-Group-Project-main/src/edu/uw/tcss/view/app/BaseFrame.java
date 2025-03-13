@@ -60,8 +60,8 @@ public class BaseFrame extends JFrame {
      * a static context.
      */
     public static void createFrame() {
-        final JFrame gameFrame = new BaseFrame();
-        System.out.println(gameFrame.getSize());
+        new BaseFrame();
+
     }
 
     private final class MusicWindowListener implements WindowFocusListener {

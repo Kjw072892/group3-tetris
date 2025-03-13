@@ -66,7 +66,7 @@ public final class BasePanel extends JPanel {
         setupKeys();
     }
 
-    private void layoutComponents() {
+    private void layoutComponents(){
         setLayout(new BorderLayout());
 
         setBorder(BorderFactory.createEmptyBorder(
@@ -107,12 +107,8 @@ public final class BasePanel extends JPanel {
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
 
-        try {
-            final AdBannerPanel banner = new AdBannerPanel();
-            add(banner, BorderLayout.SOUTH);
-        } catch (final IOException exception) {
-
-        }
+        final AdBannerPanel banner = new AdBannerPanel();
+        add(banner, BorderLayout.SOUTH);
 
 
         // add property change listeners
