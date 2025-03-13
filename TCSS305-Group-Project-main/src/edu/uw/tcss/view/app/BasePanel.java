@@ -144,9 +144,9 @@ public final class BasePanel extends JPanel {
                 getKeyStroke("pressed RIGHT"), TetrominoAction.Controls.RIGHT);
 
         myKeyMapper.mapTetrominoAction(
-                getKeyStroke("pressed Q"), TetrominoAction.Controls.ROTATE_CW);
+                getKeyStroke("pressed Q"), TetrominoAction.Controls.ROTATE_CCW);
         myKeyMapper.mapTetrominoAction(
-                getKeyStroke("pressed E"), TetrominoAction.Controls.ROTATE_CCW);
+                getKeyStroke("pressed E"), TetrominoAction.Controls.ROTATE_CW);
 
         myKeyMapper.mapGameAction(
                 getKeyStroke("pressed P"), GameAction.Controls.TOGGLE_PAUSE);
