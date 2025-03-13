@@ -21,7 +21,8 @@ public class FileMenu extends JMenuBar {
     private static final int DEFAULT_DELAY = 1000;
     private final String myVersion = "3.12.25";
 
-    private final JMenuItem myFileMenuGameStart = new JMenuItem("Start Game");
+    private final JMenuItem myFileMenuGameStart = new JMenuItem("Start Game With Panic Mode");
+    private final JMenuItem myFileMenuGameStart2 = new JMenuItem("Start Game Without Panic Mode");
     private final JMenuItem myAbout = new JMenuItem("About");
     private final JMenuItem myFileMenuExitGame = new JMenuItem("Exit");
     private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Color");
@@ -66,11 +67,13 @@ public class FileMenu extends JMenuBar {
     private void fileMenuCreation() {
         // Add mnemonics
         myFileMenuGameStart.setMnemonic('s');
+        myFileMenuGameStart2.setMnemonic('s');
         myFileMenuExitGame.setMnemonic('x');
 
 
         // Add items to the File menu
         myFileMenu.add(myFileMenuGameStart);
+        myFileMenu.add(myFileMenuGameStart2);
         myFileMenu.add(myFileMenuExitGame);
     }
 
@@ -137,7 +140,15 @@ public class FileMenu extends JMenuBar {
             }
         });
 
-        myFileMenuGameStart.addActionListener(theEvent -> myTetris.newGame());
+        myFileMenuGameStart.addActionListener(theEvent -> {
+            myTetris.newGame();
+            myTetris.setMyCouldPanic(true);
+        });
+
+        myFileMenuGameStart2.addActionListener(theEvent -> {
+            myTetris.newGame();
+            myTetris.setMyCouldPanic(false);
+        });
     }
 
 

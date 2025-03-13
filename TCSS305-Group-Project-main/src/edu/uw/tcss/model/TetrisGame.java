@@ -56,6 +56,12 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
     // The current GameState
     private GameState myState;
 
+    private boolean myWorried;
+
+    private boolean myPanicking;
+
+    private boolean myCouldPanic;
+
     /**
      * A flag to indicate when moving a piece down is part of a drop operation.
      * This is used to prevent the Board from notifying observers for each incremental
@@ -102,6 +108,18 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
          */
 
         instance_count++;
+    }
+
+    /**
+     * allows you to set whether the game can panick.
+     * @param theCouldPanick allows you to set could panic status.
+     */
+    public void setMyCouldPanic(final boolean theCouldPanick) {
+        myCouldPanic = theCouldPanick;
+    }
+
+    private boolean getMyCouldPanic() {
+        return myCouldPanic;
     }
 
 
@@ -171,7 +189,7 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
      */
     @Override
     public void endGame() {
-        if (myState == GameState.RUNNING || myState == GameState.PAUSED) {
+        if (isRunning() || myState == GameState.PAUSED) {
             setGameState(GameState.OVER);
         }
     }
@@ -208,7 +226,18 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
     @Override
     public void unPause() {
         if (myState == GameState.PAUSED) {
-            setGameState(GameState.RUNNING);
+
+            if (myWorried) {
+                setGameState(GameState.WORRY);
+            } else {
+                setGameState(GameState.RUNNING);
+            }
+
+            if (myPanicking) {
+                setGameState(GameState.PANIC);
+            } else {
+                setGameState(GameState.RUNNING);
+            }
         }
     }
 
@@ -226,7 +255,7 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
      */
     @Override
     public void togglePause() {
-        if (myState == GameState.RUNNING) {
+        if (isRunning()) {
             setGameState(GameState.PAUSED);
 //            System.out.println(
 //                    new IndividualPiece(
@@ -234,7 +263,17 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
 //                            myCurrentPiece.getTetrisPiece().getBlock()));
             System.out.println(new FrozenBlocks(myFrozenBlocks));
         } else if (myState == GameState.PAUSED) {
-            setGameState(GameState.RUNNING);
+            if (myWorried) {
+                setGameState(GameState.WORRY);
+            } else {
+                setGameState(GameState.RUNNING);
+            }
+
+            if (myPanicking) {
+                setGameState(GameState.PANIC);
+            } else {
+                setGameState(GameState.RUNNING);
+            }
         }
     }
 
@@ -315,6 +354,11 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
                         PROPERTY_FROZEN_BLOCKS,
                         null,
                         new FrozenBlocks(List.copyOf(myFrozenBlocks)));
+            }
+
+            if (getMyCouldPanic()) {
+                checkHalfWay();
+                checkThreeFourths();
             }
         }
     }
@@ -594,10 +638,67 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
         }
     }
 
+    private void checkHalfWay() {
+        final int halfway = myFrozenBlocks.size() / 2;
+
+        boolean foundBlock = false;
+
+        if (isRunning()) {
+            for (int i = 0; i < myFrozenBlocks.get(halfway).length; i++) {
+                if (myFrozenBlocks.get(halfway)[i] != null) {
+                    foundBlock = true;
+                    break;
+                }
+            }
+
+            if (!myWorried && foundBlock) {
+                setGameState(GameState.WORRY);
+                myWorried = true;
+            }
+
+            if (!foundBlock) {
+                setGameState(GameState.RUNNING);
+                myWorried = false;
+            }
+        }
+    }
+
+    private void checkThreeFourths() {
+        final double threeFourths = myHeight * (double) 3 / 4;
+
+        final int panicHeight = (int) threeFourths;
+
+        boolean foundBlock = false;
+
+        if (isRunning()) {
+            for (int i = 0; i < myFrozenBlocks.get(panicHeight).length; i++) {
+                if (myFrozenBlocks.get(panicHeight)[i] != null) {
+                    foundBlock = true;
+                    break;
+                }
+            }
+
+            if (!myPanicking && foundBlock) {
+                setGameState(GameState.PANIC);
+                myPanicking = true;
+            }
+
+            if (!foundBlock) {
+                if (!myWorried) {
+                    setGameState(GameState.RUNNING);
+                }
+                myPanicking = false;
+            }
+        }
+    }
+
     /**
      * Checks the board for complete rows.
      */
     private void checkRows() {
+
+
+
         final List<Integer> completeRows = new ArrayList<>();
         for (final Block[] row : myFrozenBlocks) {
             boolean complete = true;
@@ -737,7 +838,7 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
     }
 
     private boolean isRunning() {
-        return myState == GameState.RUNNING;
+        return myState == GameState.RUNNING
+                || myState == GameState.PANIC || myState == GameState.WORRY;
     }
-
 }
