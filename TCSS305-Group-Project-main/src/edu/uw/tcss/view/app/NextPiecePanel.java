@@ -9,12 +9,8 @@ import edu.uw.tcss.view.util.ColorSchemeFactory;
 
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.GraphicsModifier;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Shape;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -48,6 +44,41 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
 
     private IndividualPiece myNextPiece;
 
+    private void draw3DBlocks(final Graphics2D graphics2D, final int x, final int y, final int width, final int height, final Color baseColor) {
+        int offset = width / 6;
+
+        // Defining the color shades
+        Color lighterShade = baseColor.brighter().brighter();
+        // Color mediumShade = baseColor.brighter();
+        Color darkerShade = baseColor.darker();
+        // Color reallyDarkerShade = baseColor.darker().darker();
+
+        GradientPaint topLeft = new GradientPaint(
+                x, y, lighterShade, x + width, y + height, baseColor);
+
+        GradientPaint bottomRight = new GradientPaint(
+                x, y, baseColor, x + width, y + height, darkerShade);
+
+        //draw base block
+        graphics2D.setPaint(topLeft);
+        graphics2D.fillRect(x, y, width, height);
+
+        graphics2D.setPaint(bottomRight);
+        graphics2D.fillRect(x + offset, y + offset, width - offset, height - offset);
+
+
+        //glossy effect
+        GradientPaint gloss = new GradientPaint(x, y, Color.WHITE, x + offset, y + offset, new Color(255, 255, 255, 50));
+        graphics2D.setPaint(gloss);
+        graphics2D.fillRect(x, y, width, height);
+
+
+        //outline
+        graphics2D.setColor(Color.BLACK);
+        graphics2D.drawRect(x, y, width, height);
+
+    }
+
     /**
      * Constructs a new ellipse panel.
      */
@@ -74,10 +105,10 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
      * form the rectangle is drawn in the middle.
      */
 
-    private Rectangle2D.Double createCenteredRectangle(final double theX, final double theY) {
+    private void createCenteredRectangle(final Graphics2D graphics2D, final int theX, final int theY, final Color theBaseColor) {
         final double topLeftX = theX - (double) 28 / 2d;
         final double topLeftY = theY - (double) 28 / 2d;
-        return new Rectangle2D.Double(topLeftX, topLeftY, 28, 28);
+        draw3DBlocks(graphics2D,(int)topLeftX,(int)topLeftY,28,28,theBaseColor);
     }
 
     /**
@@ -166,15 +197,13 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
             // finally, ensures it's centered
             final Point pointToTakeCenter = takePointToCenter(pointToPlace);
 
-            final Shape rectangle = createCenteredRectangle(pointToTakeCenter.x(),
-                    pointToTakeCenter.y()
-            );
+            createCenteredRectangle(g2d,pointToTakeCenter.x(), pointToTakeCenter.y(),ColorSchemeManager.getBlockColor(myNextPiece.block()));
 
-            g2d.setPaint(Color.BLACK);
-            g2d.setStroke(new BasicStroke(STROKE_WIDTH));
-            g2d.draw(rectangle);
-            g2d.setPaint(ColorSchemeManager.getBlockColor(myNextPiece.block()));
-            g2d.fill(rectangle);
+            //g2d.setPaint(Color.BLACK);
+            //g2d.setStroke(new BasicStroke(STROKE_WIDTH));
+            //g2d.draw(rectangle);
+            //g2d.setPaint(ColorSchemeManager.getBlockColor(myNextPiece.block()));
+            //g2d.fill(rectangle);
 
         }
     }
