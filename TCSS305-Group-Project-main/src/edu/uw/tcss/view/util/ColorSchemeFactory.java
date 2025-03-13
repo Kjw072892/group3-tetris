@@ -1,14 +1,11 @@
 package edu.uw.tcss.view.util;
 
-import edu.uw.tcss.model.GameControls;
-import java.beans.PropertyChangeEvent;
-import java.util.HashSet;
-import java.awt.*;
-import java.beans.PropertyChangeListener;
-import java.util.Map;
-import java.util.Set;
-
 import static edu.uw.tcss.model.GameControls.Block;
+
+import edu.uw.tcss.model.GameControls;
+import java.awt.Color;
+import java.util.Map;
+
 
 /**
  * Factory class that creates a color scheme for the tetrominoes.
@@ -93,7 +90,7 @@ public final class ColorSchemeFactory {
     }
 
     /**
-     * Edgy color scheme, comprised of reds and black.
+     * Edgy color scheme, comprising reds and black.
      *
      * @return color scheme.
      */
