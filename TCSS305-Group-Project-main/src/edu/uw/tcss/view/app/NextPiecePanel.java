@@ -108,7 +108,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     private void createCenteredRectangle(final Graphics2D graphics2D, final int theX, final int theY, final Color theBaseColor) {
         final double topLeftX = theX - (double) 28 / 2d;
         final double topLeftY = theY - (double) 28 / 2d;
-        draw3DBlocks(graphics2D,(int)topLeftX,(int)topLeftY,28,28,theBaseColor);
+        draw3DBlocks(graphics2D,(int)topLeftX,(int)topLeftY,29,29,theBaseColor);
     }
 
     /**
