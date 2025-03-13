@@ -2,10 +2,13 @@ package edu.uw.tcss.view.app;
 
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.view.app.assets.AssetsManager;
 import edu.uw.tcss.view.util.AudioMusicManager;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -36,13 +39,24 @@ public class BaseFrame extends JFrame {
         configWindow();
 
         this.setVisible(true);
-
     }
 
     private void configWindow() {
         setTitle("Group 03 Tetris");
+        final ImageIcon tetrisIcon = new
+                ImageIcon(AssetsManager.IMAGES_PATH, "tetrominoIcon.png");
+
+        final Image image = tetrisIcon.getImage();
+
+        if (tetrisIcon.getIconWidth() == -1) {
+            System.out.println("Image not found");
+        }
+
+        setIconImage(image);
+
 
         pack();
+
 
         final Toolkit tk = Toolkit.getDefaultToolkit();
         setLocation(

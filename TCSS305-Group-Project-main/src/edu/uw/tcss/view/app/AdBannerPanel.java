@@ -21,7 +21,6 @@ public class AdBannerPanel extends JPanel {
     private static final int BANNER_HEIGHT = 100;
 
     private final List<BufferedImage> myAdvertisements = new ArrayList<>();
-    private final Timer myTimer = new Timer(5000, theEvent -> changeAdvertisement());
     private int myAdvertisementIndex;
 
     private BufferedImage myCurrentAdvertisement;
@@ -38,7 +37,8 @@ public class AdBannerPanel extends JPanel {
         setBackground(Color.MAGENTA);
         setOpaque(true);
 
-        myTimer.start();
+        final Timer timer = new Timer(5000, theEvent -> changeAdvertisement());
+        timer.start();
 
         myCurrentAdvertisement = myAdvertisements.getFirst();
 
