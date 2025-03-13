@@ -175,6 +175,8 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
                 new FrozenBlocks(List.copyOf(myFrozenBlocks)));
 
         setGameState(GameState.RUNNING);
+        myWorried = false;
+        myPanicking = false;
     }
 
     /**
@@ -227,18 +229,21 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
     @Override
     public void unPause() {
         if (myState == GameState.PAUSED) {
-            if (myWorried) {
+
+            boolean pickedState = false;
+
+            if (myWorried && !myPanicking) {
                 setGameState(GameState.WORRY);
-            } else {
-                setGameState(GameState.RUNNING);
+                pickedState = true;
             }
 
-            if (myPanicking) {
+            if (myPanicking && !pickedState) {
                 setGameState(GameState.PANIC);
-            } else {
-                if (myState != GameState.WORRY) {
-                    setGameState(GameState.RUNNING);
-                }
+                pickedState = true;
+            }
+
+            if (!pickedState) {
+                setGameState(GameState.RUNNING);
             }
         }
     }
@@ -261,18 +266,20 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
         if (isRunning()) {
             setGameState(GameState.PAUSED);
         } else if (myState == GameState.PAUSED) {
-            if (myWorried) {
+            boolean pickedState = false;
+
+            if (myWorried && !myPanicking) {
                 setGameState(GameState.WORRY);
-            } else {
-                setGameState(GameState.RUNNING);
+                pickedState = true;
             }
 
-            if (myPanicking) {
+            if (myPanicking && !pickedState) {
                 setGameState(GameState.PANIC);
-            } else {
-                if (myState != GameState.WORRY) {
-                    setGameState(GameState.RUNNING);
-                }
+                pickedState = true;
+            }
+
+            if (!pickedState) {
+                setGameState(GameState.RUNNING);
             }
         }
     }

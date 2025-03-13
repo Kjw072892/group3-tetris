@@ -269,6 +269,25 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                         }
                         repaint();
                     }
+
+
+                    case GameState.WORRY -> {
+                        Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
+                        currentColor = currentColor.darker();
+                        setBackground(currentColor);
+                    }
+
+                    case GameState.PANIC -> {
+                        Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
+                        currentColor = currentColor.darker();
+                        currentColor = currentColor.darker();
+                        setBackground(currentColor);
+                    }
+
+                    case GameState.RUNNING -> {
+                        setBackground(ColorSchemeManager.getCurrentPrimaryColor());
+                    }
+
                     default -> { }
                 }
             }
