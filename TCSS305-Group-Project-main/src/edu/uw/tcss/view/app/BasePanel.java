@@ -13,6 +13,7 @@ import edu.uw.tcss.view.util.AudioFXManager;
 import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -100,9 +101,15 @@ public final class BasePanel extends JPanel {
         scoreInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
         eastPanel.add(scoreInfoPanel);
+        eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
+
+
+        final AdBannerPanel banner = new AdBannerPanel();
+        add(banner, BorderLayout.SOUTH);
+
 
         // add property change listeners
         myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, myGameLogic);
