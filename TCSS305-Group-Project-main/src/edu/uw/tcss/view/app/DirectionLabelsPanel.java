@@ -47,7 +47,7 @@ public class DirectionLabelsPanel extends JPanel implements PropertyChangeListen
         final JLabel moveDownLabel = new JLabel("Move Down:  down or S/s key");
         moveDownLabel.setFont(labelFontFormat());
 
-        final JLabel rotateClockWise = new JLabel("Move CW:      up or W/w key");
+        final JLabel rotateClockWise = new JLabel("Move CW:      up or E/e key");
         rotateClockWise.setFont(labelFontFormat());
 
         final JLabel dropLabel = new JLabel("Drop:               space");
@@ -56,7 +56,7 @@ public class DirectionLabelsPanel extends JPanel implements PropertyChangeListen
         final JLabel pauseLabel = new JLabel("Pause:             P/p key");
         pauseLabel.setFont(labelFontFormat());
 
-        final JLabel muteLabel = new JLabel("Quite:               M/m key");
+        final JLabel muteLabel = new JLabel("Quit:               M/m key");
         muteLabel.setFont(labelFontFormat());
 
         setLayout(new BorderLayout());
