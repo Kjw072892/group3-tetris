@@ -1,8 +1,11 @@
 package edu.uw.tcss.view.app;
 
+import edu.uw.tcss.view.util.ColorSchemeManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,14 +20,16 @@ import javax.swing.JPanel;
  * @author Zainab
  * @version 03.1.25
  */
-public class DirectionLabelsPanel extends JPanel {
+public class DirectionLabelsPanel extends JPanel implements PropertyChangeListener {
 
+    private final JPanel myLabelPanel = new JPanel();
     /**
      * Constructor for DirectionLabels class. Invokes directionLabelPanel().
      */
     public DirectionLabelsPanel() {
         super();
         directionLabelPanel();
+        updateTheme();
     }
 
     private void directionLabelPanel() {
@@ -51,34 +56,32 @@ public class DirectionLabelsPanel extends JPanel {
         final JLabel pauseLabel = new JLabel("Pause:             P/p key");
         pauseLabel.setFont(labelFontFormat());
 
-        final JLabel muteLabel = new JLabel("Mute:               M/m key");
+        final JLabel muteLabel = new JLabel("Quite:               M/m key");
         muteLabel.setFont(labelFontFormat());
 
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createLineBorder(Color.BLACK, boarderThickness));
 
-        final JPanel labelPanel = new JPanel();
-        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.Y_AXIS));
-        labelPanel.setBorder(BorderFactory.createEmptyBorder(padding, 0, padding, 0));
 
-        labelPanel.add(moveLeftLabel);
-        labelPanel.add(Box.createVerticalStrut(spacer));
-        labelPanel.add(moveRightLabel);
-        labelPanel.add(Box.createVerticalStrut(spacer));
-        labelPanel.add(moveDownLabel);
-        labelPanel.add(Box.createVerticalStrut(spacer));
-        labelPanel.add(rotateClockWise);
-        labelPanel.add(Box.createVerticalStrut(spacer));
-        labelPanel.add(dropLabel);
-        labelPanel.add(Box.createVerticalStrut(spacer));
-        labelPanel.add(pauseLabel);
-        labelPanel.add(Box.createVerticalStrut(spacer));
-        labelPanel.add(muteLabel);
+        myLabelPanel.setLayout(new BoxLayout(myLabelPanel, BoxLayout.Y_AXIS));
+        myLabelPanel.setBorder(BorderFactory.createEmptyBorder(padding, 0, padding, 0));
 
-        add(labelPanel, BorderLayout.CENTER);
+        myLabelPanel.add(moveLeftLabel);
+        myLabelPanel.add(Box.createVerticalStrut(spacer));
+        myLabelPanel.add(moveRightLabel);
+        myLabelPanel.add(Box.createVerticalStrut(spacer));
+        myLabelPanel.add(moveDownLabel);
+        myLabelPanel.add(Box.createVerticalStrut(spacer));
+        myLabelPanel.add(rotateClockWise);
+        myLabelPanel.add(Box.createVerticalStrut(spacer));
+        myLabelPanel.add(dropLabel);
+        myLabelPanel.add(Box.createVerticalStrut(spacer));
+        myLabelPanel.add(pauseLabel);
+        myLabelPanel.add(Box.createVerticalStrut(spacer));
+        myLabelPanel.add(muteLabel);
 
-        labelPanel.setBackground(Color.GREEN);
-        setBackground(Color.GREEN);
+        add(myLabelPanel, BorderLayout.CENTER);
+
 
         setVisible(true);
         setOpaque(true);
@@ -90,4 +93,16 @@ public class DirectionLabelsPanel extends JPanel {
         return new Font("DIALOG", Font.BOLD, fontSize);
     }
 
+    private void updateTheme() {
+        myLabelPanel.setBackground(ColorSchemeManager.getCurrentTertiaryColor());
+        setBackground(ColorSchemeManager.getCurrentTertiaryColor());
+        repaint();
+    }
+
+    @Override
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+        if (theEvent.getPropertyName().equals(ColorSchemeManager.PROPERTY_COLOR_SCHEME)) {
+            updateTheme();
+        }
+    }
 }

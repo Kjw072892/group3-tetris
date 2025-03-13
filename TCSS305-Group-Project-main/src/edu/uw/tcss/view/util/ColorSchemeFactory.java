@@ -58,6 +58,40 @@ public final class ColorSchemeFactory {
                 ));
     }
 
+
+    /**
+     * Theme comprising pretty colors.
+     * @return a colorScheme of pretty colors.
+     */
+    public static ColorScheme getPrettyColors() {
+        final Color PRETTY_I_BLOCK_COLOR = new Color(255, 192, 203);
+        final Color PRETTY_J_BLOCK_COLOR = new Color(238, 130, 238);
+        final Color PRETTY_L_BLOCK_COLOR = new Color(135, 206, 250);
+        final Color PRETTY_O_BLOCK_COLOR = new Color(240, 128, 138);
+        final Color PRETTY_S_BLOCK_COLOR = new Color(173, 255, 47);
+        final Color PRETTY_T_BLOCK_COLOR = new Color(255, 153, 51);
+        final Color PRETTY_Z_BLOCK_COLOR = new Color(245, 255, 250);
+        final Color PRETTY_PRIMARY_COLOR = new Color(216, 191, 216);
+        final Color PRETTY_PANEL_COLOR = new Color(250, 235, 215);
+        return new ColorScheme(
+                "Pretty <3",
+                Map.of(
+                        Block.I, PRETTY_I_BLOCK_COLOR,
+                        Block.J, PRETTY_J_BLOCK_COLOR,
+                        Block.L, PRETTY_L_BLOCK_COLOR,
+                        Block.O, PRETTY_O_BLOCK_COLOR,
+                        Block.S, PRETTY_S_BLOCK_COLOR,
+                        Block.T, PRETTY_T_BLOCK_COLOR,
+                        Block.Z, PRETTY_Z_BLOCK_COLOR
+                ),
+                Map.of(
+                        MainColors.Primary, PRETTY_PRIMARY_COLOR,
+                        MainColors.Secondary, PRETTY_PANEL_COLOR,
+                        MainColors.Tertiary, PRETTY_PANEL_COLOR
+                )
+        );
+    }
+
     /**
      * Edgy color scheme, comprised of reds and black.
      *
@@ -93,7 +127,8 @@ public final class ColorSchemeFactory {
     public static ColorScheme[] getColorSchemes() {
         return new ColorScheme[] {
                 getGenericColors(),
-                getEdgyColors()
+                getEdgyColors(),
+                getPrettyColors()
         };
     }
 

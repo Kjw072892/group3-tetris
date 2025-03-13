@@ -19,7 +19,7 @@ import javax.swing.*;
  */
 public class FileMenu extends JMenuBar {
     private static final int DEFAULT_DELAY = 1000;
-    private final String myVersion = "3.8.25";
+    private final String myVersion = "3.12.25";
 
     private final JMenuItem myFileMenuGameStart = new JMenuItem("Start Game");
     private final JMenuItem myAbout = new JMenuItem("About");
@@ -138,9 +138,6 @@ public class FileMenu extends JMenuBar {
         });
 
         myFileMenuGameStart.addActionListener(theEvent -> myTetris.newGame());
-
-        //TODO: Create helper method to work with audio manager
-        //myFeatureBackGroundMusic.addActionListener(theEvent ->);
     }
 
 

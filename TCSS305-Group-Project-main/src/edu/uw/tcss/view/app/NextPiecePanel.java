@@ -8,6 +8,7 @@ import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.view.util.ColorSchemeFactory;
 
 import edu.uw.tcss.view.util.ColorSchemeManager;
+import edu.uw.tcss.view.util.GraphicsModifier;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,6 +19,8 @@ import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
+
+import edu.uw.tcss.view.app.Sprint1_values;
 
 /**
  * The Panel that draws the next tetris piece upcoming.
@@ -43,7 +46,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     /** The height for the rectangle. */
     private static final int RECTANGLE_HEIGHT = 30;
 
-    private IndividualPiece nextPiece;
+    private IndividualPiece myNextPiece;
 
     /**
      * Constructs a new ellipse panel.
@@ -51,7 +54,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     public NextPiecePanel() {
         super();
         layoutComponents();
-        nextPiece = Sprint1_values.nextPiece();
+        myNextPiece = Sprint1_values.nextPiece();
     }
 
     /**
@@ -67,17 +70,14 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
      * rather than x to width, and y to height
      * @param theX where the rectangle goes in the x coordinate.
      * @param theY where the rectangle goes in the y coordinate.
-     * @param theWidth width rectangle has
-     * @param theHeight height the rectangle has
      * @return gives you you you the rectangle object in the
      * form the rectangle is drawn in the middle.
      */
-    private Rectangle2D.Double createCenteredRectangle(final double theX, final double theY,
-                                                       final double theWidth,
-                                                       final double theHeight) {
-        final double topLeftX = theX - theWidth / 2d;
-        final double topLeftY = theY - theHeight / 2d;
-        return new Rectangle2D.Double(topLeftX, topLeftY, theWidth, theHeight);
+
+    private Rectangle2D.Double createCenteredRectangle(final double theX, final double theY) {
+        final double topLeftX = theX - (double) 28 / 2d;
+        final double topLeftY = theY - (double) 28 / 2d;
+        return new Rectangle2D.Double(topLeftX, topLeftY, 28, 28);
     }
 
     /**
@@ -122,7 +122,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     public void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
-        
+        GraphicsModifier.enableAntiAliasing(g2d);
 
         drawTheNextPiece(g2d);
 
@@ -132,13 +132,14 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     public void propertyChange(final PropertyChangeEvent theEvent) {
         switch (theEvent.getPropertyName()) {
             case PROPERTY_NEXT_PIECE -> {
-                nextPiece = (IndividualPiece) theEvent.getNewValue();
+                myNextPiece = (IndividualPiece) theEvent.getNewValue();
                 repaint();
             }
             case ColorSchemeManager.PROPERTY_COLOR_SCHEME -> {
                 setBackground(ColorSchemeManager.getCurrentSecondaryColor());
                 repaint();
             }
+            default -> { }
         }
     }
 
@@ -155,19 +156,19 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     private void drawTheNextPiece(final Graphics theGraphics) {
         final Graphics2D g2d = (Graphics2D) theGraphics;
 
-        final double[] pointOffset = findOffsetPoint(nextPiece.location());
+        final double[] pointOffset = findOffsetPoint(myNextPiece.location());
 
         // individual pieces have offsets to ensure they are centered
         final double xOffset = pointOffset[0];
         final double yOffset = pointOffset[1];
 
-        for (int i = 0; i < nextPiece.location().length; i++) {
+        for (int i = 0; i < myNextPiece.location().length; i++) {
 
             // point in space is not centered to screen yet, but let's
-            // just get our points seperated into equal spaces for our drawing.
-            final int xToPlace = (int) ((nextPiece.location()[i].x() - xOffset)
+            // just get our points separated into equal spaces for our drawing.
+            final int xToPlace = (int) ((myNextPiece.location()[i].x() - xOffset)
                     * RECTANGLE_WIDTH);
-            final int yToPlace = (int) ((nextPiece.location()[i].y() - yOffset)
+            final int yToPlace = (int) ((myNextPiece.location()[i].y() - yOffset)
                     * RECTANGLE_HEIGHT);
 
             final Point pointToPlace = new Point(xToPlace, -yToPlace);
@@ -176,15 +177,14 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
             final Point pointToTakeCenter = takePointToCenter(pointToPlace);
 
             final Shape rectangle = createCenteredRectangle(pointToTakeCenter.x(),
-                    pointToTakeCenter.y(),
-                    RECTANGLE_WIDTH - (STROKE_WIDTH - 1), RECTANGLE_HEIGHT
-                            - (STROKE_WIDTH - 1));
+                    pointToTakeCenter.y()
+            );
 
             g2d.setPaint(Color.BLACK);
             g2d.setStroke(new BasicStroke(STROKE_WIDTH));
             g2d.draw(rectangle);
             // TODO: we'll need a way to later set up how to get the piece color automatically
-            g2d.setPaint(getBlockColor(nextPiece.block()));
+            g2d.setPaint(getBlockColor(myNextPiece.block()));
             g2d.fill(rectangle);
 
         }

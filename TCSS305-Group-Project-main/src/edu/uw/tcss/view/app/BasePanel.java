@@ -88,7 +88,7 @@ public final class BasePanel extends JPanel {
 
         eastPanel.add(Box.createVerticalStrut(MINOR_PADDING));
 
-        final JPanel controlsInfoPanel = new DirectionLabelsPanel();
+        final DirectionLabelsPanel controlsInfoPanel = new DirectionLabelsPanel();
         controlsInfoPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
 
         eastPanel.add(controlsInfoPanel);
@@ -115,6 +115,8 @@ public final class BasePanel extends JPanel {
         myTetrisGame.addPropertyChangeListener(new AudioMusicManager());
         ColorSchemeManager.addPropertyChangeListener(gameBoard);
         ColorSchemeManager.addPropertyChangeListener(nextPiecePanel);
+        ColorSchemeManager.addPropertyChangeListener(scoreInfoPanel);
+        ColorSchemeManager.addPropertyChangeListener(controlsInfoPanel);
 
     }
 

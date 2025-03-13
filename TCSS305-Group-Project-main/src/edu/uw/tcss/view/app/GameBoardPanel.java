@@ -86,7 +86,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         }
     }
 
-    // TODO: magic numbers
+
     private void drawGameOver(final Graphics2D theGraphics) {
         theGraphics.drawImage(myDeathIcon.getImage(),
                 (getWidth() - myDeathIcon.getIconWidth()) / 2,
@@ -210,7 +210,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private final class BackGroundColorAnimator implements ActionListener {
         public void actionPerformed(final ActionEvent theEvent) {
             if (!myFlashColor) {
-                setBackground(new Color(182, 103, 103, 169));
+                final Color c = ColorSchemeManager.getCurrentPrimaryColor();
+                setBackground(new Color(c.getRed(), c.getGreen(), c.getBlue(), (int) (c.getAlpha() * 0.8)));
                 myFlashColor = !myFlashColor;
             } else {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
