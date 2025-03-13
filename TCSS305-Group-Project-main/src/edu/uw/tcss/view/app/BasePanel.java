@@ -111,7 +111,7 @@ public final class BasePanel extends JPanel {
             final AdBannerPanel banner = new AdBannerPanel();
             add(banner, BorderLayout.SOUTH);
         } catch (final IOException exception) {
-
+            exception.printStackTrace();
         }
 
 
