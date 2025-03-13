@@ -41,7 +41,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
 
     private IndividualPiece myNextPiece;
 
-    private DrawingObject myDrawer = DrawingFactory.getDrawingObject(DrawingFactory.BlockStyle.GLOSSY);
+    private DrawingObject myDrawer = GraphicsHandler.getCurrentDrawingObject();
 
     /**
      * Constructs a new ellipse panel.

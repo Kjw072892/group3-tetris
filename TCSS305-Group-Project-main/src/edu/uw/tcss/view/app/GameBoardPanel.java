@@ -43,10 +43,10 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private boolean myGameOverDeath;
 
     private boolean myFlashColor;
-
     private final ImageIcon myDeathIcon;
-
     private final Timer myAnimator;
+
+    private DrawingObject myDrawer = GraphicsHandler.getCurrentDrawingObject();
 
     private GameControls.FrozenBlocks myFrozen = Sprint1_values.frozenBlocks();
 
@@ -69,41 +69,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         myDeathIcon = new ImageIcon(
                 AssetsManager.getFilePath(AssetsManager.IMAGES_PATH, "oof-noob.gif"));
         myAnimator = new Timer(1000, new BackGroundColorAnimator());
-    }
-
-    private void draw3DBlocks(final Graphics2D graphics2D, final int x, final int y, final int width, final int height, final Color baseColor) {
-        int offset = width / 6;
-
-        // Defining the color shades
-        Color lighterShade = baseColor.brighter().brighter();
-        // Color mediumShade = baseColor.brighter();
-        Color darkerShade = baseColor.darker();
-        // Color reallyDarkerShade = baseColor.darker().darker();
-
-        GradientPaint topLeft = new GradientPaint(
-                x, y, lighterShade, x + width, y + height, baseColor);
-
-        GradientPaint bottomRight = new GradientPaint(
-                x, y, baseColor, x + width, y + height, darkerShade);
-
-        //draw base block
-        graphics2D.setPaint(topLeft);
-        graphics2D.fillRect(x, y, width, height);
-
-        graphics2D.setPaint(bottomRight);
-        graphics2D.fillRect(x + offset, y + offset, width - offset, height - offset);
-
-
-        //glossy effect
-        GradientPaint gloss = new GradientPaint(x, y, Color.WHITE, x + offset, y + offset, new Color(255, 255, 255, 50));
-        graphics2D.setPaint(gloss);
-        graphics2D.fillRect(x, y, width, height);
-
-
-        //outline
-        graphics2D.setColor(Color.BLACK);
-        graphics2D.drawRect(x, y, width, height);
-
     }
 
     /**
@@ -156,7 +121,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
                 final int x = column * myBlockWidth;
                 final int y = ((ROWS - 1) - row) * myBlockHeight;
-                draw3DBlocks((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
+                myDrawer.drawBlock((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
             }
         }
     }
