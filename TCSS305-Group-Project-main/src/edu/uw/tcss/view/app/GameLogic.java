@@ -4,9 +4,11 @@ import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_FROZE
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
 import static edu.uw.tcss.model.GameControls.GameState;
+import static edu.uw.tcss.view.util.AudioFXManager.Channels;
 
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.util.AudioFXManager;
+import edu.uw.tcss.view.util.AudioMusicManager;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.Timer;
@@ -25,10 +27,20 @@ public final class GameLogic implements PropertyChangeListener {
     private static final int TWO_LINE_SCORE = 100;
     private static final int THREE_LINE_SCORE = 300;
     private static final int FOUR_LINE_SCORE = 1200;
-    private static final int LINES_PER_SCORE = 5;
+    private static final int LINES_UNTIL_NEXT_LEVEL = 5;
     private static final int SCORE_PER_PIECE = 4;
-    private static final int THREE_LINES_CLEARED = 3;
-    private static final int FOUR_LINES_CLEARED = 4;
+
+    /** single line cleared */
+    private static final int SINGLE = 1;
+
+    /** double, two lines cleared */
+    private static final int DOUBLE = 2;
+
+    /** triple, three lines cleared */
+    private static final int TRIPLE = 3;
+
+    /** quad, four lines cleared */
+    private static final int QUADRUPLE = 4;
 
     /** Default millisecond delay of the timer */
     private static final int DEFAULT_DELAY = 1000;
@@ -61,54 +73,51 @@ public final class GameLogic implements PropertyChangeListener {
                 myScore += SCORE_PER_PIECE;
             }
         } else if (PROPERTY_GAME_STATE.equals(theEvent.getPropertyName())) {
-            final GameState newGameState =
-                    (GameState) theEvent.getNewValue();
-
-            switch (newGameState) {
-                case GameState.NEW -> {
-                    myScore = 0;
-                    myLinesCleared = 0;
-                    myCurrentLevel = 1;
-
-                    myTimer.setDelay(DEFAULT_DELAY);
-                }
-                case GameState.PAUSED,
-                     GameState.OVER -> myTimer.stop();
-                case GameState.RUNNING -> {
-                    if (!GameState.RUNNING.equals(myLastGameState)) {
-                        myTimer.start();
-                    }
-                }
-
-                case GameState.WORRY -> {
-                    if (!GameState.RUNNING.equals(myLastGameState) && !myTimer.isRunning()) {
-                        myTimer.start();
-                    }
-                }
-
-                case GameState.PANIC -> {
-                    if (!GameState.RUNNING.equals(myLastGameState) && !myTimer.isRunning()) {
-                        myTimer.start();
-                    }
-                }
-
-                default -> throw
-                        new EnumConstantNotPresentException(
-                                GameState.class, String.valueOf(newGameState));
-            }
-
+            final GameState newGameState = (GameState) theEvent.getNewValue();
+            handleGameState(newGameState);
             myLastGameState = newGameState;
         }
 
     }
 
+    private void handleGameState(final GameState theGameState) {
+        switch (theGameState) {
+            case GameState.NEW -> {
+                myScore = 0;
+                myLinesCleared = 0;
+                myCurrentLevel = 1;
+
+                myTimer.setDelay(DEFAULT_DELAY);
+                AudioMusicManager.restartMusic();
+            }
+            case GameState.PAUSED,
+                 GameState.OVER -> myTimer.stop();
+            case GameState.RUNNING -> {
+                if (!GameState.RUNNING.equals(myLastGameState)) {
+                    myTimer.start();
+                }
+            }
+
+            case GameState.WORRY,
+                 GameState.PANIC -> {
+                if (!GameState.RUNNING.equals(myLastGameState) && !myTimer.isRunning()) {
+                    myTimer.start();
+                }
+            }
+
+            default -> throw
+                    new EnumConstantNotPresentException(
+                            GameState.class, theGameState.toString());
+        }
+    }
+
     private void playLinesFX(final int theNumLinesCleared) {
-        if (theNumLinesCleared == THREE_LINES_CLEARED) {
-            AudioFXManager.playSoundFX(AudioFXManager.Channels.THREE_LINES_FX);
+        if (theNumLinesCleared == TRIPLE) {
+            AudioFXManager.playSoundFX(Channels.THREE_LINES_FX);
 
-        } else if (theNumLinesCleared == FOUR_LINES_CLEARED) {
+        } else if (theNumLinesCleared == QUADRUPLE) {
 
-            AudioFXManager.playSoundFX(AudioFXManager.Channels.FOUR_LINES_FX);
+            AudioFXManager.playSoundFX(Channels.FOUR_LINES_FX);
         }
     }
 
@@ -122,12 +131,12 @@ public final class GameLogic implements PropertyChangeListener {
     }
 
     private void updateLevel() {
-        final int newLevel = myLinesCleared / LINES_PER_SCORE + 1;
+        final int newLevel = myLinesCleared / LINES_UNTIL_NEXT_LEVEL + 1;
 
         if (newLevel > myCurrentLevel) {
             myTimer.setDelay(DEFAULT_DELAY - myCurrentLevel * DELAY_DECREMENT);
 
-            AudioFXManager.playSoundFX(AudioFXManager.Channels.NEW_LEVEL_FX);
+            AudioFXManager.playSoundFX(Channels.NEW_LEVEL_FX);
         }
 
         myCurrentLevel = newLevel;
@@ -144,16 +153,11 @@ public final class GameLogic implements PropertyChangeListener {
 
     private void updateScore(final int theLinesCleared) {
 
-        final int oneLine = 1;
-        final int twoLine = 2;
-        final int threeLine = 3;
-        final int fourLine = 4;
-
         myScore += switch (theLinesCleared) {
-            case oneLine -> ONE_LINE_SCORE * myCurrentLevel;
-            case twoLine -> TWO_LINE_SCORE * myCurrentLevel;
-            case threeLine -> THREE_LINE_SCORE * myCurrentLevel;
-            case fourLine -> FOUR_LINE_SCORE * myCurrentLevel;
+            case SINGLE -> ONE_LINE_SCORE * myCurrentLevel;
+            case DOUBLE -> TWO_LINE_SCORE * myCurrentLevel;
+            case TRIPLE -> THREE_LINE_SCORE * myCurrentLevel;
+            case QUADRUPLE -> FOUR_LINE_SCORE * myCurrentLevel;
             default -> 0;
         };
         playLinesFX(theLinesCleared);
@@ -176,5 +180,14 @@ public final class GameLogic implements PropertyChangeListener {
      */
     public GameState getLastGameState() {
         return myLastGameState;
+    }
+
+    /**
+     * Gets the number of lines until the next level is reached.
+     *
+     * @return the number of lines until a new level
+     */
+    public int getLinesUntilNextLevel() {
+        return LINES_UNTIL_NEXT_LEVEL - myLinesCleared % LINES_UNTIL_NEXT_LEVEL;
     }
 }
