@@ -45,9 +45,11 @@ public class AudioMusicManager implements PropertyChangeListener {
     }
 
     public static void playMusic() {
-        if (ColorSchemeManager.getCurrentColorScheme().name().contains("Pink Mode \uD83C\uDF80✨")) {
+        if (ColorSchemeManager.getCurrentColorScheme()
+                .equals(ColorSchemeFactory.getPinkModeColors())) {
             setMusic(AudioMusicFactory.getMusicPink());
-        } else if (ColorSchemeManager.getCurrentColorScheme().name().contains("Pretty <3")) {
+        } else if (ColorSchemeManager.getCurrentColorScheme()
+                .equals(ColorSchemeFactory.getPrettyColors())) {
             setMusic(AudioMusicFactory.getCuteSong());
         } else {
             setMusic(AudioMusicFactory.getMusicEpic());
@@ -90,6 +92,13 @@ public class AudioMusicManager implements PropertyChangeListener {
         myMusicChannel.stop();
     }
 
+    /**
+     * Resets the music playback.
+     */
+    public static void resetMusic() {
+        myMusicChannel.setFramePosition(0);
+        startMusic();
+    }
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
