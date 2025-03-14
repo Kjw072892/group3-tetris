@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 /**
  * Factory class that handles the creation of drawing objects, objects that specify
  * how a block should be drawn.
- *
+ * @author Zainab Stanikzy
  * @author Roman Bureacov
  * @version 2025-03-12
  */
