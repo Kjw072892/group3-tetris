@@ -9,6 +9,8 @@ import static edu.uw.tcss.view.util.AudioMusicFactory.BackgroundMusic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class that acts as a property change listener for the AudioMusicManager class.
@@ -20,6 +22,7 @@ public class AudioMusicListener implements PropertyChangeListener {
 
     private GameState myLastGameState;
     private BackgroundMusic myLastMusic = AudioMusicManager.getCurrentMusic();
+    private boolean myIsPanic;
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
@@ -33,7 +36,9 @@ public class AudioMusicListener implements PropertyChangeListener {
                 handleColorSchemeState((ColorScheme) theEvent.getNewValue());
             }
             case PROPERTY_MUSIC -> {
-                myLastMusic = (BackgroundMusic) theEvent.getNewValue();
+                if (!myIsPanic) {
+                    myLastMusic = (BackgroundMusic) theEvent.getNewValue();
+                }
             }
             default -> { }
         }
@@ -50,6 +55,7 @@ public class AudioMusicListener implements PropertyChangeListener {
 
 
     private void handleGameState(final GameState theGameState) {
+        myIsPanic = false;
         switch (theGameState) {
             case GameState.NEW -> {
                 AudioMusicManager.setCurrentMusic(myLastMusic);
@@ -64,10 +70,12 @@ public class AudioMusicListener implements PropertyChangeListener {
                     AudioMusicManager.setCurrentMusic(myLastMusic);
                     AudioMusicManager.startMusic();
                 } else if (GameState.PAUSED.equals(myLastGameState)) {
+                    myLastMusic = AudioMusicManager.getCurrentMusic();
                     AudioMusicManager.startMusic();
                 }
             }
             case GameState.PANIC -> {
+                myIsPanic = true;
                 myLastMusic = AudioMusicManager.getCurrentMusic();
                 AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicPanic());
                 AudioMusicManager.startMusic();
@@ -76,5 +84,6 @@ public class AudioMusicListener implements PropertyChangeListener {
                     new EnumConstantNotPresentException(
                             GameState.class, theGameState.toString());
         }
+        //Logger.getAnonymousLogger().log(Level.INFO, theGameState.toString());
     }
 }

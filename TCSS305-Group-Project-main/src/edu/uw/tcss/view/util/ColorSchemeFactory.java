@@ -89,8 +89,8 @@ public final class ColorSchemeFactory {
         );
     }
 
-public static ColorScheme getPinkModeColors() {
-    return new ColorScheme(
+    public static ColorScheme getPinkModeColors() {
+        return new ColorScheme(
             "Pink Mode \uD83C\uDF80✨",
 
             Map.of(
@@ -107,12 +107,12 @@ public static ColorScheme getPinkModeColors() {
                     MainColors.Secondary, new Color(250,128,114),
                     MainColors.Tertiary, new Color(255, 182, 193)
             )
-    );
+        );
 
-}
+    }
 
 
-/**
+    /**
      * Edgy color scheme, comprising reds and black.
      *
      * @return color scheme.
