@@ -59,6 +59,8 @@ public class AdBannerPanel extends JPanel {
                 "adBanner2.jpeg")));
         myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                 "adBanner3.jpg")));
+        myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                "dairyQueenAd.png")));
 
     }
 

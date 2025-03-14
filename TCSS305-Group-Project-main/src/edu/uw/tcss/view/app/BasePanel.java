@@ -46,6 +46,8 @@ public final class BasePanel extends JPanel {
     private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_PANEL_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;
 
+    private static final int BORDER_BOTTOM_PADDING = -2;
+
     private final TetrisGame myTetrisGame;
     private final KeyMapper myKeyMapper;
     private final GameLogic myGameLogic;
@@ -82,7 +84,8 @@ public final class BasePanel extends JPanel {
         eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
         eastPanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, GAME_BOARD_HEIGHT));
 
-        eastPanel.setBorder(BorderFactory.createEmptyBorder(0, MAJOR_PADDING, 0, 0));
+        eastPanel.setBorder(BorderFactory.createEmptyBorder(MINOR_PADDING, MAJOR_PADDING,
+                BORDER_BOTTOM_PADDING,  0));
 
         final NextPiecePanel nextPiecePanel = new NextPiecePanel();
         nextPiecePanel.setPreferredSize(new Dimension(EAST_PANEL_WIDTH, EAST_PANEL_COMP_HEIGHT));
@@ -161,7 +164,7 @@ public final class BasePanel extends JPanel {
         myKeyMapper.mapGameAction(
                 getKeyStroke("pressed N"), GameAction.Controls.NEW_GAME);
         myKeyMapper.mapGameAction(
-                getKeyStroke("pressed M"), GameAction.Controls.END_GAME);
+                getKeyStroke("pressed K"), GameAction.Controls.END_GAME);
 
     }
 }

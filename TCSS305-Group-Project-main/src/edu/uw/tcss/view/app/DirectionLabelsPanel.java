@@ -32,6 +32,11 @@ public class DirectionLabelsPanel extends JPanel implements PropertyChangeListen
         updateTheme();
     }
 
+    private String htmlFormater(final String theLeft, final String theRight) {
+        return "<html><div style='display: flex; justify-content: space-between; width: 100%;'>"
+                          + "<span>a</span><span>b</span></div></html>";
+    }
+
     private void directionLabelPanel() {
 
         final int spacer = 11;
@@ -39,25 +44,25 @@ public class DirectionLabelsPanel extends JPanel implements PropertyChangeListen
         final int padding = 10;
 
         // TODO: might want to make these separate labels such that it's spaced automatically by swing
-        final JLabel moveLeftLabel = new JLabel("Move Left:                Left or A/a key");
+        final JLabel moveLeftLabel = new JLabel("Move Left:               Left or A/a key");
         moveLeftLabel.setFont(labelFontFormat());
 
         final JLabel moveRightLabel = new JLabel("Move Right:             Right or D/d key");
         moveRightLabel.setFont(labelFontFormat());
 
-        final JLabel moveDownLabel = new JLabel("Move Down:             Down or S/s key");
+        final JLabel moveDownLabel = new JLabel("Move Down:            Down or S/s key");
         moveDownLabel.setFont(labelFontFormat());
 
         final JLabel rotateClockWise = new JLabel("Move Ccw/ Cw:        Q/q or E/e key");
         rotateClockWise.setFont(labelFontFormat());
 
-        final JLabel dropLabel = new JLabel("Drop:                          space");
+        final JLabel dropLabel = new JLabel("Drop:                       Space");
         dropLabel.setFont(labelFontFormat());
 
-        final JLabel pauseLabel = new JLabel("Pause:                        P/p key");
+        final JLabel pauseLabel = new JLabel("Pause:                     P/p key");
         pauseLabel.setFont(labelFontFormat());
 
-        final JLabel muteLabel = new JLabel("Quit:                           M/m key");
+        final JLabel muteLabel = new JLabel("End Game:              K/k key");
         muteLabel.setFont(labelFontFormat());
 
         setLayout(new BorderLayout());
