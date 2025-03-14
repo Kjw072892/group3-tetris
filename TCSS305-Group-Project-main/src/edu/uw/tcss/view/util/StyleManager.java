@@ -27,7 +27,7 @@ public final class StyleManager {
      * Gets the static border color.
      * @return color of the border
      */
-    public Color getBorderColor() {
+    public static Color getBorderColor() {
         return myBorderColor;
     }
 
@@ -35,7 +35,7 @@ public final class StyleManager {
      * Sets the static border color.
      * @param theColor the color the border should be
      */
-    public void setBorderColor(final Color theColor) {
+    public static void setBorderColor(final Color theColor) {
         myBorderColor = theColor;
     }
 }
