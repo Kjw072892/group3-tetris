@@ -1,6 +1,7 @@
 package edu.uw.tcss.view.util;
 
 import static edu.uw.tcss.model.GameControls.GameState;
+import static edu.uw.tcss.view.app.assets.AssetsManager.MUSIC_PATH;
 import static edu.uw.tcss.view.util.AudioMusicFactory.BackgroundMusic;
 
 import edu.uw.tcss.model.TetrisGame;
@@ -52,6 +53,7 @@ public class AudioMusicManager implements PropertyChangeListener {
 
     /**
      * Sets the background music file to open for access.
+     * This class will not start the new music upon setting the music.
      * @param theMusic the background music clip.
      */
     public static void setMusic(final BackgroundMusic theMusic) {
@@ -59,8 +61,7 @@ public class AudioMusicManager implements PropertyChangeListener {
             myMusicChannel.stop();
             myMusicChannel.close();
 
-            final File soundFile =
-                    AssetsManager.getFile(AssetsManager.MUSIC_PATH, theMusic.fileName());
+            final File soundFile = AssetsManager.getFile(MUSIC_PATH, theMusic.fileName());
             final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
 
             myMusicChannel.open(stream);
