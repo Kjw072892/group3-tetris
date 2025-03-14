@@ -31,6 +31,8 @@ public final class AudioFXManager extends KeyAdapter {
     private static final Logger LOGGER = Logger.getLogger(AudioFXManager.class.getName());
 
     private static final Map<Channels, Clip> SOUND_CLIPS = new HashMap<>();
+    // TODO: implement muting
+    private static boolean myIsMute;
 
     static {
         LOGGER.setLevel(Level.ALL);
@@ -156,6 +158,21 @@ public final class AudioFXManager extends KeyAdapter {
             clip.start();
 
         }
+    }
+
+
+    /**
+     * Sets if the audio FX should be mute or not.
+     */
+    public static void setMute(final boolean theIsMute) {
+        myIsMute = theIsMute;
+    }
+
+    /**
+     * Gets if the audio FX are mute.
+     */
+    public static boolean getMute() {
+        return myIsMute;
     }
 
 }

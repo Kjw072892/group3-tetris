@@ -31,10 +31,13 @@ public final class AudioMusicManager {
     /** name of property when the music has changed. */
     public static final String PROPERTY_MUSIC = "The music has changed!";
     private static final Object PROPERTY_SOURCE_BEAN = new Object();
-    private static final PropertyChangeSupport PCS = new PropertyChangeSupport(PROPERTY_SOURCE_BEAN);
+    private static final PropertyChangeSupport PCS =
+            new PropertyChangeSupport(PROPERTY_SOURCE_BEAN);
 
     private static Clip myMusicChannel;
     private static BackgroundMusic myCurrentMusic;
+    // TODO: implement muting
+    private static boolean myIsMute;
 
     private static final Logger LOGGER = Logger.getLogger(AudioMusicManager.class.getName());
 
@@ -126,5 +129,19 @@ public final class AudioMusicManager {
      */
     public static void removePropertyChangeListener(final PropertyChangeListener theListener) {
         PCS.removePropertyChangeListener(theListener);
+    }
+
+    /**
+     * Sets if the music should be mute or not.
+     */
+    public static void setMute(final boolean theIsMute) {
+        myIsMute = theIsMute;
+    }
+
+    /**
+     * Gets if the music is mute.
+     */
+    public static boolean getMute() {
+        return myIsMute;
     }
 }
