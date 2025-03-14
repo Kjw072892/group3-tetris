@@ -113,6 +113,8 @@ public final class GameLogic implements PropertyChangeListener {
         if (GameState.PANIC.equals(theGameState)) {
             AudioMusicManager.setMusic(AudioMusicFactory.getMusicPanic());
             AudioMusicManager.startMusic();
+        } else if (GameState.PAUSED.equals(theGameState)) {
+            AudioFXManager.playSoundFX(Channels.PAUSE_FX);
         }
     }
 
