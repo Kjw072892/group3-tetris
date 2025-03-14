@@ -3,6 +3,8 @@ package edu.uw.tcss.view.app;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_FROZEN_BLOCKS;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED;
+import static edu.uw.tcss.view.util.StyleManager.MAJOR_PADDING;
+import static edu.uw.tcss.view.util.StyleManager.MINOR_PADDING;
 import static javax.swing.KeyStroke.getKeyStroke;
 
 import edu.uw.tcss.model.TetrisGame;
@@ -13,7 +15,6 @@ import edu.uw.tcss.view.util.AudioFXManager;
 import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.io.IOException;
 import javax.swing.BorderFactory;
@@ -40,9 +41,6 @@ public final class BasePanel extends JPanel {
 
     // aspect ratio for the game board should be 2:1
     private static final int GAME_BOARD_HEIGHT = WEST_PANEL_WIDTH * 2;
-
-    private static final int MINOR_PADDING = 5;
-    private static final int MAJOR_PADDING = 10;
 
     private static final int EAST_PANEL_WIDTH = J_FRAME_WIDTH - WEST_PANEL_WIDTH;
     private static final int EAST_PANEL_COMP_HEIGHT = GAME_BOARD_HEIGHT / 3;

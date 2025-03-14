@@ -1,17 +1,21 @@
 package edu.uw.tcss.view.app;
 
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE;
+import static edu.uw.tcss.view.util.StyleManager.BORDER_THICKNESS;
 
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
-
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.DrawingObject;
 import edu.uw.tcss.view.util.GraphicsHandler;
-
-import java.awt.*;
+import edu.uw.tcss.view.util.StyleManager;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /**
@@ -49,6 +53,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
         super();
         layoutComponents();
         myNextPiece = Sprint1_values.nextPiece();
+        setBorder(BorderFactory.createLineBorder(StyleManager.getBorderColor(), BORDER_THICKNESS));
     }
 
     /**

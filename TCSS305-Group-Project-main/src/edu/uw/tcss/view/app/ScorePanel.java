@@ -1,6 +1,8 @@
 package edu.uw.tcss.view.app;
 
+import static edu.uw.tcss.view.util.StyleManager.BORDER_THICKNESS;
 import edu.uw.tcss.view.util.ColorSchemeManager;
+import edu.uw.tcss.view.util.StyleManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -89,11 +91,10 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
     private void setupLabels() {
         final int fontSize = 12;
         final int spacer = 20;
-        final int borderThickness = 3;
         final int padding = 10;
 
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, borderThickness));
+        setBorder(BorderFactory.createLineBorder(StyleManager.getBorderColor(), BORDER_THICKNESS));
 
         myLabelPanel.setLayout(new BoxLayout(myLabelPanel, BoxLayout.Y_AXIS));
         myLabelPanel.setBorder(BorderFactory.createEmptyBorder(padding, 0, padding, 0));

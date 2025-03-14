@@ -47,7 +47,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private final Timer myAnimator;
 
     private GameControls.FrozenBlocks myFrozen = Sprint1_values.frozenBlocks();
-    private GraphicsHandler GraphicsModifier;
 
     {
         myTetrisPieces = Sprint1_values.pieces();   // Store Pieces in myTetrisPiece
@@ -137,8 +136,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     @Override
     protected void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
-        final Graphics2D g2d = (Graphics2D) theGraphics;
-        GraphicsModifier.enableAntiAliasing(g2d);
+        final Graphics2D g2d = GraphicsHandler.enableAntiAliasingAndReturn(theGraphics);
 
         drawFrozenBlocks(g2d);
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
@@ -151,7 +149,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private void drawGameOver(final Graphics2D theGraphics) {
         theGraphics.drawImage(myDeathIcon.getImage(),
                 (getWidth() - myDeathIcon.getIconWidth()) / 2,
-                getHeight() / 10, this);
+                getHeight() / 10,
+                this);
         theGraphics.setColor(Color.BLACK);
         theGraphics.fillRect(45, 350, 220, 80);
 
