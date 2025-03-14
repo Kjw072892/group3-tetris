@@ -124,7 +124,7 @@ public class FileMenu extends JMenuBar {
                     AudioMusicManager.setMusic(AudioMusicFactory.getMusicPink());
 
                 } else if (scheme.toString().contains("Pretty <3")) {
-                    AudioMusicManager.setMusic(AudioMusicFactory.getCuteSong());
+                    AudioMusicManager.setMusic(AudioMusicFactory.getMusicCute());
                 }
             }
         });
