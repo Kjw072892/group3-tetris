@@ -24,7 +24,8 @@ public final class AudioMusicFactory {
                 getMusicRetro(),
                 getMusicTrap(),
                 getMusicAlt(),
-                getMusicPink()
+                getMusicPink(),
+                getCuteSong()
         };
     }
 
@@ -58,19 +59,19 @@ public final class AudioMusicFactory {
         return new BackgroundMusic("Alternative Tetris", "TheSamovars.wav");
     }
 
+    /** The cute song, plays when the color scheme is set to the pretty scheme */
     public static BackgroundMusic getCuteSong() {
         return new BackgroundMusic("Pastel Mode", "cuteSong.wav");
     }
 
-
+    /** The pink theme, plays when the color scheme is set to the pink theme */
     public static BackgroundMusic getMusicPink() {
         return new BackgroundMusic("Pink Mode \uD83C\uDF80✨", "pinkTheme.wav");
     }
     /**
-     *
      * Record for information relating to the music.
      * 
-     * @param name the formal name of the music
+     * @param name the formal, readable name of the music
      * @param fileName the file name of the music
      */
     public record BackgroundMusic(String name, String fileName) {
