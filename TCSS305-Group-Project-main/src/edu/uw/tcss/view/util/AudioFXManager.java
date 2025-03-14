@@ -26,14 +26,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author Roman Bureacov
  * @version 3.11.25
  */
-public class AudioFXManager extends KeyAdapter implements PropertyChangeListener {
+public final class AudioFXManager extends KeyAdapter {
 
     private static final Logger LOGGER = Logger.getLogger(AudioFXManager.class.getName());
 
     private static final Map<Channels, Clip> SOUND_CLIPS = new HashMap<>();
-
-    private static GameControls.GameState myLastGameState = GameControls.GameState.OVER;
-
 
     static {
         LOGGER.setLevel(Level.ALL);
@@ -42,8 +39,8 @@ public class AudioFXManager extends KeyAdapter implements PropertyChangeListener
     /**
      * AudioManagerFX constructor.
      */
-    public AudioFXManager() {
-        super();
+    private AudioFXManager() {
+
     }
 
     /**
@@ -160,33 +157,5 @@ public class AudioFXManager extends KeyAdapter implements PropertyChangeListener
 
         }
     }
-
-
-    @Override
-    public void propertyChange(final PropertyChangeEvent theEvent) {
-
-        if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_GAME_STATE)
-                && theEvent.getNewValue().equals(GameControls.GameState.OVER)) {
-
-            playSoundFX(Channels.GAME_OVER);
-
-        } else if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_ROWS_CLEARED)) {
-
-            playSoundFX(Channels.LINE_CLEARED_FX);
-
-        } else if (PropertyChangeEnabledGameControls.PROPERTY_FROZEN_BLOCKS.
-                equals(theEvent.getPropertyName())
-                && !GameControls.GameState.NEW.equals(myLastGameState)) {
-
-            playSoundFX(Channels.LANDING_FX);
-
-        } else if (PropertyChangeEnabledGameControls.PROPERTY_GAME_STATE
-                .equals(theEvent.getPropertyName())) {
-
-            myLastGameState = (GameControls.GameState) theEvent.getNewValue();
-
-        }
-    }
-
 
 }

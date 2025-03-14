@@ -65,25 +65,28 @@ public final class GameLogic implements PropertyChangeListener {
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (PROPERTY_ROWS_CLEARED.equals(theEvent.getPropertyName())) {
-            final Integer rowsCleared = (Integer) theEvent.getNewValue();
+        switch (theEvent.getPropertyName()) {
+            case PROPERTY_ROWS_CLEARED -> {
+                final Integer rowsCleared = (Integer) theEvent.getNewValue();
 
-            myLinesCleared += rowsCleared;
+                myLinesCleared += rowsCleared;
 
-            updateLevel();
-            updateScore(rowsCleared);
-
-        } else if (PROPERTY_FROZEN_BLOCKS.equals(theEvent.getPropertyName())) {
-            if (!GameState.NEW.equals(myLastGameState)) {
-                myScore += SCORE_PER_PIECE;
+                updateLevel();
+                updateScore(rowsCleared);
+                playLinesFX(rowsCleared);
             }
-        } else if (PROPERTY_GAME_STATE.equals(theEvent.getPropertyName())) {
-            final GameState newGameState = (GameState) theEvent.getNewValue();
-            handleGameState(newGameState);
-            handleGameStateAudio(newGameState);
-            myLastGameState = newGameState;
+            case PROPERTY_FROZEN_BLOCKS -> {
+                if (!GameState.NEW.equals(myLastGameState)) {
+                    myScore += SCORE_PER_PIECE;
+                }
+            }
+            case PROPERTY_GAME_STATE -> {
+                final GameState newGameState = (GameState) theEvent.getNewValue();
+                handleGameState(newGameState);
+                myLastGameState = newGameState;
+            }
+            default -> { }
         }
-
     }
 
     private void handleGameState(final GameState theGameState) {
@@ -110,43 +113,13 @@ public final class GameLogic implements PropertyChangeListener {
         }
     }
 
-    private void handleGameStateAudio(final GameState theGameState) {
-        switch (theGameState) {
-            case GameState.NEW -> {
-                AudioMusicManager.setCurrentMusic(myOldMusic);
-                AudioMusicManager.startMusic();
-            }
-            case GameState.PAUSED -> {
-                AudioFXManager.playSoundFX(Channels.PAUSE_FX);
-                AudioMusicManager.stopMusic();
-            }
-            case GameState.OVER -> {
-                AudioFXManager.playSoundFX(Channels.GAME_OVER);
-                AudioMusicManager.stopMusic();
-            }
-            case GameState.RUNNING,
-                 GameState.WORRY -> {
-                if (GameState.PANIC.equals(myLastGameState)) {
-                    AudioMusicManager.setCurrentMusic(myOldMusic);
-                    AudioMusicManager.startMusic();
-                }
-            }
-            case GameState.PANIC -> {
-                myOldMusic = AudioMusicManager.getCurrentMusic();
-                AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicPanic());
-                AudioMusicManager.startMusic();
-            }
-            default -> throw
-                    new EnumConstantNotPresentException(
-                            GameState.class, theGameState.toString());
-        }
-    }
-
     private void playLinesFX(final int theNumLinesCleared) {
         if (theNumLinesCleared == TRIPLE) {
             AudioFXManager.playSoundFX(Channels.THREE_LINES_FX);
         } else if (theNumLinesCleared == QUADRUPLE) {
             AudioFXManager.playSoundFX(Channels.FOUR_LINES_FX);
+        } else {
+            AudioFXManager.playSoundFX(Channels.LINE_CLEARED_FX);
         }
     }
 
@@ -181,7 +154,6 @@ public final class GameLogic implements PropertyChangeListener {
     }
 
     private void updateScore(final int theLinesCleared) {
-
         myScore += switch (theLinesCleared) {
             case SINGLE -> ONE_LINE_SCORE * myCurrentLevel;
             case DOUBLE -> TWO_LINE_SCORE * myCurrentLevel;
@@ -189,8 +161,6 @@ public final class GameLogic implements PropertyChangeListener {
             case QUADRUPLE -> FOUR_LINE_SCORE * myCurrentLevel;
             default -> 0;
         };
-        playLinesFX(theLinesCleared);
-
     }
 
     /**

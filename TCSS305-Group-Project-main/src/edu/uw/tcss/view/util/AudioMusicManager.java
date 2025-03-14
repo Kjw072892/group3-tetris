@@ -4,10 +4,10 @@ import static edu.uw.tcss.model.GameControls.GameState;
 import static edu.uw.tcss.view.app.assets.AssetsManager.MUSIC_PATH;
 import static edu.uw.tcss.view.util.AudioMusicFactory.BackgroundMusic;
 
-import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -25,7 +25,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author Roman Bureacov
  * @version 2025-03-12
  */
-public class AudioMusicManager implements PropertyChangeListener {
+public final class AudioMusicManager {
+
+
+    /** name of property when the music has changed. */
+    public static final String PROPERTY_MUSIC = "The music has changed!";
+    private static final Object PROPERTY_SOURCE_BEAN = new Object();
+    private static final PropertyChangeSupport PCS = new PropertyChangeSupport(PROPERTY_SOURCE_BEAN);
 
     private static Clip myMusicChannel;
     private static BackgroundMusic myCurrentMusic;
@@ -37,7 +43,8 @@ public class AudioMusicManager implements PropertyChangeListener {
         try {
             myMusicChannel = AudioSystem.getClip();
             myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
-            setCurrentMusic(AudioMusicFactory.getMusicEpic());
+            myCurrentMusic = AudioMusicFactory.getMusicEpic();
+            setCurrentMusic(myCurrentMusic);
 
         } catch (final LineUnavailableException e) {
             LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
@@ -48,8 +55,8 @@ public class AudioMusicManager implements PropertyChangeListener {
     /**
      * AudioManager Constructor.
      */
-    public AudioMusicManager() {
-        super();
+    private AudioMusicManager() {
+
     }
 
     /**
@@ -68,6 +75,7 @@ public class AudioMusicManager implements PropertyChangeListener {
             final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
 
             myMusicChannel.open(stream);
+            PCS.firePropertyChange(PROPERTY_MUSIC, null, myCurrentMusic);
 
         } catch (final UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             LOGGER.info(() -> "Could not find or open music asset: " + myCurrentMusic.fileName());
@@ -103,18 +111,20 @@ public class AudioMusicManager implements PropertyChangeListener {
         return myCurrentMusic;
     }
 
-    @Override
-    public void propertyChange(final PropertyChangeEvent theEvent) {
-
-        if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_GAME_STATE)) {
-            switch (theEvent.getNewValue()) {
-                case GameState.NEW, GameState.RUNNING, GameState.WORRY, GameState.PANIC ->
-                        startMusic();
-                case GameState.PAUSED, GameState.OVER -> stopMusic();
-                default -> {
-                }
-            }
-        }
+    /**
+     * Adds a property change listener for when the music has changed.
+     * @param theListener the object to listen for music changes
+     */
+    public static void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        PCS.addPropertyChangeListener(theListener);
     }
 
+    /**
+     * Removes the specified property change listener from the listeners.
+     *
+     * @param theListener the listener to remove
+     */
+    public static void removePropertyChangeListener(final PropertyChangeListener theListener) {
+        PCS.removePropertyChangeListener(theListener);
+    }
 }

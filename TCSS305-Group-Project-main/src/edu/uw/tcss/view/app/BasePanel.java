@@ -11,7 +11,9 @@ import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.keymaps.GameAction;
 import edu.uw.tcss.view.app.keymaps.KeyMapper;
 import edu.uw.tcss.view.app.keymaps.TetrominoAction;
+import edu.uw.tcss.view.util.AudioFXListener;
 import edu.uw.tcss.view.util.AudioFXManager;
+import edu.uw.tcss.view.util.AudioMusicListener;
 import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import java.awt.BorderLayout;
@@ -107,8 +109,9 @@ public final class BasePanel extends JPanel {
         final AdBannerPanel banner = new AdBannerPanel();
         add(banner, BorderLayout.SOUTH);
 
-
         // add property change listeners
+        final AudioMusicListener musicListener = new AudioMusicListener();
+
         myTetrisGame.addPropertyChangeListener(PROPERTY_ROWS_CLEARED, myGameLogic);
         myTetrisGame.addPropertyChangeListener(PROPERTY_GAME_STATE, myGameLogic);
         myTetrisGame.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, myGameLogic);
@@ -117,13 +120,14 @@ public final class BasePanel extends JPanel {
         myTetrisGame.addPropertyChangeListener(PROPERTY_FROZEN_BLOCKS, scoreInfoPanel);
         myTetrisGame.addPropertyChangeListener(gameBoard);
         myTetrisGame.addPropertyChangeListener(nextPiecePanel);
-        myTetrisGame.addPropertyChangeListener(new AudioMusicManager());
-        myTetrisGame.addPropertyChangeListener(new AudioFXManager());
+        myTetrisGame.addPropertyChangeListener(musicListener);
+        myTetrisGame.addPropertyChangeListener(new AudioFXListener());
         ColorSchemeManager.addPropertyChangeListener(gameBoard);
         ColorSchemeManager.addPropertyChangeListener(nextPiecePanel);
         ColorSchemeManager.addPropertyChangeListener(scoreInfoPanel);
         ColorSchemeManager.addPropertyChangeListener(controlsInfoPanel);
-
+        ColorSchemeManager.addPropertyChangeListener(musicListener);
+        AudioMusicManager.addPropertyChangeListener(musicListener);
     }
 
     private void setupKeys() {
@@ -158,12 +162,6 @@ public final class BasePanel extends JPanel {
                 getKeyStroke("pressed N"), GameAction.Controls.NEW_GAME);
         myKeyMapper.mapGameAction(
                 getKeyStroke("pressed M"), GameAction.Controls.END_GAME);
-
-        // TODO: this is not a game action, needs to be revised
-        myKeyMapper.mapGameAction(
-                getKeyStroke("pressed B"), GameAction.Controls.TOGGLE_PINK_MODE);
-
-
 
     }
 }

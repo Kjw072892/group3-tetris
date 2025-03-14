@@ -4,11 +4,9 @@ import static edu.uw.tcss.view.util.ColorSchemeFactory.ColorScheme;
 
 import edu.uw.tcss.model.GameControls;
 import java.awt.Color;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashSet;
+import java.beans.PropertyChangeSupport;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Class that manages the static color scheme.
@@ -19,10 +17,11 @@ import java.util.Set;
 public final class ColorSchemeManager {
 
 
+    /** name of the property for when the color scheme has changed */
     public static final String PROPERTY_COLOR_SCHEME = "The color scheme has changed";
-    public static final Object PROPERTY_SOURCE_BEAN = new Object();
+    private static final Object PROPERTY_SOURCE_BEAN = new Object();
 
-    private static final Set<PropertyChangeListener> LISTENERS = new HashSet<>();
+    private static final PropertyChangeSupport PCS = new PropertyChangeSupport(PROPERTY_SOURCE_BEAN);
 
     private static ColorScheme myCurrentColorScheme;
 
@@ -42,7 +41,7 @@ public final class ColorSchemeManager {
      * @param theListener the property change listener to append.
      */
     public static void addPropertyChangeListener(final PropertyChangeListener theListener) {
-        LISTENERS.add(theListener);
+        PCS.addPropertyChangeListener(theListener);
     }
 
     /**
@@ -51,18 +50,7 @@ public final class ColorSchemeManager {
      * @param theListener the property change listener to remove.
      */
     public static void removePropertyChangeListener(final PropertyChangeListener theListener) {
-        LISTENERS.remove(theListener);
-    }
-
-    private static void somePropertyChanged() {
-        for (final PropertyChangeListener listener : LISTENERS) {
-            listener.propertyChange(new PropertyChangeEvent(
-                    PROPERTY_SOURCE_BEAN,
-                    PROPERTY_COLOR_SCHEME,
-                    null,
-                    getCurrentColorScheme()
-            ));
-        }
+        PCS.removePropertyChangeListener(theListener);
     }
 
     /**
@@ -72,7 +60,7 @@ public final class ColorSchemeManager {
      */
     public static void setCurrentColorScheme(final ColorScheme theScheme) {
         myCurrentColorScheme = theScheme;
-        somePropertyChanged();
+        PCS.firePropertyChange(PROPERTY_COLOR_SCHEME, null, myCurrentColorScheme);
     }
 
     /**
