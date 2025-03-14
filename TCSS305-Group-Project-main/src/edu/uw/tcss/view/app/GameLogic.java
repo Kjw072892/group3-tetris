@@ -100,8 +100,6 @@ public final class GameLogic implements PropertyChangeListener {
             case GameState.RUNNING,
                  GameState.WORRY,
                  GameState.PANIC -> {
-                Logger.getAnonymousLogger().log(Level.INFO,
-                        "Current State: " + theGameState);
                 if (!GameState.RUNNING.equals(myLastGameState)) {
                     myTimer.start();
                 }
@@ -130,6 +128,7 @@ public final class GameLogic implements PropertyChangeListener {
                  GameState.WORRY -> {
                 if (GameState.PANIC.equals(myLastGameState)) {
                     AudioMusicManager.setCurrentMusic(myOldMusic);
+                    AudioMusicManager.startMusic();
                 }
             }
             case GameState.PANIC -> {
