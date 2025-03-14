@@ -105,12 +105,8 @@ public final class BasePanel extends JPanel {
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
 
-        try {
-            final AdBannerPanel banner = new AdBannerPanel();
-            add(banner, BorderLayout.SOUTH);
-        } catch (final IOException exception) {
-            exception.printStackTrace();
-        }
+        final AdBannerPanel banner = new AdBannerPanel();
+        add(banner, BorderLayout.SOUTH);
 
 
         // add property change listeners
@@ -164,8 +160,9 @@ public final class BasePanel extends JPanel {
         myKeyMapper.mapGameAction(
                 getKeyStroke("pressed M"), GameAction.Controls.END_GAME);
 
-                myKeyMapper.mapGameAction(
-                        getKeyStroke("pressed B"), GameAction.Controls.TOGGLE_PINK_MODE);
+        // TODO: this is not a game action, needs to be revised
+        myKeyMapper.mapGameAction(
+                getKeyStroke("pressed B"), GameAction.Controls.TOGGLE_PINK_MODE);
 
 
 

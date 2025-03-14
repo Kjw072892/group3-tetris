@@ -10,6 +10,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -27,12 +29,14 @@ public class AdBannerPanel extends JPanel {
 
     /**
      * Creates a fixed-size banner panel that displays advertisements.
-     *
-     * @throws IOException should the image files contained not be found.
      */
-    public AdBannerPanel() throws IOException {
+    public AdBannerPanel() {
         super();
-        loadAdvertisements();
+        try {
+            loadAdvertisements();
+        } catch (final IOException e) {
+            Logger.getAnonymousLogger().log(Level.WARNING, "File not found", e.getStackTrace());
+        }
         setPreferredSize(new Dimension(BANNER_WIDTH, BANNER_HEIGHT));
         setBackground(Color.MAGENTA);
         setOpaque(true);
