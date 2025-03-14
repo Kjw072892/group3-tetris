@@ -38,25 +38,25 @@ public class DirectionLabelsPanel extends JPanel implements PropertyChangeListen
         final int boarderThickness = 3;
         final int padding = 10;
 
-        final JLabel moveLeftLabel = new JLabel("Move Left:     left or A/a key");
+        final JLabel moveLeftLabel = new JLabel("Move Left:                Left or A/a key");
         moveLeftLabel.setFont(labelFontFormat());
 
-        final JLabel moveRightLabel = new JLabel("Move Right:   right or D/d key");
+        final JLabel moveRightLabel = new JLabel("Move Right:             Right or D/d key");
         moveRightLabel.setFont(labelFontFormat());
 
-        final JLabel moveDownLabel = new JLabel("Move Down:  down or S/s key");
+        final JLabel moveDownLabel = new JLabel("Move Down:             Down or S/s key");
         moveDownLabel.setFont(labelFontFormat());
 
-        final JLabel rotateClockWise = new JLabel("Move CW:      up or E/e key");
+        final JLabel rotateClockWise = new JLabel("Move Ccw/ Cw:        Q/q or E/e key");
         rotateClockWise.setFont(labelFontFormat());
 
-        final JLabel dropLabel = new JLabel("Drop:               space");
+        final JLabel dropLabel = new JLabel("Drop:                          space");
         dropLabel.setFont(labelFontFormat());
 
-        final JLabel pauseLabel = new JLabel("Pause:             P/p key");
+        final JLabel pauseLabel = new JLabel("Pause:                        P/p key");
         pauseLabel.setFont(labelFontFormat());
 
-        final JLabel muteLabel = new JLabel("Quit:               M/m key");
+        final JLabel muteLabel = new JLabel("Quit:                           M/m key");
         muteLabel.setFont(labelFontFormat());
 
         setLayout(new BorderLayout());

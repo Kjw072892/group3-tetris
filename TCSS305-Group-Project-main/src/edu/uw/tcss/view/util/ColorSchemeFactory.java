@@ -71,7 +71,7 @@ public final class ColorSchemeFactory {
         final Color primary = new Color(216, 191, 216);
         final Color panel = new Color(250, 235, 215);
         return new ColorScheme(
-                "Pretty <3",
+                "Pretty ❤️",
                 Map.of(
                         Block.I, iBlock,
                         Block.J, jBlock,

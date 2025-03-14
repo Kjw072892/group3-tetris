@@ -24,8 +24,9 @@ public class FileMenu extends JMenuBar {
     private final JMenuItem myFileMenuGameStart = new JMenuItem("Start Game With Panic Mode");
     private final JMenuItem myFileMenuGameStart2 = new JMenuItem("Start Game Without Panic Mode");
     private final JMenuItem myAbout = new JMenuItem("About");
+    private final JMenuItem myReferences = new JMenuItem("References");
     private final JMenuItem myFileMenuExitGame = new JMenuItem("Exit");
-    private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Color");
+    private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Theme");
     private final JMenuItem myFeatureBackGroundMusic = new JMenuItem("Background Music");
     private final JMenu myFileMenu = new JMenu("File");
     private final JMenu myFeatureMenu = new JMenu("Features");
@@ -78,7 +79,7 @@ public class FileMenu extends JMenuBar {
     }
 
     private void featureMenuCreation() {
-        final JMenu innerColorMenu = new JMenu("Color");
+        final JMenu innerColorMenu = new JMenu("Theme's");
 
         // Add mnemonics
         innerColorMenu.setMnemonic('c');
@@ -94,17 +95,38 @@ public class FileMenu extends JMenuBar {
     private void helpMenuCreation() {
         // Add mnemonics
         myAbout.setMnemonic('a');
+        myReferences.setMnemonic('r');
 
         // Add items to the Help menu
         myHelpMenu.add(myAbout);
+        myHelpMenu.add(myReferences);
     }
 
+    //TODO: Please cite all of your sources in the myReference. Be mindful of spacing!
     private void addListeners(final JFrame theFrame) {
         myAbout.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
-                "Made by James, Kassie, Roman, Zainab. \nCurrent version: "
+                "                        (GROUP 3)\n "
+                        + "Made by: James, Kassie, Roman, Zainab. \n\n       Current version: "
                         + myVersion));
 
+        myReferences.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
+                """
+                        Music and soundFx were found on youtube. We do not own the rights to any \
+                        of the music or soundFX used in this game.
+                        ---------------------------------------------------------------------------\
+                        ---------------------------------------------------------------------------\
+                        --------------------------\s
+                        
+                        ⭐Twinkling Shooting Star⭐(Cute chiptune/8bit music): \
+                        https://www.youtube.com/watch?v=3qTAGRz-GjE
+                        
+                        Tetris Game SoundFX: https://www.sounds-resource.com\
+                        /nintendo_switch/tetris99/sound/19376/\s
+                        
+                        Trap Tetris (Da Brozz - Tetris (Original Mix)): \
+                        https://www.youtube.com/watch?v=AT7KjIOd7GQ\s
+                        """));
         myFileMenuExitGame.addActionListener(ActionEvent -> System.exit(0));
 
         myFeatureMenuColorChooser.addActionListener(ActionEvent -> {
@@ -123,7 +145,7 @@ public class FileMenu extends JMenuBar {
                 if (scheme.toString().contains("Pink Mode \uD83C\uDF80✨")) {
                     AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicPink());
 
-                } else if (scheme.toString().contains("Pretty <3")) {
+                } else if (scheme.toString().contains("Pretty ❤️")) {
                     AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicCute());
                 }
             }
