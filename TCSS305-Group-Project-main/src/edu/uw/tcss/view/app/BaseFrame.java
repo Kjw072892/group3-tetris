@@ -1,5 +1,6 @@
 package edu.uw.tcss.view.app;
 
+import static edu.uw.tcss.view.app.assets.AssetsManager.IMAGES_PATH;
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
@@ -43,20 +44,14 @@ public class BaseFrame extends JFrame {
 
     private void configWindow() {
         setTitle("Group 03 Tetris");
-        final ImageIcon tetrisIcon = new
-                ImageIcon(AssetsManager.IMAGES_PATH, "tetrominoIcon.png");
+        final ImageIcon tetrisIcon = new ImageIcon(
+                AssetsManager.getFilePath(IMAGES_PATH, "tetrominoIcon.png"));
 
         final Image image = tetrisIcon.getImage();
 
-        if (tetrisIcon.getIconWidth() == -1) {
-            System.out.println("Image not found");
-        }
-
         setIconImage(image);
 
-
         pack();
-
 
         final Toolkit tk = Toolkit.getDefaultToolkit();
         setLocation(
