@@ -18,6 +18,12 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * static class that manages the playback of the music.
+ *
+ * @author Roman Bureacov
+ * @version 2025-03-12
+ */
 public class AudioMusicManager implements PropertyChangeListener {
 
     private static Clip myMusicChannel;
@@ -42,20 +48,6 @@ public class AudioMusicManager implements PropertyChangeListener {
      */
     public AudioMusicManager() {
         super();
-    }
-
-    public static void playMusic() {
-        if (ColorSchemeManager.getCurrentColorScheme()
-                .equals(ColorSchemeFactory.getPinkModeColors())) {
-            setMusic(AudioMusicFactory.getMusicPink());
-        } else if (ColorSchemeManager.getCurrentColorScheme()
-                .equals(ColorSchemeFactory.getPrettyColors())) {
-            setMusic(AudioMusicFactory.getCuteSong());
-        } else {
-            setMusic(AudioMusicFactory.getMusicEpic());
-
-        }
-        myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     /**
@@ -93,11 +85,10 @@ public class AudioMusicManager implements PropertyChangeListener {
     }
 
     /**
-     * Resets the music playback.
+     * Resets the music playback to start from the beginning. Does not stop or start playback.
      */
-    public static void resetMusic() {
+    public static void restartMusic() {
         myMusicChannel.setFramePosition(0);
-        startMusic();
     }
 
     @Override
