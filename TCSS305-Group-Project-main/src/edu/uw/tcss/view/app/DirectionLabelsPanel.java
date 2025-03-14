@@ -38,6 +38,7 @@ public class DirectionLabelsPanel extends JPanel implements PropertyChangeListen
         final int boarderThickness = 3;
         final int padding = 10;
 
+        // TODO: might want to make these separate labels such that it's spaced automatically by swing
         final JLabel moveLeftLabel = new JLabel("Move Left:                Left or A/a key");
         moveLeftLabel.setFont(labelFontFormat());
 

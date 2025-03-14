@@ -103,6 +103,7 @@ public class FileMenu extends JMenuBar {
     }
 
     //TODO: Please cite all of your sources in the myReference. Be mindful of spacing!
+    // TODO: might be best to create a new frame such that everything is spaced automatically by swing
     private void addListeners(final JFrame theFrame) {
         myAbout.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
