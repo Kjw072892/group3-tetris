@@ -56,10 +56,13 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
     // The current GameState
     private GameState myState;
 
+    // variable for tracking myWorried
     private boolean myWorried;
 
+    // variable for tracking a panic
     private boolean myPanicking;
 
+    // variable for setting if game can ever enter worry or panic
     private boolean myCouldPanic;
 
     /**
@@ -693,6 +696,8 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
             if (!foundBlock) {
                 if (!myWorried) {
                     setGameState(GameState.RUNNING);
+                } else {
+                    setGameState(GameState.WORRY);
                 }
                 myPanicking = false;
             }
