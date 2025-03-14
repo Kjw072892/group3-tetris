@@ -42,6 +42,7 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
     private final JLabel myCurrentScoreLabel = new JLabel();
     private final JLabel myClearedLinesLabel = new JLabel();
     private final JLabel myCurrentLevelLabel = new JLabel();
+    private final JLabel myLevelTracker = new JLabel();
 
     /**
      * Constructor for score panel class.
@@ -52,51 +53,12 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         super();
 
         myGameLogic = theGameLogic;
+        setupLabels();
 
-        setMyScore(theGameLogic.getScore());
-
-        setMyCurrentLevel(theGameLogic.getLevel());
-
-        setMyClearedLines(theGameLogic.getLinesCleared());
-
-        theScorePanel();
+        setLabels();
 
         updateTheme();
-
     }
-
-    /**
-     * Sets the current score.
-     * @param theScore integer of the current score.
-     */
-    public void setMyScore(final int theScore) {
-        if (theScore < 0) {
-            throw new IllegalArgumentException("Minimum score must be 0!");
-        }
-
-        myCurrentScoreLabel.setText(FORMATTER.format(theScore));
-
-    }
-
-    private void setMyClearedLines(final int theCurrentLines) {
-        if (theCurrentLines < 0) {
-            throw new IllegalArgumentException(
-                    "Number of lines cleared must be greater than or equal to 0!");
-        }
-
-        myClearedLinesLabel.setText(FORMATTER.format(theCurrentLines));
-
-    }
-
-    private void setMyCurrentLevel(final int theCurrentLevel) {
-        if (theCurrentLevel < 1) {
-            throw new IllegalArgumentException("The lowest starting level must be 1!");
-        }
-
-        myCurrentLevelLabel.setText(FORMATTER.format(theCurrentLevel));
-
-    }
-
 
     /**
      * Creates a formatted panel that a line will sit on.
@@ -124,7 +86,7 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         return panel;
     }
 
-    private void theScorePanel() {
+    private void setupLabels() {
         final int fontSize = 12;
         final int spacer = 20;
         final int borderThickness = 3;
@@ -149,15 +111,15 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         final JPanel currentLevelPanel = formattedLine("Level: ", myCurrentLevelLabel);
         myLabelPanel.add(currentLevelPanel);
 
-        final JLabel message = new JLabel("Levels Increase Every 5 Lines!");
-        message.setFont(new Font(SERIF_FONT_NAME, Font.PLAIN, fontSize));
-        message.setHorizontalAlignment(SwingConstants.CENTER);
+        myLevelTracker.setText(getNextLevelString());
+        myLevelTracker.setFont(new Font(SERIF_FONT_NAME, Font.PLAIN, fontSize));
+        myLevelTracker.setHorizontalAlignment(SwingConstants.CENTER);
 
         final JPanel messagePanel = new JPanel();
-        messagePanel.add(message);
+        messagePanel.add(myLevelTracker);
 
         add(myLabelPanel, BorderLayout.CENTER);
-        add(message, BorderLayout.SOUTH);
+        add(myLevelTracker, BorderLayout.SOUTH);
 
         setVisible(true);
         setOpaque(true);
@@ -169,6 +131,24 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
         setBackground(ColorSchemeManager.getCurrentTertiaryColor());
     }
 
+    private String getNextLevelString() {
+        final String plural;
+        final int linesLeft = myGameLogic.getLinesUntilNextLevel();
+        if (linesLeft > 1) {
+            plural = "s";
+        } else {
+            plural = "";
+        }
+
+        return String.format("Next level in %d line%s!", linesLeft, plural);
+    }
+
+    private void setLabels() {
+        myClearedLinesLabel.setText(FORMATTER.format(myGameLogic.getLinesCleared()));
+        myCurrentLevelLabel.setText(FORMATTER.format(myGameLogic.getLevel()));
+        myCurrentScoreLabel.setText(FORMATTER.format(myGameLogic.getScore()));
+        myLevelTracker.setText(getNextLevelString());
+    }
 
     /**
      * @param theEvent A PropertyChangeEvent object describing the event source
@@ -176,14 +156,9 @@ public class ScorePanel extends JPanel implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        setMyClearedLines(myGameLogic.getLinesCleared());
-        setMyCurrentLevel(myGameLogic.getLevel());
-        setMyScore(myGameLogic.getScore());
-
+        setLabels();
         if (theEvent.getPropertyName().equals(ColorSchemeManager.PROPERTY_COLOR_SCHEME)) {
             updateTheme();
         }
-
-
     }
 }
