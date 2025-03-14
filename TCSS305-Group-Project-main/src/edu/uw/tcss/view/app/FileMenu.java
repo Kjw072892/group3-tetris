@@ -121,10 +121,10 @@ public class FileMenu extends JMenuBar {
             if (scheme != null) {
                 ColorSchemeManager.setCurrentColorScheme((ColorSchemeFactory.ColorScheme) scheme);
                 if (scheme.toString().contains("Pink Mode \uD83C\uDF80✨")) {
-                    AudioMusicManager.setMusic(AudioMusicFactory.getMusicPink());
+                    AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicPink());
 
                 } else if (scheme.toString().contains("Pretty <3")) {
-                    AudioMusicManager.setMusic(AudioMusicFactory.getMusicCute());
+                    AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicCute());
                 }
             }
         });
@@ -141,7 +141,7 @@ public class FileMenu extends JMenuBar {
             );
 
             if (music != null) {
-                AudioMusicManager.setMusic((AudioMusicFactory.BackgroundMusic) music);
+                AudioMusicManager.setCurrentMusic((AudioMusicFactory.BackgroundMusic) music);
             }
         });
 

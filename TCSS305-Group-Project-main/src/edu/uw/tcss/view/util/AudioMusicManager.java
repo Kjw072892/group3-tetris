@@ -28,6 +28,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class AudioMusicManager implements PropertyChangeListener {
 
     private static Clip myMusicChannel;
+    private static BackgroundMusic myCurrentMusic;
 
     private static final Logger LOGGER = Logger.getLogger(AudioMusicManager.class.getName());
 
@@ -36,7 +37,7 @@ public class AudioMusicManager implements PropertyChangeListener {
         try {
             myMusicChannel = AudioSystem.getClip();
             myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
-            setMusic(AudioMusicFactory.getMusicEpic());
+            setCurrentMusic(AudioMusicFactory.getMusicEpic());
 
         } catch (final LineUnavailableException e) {
             LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
@@ -56,18 +57,20 @@ public class AudioMusicManager implements PropertyChangeListener {
      * This class will not start the new music upon setting the music.
      * @param theMusic the background music clip.
      */
-    public static void setMusic(final BackgroundMusic theMusic) {
+    public static void setCurrentMusic(final BackgroundMusic theMusic) {
         try {
+            myCurrentMusic = theMusic;
+
             myMusicChannel.stop();
             myMusicChannel.close();
 
-            final File soundFile = AssetsManager.getFile(MUSIC_PATH, theMusic.fileName());
+            final File soundFile = AssetsManager.getFile(MUSIC_PATH, myCurrentMusic.fileName());
             final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
 
             myMusicChannel.open(stream);
 
         } catch (final UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
+            LOGGER.info(() -> "Could not find or open music asset: " + myCurrentMusic.fileName());
         }
     }
 
@@ -90,6 +93,14 @@ public class AudioMusicManager implements PropertyChangeListener {
      */
     public static void restartMusic() {
         myMusicChannel.setFramePosition(0);
+    }
+
+    /**
+     * Gets the current music set.
+     * @return current music
+     */
+    public static BackgroundMusic getCurrentMusic() {
+        return myCurrentMusic;
     }
 
     @Override

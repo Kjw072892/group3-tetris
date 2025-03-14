@@ -56,6 +56,8 @@ public final class GameLogic implements PropertyChangeListener {
     private int myLinesCleared;
     private GameState myLastGameState = GameState.OVER;
 
+    private AudioMusicFactory.BackgroundMusic myOldMusic = AudioMusicManager.getCurrentMusic();
+
     GameLogic(final TetrisGame theTetrisGame) {
         myTetrisGame = theTetrisGame;
         myTimer = new Timer(DEFAULT_DELAY, theEvent -> myTetrisGame.step());
@@ -78,6 +80,7 @@ public final class GameLogic implements PropertyChangeListener {
         } else if (PROPERTY_GAME_STATE.equals(theEvent.getPropertyName())) {
             final GameState newGameState = (GameState) theEvent.getNewValue();
             handleGameState(newGameState);
+            handleGameStateAudio(newGameState);
             myLastGameState = newGameState;
         }
 
@@ -91,39 +94,59 @@ public final class GameLogic implements PropertyChangeListener {
                 myCurrentLevel = 1;
 
                 myTimer.setDelay(DEFAULT_DELAY);
-                AudioMusicManager.restartMusic();
             }
             case GameState.PAUSED,
                  GameState.OVER -> myTimer.stop();
             case GameState.RUNNING,
                  GameState.WORRY,
                  GameState.PANIC -> {
+                Logger.getAnonymousLogger().log(Level.INFO,
+                        "Current State: " + theGameState);
                 if (!GameState.RUNNING.equals(myLastGameState)) {
                     myTimer.start();
                 }
-                // TODO: need to fix backend never sending out the worry nor panic game states
-                Logger.getAnonymousLogger().log(Level.INFO,
-                        String.format("Current running game state: %s", theGameState));
             }
             default -> throw
                     new EnumConstantNotPresentException(
                             GameState.class, theGameState.toString());
         }
+    }
 
-        if (GameState.PANIC.equals(theGameState)) {
-            AudioMusicManager.setMusic(AudioMusicFactory.getMusicPanic());
-            AudioMusicManager.startMusic();
-        } else if (GameState.PAUSED.equals(theGameState)) {
-            AudioFXManager.playSoundFX(Channels.PAUSE_FX);
+    private void handleGameStateAudio(final GameState theGameState) {
+        switch (theGameState) {
+            case GameState.NEW -> {
+                AudioMusicManager.setCurrentMusic(myOldMusic);
+                AudioMusicManager.startMusic();
+            }
+            case GameState.PAUSED -> {
+                AudioFXManager.playSoundFX(Channels.PAUSE_FX);
+                AudioMusicManager.stopMusic();
+            }
+            case GameState.OVER -> {
+                AudioFXManager.playSoundFX(Channels.GAME_OVER);
+                AudioMusicManager.stopMusic();
+            }
+            case GameState.RUNNING,
+                 GameState.WORRY -> {
+                if (GameState.PANIC.equals(myLastGameState)) {
+                    AudioMusicManager.setCurrentMusic(myOldMusic);
+                }
+            }
+            case GameState.PANIC -> {
+                myOldMusic = AudioMusicManager.getCurrentMusic();
+                AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicPanic());
+                AudioMusicManager.startMusic();
+            }
+            default -> throw
+                    new EnumConstantNotPresentException(
+                            GameState.class, theGameState.toString());
         }
     }
 
     private void playLinesFX(final int theNumLinesCleared) {
         if (theNumLinesCleared == TRIPLE) {
             AudioFXManager.playSoundFX(Channels.THREE_LINES_FX);
-
         } else if (theNumLinesCleared == QUADRUPLE) {
-
             AudioFXManager.playSoundFX(Channels.FOUR_LINES_FX);
         }
     }

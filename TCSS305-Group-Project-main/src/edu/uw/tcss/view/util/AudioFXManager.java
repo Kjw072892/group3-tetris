@@ -53,7 +53,7 @@ public class AudioFXManager extends KeyAdapter implements PropertyChangeListener
         /**
          * FX sound for roblox death sound.
          */
-        ROBLOX_DEATH_SOUND,
+        GAME_OVER,
 
         /**
          * FX sound for changed position FX.
@@ -126,7 +126,7 @@ public class AudioFXManager extends KeyAdapter implements PropertyChangeListener
 
     private static String getSoundFileName(final Channels theChannel) {
         return switch (theChannel) {
-            case ROBLOX_DEATH_SOUND -> "Roblox Death Sound.wav";
+            case GAME_OVER -> "Roblox Death Sound.wav";
             case LINE_CLEARED_FX -> "lineClearedFX.wav";
             case CHANGED_POSITION_FX -> "moveFX.wav";
             case ROTATE_FX -> "rotateFX.wav";
@@ -168,7 +168,7 @@ public class AudioFXManager extends KeyAdapter implements PropertyChangeListener
         if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_GAME_STATE)
                 && theEvent.getNewValue().equals(GameControls.GameState.OVER)) {
 
-            playSoundFX(Channels.ROBLOX_DEATH_SOUND);
+            playSoundFX(Channels.GAME_OVER);
 
         } else if (theEvent.getPropertyName().equals(TetrisGame.PROPERTY_ROWS_CLEARED)) {
 
