@@ -6,6 +6,7 @@ import edu.uw.tcss.model.GameControls.Block;
 import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.GameControls;
 
+@Deprecated
 public final class Sprint1_values {
 
     private Sprint1_values() {
