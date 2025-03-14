@@ -1,21 +1,22 @@
 package edu.uw.tcss.view.app;
 
 import static edu.uw.tcss.view.app.assets.AssetsManager.IMAGES_PATH;
-import edu.uw.tcss.view.app.assets.AssetsManager;
 
+import edu.uw.tcss.view.app.assets.AssetsManager;
 import edu.uw.tcss.view.util.GraphicsHandler;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class AdBannerPanel extends JPanel {
 

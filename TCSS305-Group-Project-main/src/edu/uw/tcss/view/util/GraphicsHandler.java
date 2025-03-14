@@ -1,7 +1,9 @@
 package edu.uw.tcss.view.util;
 
-import java.awt.*;
 import edu.uw.tcss.view.util.DrawingFactory.BlockStyle;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 /**
  * Convenience class for modifying the graphics objects of JComponents.

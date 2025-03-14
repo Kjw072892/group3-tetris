@@ -1,10 +1,10 @@
 package edu.uw.tcss.view.app;
 
 import static edu.uw.tcss.view.util.StyleManager.BORDER_THICKNESS;
+
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.StyleManager;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

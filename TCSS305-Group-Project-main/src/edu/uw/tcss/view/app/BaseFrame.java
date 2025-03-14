@@ -1,6 +1,7 @@
 package edu.uw.tcss.view.app;
 
 import static edu.uw.tcss.view.app.assets.AssetsManager.IMAGES_PATH;
+
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
