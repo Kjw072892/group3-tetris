@@ -56,8 +56,6 @@ public final class GameLogic implements PropertyChangeListener {
     private int myLinesCleared;
     private GameState myLastGameState = GameState.OVER;
 
-    private AudioMusicFactory.BackgroundMusic myOldMusic = AudioMusicManager.getCurrentMusic();
-
     GameLogic(final TetrisGame theTetrisGame) {
         myTetrisGame = theTetrisGame;
         myTimer = new Timer(DEFAULT_DELAY, theEvent -> myTetrisGame.step());

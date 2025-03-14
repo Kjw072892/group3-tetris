@@ -1,12 +1,15 @@
 package edu.uw.tcss.view.app;
 
 import edu.uw.tcss.model.TetrisGame;
-import edu.uw.tcss.view.util.AudioMusicManager;
-
 import edu.uw.tcss.view.util.AudioMusicFactory;
+import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeFactory;
 import edu.uw.tcss.view.util.ColorSchemeManager;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 /**
  * FileMenu creation class.
@@ -18,7 +21,6 @@ import javax.swing.*;
  * @version 2.28.25
  */
 public class FileMenu extends JMenuBar {
-    private static final int DEFAULT_DELAY = 1000;
     private final String myVersion = "3.12.25";
 
     private final JMenuItem myFileMenuGameStart = new JMenuItem("Start Game With Panic Mode");

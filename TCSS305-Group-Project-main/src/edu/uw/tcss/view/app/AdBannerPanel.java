@@ -18,6 +18,12 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ * Ad banner class.
+ * @author Kassie
+ * @author Roman
+ * @version 3.14.25
+ */
 public class AdBannerPanel extends JPanel {
 
     private static final int BANNER_WIDTH = 500;

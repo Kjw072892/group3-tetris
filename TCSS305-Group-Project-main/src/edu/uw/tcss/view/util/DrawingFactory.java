@@ -62,21 +62,26 @@ public final class DrawingFactory {
         // Color reallyDarkerShade = baseColor.darker().darker();
 
         final GradientPaint topLeft = new GradientPaint(
-                theX, theY, lighterShade, theX + theWidth, theY + theHeight, theBaseColor);
+                theX, theY, lighterShade, theX + theWidth,
+                theY + theHeight, theBaseColor);
 
         final GradientPaint bottomRight = new GradientPaint(
-                theX, theY, theBaseColor, theX + theWidth, theY + theHeight, darkerShade);
+                theX, theY, theBaseColor, theX + theWidth,
+                theY + theHeight, darkerShade);
 
         //draw base block
         theGraphics.setPaint(topLeft);
         theGraphics.fillRect(theX, theY, theWidth, theHeight);
 
         theGraphics.setPaint(bottomRight);
-        theGraphics.fillRect(theX + offset, theY + offset, theWidth - offset, theHeight - offset);
+        theGraphics.fillRect(theX + offset, theY + offset,
+                theWidth - offset, theHeight - offset);
 
 
         //glossy effect
-        final GradientPaint gloss = new GradientPaint(theX, theY, Color.WHITE, theX + offset, theY + offset, new Color(255, 255, 255, 50));
+        final GradientPaint gloss = new GradientPaint(theX, theY, Color.WHITE,
+                theX + offset, theY + offset, new Color(255, 255, 255, 50));
+
         theGraphics.setPaint(gloss);
         theGraphics.fillRect(theX, theY, theWidth, theHeight);
 

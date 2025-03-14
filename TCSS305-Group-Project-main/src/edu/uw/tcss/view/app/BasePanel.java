@@ -12,7 +12,6 @@ import edu.uw.tcss.view.app.keymaps.GameAction;
 import edu.uw.tcss.view.app.keymaps.KeyMapper;
 import edu.uw.tcss.view.app.keymaps.TetrominoAction;
 import edu.uw.tcss.view.util.AudioFXListener;
-import edu.uw.tcss.view.util.AudioFXManager;
 import edu.uw.tcss.view.util.AudioMusicListener;
 import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeManager;

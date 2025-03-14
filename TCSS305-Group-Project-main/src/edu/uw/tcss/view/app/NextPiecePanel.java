@@ -26,7 +26,6 @@ import javax.swing.JPanel;
  */
 public class NextPiecePanel extends JPanel implements PropertyChangeListener {
 
-    // TODO: might want to refrain from hard-coding these dimensions - RB
     /** The width of the panel. */
     private static final int WIDTH = 100;
 
