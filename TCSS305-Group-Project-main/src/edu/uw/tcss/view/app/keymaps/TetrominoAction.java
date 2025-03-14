@@ -5,7 +5,6 @@ import static edu.uw.tcss.view.util.AudioFXManager.Channels;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.util.AudioFXManager;
 import java.awt.event.ActionEvent;
-import java.util.Map;
 import javax.swing.AbstractAction;
 
 /**
@@ -18,7 +17,6 @@ import javax.swing.AbstractAction;
 public final class TetrominoAction extends AbstractAction {
 
     private final TetrisGame myTetrisGame;
-    private final Map<Controls, Runnable> myKeyActions;
 
     /**
      * The possible tetromino controls.
@@ -62,46 +60,39 @@ public final class TetrominoAction extends AbstractAction {
     TetrominoAction(final Controls theControlBind, final TetrisGame theTetrisGame) {
         myBind = theControlBind;
         myTetrisGame = theTetrisGame;
-
-        myKeyActions = getBinds();
-    }
-
-    private Map<Controls, Runnable> getBinds() {
-        return Map.of(
-                Controls.LEFT, () -> {
-                    myTetrisGame.left();
-                    AudioFXManager.playSoundFX(Channels.CHANGED_POSITION_FX);
-                },
-                Controls.RIGHT, () -> {
-                    myTetrisGame.right();
-                    AudioFXManager.playSoundFX(Channels.CHANGED_POSITION_FX);
-                },
-                Controls.DOWN, () -> {
-                    myTetrisGame.down();
-                    AudioFXManager.playSoundFX(Channels.CHANGED_POSITION_FX);
-                },
-                Controls.DROP, () -> {
-                    myTetrisGame.drop();
-                    AudioFXManager.playSoundFX(Channels.SOFT_DROP_FX);
-                },
-                Controls.ROTATE_CW, () -> {
-                    myTetrisGame.rotateCW();
-                    AudioFXManager.playSoundFX(Channels.ROTATE_FX);
-                },
-                Controls.ROTATE_CCW, () -> {
-                    myTetrisGame.rotateCCW();
-                    AudioFXManager.playSoundFX(Channels.ROTATE_FX);
-                }
-        );
     }
 
     @Override
     public void actionPerformed(final ActionEvent theEvent) {
-        final Runnable action = myKeyActions.get(myBind);
-        if (action != null) {
-            action.run();
-        } else {
-            throw new EnumConstantNotPresentException(Controls.class, myBind.name());
+        switch (myBind) {
+            case Controls.LEFT -> {
+                AudioFXManager.playSoundFX(Channels.CHANGED_POSITION_FX);
+                myTetrisGame.left();
+            }
+            case Controls.RIGHT -> {
+                AudioFXManager.playSoundFX(Channels.CHANGED_POSITION_FX);
+                myTetrisGame.right();
+            }
+            case Controls.DOWN -> {
+                AudioFXManager.playSoundFX(Channels.CHANGED_POSITION_FX);
+                myTetrisGame.down();
+            }
+            case Controls.DROP -> {
+                AudioFXManager.playSoundFX(Channels.SOFT_DROP_FX);
+                myTetrisGame.drop();
+            }
+            case Controls.ROTATE_CW -> {
+                AudioFXManager.playSoundFX(Channels.ROTATE_FX);
+                myTetrisGame.rotateCW();
+            }
+            case Controls.ROTATE_CCW -> {
+                AudioFXManager.playSoundFX(Channels.ROTATE_FX);
+                myTetrisGame.rotateCCW();
+            }
+            default -> throw
+                    new EnumConstantNotPresentException(
+                            Controls.class,
+                            myBind.name());
         }
     }
 }

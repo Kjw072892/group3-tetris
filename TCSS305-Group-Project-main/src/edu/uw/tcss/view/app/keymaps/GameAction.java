@@ -1,11 +1,8 @@
 package edu.uw.tcss.view.app.keymaps;
 
-import static edu.uw.tcss.view.util.AudioFXManager.Channels;
 
 import edu.uw.tcss.model.TetrisGame;
-import edu.uw.tcss.view.util.AudioFXManager;
 import java.awt.event.ActionEvent;
-import java.util.Map;
 import javax.swing.AbstractAction;
 
 /**
@@ -17,7 +14,6 @@ import javax.swing.AbstractAction;
 public final class GameAction extends AbstractAction {
 
     private final TetrisGame myTetrisGame;
-    private final Map<Controls, Runnable> myKeyActions;
 
     /**
      * The possible game controls.
@@ -31,10 +27,8 @@ public final class GameAction extends AbstractAction {
         PAUSE,
         /** action to unpause the game. */
         UNPAUSE,
-
-        TOGGLE_PINK_MODE,
         /** action to toggle-pause the game. */
-        TOGGLE_PAUSE
+        TOGGLE_PAUSE,
     }
 
     private final Controls myBind;
@@ -49,27 +43,20 @@ public final class GameAction extends AbstractAction {
     GameAction(final Controls theControlBind, final TetrisGame theTetrisGame) {
         myBind = theControlBind;
         myTetrisGame = theTetrisGame;
-        
-        myKeyActions = getBinds();
-    }
-    
-    private Map<Controls, Runnable> getBinds() {
-        return Map.of(
-                Controls.END_GAME, myTetrisGame::endGame,
-                Controls.NEW_GAME, myTetrisGame::newGame,
-                Controls.PAUSE, myTetrisGame::down,
-                Controls.UNPAUSE, myTetrisGame::unPause,
-                Controls.TOGGLE_PAUSE, myTetrisGame::togglePause
-        );
     }
 
     @Override
     public void actionPerformed(final ActionEvent theEvent) {
-        final Runnable action = myKeyActions.get(myBind);
-        if (action != null) {
-            action.run();
-        } else {
-            throw new EnumConstantNotPresentException(Controls.class, myBind.name());
+        switch (myBind) {
+            case Controls.END_GAME -> myTetrisGame.endGame();
+            case Controls.NEW_GAME -> myTetrisGame.newGame();
+            case Controls.PAUSE -> myTetrisGame.pause();
+            case Controls.UNPAUSE -> myTetrisGame.unPause();
+            case Controls.TOGGLE_PAUSE -> myTetrisGame.togglePause();
+            default -> throw
+                    new EnumConstantNotPresentException(
+                            Controls.class,
+                            myBind.name());
         }
     }
 }
