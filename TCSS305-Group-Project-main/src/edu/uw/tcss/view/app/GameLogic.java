@@ -8,9 +8,12 @@ import static edu.uw.tcss.view.util.AudioFXManager.Channels;
 
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.util.AudioFXManager;
+import edu.uw.tcss.view.util.AudioMusicFactory;
 import edu.uw.tcss.view.util.AudioMusicManager;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Timer;
 
 /**
@@ -92,22 +95,24 @@ public final class GameLogic implements PropertyChangeListener {
             }
             case GameState.PAUSED,
                  GameState.OVER -> myTimer.stop();
-            case GameState.RUNNING -> {
+            case GameState.RUNNING,
+                 GameState.WORRY,
+                 GameState.PANIC -> {
                 if (!GameState.RUNNING.equals(myLastGameState)) {
                     myTimer.start();
                 }
+                // TODO: need to fix backend never sending out the worry nor panic game states
+                Logger.getAnonymousLogger().log(Level.INFO,
+                        String.format("Current running game state: %s", theGameState));
             }
-
-            case GameState.WORRY,
-                 GameState.PANIC -> {
-                if (!GameState.RUNNING.equals(myLastGameState) && !myTimer.isRunning()) {
-                    myTimer.start();
-                }
-            }
-
             default -> throw
                     new EnumConstantNotPresentException(
                             GameState.class, theGameState.toString());
+        }
+
+        if (GameState.PANIC.equals(theGameState)) {
+            AudioMusicManager.setMusic(AudioMusicFactory.getMusicPanic());
+            AudioMusicManager.startMusic();
         }
     }
 
