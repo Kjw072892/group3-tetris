@@ -2,6 +2,7 @@ package edu.uw.tcss.view.util;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 /**
@@ -18,7 +19,7 @@ public final class DrawingFactory {
         /** glossy look. */
         GLOSSY,
         /** beveled edges. */
-        BEVELED
+        BEVELED,
     }
 
     private DrawingFactory() {
@@ -92,4 +93,34 @@ public final class DrawingFactory {
 
     }
 
+    /**
+     * Draws sparkles on the blocks.
+     *
+     * @param theGraphics the drawing graphics object
+     * @param theX the x position to draw from
+     * @param theY the y position to draw from
+     * @param theWidth the width of the block
+     * @param theHeight the height of the block
+     */
+    public static void drawSparkles(final Graphics2D theGraphics,
+                                    final int theX, final int theY,
+                                    final int theWidth, final int theHeight) {
+        theGraphics.setColor(Color.WHITE);
+        final int sparkleCount = 4;
+        for (int i = 0; i < sparkleCount; i++) {
+            final int sparkleX = theX + (int) (Math.random() * theWidth);
+            final int sparkleY = theY + (int) (Math.random() * theHeight);
+            final int sparkleSize = 3;
+
+            // Different shapes
+            if (i % 2 == 0) {
+                theGraphics.fillOval(sparkleX, sparkleY, sparkleSize, sparkleSize); // small circles
+            } else {
+                theGraphics.fillRect(sparkleX, sparkleY, sparkleSize, sparkleSize); // small squares
+            }
+
+        }
+    }
+
 }
+

@@ -8,7 +8,10 @@ import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
+import edu.uw.tcss.view.util.ColorSchemeFactory;
 import edu.uw.tcss.view.util.ColorSchemeManager;
+import edu.uw.tcss.view.util.DrawingFactory;
+import edu.uw.tcss.view.util.DrawingManager;
 import edu.uw.tcss.view.util.GraphicsHandler;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -88,6 +91,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private static final int ROWS = 20;
     private static final int COLOR_TO_FLASH = 0xa9b66767;
     private static final int DELAY = 1000;
+
+    // TODO: this is a misuse of constants
     private static final int TEXT_SIZE_GAME_OVER = 36;
     private static final int TEXT_GAME_OVER_X = 53;
     private static final int BLACK_SCREEN_X = 45;
@@ -99,6 +104,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private static final int TEXT_GAME_PAUSED_X = 51;
     private static final int DIVISOR_FOR_GIF_DEATH = 10;
     private static final int HALF = 2;
+
     private static final String TEXT_FONT = "Arial";
     private static final int SPARKLE_AMOUNT = 4;
     private final int myBlockWidth;
@@ -136,69 +142,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 AssetsManager.getFilePath(AssetsManager.IMAGES_PATH, "oof-noob.gif"));
         myAnimator = new Timer(DELAY, new BackGroundColorAnimator());
 
-    }
-
-    private void draw3DBlocks(final Graphics2D theGraphics, final int theX, final int theY,
-                              final int theWidth, final int theHeight, final Color theBaseColor) {
-        final int offset = theWidth / 6;
-
-
-        final boolean isPinkMode = ColorSchemeManager.getCurrentColorScheme().
-                name().contains("Pink Mode");
-
-        // Defining the color shades
-        final Color lighterShade = theBaseColor.brighter().brighter();
-        final Color darkerShade = theBaseColor.darker();
-
-
-        final GradientPaint topLeft = new GradientPaint(
-                theX, theY, lighterShade, theX + theWidth, theY + theHeight, theBaseColor);
-
-        final GradientPaint bottomRight = new GradientPaint(
-                theX, theY, theBaseColor, theX + theWidth, theY + theHeight, darkerShade);
-
-        //draw base block
-        theGraphics.setPaint(topLeft);
-        theGraphics.fillRect(theX, theY, theWidth, theHeight);
-
-        theGraphics.setPaint(bottomRight);
-        theGraphics.fillRect(theX + offset, theY + offset, theWidth - offset, theHeight - offset);
-
-
-        //glossy effect
-        final GradientPaint gloss = new GradientPaint(theX, theY, Color.WHITE, theX + offset,
-                theY + offset, new Color(255, 255, 255, 50));
-        theGraphics.setPaint(gloss);
-        theGraphics.fillRect(theX, theY, theWidth, theHeight);
-
-
-        // if pink mode is enabled, add sparkles!
-        if (isPinkMode) {
-            drawSparkles(theGraphics, theX, theY, theWidth, theHeight);
-        }
-
-        //outline
-        theGraphics.setColor(Color.BLACK);
-        theGraphics.drawRect(theX, theY, theWidth, theHeight);
-
-    }
-    // Sparkle effect only in Pink Mode.
-    private void drawSparkles(final Graphics2D theGraphics, final int theX,
-                              final int theY, final int theWidth, final int theHeight) {
-        theGraphics.setColor(Color.WHITE);
-        for (int i = 0; i < SPARKLE_AMOUNT; i++) { //Draw 4 tiny sparkles
-            final int sparkleX = theX + (int) (Math.random() * theWidth);
-            final int sparkleY = theY + (int) (Math.random() * theHeight);
-            final int sparkleSize = 3;
-
-            // Different shapes
-            if (i % 2 == 0) {
-                theGraphics.fillOval(sparkleX, sparkleY, sparkleSize, sparkleSize); // small circles
-            } else {
-                theGraphics.fillRect(sparkleX, sparkleY, sparkleSize, sparkleSize); // small squares
-            }
-
-        }
     }
 
     /**
@@ -251,7 +194,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         theGraphics.drawString("Game Paused!", TEXT_GAME_PAUSED_X, TEXT_Y);
     }
 
-    private void drawFrozenBlocks(final Graphics theGraphics) {
+    private void drawFrozenBlocks(final Graphics2D theGraphics) {
         for (int column = 0; column < COLUMNS; column++) {
             for (int row = 0; row < ROWS; row++) {
                 final Block block = myFrozen.blocks().get(row)[column];
@@ -267,12 +210,15 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
                 final int x = column * myBlockWidth;
                 final int y = ((ROWS - 1) - row) * myBlockHeight;
-                draw3DBlocks((Graphics2D) theGraphics, x, y,
-                        myBlockWidth, myBlockHeight, blockColor);
 
-                if (ColorSchemeManager.getCurrentColorScheme().
-                        name().contains("Pink Mode \uD83C\uDF80✨")) {
-                    drawSparkles((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight);
+                DrawingManager.getDrawer().drawBlock(theGraphics,
+                        x, y,
+                        myBlockWidth, myBlockHeight,
+                        blockColor);
+
+                if (ColorSchemeFactory.getPinkModeColors()
+                        .equals(ColorSchemeManager.getCurrentColorScheme())) {
+                    DrawingFactory.drawSparkles(theGraphics, x, y, myBlockWidth, myBlockHeight);
                 }
             }
         }
@@ -319,7 +265,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 if (blockColor == null) {
                     blockColor = Color.BLACK;
                 }
-                draw3DBlocks((Graphics2D) theGraphics, x, y,
+                DrawingManager.getDrawer().drawBlock((Graphics2D) theGraphics, x, y,
                         myBlockWidth, myBlockHeight, blockColor);
             }
         }
