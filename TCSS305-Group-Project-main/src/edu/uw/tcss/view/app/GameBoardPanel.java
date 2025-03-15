@@ -293,14 +293,20 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
 
                     case GameState.WORRY -> {
-                        myGamePaused = false;
+                        if(myGamePaused) {
+                            repaint();
+                            myGamePaused = false;
+                        }
                         Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
                         currentColor = currentColor.darker();
                         setBackground(currentColor);
                     }
 
                     case GameState.PANIC -> {
-                        myGamePaused = false;
+                        if(myGamePaused) {
+                            repaint();
+                            myGamePaused = false;
+                        }
                         Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
                         currentColor = currentColor.darker();
                         currentColor = currentColor.darker();
@@ -308,7 +314,10 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                     }
 
                     case GameState.RUNNING -> {
-                        myGamePaused = false;
+                        if(myGamePaused) {
+                            repaint();
+                            myGamePaused = false;
+                        }
                         setBackground(ColorSchemeManager.getCurrentPrimaryColor());
                     }
 
