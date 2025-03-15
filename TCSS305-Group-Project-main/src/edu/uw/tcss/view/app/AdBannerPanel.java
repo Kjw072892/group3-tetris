@@ -78,8 +78,8 @@ public class AdBannerPanel extends JPanel {
         if (ColorSchemeManager.getCurrentColorScheme().
                 name().contains("Pink Mode \uD83C\uDF80✨")) {
 
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "Cool_Girls_Code_Banner.png")));
+            //myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+            //        "Cool_Girls_Code_Banner.png")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "cute ad.png")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,

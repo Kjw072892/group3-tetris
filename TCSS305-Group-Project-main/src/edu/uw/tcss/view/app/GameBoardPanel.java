@@ -267,6 +267,12 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 }
                 DrawingManager.getDrawer().drawBlock((Graphics2D) theGraphics, x, y,
                         myBlockWidth, myBlockHeight, blockColor);
+
+                if (ColorSchemeFactory.getPinkModeColors()
+                        .equals(ColorSchemeManager.getCurrentColorScheme())) {
+                    DrawingFactory.drawSparkles((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight);
+                }
+
             }
         }
     }
