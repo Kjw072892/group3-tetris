@@ -89,7 +89,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private static final int COLOR_TO_FLASH = 0xa9b66767;
     private static final int DELAY = 1000;
     private static final int TEXT_SIZE_GAME_OVER = 36;
-    private static final int TEXT_GAME_OVER_X = TEXT_SIZE_GAME_OVER;
+    private static final int TEXT_GAME_OVER_X = 53;
     private static final int BLACK_SCREEN_X = 45;
     private static final int BLACK_SCREEN_Y = 350;
     private static final int WIDTH1 = 220;
