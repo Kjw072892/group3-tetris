@@ -3,9 +3,12 @@ package edu.uw.tcss.view.util;
 import static edu.uw.tcss.view.util.ColorSchemeFactory.ColorScheme;
 
 import edu.uw.tcss.model.GameControls;
+import edu.uw.tcss.view.app.AdBannerPanel;
+
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -17,7 +20,9 @@ import java.util.Map;
 public final class ColorSchemeManager {
 
 
-    /** name of the property for when the color scheme has changed */
+    /**
+     * name of the property for when the color scheme has changed
+     */
     public static final String PROPERTY_COLOR_SCHEME = "The color scheme has changed";
     private static final Object PROPERTY_SOURCE_BEAN = new Object();
 
@@ -32,7 +37,6 @@ public final class ColorSchemeManager {
     private ColorSchemeManager() {
 
     }
-
 
 
     /**
@@ -61,7 +65,17 @@ public final class ColorSchemeManager {
     public static void setCurrentColorScheme(final ColorScheme theScheme) {
         myCurrentColorScheme = theScheme;
         PCS.firePropertyChange(PROPERTY_COLOR_SCHEME, null, myCurrentColorScheme);
+        AdBannerPanel adPanel = AdBannerPanel.getInstance();
+        if (adPanel != null) {
+            try {
+                adPanel.loadAdvertisements();
+                adPanel.repaint();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 
     /**
      * Gets the static color scheme.

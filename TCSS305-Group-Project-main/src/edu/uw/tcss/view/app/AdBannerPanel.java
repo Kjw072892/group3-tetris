@@ -3,6 +3,7 @@ package edu.uw.tcss.view.app;
 import static edu.uw.tcss.view.app.assets.AssetsManager.IMAGES_PATH;
 
 import edu.uw.tcss.view.app.assets.AssetsManager;
+import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.GraphicsHandler;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,6 +29,7 @@ public class AdBannerPanel extends JPanel {
 
     private static final int BANNER_WIDTH = 500;
     private static final int BANNER_HEIGHT = 100;
+    private static AdBannerPanel instance;
 
     private final List<BufferedImage> myAdvertisements = new ArrayList<>();
     private int myAdvertisementIndex;
@@ -39,6 +41,8 @@ public class AdBannerPanel extends JPanel {
      */
     public AdBannerPanel() {
         super();
+        instance = this;
+
         try {
             loadAdvertisements();
         } catch (final IOException e) {
@@ -47,33 +51,58 @@ public class AdBannerPanel extends JPanel {
         setPreferredSize(new Dimension(BANNER_WIDTH, BANNER_HEIGHT));
         setBackground(Color.MAGENTA);
         setOpaque(true);
+        instance = this;
 
         final Timer timer = new Timer(5000, theEvent -> changeAdvertisement());
         timer.start();
 
         myCurrentAdvertisement = myAdvertisements.getFirst();
-
         repaint();
     }
+    public static AdBannerPanel getInstance() {
+        return instance;
+    }
 
-    private void loadAdvertisements() throws IOException {
-        myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                "adBanner.jpg")));
-        myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                "SampleAdvertisement.png")));
-        myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                "adBanner2.jpeg")));
-        myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                "adBanner3.jpg")));
-        myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                "dairyQueenAd.png")));
+    public void loadAdvertisements() throws IOException {
+        myAdvertisements.clear();
+        myAdvertisementIndex = 0;
 
+        // 🎀✨ add the special ads
+        if (ColorSchemeManager.getCurrentColorScheme().
+                name().contains("Pink Mode \uD83C\uDF80✨")) {
+
+            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                    "Cool_Girls_Code_Banner.png")));
+            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                    "cute ad.png")));
+            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                    "CoolGirlsCode.png")));
+        } else {
+            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                    "Cool_Girls_Code_Banner.png")));
+            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                    "adBanner.jpg")));
+            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                    "SampleAdvertisement.png")));
+            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                    "adBanner2.jpeg")));
+            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                    "adBanner3.jpg")));
+            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                    "dairyQueenAd.png")));
+        }
+        if (!myAdvertisements.isEmpty()) {
+            myCurrentAdvertisement = myAdvertisements.get(0);
+        }
+        repaint();
     }
 
     private void changeAdvertisement() {
-        myAdvertisementIndex = (myAdvertisementIndex + 1) % myAdvertisements.size();
-        myCurrentAdvertisement = myAdvertisements.get(myAdvertisementIndex);
-        repaint();
+        if (!myAdvertisements.isEmpty()) {
+            myAdvertisementIndex = (myAdvertisementIndex + 1) % myAdvertisements.size();
+            myCurrentAdvertisement = myAdvertisements.get(myAdvertisementIndex);
+            repaint();
+        }
     }
 
     @Override
