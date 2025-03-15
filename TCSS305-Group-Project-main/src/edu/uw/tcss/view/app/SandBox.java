@@ -10,6 +10,7 @@ import edu.uw.tcss.model.TetrisGame;
  * @author Roman Bureacov
  * @author Zainab Stanikzy
  * @version February 2025
+ * @deprecated
  */
 public final class SandBox {
 
