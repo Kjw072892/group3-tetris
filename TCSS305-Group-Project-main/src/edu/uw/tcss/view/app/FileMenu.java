@@ -5,6 +5,7 @@ import edu.uw.tcss.view.util.AudioMusicFactory;
 import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeFactory;
 import edu.uw.tcss.view.util.ColorSchemeManager;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -24,8 +25,10 @@ import javax.swing.JOptionPane;
 public class FileMenu extends JMenuBar {
     private final String myVersion = "3.12.25";
 
-    private final JMenuItem myFileMenuGameStart = new JMenuItem("Start Game With Panic Mode");
-    private final JMenuItem myFileMenuGameStart2 = new JMenuItem("Start Game Without Panic Mode");
+    private final JCheckBoxMenuItem myFileMenuPanicMode =
+            new JCheckBoxMenuItem("Game starts with Panic Mode");
+    private boolean myPanicModeTracker;
+
     private final JMenuItem myAbout = new JMenuItem("About");
     private final String myReferenceStr = "References";
     private final String myControlStr = "Controls layout";
@@ -73,14 +76,12 @@ public class FileMenu extends JMenuBar {
 
     private void fileMenuCreation() {
         // Add mnemonics
-        myFileMenuGameStart.setMnemonic('s');
-        myFileMenuGameStart2.setMnemonic('s');
         myFileMenuExitGame.setMnemonic('x');
+        myFileMenuPanicMode.setMnemonic('p');
 
 
         // Add items to the File menu
-        myFileMenu.add(myFileMenuGameStart);
-        myFileMenu.add(myFileMenuGameStart2);
+        myFileMenu.add(myFileMenuPanicMode);
         myFileMenu.add(myFileMenuExitGame);
     }
 
@@ -113,9 +114,19 @@ public class FileMenu extends JMenuBar {
     private void addListeners(final JFrame theFrame) {
         myAbout.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
-                "                        (GROUP 3)\n "
-                        + "Made by: James, Kassie, Roman, Zainab. \n\n       Current version: "
-                        + myVersion));
+                    String.format(
+                            """
+                            <html>
+                                <p style="text-align: center">(GROUP 3)</p>
+                                <p>Made by: James, Kassie, Roman, Zainab.<p>
+                                <p>Current version: %s</p>
+                            </html>
+                            """,
+                            myVersion
+                    ),
+                    "About",
+                    JOptionPane.INFORMATION_MESSAGE
+                ));
 
         myReferences.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
                 """
@@ -195,14 +206,9 @@ public class FileMenu extends JMenuBar {
             }
         });
 
-        myFileMenuGameStart.addActionListener(theEvent -> {
-            myTetris.newGame();
-            myTetris.setMyCouldPanic(true);
-        });
-
-        myFileMenuGameStart2.addActionListener(theEvent -> {
-            myTetris.newGame();
-            myTetris.setMyCouldPanic(false);
+        myFileMenuPanicMode.addActionListener(theEvent -> {
+            myPanicModeTracker = !myPanicModeTracker;
+            myTetris.setPanicMode(myPanicModeTracker);
         });
     }
 
