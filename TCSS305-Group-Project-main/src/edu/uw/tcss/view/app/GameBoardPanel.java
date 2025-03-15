@@ -294,80 +294,79 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 repaint();
             }
 
-            case TetrisGame.PROPERTY_GAME_STATE -> {
-                switch (theEvent.getNewValue()) {
-                    case GameState.NEW -> {
-                        myGamePaused = false;
-                        myTetrisPieces = new IndividualPiece[1];
-                        myGameOverDeath = false;
-                        if (myAnimator.isRunning()) {
-                            myAnimator.stop();
-                            setBackground(ColorSchemeManager.getCurrentPrimaryColor());
-                        }
-                        repaint();
-                    }
-                    case GameState.OVER -> {
-                        myGamePaused = false;
-                        myGameOverDeath = true;
-                        if (!myAnimator.isRunning()) {
-                            myAnimator.start();
-                        }
-                        repaint();
-                    }
-
-
-                    case GameState.WORRY -> {
-                        if (myGamePaused) {
-                            repaint();
-                            myGamePaused = false;
-                        }
-                        Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
-                        currentColor = currentColor.darker();
-                        setBackground(currentColor);
-                    }
-
-                    case GameState.PANIC -> {
-                        if (myGamePaused) {
-                            repaint();
-                            myGamePaused = false;
-                        }
-                        Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
-                        currentColor = currentColor.darker();
-                        currentColor = currentColor.darker();
-                        setBackground(currentColor);
-                    }
-
-                    case GameState.RUNNING -> {
-                        if (myGamePaused) {
-                            repaint();
-                            myGamePaused = false;
-                        }
-                        setBackground(ColorSchemeManager.getCurrentPrimaryColor());
-                    }
-
-                    case GameState.PAUSED -> {
-                        myGamePaused = true;
-                        repaint();
-                    }
-
-                    default -> { }
-                }
-            }
+            case TetrisGame.PROPERTY_GAME_STATE -> gameStateSwitches(theEvent);
 
             default -> { }
         }
 
     }
 
+    private void gameStateSwitches(final PropertyChangeEvent theEvent) {
+        switch (theEvent.getNewValue()) {
+            case GameState.NEW -> {
+                myGamePaused = false;
+                myTetrisPieces = new IndividualPiece[1];
+                myGameOverDeath = false;
+                if (myAnimator.isRunning()) {
+                    myAnimator.stop();
+                    setBackground(ColorSchemeManager.getCurrentPrimaryColor());
+                }
+                repaint();
+            }
+            case GameState.OVER -> {
+                myGamePaused = false;
+                myGameOverDeath = true;
+                if (!myAnimator.isRunning()) {
+                    myAnimator.start();
+                }
+                repaint();
+            }
+
+
+            case GameState.WORRY -> {
+                checkPaused();
+                Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
+                currentColor = currentColor.darker();
+                setBackground(currentColor);
+            }
+
+            case GameState.PANIC -> {
+                checkPaused();
+                Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
+                currentColor = currentColor.darker();
+                currentColor = currentColor.darker();
+                setBackground(currentColor);
+            }
+
+            case GameState.RUNNING -> {
+                checkPaused();
+                setBackground(ColorSchemeManager.getCurrentPrimaryColor());
+            }
+
+            case GameState.PAUSED -> {
+                myGamePaused = true;
+                repaint();
+            }
+
+            default -> { }
+        }
+    }
+
+    private void checkPaused() {
+        if (myGamePaused) {
+            repaint();
+            myGamePaused = false;
+        }
+    }
+
     private final class BackGroundColorAnimator implements ActionListener {
         public void actionPerformed(final ActionEvent theEvent) {
             if (!myFlashColor) {
                 setBackground(new Color(COLORTOFLASH, true));
-                myFlashColor = !myFlashColor;
             } else {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
-                myFlashColor = !myFlashColor;
             }
+            myFlashColor = !myFlashColor;
         }
     }
 
