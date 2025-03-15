@@ -98,7 +98,7 @@ public final class ColorSchemeFactory {
        final Color pinkTBlock = new Color(222, 72, 231);
        final Color pinkZBlock = new Color(255, 250, 250);
        final Color pinkPrimary = new Color(245, 176, 236, 255);
-       final Color pinkPanel = new  Color(234, 150, 213, 228)
+       final Color pinkPanel = new  Color(231, 207, 223, 228)
                ;
        return new ColorScheme(
                "Pink Mode \uD83C\uDF80✨",
