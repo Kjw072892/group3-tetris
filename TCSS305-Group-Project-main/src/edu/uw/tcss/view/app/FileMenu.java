@@ -115,25 +115,43 @@ public class FileMenu extends JMenuBar {
 
         myReferences.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
                 """
-                        Music and soundFx were found on youtube. We do not own the rights to any \
-                        of the music or soundFX used in this game.
-                        ---------------------------------------------------------------------------\
-                        ---------------------------------------------------------------------------\
-                        --------------------------\s
-                        
-                        ⭐Twinkling Shooting Star⭐(Cute chiptune/8bit music): \
-                        https://www.youtube.com/watch?v=3qTAGRz-GjE
-                        
-                        Tetris Game SoundFX: https://www.sounds-resource.com\
-                        /nintendo_switch/tetris99/sound/19376/\s
-                        
-                        Trap Tetris (Da Brozz - Tetris (Original Mix)): \
-                        https://www.youtube.com/watch?v=AT7KjIOd7GQ\s
-                        
-                        Tension - Everybody's Warming (Extended Mix): \
-                        https://www.youtube.com/watch?v=phYUedumuyE\s
-                        
-                        """));
+                        <html>
+                            <p>Music and soundFx were found on youtube.
+                            We do not own the rights to any of the music or soundFX
+                            used in this game.<p>
+                            <ul>
+                                <li>
+                                    ⭐Twinkling Shooting Star⭐(Cute chiptune/8bit music):
+                                    https://www.youtube.com/watch?v=3qTAGRz-GjE
+                                </li>
+                                <li>
+                                    Tetris Game SoundFX:
+                                    https://www.sounds-resource.com
+                                    /nintendo_switch/tetris99/sound/19376/
+                                </li>
+                                <li>
+                                    Trap Tetris (Da Brozz - Tetris (Original Mix)):
+                                    https://www.youtube.com/watch?v=AT7KjIOd7GQ
+                                </li>
+                                <li>
+                                    Tension - Everybody's Warming (Extended Mix):
+                                    https://www.youtube.com/watch?v=phYUedumuyE
+                                </li>
+                                <li>
+                                    Epic Tetris:  Korobeiniki by the Red Army Choir
+                                </li>
+                                <li>
+                                    Alternative Tetris: The Samovars by the Red Army Choir
+                                </li>
+                                <li>
+                                    Panic Tetris: The Legend Descends - Fatalis by Capcom Sound Team
+                                </li>
+                        <html>
+                        """,
+                        "References",
+                        JOptionPane.INFORMATION_MESSAGE
+                ));
+
         myFileMenuExitGame.addActionListener(ActionEvent -> System.exit(0));
 
         myFeatureMenuColorChooser.addActionListener(ActionEvent -> {
