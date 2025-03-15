@@ -81,7 +81,7 @@ public class FileMenu extends JMenuBar {
     }
 
     private void featureMenuCreation() {
-        final JMenu innerColorMenu = new JMenu("Theme's");
+        final JMenu innerColorMenu = new JMenu("Themes");
 
         // Add mnemonics
         innerColorMenu.setMnemonic('c');
