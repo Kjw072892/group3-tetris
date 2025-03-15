@@ -45,7 +45,6 @@ public class AudioMusicListener implements PropertyChangeListener {
     }
 
     private void handleColorSchemeState(final ColorScheme theColorScheme) {
-        System.out.println("Setting scheme?");
         if (ColorSchemeFactory.getPrettyColors().equals(theColorScheme)) {
             AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicCute());
         } else if (ColorSchemeFactory.getPinkModeColors().equals(theColorScheme)) {
