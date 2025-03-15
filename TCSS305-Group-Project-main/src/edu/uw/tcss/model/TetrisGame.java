@@ -117,7 +117,7 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
      * allows you to set whether the game can panic.
      * @param theCouldPanic allows you to set could panic status.
      */
-    public void setMyCouldPanic(final boolean theCouldPanic) {
+    public void setPanicMode(final boolean theCouldPanic) {
         myCouldPanic = theCouldPanic;
     }
 
