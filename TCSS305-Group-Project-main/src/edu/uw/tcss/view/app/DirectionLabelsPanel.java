@@ -46,8 +46,6 @@ public class DirectionLabelsPanel extends JPanel implements PropertyChangeListen
         // Switched to GridLayout to automatically align the labels clearly in two columns.
         myLabelPanel.setLayout(new GridLayout(0, 2, padding, padding));
 
-        // TODO: might want to make these separate labels
-        //  such that it's spaced automatically by swing - Done.
 
         // Clearly seperated labels for better readability and automatic spacing.
         addLabelPair("Move Left:", "Left or A/a key");
@@ -56,7 +54,7 @@ public class DirectionLabelsPanel extends JPanel implements PropertyChangeListen
         addLabelPair("Move Ccw/ Cw:", "Q/q or E/e key");
         addLabelPair("Drop:", "space");
         addLabelPair("Pause:", "P/p key");
-        addLabelPair("Quit:", "M/m key");
+        addLabelPair("Quit:", "K/k key");
 
         setLayout(new BorderLayout()); // Changed to GridLayout now.
         setBorder(BorderFactory.createLineBorder(Color.BLACK, boarderThickness));
