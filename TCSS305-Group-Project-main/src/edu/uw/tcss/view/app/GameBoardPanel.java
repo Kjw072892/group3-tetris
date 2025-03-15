@@ -1,5 +1,4 @@
 package edu.uw.tcss.view.app;
-
 import static edu.uw.tcss.model.GameControls.GameState;
 
 import edu.uw.tcss.model.GameControls;
@@ -9,11 +8,11 @@ import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
 import edu.uw.tcss.view.util.ColorSchemeManager;
+import edu.uw.tcss.view.util.DrawingFactory;
 import edu.uw.tcss.view.util.GraphicsHandler;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -24,9 +23,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-
 /**
- * The gameBoard class (constructs and handles game logic).
+ * The gameBoard class construct and manages the Tetris game board.
  * @author Zainab
  * @author James
  * @author Kassie
@@ -35,175 +33,113 @@ import javax.swing.Timer;
  */
 public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
-    //Properties of the board & blocks.
-    private static final int COLUMNS = 10;         // Number of columns & rows.
+    private static final int COLUMNS = 10;
     private static final int ROWS = 20;
-    private static final int COLORTOFLASH = 0xa9b66767;
-    private static final int DELAY = 1000;
-    private static final int TEXT_SIZE_GAME_OVER = 36;
-    private static final int TEXT_GAME_OVER_X = TEXT_SIZE_GAME_OVER;
-    private static final int BLACKSCREEN_X = 45;
-    private static final int BLACKSCREEN_Y = 350;
-    private static final int WIDTH1 = 220;
-    private static final int HEIGHT1 = 80;
-    private static final int TEXT_Y = 400;
-    private static final int PAUSE_SIZE = 30;
-    private static final int TEXT_GAMEPAUSED_X = 51;
-    private static final int DIVISOR_FOR_GIFDEATH = 10;
-    private static final int HALF = 2;
-    private static final String TEXT_FONT = "Arial";
-    private static final int SPARKLE_AMOUNT = 4;
+    private static final int GAME_OVER_Y_POSITION = 400;
+    private static final int GAME_OVER_BOX_WIDTH = 220;
+    private static final int GAME_OVER_BOX_X = 45;
+    private static final int GAME_OVER_BOX_Y = 350;
+    private static final int GAME_OVER_FONT_SIZE = 36;
+    private static final int GAME_OVER_TEXT_X = 53;
+    private static final int GAME_OVER_TEXT_Y = 10;
+    private static final int SPARKLE_COUNT = 4;
+    private static final int SPARKLE_SIZE = 3;
+    private static final int BACKGROUND_ANIMATION_DELAY = 1000;
+    private static final Color FLASH_COLOR = new Color(182, 103, 103, 169);
     private final int myBlockWidth;
     private final int myBlockHeight;
     private IndividualPiece[] myTetrisPieces;
     private boolean myGameOverDeath;
-
-    private boolean myGamePaused;
-
     private boolean myFlashColor;
-
     private final ImageIcon myDeathIcon;
-
     private final Timer myAnimator;
-
     private GameControls.FrozenBlocks myFrozen = Sprint1_values.frozenBlocks();
 
     {
-        myTetrisPieces = Sprint1_values.pieces();   // Store Pieces in myTetrisPiece
+        myTetrisPieces = Sprint1_values.pieces();
     }
 
     /**
      * Constructs the game board.
+     *
+     * @param theWidth  Width of game board.
+     * @param theHeight Height of game board.
      */
     public GameBoardPanel(final int theWidth, final int theHeight) {
-        //Preferred size set to fit in layout.
+        /* Preferred size set and color to fit in layout. */
         setPreferredSize(new Dimension(theWidth, theHeight));
-        // TODO: for later, we could consider making
-        //  a class that houses the preferences or something
-        setBackground(Color.RED); //background red.
+        setBackground(Color.RED);
 
         myBlockWidth = theWidth / COLUMNS;
         myBlockHeight = theHeight / ROWS;
         myDeathIcon = new ImageIcon(
                 AssetsManager.getFilePath(AssetsManager.IMAGES_PATH, "oof-noob.gif"));
-        myAnimator = new Timer(DELAY, new BackGroundColorAnimator());
-
+        myAnimator = new Timer(BACKGROUND_ANIMATION_DELAY, new BackGroundColorAnimator());
     }
 
-    private void draw3DBlocks(final Graphics2D theGraphics, final int theX, final int theY,
-                              final int theWidth, final int theHeight, final Color theBaseColor) {
-        final int offset = theWidth / 6;
-
-
-        final boolean isPinkMode = ColorSchemeManager.getCurrentColorScheme().
-                name().contains("Pink Mode");
-
-        // Defining the color shades
-        final Color lighterShade = theBaseColor.brighter().brighter();
-        final Color darkerShade = theBaseColor.darker();
-
-
-        final GradientPaint topLeft = new GradientPaint(
-                theX, theY, lighterShade, theX + theWidth, theY + theHeight, theBaseColor);
-
-        final GradientPaint bottomRight = new GradientPaint(
-                theX, theY, theBaseColor, theX + theWidth, theY + theHeight, darkerShade);
-
-        //draw base block
-        theGraphics.setPaint(topLeft);
-        theGraphics.fillRect(theX, theY, theWidth, theHeight);
-
-        theGraphics.setPaint(bottomRight);
-        theGraphics.fillRect(theX + offset, theY + offset, theWidth - offset, theHeight - offset);
-
-
-        //glossy effect
-        final GradientPaint gloss = new GradientPaint(theX, theY, Color.WHITE, theX + offset,
-                theY + offset, new Color(255, 255, 255, 50));
-        theGraphics.setPaint(gloss);
-        theGraphics.fillRect(theX, theY, theWidth, theHeight);
-
-
-        // if pink mode is enabled, add sparkles!
-        if (isPinkMode) {
-            drawSparkles(theGraphics, theX, theY, theWidth, theHeight);
-        }
-
-        //outline
-        theGraphics.setColor(Color.BLACK);
-        theGraphics.drawRect(theX, theY, theWidth, theHeight);
-
-    }
-    // Sparkle effect only in Pink Mode.
-    private void drawSparkles(final Graphics2D theGraphics, final int theX,
-                              final int theY, final int theWidth, final int theHeight) {
-        theGraphics.setColor(Color.WHITE);
-        for (int i = 0; i < SPARKLE_AMOUNT; i++) { //Draw 4 tiny sparkles
-            final int sparkleX = theX + (int) (Math.random() * theWidth);
-            final int sparkleY = theY + (int) (Math.random() * theHeight);
-            final int sparkleSize = 3;
-
-            // Different shapes
-            if (i % 2 == 0) {
-                theGraphics.fillOval(sparkleX, sparkleY, sparkleSize, sparkleSize); // small circles
-            } else {
-                theGraphics.fillRect(sparkleX, sparkleY, sparkleSize, sparkleSize); // small squares
-            }
-
-        }
-    }
-
-    /**
-     * Paints the board grid lines and pieces.
-     *
-     * @param theGraphics the Graphics object for drawing.
-     */
+    /** Paints the board grid lines and pieces. */
     @Override
     protected void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = GraphicsHandler.enableAntiAliasingAndReturn(theGraphics);
 
         drawFrozenBlocks(g2d);
-        drawPiece(g2d); // Draws all Sprint 1 pieces on board.
-        drawGrid(g2d); //draw the grid lines on the board.
+        drawPiece(g2d);
+        drawGrid(g2d);
         if (myGameOverDeath) {
             drawGameOver(g2d);
         }
-
-        if (myGamePaused) {
-            drawPaused(g2d);
-        }
     }
-    // TODO: magic numbers
+
+    /** Draws the Game Over screen. */
     private void drawGameOver(final Graphics2D theGraphics) {
         theGraphics.drawImage(myDeathIcon.getImage(),
-                (getWidth() - myDeathIcon.getIconWidth()) / HALF,
-                getHeight() / DIVISOR_FOR_GIFDEATH,
-                this);
+                (getWidth() - myDeathIcon.getIconWidth()) / 2,
+                getHeight() / GAME_OVER_TEXT_Y, this);
         theGraphics.setColor(Color.BLACK);
-        theGraphics.fillRect(BLACKSCREEN_X, BLACKSCREEN_Y, WIDTH1, HEIGHT1);
+        theGraphics.fillRect(GAME_OVER_BOX_X, GAME_OVER_BOX_Y,
+                GAME_OVER_BOX_WIDTH, GAME_OVER_FONT_SIZE);
 
-
-        final Font bigFont = new Font("Arial", Font.BOLD, TEXT_SIZE_GAME_OVER);
+        final Font bigFont = new Font("Arial", Font.BOLD, GAME_OVER_FONT_SIZE); // 50px size
         theGraphics.setFont(bigFont);
-
         theGraphics.setColor(Color.WHITE);
-        theGraphics.drawString("Game Over!", TEXT_GAME_OVER_X, TEXT_Y);
+        theGraphics.drawString("Game Over!", GAME_OVER_TEXT_X, GAME_OVER_Y_POSITION);
     }
 
-    private void drawPaused(final Graphics2D theGraphics) {
-        theGraphics.setColor(Color.BLACK);
-        theGraphics.fillRect(BLACKSCREEN_X, BLACKSCREEN_Y, WIDTH1, HEIGHT1);
 
-
-        final Font bigFont = new Font(TEXT_FONT, Font.BOLD, PAUSE_SIZE);
-        theGraphics.setFont(bigFont);
-
+    /** Draws sparkles for Pink Mode.*/
+    private void drawSparkles(final Graphics2D theGraphics, final int theX, final int theY,
+                              final int theWidth, final int theHeight) {
         theGraphics.setColor(Color.WHITE);
-        theGraphics.drawString("Game Paused!", TEXT_GAMEPAUSED_X, TEXT_Y);
+        for (int i = 0; i < SPARKLE_COUNT; i++) {
+            final int sparkleX = theX + (int) (Math.random() * theWidth);
+            final int sparkleY = theY + (int) (Math.random() * theHeight);
+
+            // Different shapes
+            if (i % 2 == 0) {
+                theGraphics.fillOval(sparkleX, sparkleY, SPARKLE_SIZE, SPARKLE_SIZE);
+            } else {
+                theGraphics.fillRect(sparkleX, sparkleY, SPARKLE_SIZE, SPARKLE_SIZE);
+            }
+        }
+    }
+
+
+    private void draw3DBlocks(final Graphics2D theGraphics2D, final int theX, final int theY,
+                              final int theWidth, final int theHeight, final Color theBaseColor) {
+
+        DrawingFactory.drawGlossy(theGraphics2D, theX, theY, theWidth, theHeight, theBaseColor);
+
+        if (ColorSchemeManager.getCurrentColorScheme().name().contains("Pink Mode \uD83C\uDF80✨")) {
+            drawSparkles(theGraphics2D, theX, theY, theWidth, theHeight);
+
+        }
     }
 
     private void drawFrozenBlocks(final Graphics theGraphics) {
+        final Graphics2D g2d = GraphicsHandler.enableAntiAliasingAndReturn(theGraphics);
+
+
         for (int column = 0; column < COLUMNS; column++) {
             for (int row = 0; row < ROWS; row++) {
                 final Block block = myFrozen.blocks().get(row)[column];
@@ -211,7 +147,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 if (block == null) {
                     continue;
                 }
-
                 final Color blockColor = ColorSchemeManager.getBlockColor(block);
                 if (blockColor == null) {
                     continue;
@@ -219,23 +154,13 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
                 final int x = column * myBlockWidth;
                 final int y = ((ROWS - 1) - row) * myBlockHeight;
-                draw3DBlocks((Graphics2D) theGraphics, x, y,
-                        myBlockWidth, myBlockHeight, blockColor);
 
-                if (ColorSchemeManager.getCurrentColorScheme().
-                        name().contains("Pink Mode \uD83C\uDF80✨")) {
-                    drawSparkles((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight);
-                }
+                draw3DBlocks(g2d, x, y, myBlockWidth, myBlockHeight, blockColor);
             }
         }
     }
 
-
-    /**
-     * Drawing the grid, 10 columns, 20 rows.
-     *
-     * @param theGraphics graphics for object drawing.
-     */
+    /*** Drawing the grid, 10 columns, 20 rows. */
     private void drawGrid(final Graphics theGraphics) {
         theGraphics.setColor(Color.BLACK);
         for (int column = 0; column <= COLUMNS; column++) { //vertical lines for column
@@ -247,16 +172,10 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             final int y = row * myBlockHeight;
             theGraphics.drawLine(0, y, getWidth(), y);
         }
-
     }
 
-    // draw the pieces.
     private void drawPiece(final Graphics theGraphics) {
-        final Graphics2D g2d = (Graphics2D) theGraphics;
-
-
         for (IndividualPiece piece : myTetrisPieces) {
-            // Loop through sprint 1 piece.
             if (piece == null) {
                 continue;
             }
@@ -273,7 +192,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                     blockColor = Color.BLACK;
                 }
                 draw3DBlocks((Graphics2D) theGraphics, x, y,
-                        myBlockWidth, myBlockHeight, blockColor);
+                           myBlockWidth, myBlockHeight, blockColor);
             }
         }
     }
@@ -297,7 +216,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             case TetrisGame.PROPERTY_GAME_STATE -> {
                 switch (theEvent.getNewValue()) {
                     case GameState.NEW -> {
-                        myGamePaused = false;
                         myTetrisPieces = new IndividualPiece[1];
                         myGameOverDeath = false;
                         if (myAnimator.isRunning()) {
@@ -307,7 +225,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                         repaint();
                     }
                     case GameState.OVER -> {
-                        myGamePaused = false;
                         myGameOverDeath = true;
                         if (!myAnimator.isRunning()) {
                             myAnimator.start();
@@ -317,57 +234,33 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
 
                     case GameState.WORRY -> {
-                        if (myGamePaused) {
-                            repaint();
-                            myGamePaused = false;
-                        }
                         Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
                         currentColor = currentColor.darker();
                         setBackground(currentColor);
                     }
 
                     case GameState.PANIC -> {
-                        if (myGamePaused) {
-                            repaint();
-                            myGamePaused = false;
-                        }
                         Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
                         currentColor = currentColor.darker();
                         currentColor = currentColor.darker();
                         setBackground(currentColor);
                     }
 
-                    case GameState.RUNNING -> {
-                        if (myGamePaused) {
-                            repaint();
-                            myGamePaused = false;
-                        }
+                    default -> {
                         setBackground(ColorSchemeManager.getCurrentPrimaryColor());
                     }
-
-                    case GameState.PAUSED -> {
-                        myGamePaused = true;
-                        repaint();
-                    }
-
-                    default -> { }
                 }
             }
-
-            default -> { }
         }
-
     }
-
     private final class BackGroundColorAnimator implements ActionListener {
         public void actionPerformed(final ActionEvent theEvent) {
             if (!myFlashColor) {
-                setBackground(new Color(COLORTOFLASH, true));
-                myFlashColor = !myFlashColor;
+                setBackground(FLASH_COLOR);
             } else {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
-                myFlashColor = !myFlashColor;
             }
+            myFlashColor = !myFlashColor;
         }
     }
 
