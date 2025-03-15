@@ -26,7 +26,8 @@ public final class AudioMusicFactory {
                 getMusicAlt(),
                 getMusicPink(),
                 getMusicCute(),
-                getMusicPanic()
+                getMusicPanic(),
+                getMusicEurobeat()
         };
     }
 
@@ -74,6 +75,11 @@ public final class AudioMusicFactory {
     public static BackgroundMusic getMusicPink() {
         return new BackgroundMusic("Pink Mode \uD83C\uDF80✨", "pinkTheme.wav");
     }
+
+    public static BackgroundMusic getMusicEurobeat() {
+        return new BackgroundMusic("Overload - Black Out (Extended Mix)", "Black Out (Extended Mix).wav");
+    }
+
     /**
      * Record for information relating to the music.
      * 
