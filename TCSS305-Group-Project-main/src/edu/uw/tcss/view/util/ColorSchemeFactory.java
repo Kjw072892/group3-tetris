@@ -90,26 +90,34 @@ public final class ColorSchemeFactory {
     }
 
     public static ColorScheme getPinkModeColors() {
-        return new ColorScheme(
-            "Pink Mode \uD83C\uDF80✨",
+       final Color pinkIBlock = new Color(189, 156, 234);
+       final Color pinkJBlock = new Color(243, 160, 226);
+       final Color pinkLBlock = new Color(255, 172, 246);
+       final Color pinkOBlock = new Color(250, 207, 17);
+       final Color pinkSBlock = new Color(224, 169, 123, 255);
+       final Color pinkTBlock = new Color(222, 72, 231);
+       final Color pinkZBlock = new Color(255, 250, 250);
+       final Color pinkPrimary = new Color(243, 172, 180, 255);
+       final Color pinkPanel = new  Color(231, 207, 223, 228)
+               ;
+       return new ColorScheme(
+               "Pink Mode \uD83C\uDF80✨",
+               Map.of(
+                       Block.I, pinkIBlock,
+                       Block.J, pinkJBlock,
+                       Block.L, pinkLBlock,
+                       Block.O, pinkOBlock,
+                       Block.S, pinkSBlock,
+                       Block.T, pinkTBlock,
+                       Block.Z, pinkZBlock
+               ),
+               Map.of(
+                       MainColors.Primary, pinkPrimary,
+                       MainColors.Secondary, pinkPanel,
+                       MainColors.Tertiary, pinkPanel
 
-            Map.of(
-                    Block.I, new Color(255,182, 193),
-                    Block.J, new Color(238, 105, 180),
-                    Block.L, new Color(255, 192, 203),
-                    Block.O, new Color(255,215,0),
-                    Block.S, new Color(255, 140, 105),
-                    Block.T, new Color(218, 112, 214),
-                    Block.Z, new Color(255, 250, 250)
-            ),
-            Map.of(
-                    MainColors.Primary, new Color(255,192, 203),
-                    MainColors.Secondary, new Color(250,128,114),
-                    MainColors.Tertiary, new Color(255, 182, 193)
-            )
-        );
-
-    }
+               ));
+   }
 
 
     /**
