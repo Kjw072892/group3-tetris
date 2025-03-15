@@ -20,9 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 
 /**
@@ -42,6 +40,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private final int myBlockHeight;
     private IndividualPiece[] myTetrisPieces;
     private boolean myGameOverDeath;
+
+    private boolean myGamePaused;
 
     private boolean myFlashColor;
 
@@ -70,6 +70,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         myDeathIcon = new ImageIcon(
                 AssetsManager.getFilePath(AssetsManager.IMAGES_PATH, "oof-noob.gif"));
         myAnimator = new Timer(1000, new BackGroundColorAnimator());
+
     }
 
     private void draw3DBlocks(final Graphics2D graphics2D, final int x, final int y, final int width, final int height, final Color baseColor) {
@@ -147,6 +148,10 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         if (myGameOverDeath) {
             drawGameOver(g2d);
         }
+
+        if(myGamePaused) {
+            drawPaused(g2d);
+        }
     }
     // TODO: magic numbers
     private void drawGameOver(final Graphics2D theGraphics) {
@@ -158,11 +163,23 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         theGraphics.fillRect(45, 350, 220, 80);
 
 
-        final Font bigFont = new Font("Arial", Font.BOLD, 36); // 50px size
+        final Font bigFont = new Font("Arial", Font.BOLD, 36);
         theGraphics.setFont(bigFont);
 
         theGraphics.setColor(Color.WHITE);
         theGraphics.drawString("Game Over!", 53, 400);
+    }
+
+    private void drawPaused(final Graphics2D theGraphics) {
+        theGraphics.setColor(Color.BLACK);
+        theGraphics.fillRect(45, 350, 220, 80);
+
+
+        final Font bigFont = new Font("Arial", Font.BOLD, 30);
+        theGraphics.setFont(bigFont);
+
+        theGraphics.setColor(Color.WHITE);
+        theGraphics.drawString("Game Paused!", 51, 400);
     }
 
     private void drawFrozenBlocks(final Graphics theGraphics) {
@@ -256,6 +273,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             case TetrisGame.PROPERTY_GAME_STATE -> {
                 switch (theEvent.getNewValue()) {
                     case GameState.NEW -> {
+                        myGamePaused = false;
                         myTetrisPieces = new IndividualPiece[1];
                         myGameOverDeath = false;
                         if (myAnimator.isRunning()) {
@@ -265,6 +283,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                         repaint();
                     }
                     case GameState.OVER -> {
+                        myGamePaused = false;
                         myGameOverDeath = true;
                         if (!myAnimator.isRunning()) {
                             myAnimator.start();
@@ -274,12 +293,14 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
 
                     case GameState.WORRY -> {
+                        myGamePaused = false;
                         Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
                         currentColor = currentColor.darker();
                         setBackground(currentColor);
                     }
 
                     case GameState.PANIC -> {
+                        myGamePaused = false;
                         Color currentColor = ColorSchemeManager.getCurrentPrimaryColor();
                         currentColor = currentColor.darker();
                         currentColor = currentColor.darker();
@@ -287,7 +308,13 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                     }
 
                     case GameState.RUNNING -> {
+                        myGamePaused = false;
                         setBackground(ColorSchemeManager.getCurrentPrimaryColor());
+                    }
+
+                    case GameState.PAUSED -> {
+                        myGamePaused = true;
+                        repaint();
                     }
 
                     default -> { }
