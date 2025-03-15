@@ -114,11 +114,11 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
     }
 
     /**
-     * allows you to set whether the game can panick.
-     * @param theCouldPanick allows you to set could panic status.
+     * allows you to set whether the game can panic.
+     * @param theCouldPanic allows you to set could panic status.
      */
-    public void setMyCouldPanic(final boolean theCouldPanick) {
-        myCouldPanic = theCouldPanick;
+    public void setMyCouldPanic(final boolean theCouldPanic) {
+        myCouldPanic = theCouldPanic;
     }
 
     private boolean getMyCouldPanic() {
@@ -648,6 +648,9 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
         }
     }
 
+    /**
+     * checks to see if a single piece ends up halfway on the game board.
+     */
     private void checkHalfWay() {
         final int halfway = myFrozenBlocks.size() / 2;
 
@@ -673,6 +676,10 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
         }
     }
 
+    /**
+     * Checks to see if within 3/4ths of the board, should the game
+     * start panicking from too many pieces stacked on top.
+     */
     private void checkThreeFourths() {
         final double threeFourths = myHeight * (double) 3 / 4;
 
