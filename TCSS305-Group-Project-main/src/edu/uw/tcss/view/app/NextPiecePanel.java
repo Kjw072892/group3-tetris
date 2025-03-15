@@ -3,6 +3,7 @@ package edu.uw.tcss.view.app;
 import static edu.uw.tcss.model.PropertyChangeEnabledGameControls.PROPERTY_NEXT_PIECE;
 import static edu.uw.tcss.view.util.StyleManager.BORDER_THICKNESS;
 
+import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.view.util.ColorSchemeManager;
@@ -25,6 +26,14 @@ import javax.swing.JPanel;
  * @version 1
  */
 public class NextPiecePanel extends JPanel implements PropertyChangeListener {
+
+    private static final IndividualPiece SCREEN_PIECE_STARTER = new IndividualPiece(
+            new Point[] {
+                new Point(1, 2),
+                new Point(0, 1),
+                new Point(1, 1),
+                new Point(2, 1)},
+            GameControls.Block.T);
 
     /** The width of the panel. */
     private static final int WIDTH = 100;
@@ -51,7 +60,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
     public NextPiecePanel() {
         super();
         layoutComponents();
-        myNextPiece = Sprint1_values.nextPiece();
+        myNextPiece = SCREEN_PIECE_STARTER;
         setBorder(BorderFactory.createLineBorder(StyleManager.getBorderColor(), BORDER_THICKNESS));
     }
 
