@@ -16,7 +16,6 @@ import edu.uw.tcss.view.util.GraphicsHandler;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -106,7 +105,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private static final int HALF = 2;
 
     private static final String TEXT_FONT = "Arial";
-    private static final int SPARKLE_AMOUNT = 4;
     private final int myBlockWidth;
     private final int myBlockHeight;
     private IndividualPiece[] myTetrisPieces;
@@ -270,7 +268,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
                 if (ColorSchemeFactory.getPinkModeColors()
                         .equals(ColorSchemeManager.getCurrentColorScheme())) {
-                    DrawingFactory.drawSparkles((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight);
+                    DrawingFactory.drawSparkles((Graphics2D) theGraphics, x, y,
+                            myBlockWidth, myBlockHeight);
                 }
 
             }

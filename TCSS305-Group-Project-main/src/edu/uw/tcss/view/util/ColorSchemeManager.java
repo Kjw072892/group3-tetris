@@ -21,7 +21,7 @@ public final class ColorSchemeManager {
 
 
     /**
-     * name of the property for when the color scheme has changed
+     * name of the property for when the color scheme has changed.
      */
     public static final String PROPERTY_COLOR_SCHEME = "The color scheme has changed";
     private static final Object PROPERTY_SOURCE_BEAN = new Object();
@@ -65,7 +65,7 @@ public final class ColorSchemeManager {
     public static void setCurrentColorScheme(final ColorScheme theScheme) {
         myCurrentColorScheme = theScheme;
         PCS.firePropertyChange(PROPERTY_COLOR_SCHEME, null, myCurrentColorScheme);
-        AdBannerPanel adPanel = AdBannerPanel.getInstance();
+        final AdBannerPanel adPanel = AdBannerPanel.getInstance();
         if (adPanel != null) {
             try {
                 adPanel.loadAdvertisements();
