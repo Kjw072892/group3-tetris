@@ -5,12 +5,16 @@ import static edu.uw.tcss.view.app.assets.AssetsManager.IMAGES_PATH;
 import edu.uw.tcss.view.app.assets.AssetsManager;
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.GraphicsHandler;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -57,6 +61,9 @@ public class AdBannerPanel extends JPanel {
         timer.start();
 
         myCurrentAdvertisement = myAdvertisements.getFirst();
+
+        addListeners();
+
         repaint();
     }
     public static AdBannerPanel getInstance() {
@@ -102,6 +109,23 @@ public class AdBannerPanel extends JPanel {
         repaint();
     }
 
+    private void addListeners() {
+        addMouseListener(new MouseAdapter() {
+            public void mouseClicked(final MouseEvent theEvent) {
+                try {
+                    openWebpage();
+                } catch (final URISyntaxException | IOException exception) {
+                    throw new RuntimeException(exception);
+                }
+            }
+        });
+    }
+
+    private void openWebpage() throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI("https://this-page-intentionally-left-blank.org/"));
+
+    }
+
     private void changeAdvertisement() {
         if (!myAdvertisements.isEmpty()) {
             myAdvertisementIndex = (myAdvertisementIndex + 1) % myAdvertisements.size();
@@ -118,4 +142,5 @@ public class AdBannerPanel extends JPanel {
 
         g2d.drawImage(myCurrentAdvertisement, 0, 0, getWidth(), getHeight(), this);
     }
+
 }
