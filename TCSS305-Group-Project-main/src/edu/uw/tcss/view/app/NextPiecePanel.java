@@ -6,11 +6,8 @@ import static edu.uw.tcss.view.util.StyleManager.BORDER_THICKNESS;
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.GameControls.IndividualPiece;
 import edu.uw.tcss.model.GameControls.Point;
-import edu.uw.tcss.view.util.ColorSchemeManager;
-import edu.uw.tcss.view.util.DrawingManager;
-import edu.uw.tcss.view.util.DrawingObject;
-import edu.uw.tcss.view.util.GraphicsHandler;
-import edu.uw.tcss.view.util.StyleManager;
+import edu.uw.tcss.view.util.*;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -174,10 +171,16 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
                                        final Color theBaseColor) {
         final int topLeftX = theX - (RECTANGLE_WIDTH - (STROKE_WIDTH - 1)) / 2;
         final int topLeftY = theY - (RECTANGLE_HEIGHT - (STROKE_WIDTH - 1)) / 2;
+
         DrawingManager.getDrawer().drawBlock(theGraphics,
                 topLeftX, topLeftY,
                 RECTANGLE_WIDTH - 1, RECTANGLE_HEIGHT - 1,
                 theBaseColor);
+
+        if (ColorSchemeFactory.getPinkModeColors()
+                .equals(ColorSchemeManager.getCurrentColorScheme())) {
+            DrawingFactory.drawSparkles(theGraphics, topLeftX, topLeftY, RECTANGLE_WIDTH - 1, RECTANGLE_HEIGHT - 1);
+        }
     }
 }
 
