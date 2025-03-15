@@ -105,13 +105,22 @@ public class FileMenu extends JMenuBar {
     }
 
     //TODO: Please cite all of your sources in the myReference. Be mindful of spacing!
-    // TODO: might be best to create a new frame such that everything is spaced automatically by swing
     private void addListeners(final JFrame theFrame) {
         myAbout.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
-                "                        (GROUP 3)\n "
-                        + "Made by: James, Kassie, Roman, Zainab. \n\n       Current version: "
-                        + myVersion));
+                    String.format(
+                            """
+                            <html>
+                                <p style="text-align: center">(GROUP 3)</p>
+                                <p>Made by: James, Kassie, Roman, Zainab.<p>
+                                <p>Current version: %s</p>
+                            </html>
+                            """,
+                            myVersion
+                    ),
+                    "About",
+                    JOptionPane.INFORMATION_MESSAGE
+                ));
 
         myReferences.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
                 """
