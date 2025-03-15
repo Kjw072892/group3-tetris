@@ -67,6 +67,7 @@ public class AdBannerPanel extends JPanel {
     /**
      * just gets instance.
      * @return gives instance.
+     * @deprecated
      */
     public static AdBannerPanel getInstance() {
         return instance;

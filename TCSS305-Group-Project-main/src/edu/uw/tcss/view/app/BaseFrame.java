@@ -6,10 +6,12 @@ import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
 import edu.uw.tcss.view.util.AudioMusicManager;
+import edu.uw.tcss.view.util.PreferencesManager;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.Window;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -40,6 +42,8 @@ public class BaseFrame extends JFrame {
 
         configWindow();
 
+        PreferencesManager.retrievePreferences();
+
         this.setVisible(true);
     }
 
@@ -60,9 +64,11 @@ public class BaseFrame extends JFrame {
                 (tk.getScreenSize().height - getHeight()) / 2
         );
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        addWindowFocusListener(new MusicWindowListener());
+
+        final BaseFrameWindowListener listener = new BaseFrameWindowListener();
+        addWindowFocusListener(listener);
+        addWindowListener(listener);
     }
 
     /**
@@ -74,7 +80,7 @@ public class BaseFrame extends JFrame {
 
     }
 
-    private final class MusicWindowListener implements WindowFocusListener {
+    private final class BaseFrameWindowListener extends WindowAdapter {
 
         @Override
         public void windowGainedFocus(final WindowEvent theEvent) {
@@ -90,5 +96,12 @@ public class BaseFrame extends JFrame {
             myTetrisGame.pause();
             AudioMusicManager.stopMusic();
         }
+
+        @Override
+        public void windowClosing(final WindowEvent theEvent) {
+            PreferencesManager.setPreferences();
+            System.exit(0);
+        }
+
     }
 }
