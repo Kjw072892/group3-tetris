@@ -78,14 +78,19 @@ public class AdBannerPanel extends JPanel {
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "CoolGirlsCode.png")));
         } else {
+
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "Cool_Girls_Code_Banner.png")));
+                    "CoolGirlsCode.png")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "adBanner.jpg")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "SampleAdvertisement.png")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                    "cute ad.png")));
+            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "adBanner2.jpeg")));
+            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                    "Cool_Girls_Code_Banner.png")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "adBanner3.jpg")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
