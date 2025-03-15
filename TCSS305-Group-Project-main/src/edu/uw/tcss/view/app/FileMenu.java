@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+
 /**
  * FileMenu creation class.
  *
@@ -26,7 +27,10 @@ public class FileMenu extends JMenuBar {
     private final JMenuItem myFileMenuGameStart = new JMenuItem("Start Game With Panic Mode");
     private final JMenuItem myFileMenuGameStart2 = new JMenuItem("Start Game Without Panic Mode");
     private final JMenuItem myAbout = new JMenuItem("About");
-    private final JMenuItem myReferences = new JMenuItem("References");
+    private final String myReferenceStr = "References";
+    private final String myControlStr = "Controls layout";
+    private final JMenuItem myReferences = new JMenuItem(myReferenceStr);
+    private final JMenuItem myControls = new JMenuItem(myControlStr);
     private final JMenuItem myFileMenuExitGame = new JMenuItem("Exit");
     private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Theme");
     private final JMenuItem myFeatureBackGroundMusic = new JMenuItem("Background Music");
@@ -99,13 +103,13 @@ public class FileMenu extends JMenuBar {
         myAbout.setMnemonic('a');
         myReferences.setMnemonic('r');
 
+
         // Add items to the Help menu
         myHelpMenu.add(myAbout);
         myHelpMenu.add(myReferences);
+        myHelpMenu.add(myControls);
     }
 
-    //TODO: Please cite all of your sources in the myReference. Be mindful of spacing!
-    // TODO: might be best to create a new frame such that everything is spaced automatically by swing
     private void addListeners(final JFrame theFrame) {
         myAbout.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
@@ -148,9 +152,14 @@ public class FileMenu extends JMenuBar {
                                 </li>
                         <html>
                         """,
-                        "References",
+                myReferenceStr,
                         JOptionPane.INFORMATION_MESSAGE
                 ));
+        myControls.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
+                htmlControl(),
+                "Controls",
+                JOptionPane.PLAIN_MESSAGE
+        ));
 
         myFileMenuExitGame.addActionListener(ActionEvent -> System.exit(0));
 
@@ -195,6 +204,27 @@ public class FileMenu extends JMenuBar {
             myTetris.newGame();
             myTetris.setMyCouldPanic(false);
         });
+    }
+
+    private String htmlControl() {
+        return """
+                <html>
+                    <body style="width: 120px; text-align: center;">
+                            <table style="margin: auto; border-spacing:10px 5px;">
+                                <tr><td><b>New Game:</b></td> <td>N/n</td></tr>
+                                <tr><td><b>Move Left:</b></td>  <td>Left or A/a</td></tr>
+                                <tr><td><b>Move Right:</b></td> <td>Right or D/d</td></tr>
+                                <tr><td><b>Move Down:</b></td>  <td>Down or S/s</td></tr>
+                                <tr><td><b>Move CCW:</b></td>   <td>Q/q</td></tr>
+                                <tr><td><b>Move CW:</b></td>   <td>E/e</td></tr>
+                                <tr><td><b>Drop:</b></td>  <td>Spacebar</td></tr>
+                                <tr><td><b>Pause:</b></td>  <td>P/p</td></tr>
+                                <tr><td><b>Quit:</b></td>   <td>K/k</td></tr>
+                                <tr><td><b>Mute:</b></td>  <td>M/m</td></tr>
+                            </table>
+                    </body>
+                <html>
+                """;
     }
 
 
