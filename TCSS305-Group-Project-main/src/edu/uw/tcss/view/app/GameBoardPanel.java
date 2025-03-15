@@ -252,7 +252,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     // draw the pieces.
     private void drawPiece(final Graphics theGraphics) {
-        final Graphics2D g2d = (Graphics2D) theGraphics;
 
 
         for (IndividualPiece piece : myTetrisPieces) {
