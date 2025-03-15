@@ -77,7 +77,7 @@ public final class AudioMusicFactory {
     }
 
     public static BackgroundMusic getMusicEurobeat() {
-        return new BackgroundMusic("Overload - Black Out (Extended Mix)", "Black Out (Extended Mix).wav");
+        return new BackgroundMusic("Tension - Everybody's Warming (Extended Mix)", "Everybody's Warming (Extended Mix).wav");
     }
 
     /**

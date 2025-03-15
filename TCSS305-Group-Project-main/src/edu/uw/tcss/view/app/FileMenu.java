@@ -130,8 +130,8 @@ public class FileMenu extends JMenuBar {
                         Trap Tetris (Da Brozz - Tetris (Original Mix)): \
                         https://www.youtube.com/watch?v=AT7KjIOd7GQ\s
                         
-                        Overload - Black Out (Extended Mix): \
-                        https://www.youtube.com/watch?v=s8ZhRMMdTUQ\s
+                        Tension - Everybody's Warming (Extended Mix): \
+                        https://www.youtube.com/watch?v=phYUedumuyE\s
                         
                         """));
         myFileMenuExitGame.addActionListener(ActionEvent -> System.exit(0));
