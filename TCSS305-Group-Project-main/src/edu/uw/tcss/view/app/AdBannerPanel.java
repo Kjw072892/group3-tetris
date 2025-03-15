@@ -48,9 +48,7 @@ public class AdBannerPanel extends JPanel {
         } catch (final IOException e) {
             Logger.getAnonymousLogger().log(Level.WARNING, "File not found", e.getStackTrace());
         }
-        setPreferredSize(new Dimension(BANNER_WIDTH, BANNER_HEIGHT));
-        setBackground(Color.MAGENTA);
-        setOpaque(true);
+        setStyle();
         instance = this;
 
         final Timer timer = new Timer(5000, theEvent -> changeAdvertisement());
@@ -59,10 +57,25 @@ public class AdBannerPanel extends JPanel {
         myCurrentAdvertisement = myAdvertisements.getFirst();
         repaint();
     }
+
+    private void setStyle() {
+        setPreferredSize(new Dimension(BANNER_WIDTH, BANNER_HEIGHT));
+        setBackground(Color.MAGENTA);
+        setOpaque(true);
+    }
+
+    /**
+     * just gets instance.
+     * @return gives instance.
+     */
     public static AdBannerPanel getInstance() {
         return instance;
     }
 
+    /**
+     * loads advertisements.
+     * @throws IOException ensures unloadable images don't cause trouble.
+     */
     public void loadAdvertisements() throws IOException {
         myAdvertisements.clear();
         myAdvertisementIndex = 0;
@@ -70,35 +83,23 @@ public class AdBannerPanel extends JPanel {
         // 🎀✨ add the special ads
         if (ColorSchemeManager.getCurrentColorScheme().
                 name().contains("Pink Mode \uD83C\uDF80✨")) {
-
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "Cool_Girls_Code_Banner.png")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "cute ad.png")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "CoolGirlsCode.png")));
         } else {
-
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "CoolGirlsCode.png")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "adBanner.jpg")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "SampleAdvertisement.png")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "cute ad.png")));
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "adBanner2.jpeg")));
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "Cool_Girls_Code_Banner.png")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "adBanner3.jpg")));
             myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
                     "dairyQueenAd.png")));
         }
-        if (!myAdvertisements.isEmpty()) {
-            myCurrentAdvertisement = myAdvertisements.get(0);
-        }
+        myCurrentAdvertisement = myAdvertisements.getFirst();
         repaint();
     }
 
@@ -118,4 +119,5 @@ public class AdBannerPanel extends JPanel {
 
         g2d.drawImage(myCurrentAdvertisement, 0, 0, getWidth(), getHeight(), this);
     }
+
 }
