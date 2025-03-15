@@ -31,7 +31,6 @@ public final class AudioFXManager extends KeyAdapter {
     private static final Logger LOGGER = Logger.getLogger(AudioFXManager.class.getName());
 
     private static final Map<Channels, Clip> SOUND_CLIPS = new HashMap<>();
-    // TODO: implement muting
     private static boolean myIsMute;
 
     static {
@@ -150,13 +149,13 @@ public final class AudioFXManager extends KeyAdapter {
      * @param theChannel the fx sound clip.
      */
     public static void playSoundFX(final Channels theChannel) {
-        final Clip clip = SOUND_CLIPS.get(theChannel);
+        if (!myIsMute) {
+            final Clip clip = SOUND_CLIPS.get(theChannel);
 
-        if (clip != null) {
-
-            clip.setFramePosition(0);
-            clip.start();
-
+            if (clip != null) {
+                clip.setFramePosition(0);
+                clip.start();
+            }
         }
     }
 
@@ -166,6 +165,12 @@ public final class AudioFXManager extends KeyAdapter {
      */
     public static void setMute(final boolean theIsMute) {
         myIsMute = theIsMute;
+
+        if (myIsMute) {
+            for (Clip clip : SOUND_CLIPS.values()) {
+                clip.stop();
+            }
+        }
     }
 
     /**
@@ -179,7 +184,7 @@ public final class AudioFXManager extends KeyAdapter {
      * Toggles the mute of the music.
      */
     public static void toggleMute() {
-        myIsMute = !myIsMute;
+        setMute(!myIsMute);
     }
 
 }

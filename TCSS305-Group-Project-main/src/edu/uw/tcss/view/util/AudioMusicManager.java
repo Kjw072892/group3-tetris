@@ -36,7 +36,6 @@ public final class AudioMusicManager {
 
     private static Clip myMusicChannel;
     private static BackgroundMusic myCurrentMusic;
-    // TODO: implement muting
     private static boolean myIsMute;
 
     private static final Logger LOGGER = Logger.getLogger(AudioMusicManager.class.getName());
@@ -89,7 +88,9 @@ public final class AudioMusicManager {
      * Starts the music loop.
      */
     public static void startMusic() {
-        myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
+        if (!myIsMute) {
+            myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
+        }
     }
 
     /**
@@ -136,6 +137,12 @@ public final class AudioMusicManager {
      */
     public static void setMute(final boolean theIsMute) {
         myIsMute = theIsMute;
+
+        if (!myIsMute) {
+            startMusic();
+        } else {
+            stopMusic();
+        }
     }
 
     /**
@@ -149,6 +156,6 @@ public final class AudioMusicManager {
      * Toggles the mute of the music.
      */
     public static void toggleMute() {
-        myIsMute = !myIsMute;
+        setMute(!myIsMute);
     }
 }
