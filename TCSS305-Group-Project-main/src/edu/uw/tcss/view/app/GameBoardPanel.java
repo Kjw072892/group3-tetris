@@ -302,6 +302,9 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     }
 
     private void gameStateSwitches(final PropertyChangeEvent theEvent) {
+
+        int test = 0;
+
         switch (theEvent.getNewValue()) {
             case GameState.NEW -> {
                 myGamePaused = false;
