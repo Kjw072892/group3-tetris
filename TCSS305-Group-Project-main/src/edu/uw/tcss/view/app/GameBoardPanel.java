@@ -38,18 +38,18 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     //Properties of the board & blocks.
     private static final int COLUMNS = 10;         // Number of columns & rows.
     private static final int ROWS = 20;
-    private static final int COLORTOFLASH = 0xa9b66767;
+    private static final int COLOR_TO_FLASH = 0xa9b66767;
     private static final int DELAY = 1000;
     private static final int TEXT_SIZE_GAME_OVER = 36;
     private static final int TEXT_GAME_OVER_X = TEXT_SIZE_GAME_OVER;
-    private static final int BLACKSCREEN_X = 45;
-    private static final int BLACKSCREEN_Y = 350;
+    private static final int BLACK_SCREEN_X = 45;
+    private static final int BLACK_SCREEN_Y = 350;
     private static final int WIDTH1 = 220;
     private static final int HEIGHT1 = 80;
     private static final int TEXT_Y = 400;
     private static final int PAUSE_SIZE = 30;
-    private static final int TEXT_GAMEPAUSED_X = 51;
-    private static final int DIVISOR_FOR_GIFDEATH = 10;
+    private static final int TEXT_GAME_PAUSED_X = 51;
+    private static final int DIVISOR_FOR_GIF_DEATH = 10;
     private static final int HALF = 2;
     private static final String TEXT_FONT = "Arial";
     private static final int SPARKLE_AMOUNT = 4;
@@ -178,13 +178,13 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private void drawGameOver(final Graphics2D theGraphics) {
         theGraphics.drawImage(myDeathIcon.getImage(),
                 (getWidth() - myDeathIcon.getIconWidth()) / HALF,
-                getHeight() / DIVISOR_FOR_GIFDEATH,
+                getHeight() / DIVISOR_FOR_GIF_DEATH,
                 this);
         theGraphics.setColor(Color.BLACK);
-        theGraphics.fillRect(BLACKSCREEN_X, BLACKSCREEN_Y, WIDTH1, HEIGHT1);
+        theGraphics.fillRect(BLACK_SCREEN_X, BLACK_SCREEN_Y, WIDTH1, HEIGHT1);
 
 
-        final Font bigFont = new Font("Arial", Font.BOLD, TEXT_SIZE_GAME_OVER);
+        final Font bigFont = new Font(TEXT_FONT, Font.BOLD, TEXT_SIZE_GAME_OVER);
         theGraphics.setFont(bigFont);
 
         theGraphics.setColor(Color.WHITE);
@@ -193,14 +193,14 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     private void drawPaused(final Graphics2D theGraphics) {
         theGraphics.setColor(Color.BLACK);
-        theGraphics.fillRect(BLACKSCREEN_X, BLACKSCREEN_Y, WIDTH1, HEIGHT1);
+        theGraphics.fillRect(BLACK_SCREEN_X, BLACK_SCREEN_Y, WIDTH1, HEIGHT1);
 
 
         final Font bigFont = new Font(TEXT_FONT, Font.BOLD, PAUSE_SIZE);
         theGraphics.setFont(bigFont);
 
         theGraphics.setColor(Color.WHITE);
-        theGraphics.drawString("Game Paused!", TEXT_GAMEPAUSED_X, TEXT_Y);
+        theGraphics.drawString("Game Paused!", TEXT_GAME_PAUSED_X, TEXT_Y);
     }
 
     private void drawFrozenBlocks(final Graphics theGraphics) {
@@ -362,7 +362,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private final class BackGroundColorAnimator implements ActionListener {
         public void actionPerformed(final ActionEvent theEvent) {
             if (!myFlashColor) {
-                setBackground(new Color(COLORTOFLASH, true));
+                setBackground(new Color(COLOR_TO_FLASH, true));
             } else {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
             }
