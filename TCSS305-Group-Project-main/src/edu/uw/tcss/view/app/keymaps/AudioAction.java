@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
  * @author Roman Bureavob
  * @version 2025-03-13
  */
-public class GUIAction extends AbstractAction {
+public class AudioAction extends AbstractAction {
 
     private final Controls myBind;
 
@@ -44,7 +44,7 @@ public class GUIAction extends AbstractAction {
      *
      * @param theBind the bind to
      */
-    public GUIAction(final Controls theBind) {
+    public AudioAction(final Controls theBind) {
         myBind = theBind;
     }
 

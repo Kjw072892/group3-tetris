@@ -42,8 +42,8 @@ public final class KeyMapper {
         for (final GameAction.Controls control : GameAction.Controls.values()) {
             myActionMap.put(control, new GameAction(control, myTetrisGame));
         }
-        for (final GUIAction.Controls control : GUIAction.Controls.values()) {
-            myActionMap.put(control, new GUIAction(control));
+        for (final AudioAction.Controls control : AudioAction.Controls.values()) {
+            myActionMap.put(control, new AudioAction(control));
         }
     }
 
@@ -95,7 +95,7 @@ public final class KeyMapper {
      * @param theKeyStroke the keystroke tot map from
      * @param theControl the control to map to
      */
-    public void mapGUIAction(final KeyStroke theKeyStroke, final GUIAction.Controls theControl) {
+    public void mapGUIAction(final KeyStroke theKeyStroke, final AudioAction.Controls theControl) {
         myInputMap.put(theKeyStroke, theControl);
     }
 }
