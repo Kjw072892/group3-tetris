@@ -8,12 +8,8 @@ import static edu.uw.tcss.view.util.AudioFXManager.Channels;
 
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.util.AudioFXManager;
-import edu.uw.tcss.view.util.AudioMusicFactory;
-import edu.uw.tcss.view.util.AudioMusicManager;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Timer;
 
 /**
