@@ -36,6 +36,21 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     //Properties of the board & blocks.
     private static final int COLUMNS = 10;         // Number of columns & rows.
     private static final int ROWS = 20;
+    private static final int COLORTOFLASH = 0xa9b66767;
+    private static final int DELAY = 1000;
+    private static final int TEXT_SIZE_GAME_OVER = 36;
+    private static final int TEXT_GAME_OVER_X = TEXT_SIZE_GAME_OVER;
+    private static final int BLACKSCREEN_X = 45;
+    private static final int BLACKSCREEN_Y = 350;
+    private static final int WIDTH1 = 220;
+    private static final int HEIGHT1 = 80;
+    private static final int TEXT_Y = 400;
+    private static final int PAUSE_SIZE = 30;
+    private static final int TEXT_GAMEPAUSED_X = 51;
+    private static final int DIVISOR_FOR_GIFDEATH = 10;
+    private static final int HALF = 2;
+    private static final String TEXT_FONT = "Arial";
+    private static final int SPARKLE_AMOUNT = 4;
     private final int myBlockWidth;
     private final int myBlockHeight;
     private IndividualPiece[] myTetrisPieces;
@@ -69,64 +84,68 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         myBlockHeight = theHeight / ROWS;
         myDeathIcon = new ImageIcon(
                 AssetsManager.getFilePath(AssetsManager.IMAGES_PATH, "oof-noob.gif"));
-        myAnimator = new Timer(1000, new BackGroundColorAnimator());
+        myAnimator = new Timer(DELAY, new BackGroundColorAnimator());
 
     }
 
-    private void draw3DBlocks(final Graphics2D graphics2D, final int x, final int y, final int width, final int height, final Color baseColor) {
-        int offset = width / 6;
+    private void draw3DBlocks(final Graphics2D theGraphics, final int theX, final int theY,
+                              final int theWidth, final int theHeight, final Color theBaseColor) {
+        final int offset = theWidth / 6;
 
 
-        boolean isPinkMode = ColorSchemeManager.getCurrentColorScheme().name().contains("Pink Mode");
+        final boolean isPinkMode = ColorSchemeManager.getCurrentColorScheme().
+                name().contains("Pink Mode");
 
         // Defining the color shades
-        Color lighterShade = baseColor.brighter().brighter();
-        Color darkerShade = baseColor.darker();
+        final Color lighterShade = theBaseColor.brighter().brighter();
+        final Color darkerShade = theBaseColor.darker();
 
 
-        GradientPaint topLeft = new GradientPaint(
-                x, y, lighterShade, x + width, y + height, baseColor);
+        final GradientPaint topLeft = new GradientPaint(
+                theX, theY, lighterShade, theX + theWidth, theY + theHeight, theBaseColor);
 
-        GradientPaint bottomRight = new GradientPaint(
-                x, y, baseColor, x + width, y + height, darkerShade);
+        final GradientPaint bottomRight = new GradientPaint(
+                theX, theY, theBaseColor, theX + theWidth, theY + theHeight, darkerShade);
 
         //draw base block
-        graphics2D.setPaint(topLeft);
-        graphics2D.fillRect(x, y, width, height);
+        theGraphics.setPaint(topLeft);
+        theGraphics.fillRect(theX, theY, theWidth, theHeight);
 
-        graphics2D.setPaint(bottomRight);
-        graphics2D.fillRect(x + offset, y + offset, width - offset, height - offset);
+        theGraphics.setPaint(bottomRight);
+        theGraphics.fillRect(theX + offset, theY + offset, theWidth - offset, theHeight - offset);
 
 
         //glossy effect
-        GradientPaint gloss = new GradientPaint(x, y, Color.WHITE, x + offset, y + offset, new Color(255, 255, 255, 50));
-        graphics2D.setPaint(gloss);
-        graphics2D.fillRect(x, y, width, height);
+        final GradientPaint gloss = new GradientPaint(theX, theY, Color.WHITE, theX + offset,
+                theY + offset, new Color(255, 255, 255, 50));
+        theGraphics.setPaint(gloss);
+        theGraphics.fillRect(theX, theY, theWidth, theHeight);
 
 
         // if pink mode is enabled, add sparkles!
         if (isPinkMode) {
-            drawSparkles(graphics2D, x, y, width, height);
+            drawSparkles(theGraphics, theX, theY, theWidth, theHeight);
         }
 
         //outline
-        graphics2D.setColor(Color.BLACK);
-        graphics2D.drawRect(x, y, width, height);
+        theGraphics.setColor(Color.BLACK);
+        theGraphics.drawRect(theX, theY, theWidth, theHeight);
 
     }
     // Sparkle effect only in Pink Mode.
-    private void drawSparkles(final Graphics2D graphics2D, final int x, final int y, final int width, final int height) {
-        graphics2D.setColor(Color.WHITE);
-        for (int i = 0; i < 4; i++) { //Draw 4 tiny sparkles
-            int sparkleX = x + (int) (Math.random() * width);
-            int sparkleY = y + (int) (Math.random() * height);
-            int sparkleSize = 3;
+    private void drawSparkles(final Graphics2D theGraphics, final int theX,
+                              final int theY, final int theWidth, final int theHeight) {
+        theGraphics.setColor(Color.WHITE);
+        for (int i = 0; i < SPARKLE_AMOUNT; i++) { //Draw 4 tiny sparkles
+            final int sparkleX = theX + (int) (Math.random() * theWidth);
+            final int sparkleY = theY + (int) (Math.random() * theHeight);
+            final int sparkleSize = 3;
 
             // Different shapes
             if (i % 2 == 0) {
-                graphics2D.fillOval(sparkleX, sparkleY, sparkleSize, sparkleSize); // small circles
+                theGraphics.fillOval(sparkleX, sparkleY, sparkleSize, sparkleSize); // small circles
             } else {
-                graphics2D.fillRect(sparkleX, sparkleY, sparkleSize, sparkleSize); // small squares
+                theGraphics.fillRect(sparkleX, sparkleY, sparkleSize, sparkleSize); // small squares
             }
 
         }
@@ -149,37 +168,37 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             drawGameOver(g2d);
         }
 
-        if(myGamePaused) {
+        if (myGamePaused) {
             drawPaused(g2d);
         }
     }
     // TODO: magic numbers
     private void drawGameOver(final Graphics2D theGraphics) {
         theGraphics.drawImage(myDeathIcon.getImage(),
-                (getWidth() - myDeathIcon.getIconWidth()) / 2,
-                getHeight() / 10,
+                (getWidth() - myDeathIcon.getIconWidth()) / HALF,
+                getHeight() / DIVISOR_FOR_GIFDEATH,
                 this);
         theGraphics.setColor(Color.BLACK);
-        theGraphics.fillRect(45, 350, 220, 80);
+        theGraphics.fillRect(BLACKSCREEN_X, BLACKSCREEN_Y, WIDTH1, HEIGHT1);
 
 
-        final Font bigFont = new Font("Arial", Font.BOLD, 36);
+        final Font bigFont = new Font("Arial", Font.BOLD, TEXT_SIZE_GAME_OVER);
         theGraphics.setFont(bigFont);
 
         theGraphics.setColor(Color.WHITE);
-        theGraphics.drawString("Game Over!", 53, 400);
+        theGraphics.drawString("Game Over!", TEXT_GAME_OVER_X, TEXT_Y);
     }
 
     private void drawPaused(final Graphics2D theGraphics) {
         theGraphics.setColor(Color.BLACK);
-        theGraphics.fillRect(45, 350, 220, 80);
+        theGraphics.fillRect(BLACKSCREEN_X, BLACKSCREEN_Y, WIDTH1, HEIGHT1);
 
 
-        final Font bigFont = new Font("Arial", Font.BOLD, 30);
+        final Font bigFont = new Font(TEXT_FONT, Font.BOLD, PAUSE_SIZE);
         theGraphics.setFont(bigFont);
 
         theGraphics.setColor(Color.WHITE);
-        theGraphics.drawString("Game Paused!", 51, 400);
+        theGraphics.drawString("Game Paused!", TEXT_GAMEPAUSED_X, TEXT_Y);
     }
 
     private void drawFrozenBlocks(final Graphics theGraphics) {
@@ -198,9 +217,11 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
                 final int x = column * myBlockWidth;
                 final int y = ((ROWS - 1) - row) * myBlockHeight;
-                draw3DBlocks((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
+                draw3DBlocks((Graphics2D) theGraphics, x, y,
+                        myBlockWidth, myBlockHeight, blockColor);
 
-                if (ColorSchemeManager.getCurrentColorScheme().name().contains("Pink Mode \uD83C\uDF80✨")) {
+                if (ColorSchemeManager.getCurrentColorScheme().
+                        name().contains("Pink Mode \uD83C\uDF80✨")) {
                     drawSparkles((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight);
                 }
             }
@@ -245,11 +266,12 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 final int x = block.x() * myBlockWidth;
                 final int y = ((ROWS - 1) - block.y()) * myBlockHeight;
 
-               Color blockColor = ColorSchemeManager.getBlockColor(piece.block());
-               if (blockColor == null) {
-                   blockColor = Color.BLACK;
-               }
-               draw3DBlocks((Graphics2D) theGraphics, x, y, myBlockWidth, myBlockHeight, blockColor);
+                Color blockColor = ColorSchemeManager.getBlockColor(piece.block());
+                if (blockColor == null) {
+                    blockColor = Color.BLACK;
+                }
+                draw3DBlocks((Graphics2D) theGraphics, x, y,
+                        myBlockWidth, myBlockHeight, blockColor);
             }
         }
     }
@@ -293,7 +315,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
 
                     case GameState.WORRY -> {
-                        if(myGamePaused) {
+                        if (myGamePaused) {
                             repaint();
                             myGamePaused = false;
                         }
@@ -303,7 +325,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                     }
 
                     case GameState.PANIC -> {
-                        if(myGamePaused) {
+                        if (myGamePaused) {
                             repaint();
                             myGamePaused = false;
                         }
@@ -314,7 +336,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                     }
 
                     case GameState.RUNNING -> {
-                        if(myGamePaused) {
+                        if (myGamePaused) {
                             repaint();
                             myGamePaused = false;
                         }
@@ -338,7 +360,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private final class BackGroundColorAnimator implements ActionListener {
         public void actionPerformed(final ActionEvent theEvent) {
             if (!myFlashColor) {
-                setBackground(new Color(182, 103, 103, 169));
+                setBackground(new Color(COLORTOFLASH, true));
                 myFlashColor = !myFlashColor;
             } else {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
