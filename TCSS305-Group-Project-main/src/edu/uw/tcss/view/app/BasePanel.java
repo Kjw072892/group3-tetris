@@ -8,6 +8,7 @@ import static edu.uw.tcss.view.util.StyleManager.MINOR_PADDING;
 import static javax.swing.KeyStroke.getKeyStroke;
 
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.view.app.keymaps.GUIAction;
 import edu.uw.tcss.view.app.keymaps.GameAction;
 import edu.uw.tcss.view.app.keymaps.KeyMapper;
 import edu.uw.tcss.view.app.keymaps.TetrominoAction;
@@ -164,6 +165,9 @@ public final class BasePanel extends JPanel {
                 getKeyStroke("pressed N"), GameAction.Controls.NEW_GAME);
         myKeyMapper.mapGameAction(
                 getKeyStroke("pressed K"), GameAction.Controls.END_GAME);
+
+        myKeyMapper.mapGUIAction(
+                getKeyStroke("pressed M"), GUIAction.Controls.TOGGLE_MUTE_ALL);
 
     }
 }

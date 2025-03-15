@@ -175,4 +175,11 @@ public final class AudioFXManager extends KeyAdapter {
         return myIsMute;
     }
 
+    /**
+     * Toggles the mute of the music.
+     */
+    public static void toggleMute() {
+        myIsMute = !myIsMute;
+    }
+
 }

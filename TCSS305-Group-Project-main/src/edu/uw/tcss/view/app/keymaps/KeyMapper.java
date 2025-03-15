@@ -42,6 +42,9 @@ public final class KeyMapper {
         for (final GameAction.Controls control : GameAction.Controls.values()) {
             myActionMap.put(control, new GameAction(control, myTetrisGame));
         }
+        for (final GUIAction.Controls control : GUIAction.Controls.values()) {
+            myActionMap.put(control, new GUIAction(control));
+        }
     }
 
     /**
@@ -83,5 +86,16 @@ public final class KeyMapper {
      */
     public void unmapGameAction(final KeyStroke theKeyStroke) {
         myInputMap.remove(theKeyStroke);
+    }
+
+    /**
+     * Maps a keystroke to a control for the GUI. See the Controls enum inside
+     * the GUIAction.
+     *
+     * @param theKeyStroke the keystroke tot map from
+     * @param theControl the control to map to
+     */
+    public void mapGUIAction(final KeyStroke theKeyStroke, final GUIAction.Controls theControl) {
+        myInputMap.put(theKeyStroke, theControl);
     }
 }

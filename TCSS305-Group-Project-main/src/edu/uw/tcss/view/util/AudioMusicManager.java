@@ -144,4 +144,11 @@ public final class AudioMusicManager {
     public static boolean getMute() {
         return myIsMute;
     }
+
+    /**
+     * Toggles the mute of the music.
+     */
+    public static void toggleMute() {
+        myIsMute = !myIsMute;
+    }
 }
