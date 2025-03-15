@@ -113,9 +113,13 @@ public class FileMenu extends JMenuBar {
     private void addListeners(final JFrame theFrame) {
         myAbout.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
-                "                        (GROUP 3)\n "
-                        + "Made by: James, Kassie, Roman, Zainab. \n\n       Current version: "
-                        + myVersion));
+                        String.format("""
+                                <html>
+                                    <p style="text-align: center">(Group 3)<p>
+                                    <p>Made by: James, Kassie, Roman, Zainab<p>
+                                    <p>CurrentVersion: %s</p>
+                                </html>
+                                """, myVersion), "About", JOptionPane.PLAIN_MESSAGE));
 
         myReferences.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
                 """
