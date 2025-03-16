@@ -228,7 +228,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
      *
      * @param theGraphics graphics for object drawing.
      */
-    private void drawGrid(final Graphics theGraphics) {
+    private void drawGrid(final Graphics2D theGraphics) {
         theGraphics.setColor(Color.BLACK);
         for (int column = 0; column <= COLUMNS; column++) { //vertical lines for column
             final int x = column * myBlockWidth;
@@ -243,7 +243,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     }
 
     // draw the pieces.
-    private void drawPiece(final Graphics theGraphics) {
+    private void drawPiece(final Graphics2D theGraphics) {
 
 
         for (IndividualPiece piece : myTetrisPieces) {
@@ -291,17 +291,15 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
                 repaint();
             }
-
-            case TetrisGame.PROPERTY_GAME_STATE -> gameStateSwitches(theEvent);
-
+            case TetrisGame.PROPERTY_GAME_STATE ->
+                    gameStateSwitches((GameState) theEvent.getNewValue());
             default -> { }
         }
 
     }
 
-    private void gameStateSwitches(final PropertyChangeEvent theEvent) {
-
-        switch (theEvent.getNewValue()) {
+    private void gameStateSwitches(final GameState theState) {
+        switch (theState) {
             case GameState.NEW -> {
                 myGamePaused = false;
                 myTetrisPieces = new IndividualPiece[1];

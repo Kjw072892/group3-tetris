@@ -13,7 +13,9 @@ import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -79,6 +81,17 @@ public class BaseFrame extends JFrame {
         new BaseFrame();
     }
 
+    private boolean askToStorePreferences() {
+        final int storePreferences = JOptionPane.showConfirmDialog(this,
+                "Current settings differ from the stored preferences."
+                        + "\nWould you like to save current changes to music and color scheme?",
+                "Setttings Differ",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+        return storePreferences == 0;
+    }
+
     private final class BaseFrameWindowListener extends WindowAdapter {
 
         @Override
@@ -98,7 +111,11 @@ public class BaseFrame extends JFrame {
 
         @Override
         public void windowClosing(final WindowEvent theEvent) {
-            PreferencesManager.setPreferences();
+            if (PreferencesManager.preferencesDiffer()) {
+                if (askToStorePreferences()) {
+                    PreferencesManager.setPreferences();
+                }
+            }
             System.exit(0);
         }
 

@@ -27,11 +27,26 @@ public final class PreferencesManager {
     }
 
     /**
-     * Sets the current static preferences of this isntance.
+     * Sets the current static preferences of this instance.
      */
     public static void setPreferences() {
         NODE.put(KEY_COLOR_SCHEME, ColorSchemeManager.getCurrentColorScheme().name());
         NODE.put(KEY_MUSIC, AudioMusicManager.getCurrentMusic().name());
+    }
+
+    /**
+     * Checks to see if the current settings differ from the stored preferences.
+     *
+     * @return false if there is no difference between the preferences stored, true otherwise
+     */
+    public static boolean preferencesDiffer() {
+        final boolean isEqualPreferences =
+                ColorSchemeManager.getCurrentColorScheme().name()
+                        .equals(NODE.get(KEY_COLOR_SCHEME, null))
+                && AudioMusicManager.getCurrentMusic().name()
+                        .equals(NODE.get(KEY_MUSIC, null));
+
+        return !isEqualPreferences;
     }
 
     /**

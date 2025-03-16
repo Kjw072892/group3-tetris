@@ -5,6 +5,8 @@ import edu.uw.tcss.view.util.AudioMusicFactory;
 import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeFactory;
 import edu.uw.tcss.view.util.ColorSchemeManager;
+import edu.uw.tcss.view.util.PreferencesManager;
+import java.awt.event.ComponentListener;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -45,6 +47,7 @@ public class FileMenu extends JMenuBar {
     private final JMenu myFeatureMenu = new JMenu("Features");
     private final JMenuItem myFeatureMenuBackGroundMusic = new JMenuItem("Background Music");
     private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Theme");
+    private final JMenuItem myFeatureMenuClearPreferences = new JMenuItem("Clear Preferences");
 
     private final TetrisGame myTetris;
 
@@ -98,11 +101,13 @@ public class FileMenu extends JMenuBar {
         innerColorMenu.setMnemonic('c');
         myFeatureMenuColorChooser.setMnemonic('c');
         myFeatureMenuBackGroundMusic.setMnemonic('b');
+        myFeatureMenuClearPreferences.setMnemonic('l');
 
         // Add items to the Feature Menu
         innerColorMenu.add(myFeatureMenuColorChooser);
         myFeatureMenu.add(innerColorMenu);
         myFeatureMenu.add(myFeatureMenuBackGroundMusic);
+        myFeatureMenu.add(myFeatureMenuClearPreferences);
     }
 
     private void helpMenuCreation() {
@@ -180,6 +185,10 @@ public class FileMenu extends JMenuBar {
         });
 
         myFileMenuStartGame.addActionListener(theEvent -> myTetris.newGame());
+
+        myFeatureMenuClearPreferences.addActionListener(theEvent -> {
+            PreferencesManager.clearPreferences();
+        });
     }
 
     private String htmlControl() {
