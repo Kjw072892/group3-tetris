@@ -1,6 +1,7 @@
 package edu.uw.tcss.view.util;
 
 import static edu.uw.tcss.view.util.ColorSchemeFactory.ColorScheme;
+import static edu.uw.tcss.view.util.AudioMusicFactory.BackgroundMusic;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +20,7 @@ public final class PreferencesManager {
     private static final Logger LOGGER = Logger.getLogger("Preferences Logger");
 
     private static final String KEY_COLOR_SCHEME = "color scheme";
+    private static final String KEY_MUSIC = "music";
 
     private PreferencesManager() {
 
@@ -29,6 +31,7 @@ public final class PreferencesManager {
      */
     public static void setPreferences() {
         NODE.put(KEY_COLOR_SCHEME, ColorSchemeManager.getCurrentColorScheme().name());
+        NODE.put(KEY_MUSIC, AudioMusicManager.getCurrentMusic().name());
     }
 
     /**
@@ -37,8 +40,10 @@ public final class PreferencesManager {
      */
     public static void retrievePreferences() {
         final String colorSchemeName = NODE.get(KEY_COLOR_SCHEME, null);
+        final String musicName = NODE.get(KEY_MUSIC, null);
 
         setColorScheme(colorSchemeName);
+        setMusic(musicName);
     }
 
     /**
@@ -60,6 +65,18 @@ public final class PreferencesManager {
             for (final ColorScheme scheme : ColorSchemeFactory.getColorSchemes()) {
                 if (theSchemeName.equals(scheme.name())) {
                     ColorSchemeManager.setCurrentColorScheme(scheme);
+                    return;
+                }
+            }
+        }
+    }
+
+    private static void setMusic(final String theMusicName) {
+        if (theMusicName != null) {
+            for (final BackgroundMusic music : AudioMusicFactory.getBackgroundMusic()) {
+                if (theMusicName.equals(music.name())) {
+                    AudioMusicManager.setCurrentMusic(music);
+                    return;
                 }
             }
         }
