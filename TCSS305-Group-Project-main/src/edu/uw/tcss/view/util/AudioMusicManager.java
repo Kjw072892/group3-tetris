@@ -47,8 +47,12 @@ public final class AudioMusicManager {
         try {
             myMusicChannel = AudioSystem.getClip();
             myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
-            myCurrentMusic = AudioMusicFactory.getMusicEpic();
-            setCurrentMusic(myCurrentMusic);
+
+            PreferencesManager.retrievePreferences();
+            if (myCurrentMusic == null) {
+                myCurrentMusic = AudioMusicFactory.getMusicEpic();
+                setCurrentMusic(myCurrentMusic);
+            }
 
         } catch (final LineUnavailableException e) {
             LOGGER.info(() -> Arrays.toString(e.getStackTrace()));

@@ -2,6 +2,8 @@ package edu.uw.tcss.view.util;
 
 import static edu.uw.tcss.view.util.ColorSchemeFactory.ColorScheme;
 import static edu.uw.tcss.view.util.AudioMusicFactory.BackgroundMusic;
+import static edu.uw.tcss.view.util.DrawingFactory.DrawingScheme;
+import static edu.uw.tcss.view.util.DrawingFactory.getDrawingObjects;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +23,13 @@ public final class PreferencesManager {
 
     private static final String KEY_COLOR_SCHEME = "color scheme";
     private static final String KEY_MUSIC = "music";
+    private static final String KEY_BLOCK_STYLE = "the block style";
+
+    private static final String[] KEYS = {
+        KEY_COLOR_SCHEME,
+        KEY_MUSIC,
+        KEY_BLOCK_STYLE
+    };
 
     private PreferencesManager() {
 
@@ -32,6 +41,7 @@ public final class PreferencesManager {
     public static void setPreferences() {
         NODE.put(KEY_COLOR_SCHEME, ColorSchemeManager.getCurrentColorScheme().name());
         NODE.put(KEY_MUSIC, AudioMusicManager.getCurrentMusic().name());
+        NODE.put(KEY_BLOCK_STYLE, DrawingManager.getDrawer().name());
     }
 
     /**
@@ -41,14 +51,19 @@ public final class PreferencesManager {
      * or there are unset preferences, and true otherwise
      */
     public static boolean preferencesDiffer() {
-        final boolean preferencesAreNull =
-                NODE.get(KEY_COLOR_SCHEME, null) == null
-                || NODE.get(KEY_MUSIC, null) == null;
+        boolean preferencesAreNull = false;
+        for (final String key : KEYS) {
+            if (NODE.get(key, null) == null) {
+                preferencesAreNull = true;
+            }
+        }
+
         final boolean isEqualPreferences =
                 ColorSchemeManager.getCurrentColorScheme().name()
                         .equals(NODE.get(KEY_COLOR_SCHEME, null))
                 && AudioMusicManager.getCurrentMusic().name()
-                        .equals(NODE.get(KEY_MUSIC, null));
+                        .equals(NODE.get(KEY_MUSIC, null))
+                && DrawingManager.getDrawer().name().equals(NODE.get(KEY_BLOCK_STYLE, null));
 
         return !isEqualPreferences || preferencesAreNull;
     }
@@ -60,9 +75,11 @@ public final class PreferencesManager {
     public static void retrievePreferences() {
         final String colorSchemeName = NODE.get(KEY_COLOR_SCHEME, null);
         final String musicName = NODE.get(KEY_MUSIC, null);
+        final String blockStyle = NODE.get(KEY_BLOCK_STYLE, null);
 
         setColorScheme(colorSchemeName);
         setMusic(musicName);
+        setBlockStyle(blockStyle);
     }
 
     /**
@@ -95,6 +112,17 @@ public final class PreferencesManager {
             for (final BackgroundMusic music : AudioMusicFactory.getBackgroundMusic()) {
                 if (theMusicName.equals(music.name())) {
                     AudioMusicManager.setCurrentMusic(music);
+                    return;
+                }
+            }
+        }
+    }
+
+    private static void setBlockStyle(final String theBlockStyleName) {
+        if (theBlockStyleName != null) {
+            for (final DrawingScheme scheme : getDrawingObjects()) {
+                if (theBlockStyleName.equals(scheme.name())) {
+                    DrawingManager.setDrawer(scheme);
                     return;
                 }
             }
