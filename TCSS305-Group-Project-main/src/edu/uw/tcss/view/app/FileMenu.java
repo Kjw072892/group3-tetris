@@ -80,6 +80,7 @@ public class FileMenu extends JMenuBar {
         // Add mnemonics
         myFileMenuExitGame.setMnemonic('x');
         myFileMenuPanicMode.setMnemonic('p');
+        myStartGame.setMnemonic('s');
 
 
         // Add items to the File menu
