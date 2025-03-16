@@ -9,7 +9,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 /**
- * Static class respondible for managing the user preferences.
+ * Static class responsible for managing the user preferences.
  *
  * @author Roman Bureacov
  * @version 2025-03-15

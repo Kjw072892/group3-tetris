@@ -16,6 +16,7 @@ import edu.uw.tcss.view.util.GraphicsHandler;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -92,19 +93,12 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private static final int DELAY = 1000;
 
     // TODO: this is a misuse of constants
-    private static final int TEXT_SIZE_GAME_OVER = 36;
-    private static final int TEXT_GAME_OVER_X = 53;
-    private static final int BLACK_SCREEN_X = 45;
     private static final int BLACK_SCREEN_Y = 350;
-    private static final int WIDTH1 = 220;
-    private static final int HEIGHT1 = 80;
-    private static final int TEXT_Y = 400;
-    private static final int PAUSE_SIZE = 30;
-    private static final int TEXT_GAME_PAUSED_X = 51;
+    private static final int BLACK_SCREEN_HEIGHT = 80;
     private static final int DIVISOR_FOR_GIF_DEATH = 10;
-    private static final int HALF = 2;
 
-    private static final String TEXT_FONT = "Arial";
+    private static final Font BIG_FONT = new Font("Arial", Font.BOLD, 33);
+
     private final int myBlockWidth;
     private final int myBlockHeight;
     private IndividualPiece[] myTetrisPieces;
@@ -130,16 +124,12 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     public GameBoardPanel(final int theWidth, final int theHeight) {
         //Preferred size set to fit in layout.
         setPreferredSize(new Dimension(theWidth, theHeight));
-        // TODO: for later, we could consider making
-        //  a class that houses the preferences or something
-        setBackground(Color.RED); //background red.
 
         myBlockWidth = theWidth / COLUMNS;
         myBlockHeight = theHeight / ROWS;
         myDeathIcon = new ImageIcon(
                 AssetsManager.getFilePath(AssetsManager.IMAGES_PATH, "oof-noob.gif"));
         myAnimator = new Timer(DELAY, new BackGroundColorAnimator());
-
     }
 
     /**
@@ -163,33 +153,51 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             drawPaused(g2d);
         }
     }
-    // TODO: magic numbers
     private void drawGameOver(final Graphics2D theGraphics) {
         theGraphics.drawImage(myDeathIcon.getImage(),
-                (getWidth() - myDeathIcon.getIconWidth()) / HALF,
+                (getWidth() - myDeathIcon.getIconWidth()) / 2,
                 getHeight() / DIVISOR_FOR_GIF_DEATH,
                 this);
         theGraphics.setColor(Color.BLACK);
-        theGraphics.fillRect(BLACK_SCREEN_X, BLACK_SCREEN_Y, WIDTH1, HEIGHT1);
+        theGraphics.fillRect(0, BLACK_SCREEN_Y, getWidth(), BLACK_SCREEN_HEIGHT);
 
 
-        final Font bigFont = new Font(TEXT_FONT, Font.BOLD, TEXT_SIZE_GAME_OVER);
-        theGraphics.setFont(bigFont);
+        theGraphics.setFont(BIG_FONT);
 
         theGraphics.setColor(Color.WHITE);
-        theGraphics.drawString("Game Over!", TEXT_GAME_OVER_X, TEXT_Y);
+
+        final String gameOverString = "Game Over!";
+        final Point stringPoint = getStringPositionOnBlackScreen(theGraphics, gameOverString);
+        theGraphics.drawString(gameOverString, stringPoint.x(), stringPoint.y());
+
     }
 
     private void drawPaused(final Graphics2D theGraphics) {
         theGraphics.setColor(Color.BLACK);
-        theGraphics.fillRect(BLACK_SCREEN_X, BLACK_SCREEN_Y, WIDTH1, HEIGHT1);
+        theGraphics.fillRect(0, BLACK_SCREEN_Y, getWidth(), BLACK_SCREEN_HEIGHT);
 
 
-        final Font bigFont = new Font(TEXT_FONT, Font.BOLD, PAUSE_SIZE);
-        theGraphics.setFont(bigFont);
+        theGraphics.setFont(BIG_FONT);
 
         theGraphics.setColor(Color.WHITE);
-        theGraphics.drawString("Game Paused!", TEXT_GAME_PAUSED_X, TEXT_Y);
+
+
+        final String gamePausedString = "Game Paused!";
+        final Point stringPoint = getStringPositionOnBlackScreen(theGraphics, gamePausedString);
+        theGraphics.drawString(gamePausedString, stringPoint.x(), stringPoint.y());
+
+    }
+
+    private Point getStringPositionOnBlackScreen(final Graphics2D theGraphics, final String theString) {
+        final FontMetrics metrics = theGraphics.getFontMetrics(BIG_FONT);
+
+        final int stringWidth = metrics.stringWidth(theString);
+        final int stringX = (getWidth() - stringWidth) / 2;
+
+        final int stringHeight = metrics.getAscent();
+        final int stringY = BLACK_SCREEN_Y + (BLACK_SCREEN_HEIGHT + stringHeight) / 2;
+
+        return new Point(stringX, stringY);
     }
 
     private void drawFrozenBlocks(final Graphics2D theGraphics) {
@@ -263,12 +271,13 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 if (blockColor == null) {
                     blockColor = Color.BLACK;
                 }
-                DrawingManager.getDrawer().drawBlock((Graphics2D) theGraphics, x, y,
+
+                DrawingManager.getDrawer().drawBlock(theGraphics, x, y,
                         myBlockWidth, myBlockHeight, blockColor);
 
                 if (ColorSchemeFactory.getPinkModeColors()
                         .equals(ColorSchemeManager.getCurrentColorScheme())) {
-                    DrawingFactory.drawSparkles((Graphics2D) theGraphics, x, y,
+                    DrawingFactory.drawSparkles(theGraphics, x, y,
                             myBlockWidth, myBlockHeight);
                 }
 
