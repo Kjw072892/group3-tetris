@@ -3,6 +3,7 @@ package edu.uw.tcss.view.app;
 import static edu.uw.tcss.view.app.assets.AssetsManager.IMAGES_PATH;
 
 import edu.uw.tcss.model.GameControls;
+import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
 import edu.uw.tcss.view.util.AudioFXManager;
@@ -16,6 +17,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -45,13 +47,20 @@ public class BaseFrame extends JFrame {
 
         configWindow();
 
-        PreferencesManager.retrievePreferences();
-
-        AudioMusicManager.addPropertyChangeListener(menuBar);
-        AudioFXManager.addPropertyChangeListener(menuBar);
+        miscellaneousTasks(menuBar);
 
         this.setVisible(true);
     }
+
+    private void miscellaneousTasks(final FileMenu theMenuBar) {
+
+        PreferencesManager.retrievePreferences();
+
+        AudioMusicManager.addPropertyChangeListener(theMenuBar);
+        AudioFXManager.addPropertyChangeListener(theMenuBar);
+    }
+
+
 
     private void configWindow() {
         setTitle("Group 03 Tetris");

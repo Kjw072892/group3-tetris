@@ -131,22 +131,22 @@ public final class ColorSchemeFactory {
      */
     public static ColorScheme getEdgyColors() {
         final Color black = Color.DARK_GRAY.darker();
-        final Color red = new Color(240, 0, 0);
+        final Color evilRed = new Color(185, 0, 0);
 
         return new ColorScheme(
                 "Edgy",
                 Map.of(
-                    Block.I, red,
+                    Block.I, evilRed,
                     Block.J, black,
-                    Block.L, red,
+                    Block.L, evilRed,
                     Block.O, black,
-                    Block.S, red,
+                    Block.S, evilRed,
                     Block.T, black,
-                    Block.Z, red
+                    Block.Z, evilRed
                 ),
                 Map.of(
                       MainColors.Primary, Color.RED.darker().darker(),
-                      MainColors.Secondary, Color.RED.brighter(),
+                      MainColors.Secondary, Color.RED.darker(),
                       MainColors.Tertiary, Color.RED
                 ));
     }
