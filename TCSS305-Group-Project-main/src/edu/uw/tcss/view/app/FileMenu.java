@@ -32,16 +32,20 @@ public class FileMenu extends JMenuBar {
     private final String myReferenceStr = "References";
     private final String myControlStr = "Controls layout";
     private final String myAboutStr = "About";
-    private final JMenuItem myAbout = new JMenuItem(myAboutStr);
-    private final JMenuItem myStartGame = new JMenuItem("Start Game");
-    private final JMenuItem myReferences = new JMenuItem(myReferenceStr);
-    private final JMenuItem myControls = new JMenuItem(myControlStr);
-    private final JMenuItem myFileMenuExitGame = new JMenuItem("Exit");
-    private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Theme");
-    private final JMenuItem myFeatureBackGroundMusic = new JMenuItem("Background Music");
-    private final JMenu myFileMenu = new JMenu("File");
-    private final JMenu myFeatureMenu = new JMenu("Features");
+
     private final JMenu myHelpMenu = new JMenu("Help");
+    private final JMenuItem myHelpAbout = new JMenuItem(myAboutStr);
+    private final JMenuItem myHelpReferences = new JMenuItem(myReferenceStr);
+    private final JMenuItem myHelpControls = new JMenuItem(myControlStr);
+
+    private final JMenu myFileMenu = new JMenu("File");
+    private final JMenuItem myFileMenuStartGame = new JMenuItem("Start Game");
+    private final JMenuItem myFileMenuExitGame = new JMenuItem("Exit");
+
+    private final JMenu myFeatureMenu = new JMenu("Features");
+    private final JMenuItem myFeatureBackGroundMusic = new JMenuItem("Background Music");
+    private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Theme");
+
     private final TetrisGame myTetris;
 
 
@@ -80,12 +84,12 @@ public class FileMenu extends JMenuBar {
         // Add mnemonics
         myFileMenuExitGame.setMnemonic('x');
         myFileMenuPanicMode.setMnemonic('p');
-        myStartGame.setMnemonic('s');
+        myFileMenuStartGame.setMnemonic('s');
 
 
         // Add items to the File menu
         myFileMenu.add(myFileMenuPanicMode);
-        myFileMenu.add(myStartGame);
+        myFileMenu.add(myFileMenuStartGame);
         myFileMenu.add(myFileMenuExitGame);
     }
 
@@ -105,18 +109,18 @@ public class FileMenu extends JMenuBar {
 
     private void helpMenuCreation() {
         // Add mnemonics
-        myAbout.setMnemonic('a');
-        myReferences.setMnemonic('r');
+        myHelpAbout.setMnemonic('a');
+        myHelpReferences.setMnemonic('r');
 
 
         // Add items to the Help menu
-        myHelpMenu.add(myAbout);
-        myHelpMenu.add(myReferences);
-        myHelpMenu.add(myControls);
+        myHelpMenu.add(myHelpAbout);
+        myHelpMenu.add(myHelpReferences);
+        myHelpMenu.add(myHelpControls);
     }
 
     private void addListeners(final JFrame theFrame) {
-        myAbout.addActionListener(ActionEvent ->
+        myHelpAbout.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
                         String.format("""
                                 <html>
@@ -126,10 +130,10 @@ public class FileMenu extends JMenuBar {
                                 </html>
                                 """, myVersion), myAboutStr, JOptionPane.PLAIN_MESSAGE));
 
-        myReferences.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
+        myHelpReferences.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
                 htmlReference(), myReferenceStr, JOptionPane.INFORMATION_MESSAGE
                 ));
-        myControls.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
+        myHelpControls.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
                 htmlControl(), "Controls", JOptionPane.PLAIN_MESSAGE
         ));
 
@@ -172,7 +176,7 @@ public class FileMenu extends JMenuBar {
             myTetris.setPanicMode(myPanicModeTracker);
         });
 
-        myStartGame.addActionListener(theEvent -> myTetris.newGame());
+        myFileMenuStartGame.addActionListener(theEvent -> myTetris.newGame());
     }
 
     private String htmlControl() {
