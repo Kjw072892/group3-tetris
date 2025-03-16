@@ -30,7 +30,10 @@ She also wrote up the scoring algorithm so that it uses the algorithm given to u
 Lastly, she was involved in the decision of finalizing the overall layout and the Frame theme.
 
 ## James 
-
+James contributed by adding in a game over screen and pause screen. James also added in the backend to add 
+functionality of a panic mode. He also then used the backend to make front end changes to make the background
+darker if the pieces go over a certain height. He also helped fix a couple of checkstyle errors. He added in
+a game over effect where the background flashes a color.
 
 ## Roman
 
