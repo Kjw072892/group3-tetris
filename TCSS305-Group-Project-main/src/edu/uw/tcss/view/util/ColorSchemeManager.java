@@ -8,6 +8,9 @@ import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class that manages the static color scheme.
@@ -24,17 +27,24 @@ public final class ColorSchemeManager {
     public static final String PROPERTY_COLOR_SCHEME = "The color scheme has changed";
     private static final Object PROPERTY_SOURCE_BEAN = new Object();
 
+    private static final Logger LOGGER = Logger.getLogger(ColorSchemeManager.class.getName());
+
     private static final PropertyChangeSupport PCS =
             new PropertyChangeSupport(PROPERTY_SOURCE_BEAN);
 
     private static ColorScheme myCurrentColorScheme;
+
 
     static {
         myCurrentColorScheme = ColorSchemeFactory.getGenericColors();
     }
 
     private ColorSchemeManager() {
-
+        final ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setLevel(Level.ALL);
+        LOGGER.addHandler(consoleHandler);
+        LOGGER.setLevel(Level.ALL);
+        LOGGER.setUseParentHandlers(false); // Disable default console output
     }
 
 
@@ -72,7 +82,7 @@ public final class ColorSchemeManager {
                 adPanel.loadAdvertisements();
                 adPanel.repaint();
             } catch (final IOException e) {
-                //e.printStackTrace();
+                LOGGER.warning(e.getMessage());
             }
         }
     }
