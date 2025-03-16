@@ -29,7 +29,8 @@ public class FileMenu extends JMenuBar {
             new JCheckBoxMenuItem("Game starts with Panic Mode");
     private boolean myPanicModeTracker;
 
-    private final JMenuItem myAbout = new JMenuItem("About");
+    private final String myAboutStr = "About";
+    private final JMenuItem myAbout = new JMenuItem(myAboutStr);
     private final String myReferenceStr = "References";
     private final String myControlStr = "Controls layout";
     private final JMenuItem myReferences = new JMenuItem(myReferenceStr);
@@ -120,7 +121,7 @@ public class FileMenu extends JMenuBar {
                                     <p>Made by: James, Kassie, Roman, Zainab<p>
                                     <p>CurrentVersion: %s</p>
                                 </html>
-                                """, myVersion), "About", JOptionPane.PLAIN_MESSAGE));
+                                """, myVersion), myAboutStr, JOptionPane.PLAIN_MESSAGE));
 
         myReferences.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
                 """
@@ -209,20 +210,21 @@ public class FileMenu extends JMenuBar {
     private String htmlControl() {
         return """
                 <html>
-                    <body style="width: 120px; text-align: center;">
-                            <table style="margin: auto; border-spacing:10px 5px;">
-                                <tr><td><b>New Game:</b></td> <td>N/n</td></tr>
-                                <tr><td><b>Move Left:</b></td>  <td>Left or A/a</td></tr>
-                                <tr><td><b>Move Right:</b></td> <td>Right or D/d</td></tr>
-                                <tr><td><b>Move Down:</b></td>  <td>Down or S/s</td></tr>
-                                <tr><td><b>Move CCW:</b></td>   <td>Q/q</td></tr>
-                                <tr><td><b>Move CW:</b></td>   <td>E/e</td></tr>
-                                <tr><td><b>Drop:</b></td>  <td>Spacebar</td></tr>
-                                <tr><td><b>Pause:</b></td>  <td>P/p</td></tr>
-                                <tr><td><b>Quit:</b></td>   <td>K/k</td></tr>
-                                <tr><td><b>Mute:</b></td>  <td>M/m</td></tr>
-                            </table>
-                    </body>
+                    <style>
+                        td.right {text-align: right}
+                    </style>
+                     <table style="width: 180px; border-spacing:10px 5px;">
+                           <tr><td><b>New Game:</b></td> <td class="right">N/n</td></tr>
+                           <tr><td><b>Move Left:</b></td>  <td class="right">Left or A/a</td></tr>
+                           <tr><td><b>Move Right:</b></td> <td class="right">Right or D/d</td></tr>
+                           <tr><td><b>Move Down:</b></td>  <td class="right">Down or S/s</td></tr>
+                           <tr><td><b>Move CCW:</b></td>   <td class="right">Q/q</td></tr>
+                           <tr><td><b>Move CW:</b></td>   <td class="right">E/e</td></tr>
+                           <tr><td><b>Drop:</b></td>  <td class="right">Spacebar</td></tr>
+                           <tr><td><b>Pause:</b></td>  <td class="right">P/p</td></tr>
+                           <tr><td><b>Quit:</b></td>   <td class="right">K/k</td></tr>
+                           <tr><td><b>Mute:</b></td>  <td class="right">M/m</td></tr>
+                     </table>
                 <html>
                 """;
     }
