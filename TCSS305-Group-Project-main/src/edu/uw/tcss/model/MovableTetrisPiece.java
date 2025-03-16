@@ -39,7 +39,7 @@ final class MovableTetrisPiece {
      */
     private final Rotation myRotation;
     
-    // This constructor allows creation of pieces in the zero rotational state
+    // This constructor allows the creation of pieces in the zero rotational state
     /**
      * Constructs a MovablTetrisPiece using the specified type and position;
      * the initial rotation is set to the default zero (NONE) Rotation.
@@ -47,21 +47,21 @@ final class MovableTetrisPiece {
      * @param theTetrisPiece the type of TetrisPiece.
      * @param thePosition the position on the Board.
      */
-    public MovableTetrisPiece(final TetrisPiece theTetrisPiece,
+    MovableTetrisPiece(final TetrisPiece theTetrisPiece,
                               final Point thePosition) {
         
         this(theTetrisPiece, thePosition, Rotation.NONE);
     }
 
-    // This constructor allows creation of pieces in any rotation
+    // This constructor allows the creation of pieces in any rotation
     /**
-     * Constructs a MovablTetrisPiece using the specified type, position, and initial rotation.
+     * Constructs a MovableTetrisPiece using the specified type, position, and initial rotation.
      * 
      * @param theTetrisPiece the type of TetrisPiece.
      * @param thePosition the position on the Board.
      * @param theRotation the initial angle of the TetrisPiece.
      */
-    public MovableTetrisPiece(final TetrisPiece theTetrisPiece,
+    MovableTetrisPiece(final TetrisPiece theTetrisPiece,
                               final Point thePosition,
                               final Rotation theRotation) {
         super();
@@ -151,7 +151,7 @@ final class MovableTetrisPiece {
     }
 
     /**
-     * Rotates the TetrisPiece counter clockwise.
+     * Rotates the TetrisPiece counterclockwise.
      * 
      * @return A new rotated movable TetrisPiece
      */

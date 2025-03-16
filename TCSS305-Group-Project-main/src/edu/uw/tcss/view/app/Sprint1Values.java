@@ -1,15 +1,16 @@
 package edu.uw.tcss.view.app;
 
-import java.util.List;
-import edu.uw.tcss.model.GameControls.IndividualPiece;
-import edu.uw.tcss.model.GameControls.Block;
-import edu.uw.tcss.model.GameControls.Point;
 import edu.uw.tcss.model.GameControls;
+import edu.uw.tcss.model.GameControls.Block;
+import edu.uw.tcss.model.GameControls.IndividualPiece;
+import edu.uw.tcss.model.GameControls.Point;
+import java.util.List;
+
 
 @Deprecated
-public final class Sprint1_values {
+public final class Sprint1Values {
 
-    private Sprint1_values() {
+    private Sprint1Values() {
 
     }
 

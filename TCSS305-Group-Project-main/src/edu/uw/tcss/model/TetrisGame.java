@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class TetrisGame implements PropertyChangeEnabledGameControls {
 
-    private static int instance_count = 0;
+    private static int instance_count;
 
     // Class constants
     

@@ -1,6 +1,5 @@
 package edu.uw.tcss.view.util;
 
-import edu.uw.tcss.view.util.DrawingFactory.BlockStyle;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;

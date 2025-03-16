@@ -8,7 +8,6 @@ import edu.uw.tcss.view.util.ColorSchemeFactory;
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.DrawingFactory;
 import edu.uw.tcss.view.util.DrawingManager;
-import edu.uw.tcss.view.util.DrawingObject;
 import edu.uw.tcss.view.util.PreferencesManager;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,7 +17,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import java.awt.*;
 
 
 /**
