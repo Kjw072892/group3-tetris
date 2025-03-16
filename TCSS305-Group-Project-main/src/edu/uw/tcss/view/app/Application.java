@@ -30,18 +30,6 @@ public final class Application {
 
         FlatSolarizedLightIJTheme.setup();
 
-        // TODO: might need to remove this logger for production
-        /*
-        Logger.getAnonymousLogger().log(Level.OFF, () ->
-            UIManager.getDefaults().entrySet().stream()
-                .sorted(Map.Entry.comparingByKey(Comparator.comparing(Object::toString)))
-                .map(entry ->
-                    String.format("%-50s - %s\n",
-                            entry.getKey(), entry.getValue().getClass().getSimpleName()))
-                    .collect(Collectors.joining())
-        );
-         */
-
         invokeLater(BaseFrame::createFrame);
 
     }

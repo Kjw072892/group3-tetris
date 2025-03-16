@@ -91,7 +91,7 @@ public final class ColorSchemeFactory {
 
     /**
      * gets set of pink colors.
-     * @return gives you list of pink colors.
+     * @return the pink mode color scheme
      */
     public static ColorScheme getPinkModeColors() {
         final Color pinkIBlock = new Color(189, 156, 234);

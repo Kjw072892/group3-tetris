@@ -4,6 +4,7 @@ import static edu.uw.tcss.view.app.assets.AssetsManager.MUSIC_PATH;
 import static edu.uw.tcss.view.util.AudioMusicFactory.BackgroundMusic;
 
 import edu.uw.tcss.view.app.assets.AssetsManager;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;

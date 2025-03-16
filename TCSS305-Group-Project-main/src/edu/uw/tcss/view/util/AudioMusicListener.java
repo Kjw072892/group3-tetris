@@ -30,8 +30,8 @@ public class AudioMusicListener implements PropertyChangeListener {
                 handleGameState(newGameState);
                 myLastGameState = newGameState;
             }
-            case PROPERTY_COLOR_SCHEME -> handleColorSchemeState((ColorScheme)
-                    theEvent.getNewValue());
+            case PROPERTY_COLOR_SCHEME ->
+                    handleColorSchemeState((ColorScheme) theEvent.getNewValue());
             case PROPERTY_MUSIC -> {
                 if (!myIsPanic) {
                     myLastMusic = (BackgroundMusic) theEvent.getNewValue();

@@ -78,7 +78,7 @@ public final class AudioMusicFactory {
 
     /** some epic eurobeat music to play. */
     public static BackgroundMusic getMusicEurobeat() {
-        return new BackgroundMusic("Tension - Everybody's Warming (Extended Mix)",
+        return new BackgroundMusic("Eurobeat Tetris",
                 "Everybody's Warming (Extended Mix).wav");
     }
 
