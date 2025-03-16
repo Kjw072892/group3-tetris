@@ -72,7 +72,7 @@ public final class ColorSchemeManager {
                 adPanel.loadAdvertisements();
                 adPanel.repaint();
             } catch (final IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
     }
