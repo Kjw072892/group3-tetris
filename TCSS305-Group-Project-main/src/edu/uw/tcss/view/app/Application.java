@@ -2,7 +2,7 @@ package edu.uw.tcss.view.app;
 
 import static javax.swing.SwingUtilities.invokeLater;
 
-import javax.swing.JPanel;
+import com.formdev.flatlaf.intellijthemes.*;
 
 
 /**
@@ -14,7 +14,11 @@ import javax.swing.JPanel;
  * @author Zainab Stanikzy
  * @version 2.26.25
  */
-public final class Application extends JPanel {
+public final class Application {
+
+    private Application() {
+
+    }
 
     /**
      * The main method initialized the game, takes user input in a loop.
@@ -24,6 +28,7 @@ public final class Application extends JPanel {
      */
     public static void main(final String[] theArgs) {
 
+        FlatSolarizedLightIJTheme.setup();
         invokeLater(BaseFrame::createFrame);
 
     }

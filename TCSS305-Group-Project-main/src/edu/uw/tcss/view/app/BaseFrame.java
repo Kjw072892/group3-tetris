@@ -77,7 +77,6 @@ public class BaseFrame extends JFrame {
      */
     public static void createFrame() {
         new BaseFrame();
-
     }
 
     private final class BaseFrameWindowListener extends WindowAdapter {
