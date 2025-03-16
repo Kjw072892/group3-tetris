@@ -92,7 +92,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private static final int COLOR_TO_FLASH = 0xa9b66767;
     private static final int DELAY = 1000;
 
-    // TODO: this is a misuse of constants
     private static final int BLACK_SCREEN_Y = 350;
     private static final int BLACK_SCREEN_HEIGHT = 80;
     private static final int DIVISOR_FOR_GIF_DEATH = 10;
@@ -161,7 +160,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         theGraphics.setColor(Color.BLACK);
         theGraphics.fillRect(0, BLACK_SCREEN_Y, getWidth(), BLACK_SCREEN_HEIGHT);
 
-
         theGraphics.setFont(BIG_FONT);
 
         theGraphics.setColor(Color.WHITE);
@@ -176,11 +174,9 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         theGraphics.setColor(Color.BLACK);
         theGraphics.fillRect(0, BLACK_SCREEN_Y, getWidth(), BLACK_SCREEN_HEIGHT);
 
-
         theGraphics.setFont(BIG_FONT);
 
         theGraphics.setColor(Color.WHITE);
-
 
         final String gamePausedString = "Game Paused!";
         final Point stringPoint = getStringPositionOnBlackScreen(theGraphics, gamePausedString);
@@ -188,7 +184,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     }
 
-    private Point getStringPositionOnBlackScreen(final Graphics2D theGraphics, final String theString) {
+    private Point getStringPositionOnBlackScreen(final Graphics2D theGraphics,
+                                                 final String theString) {
         final FontMetrics metrics = theGraphics.getFontMetrics(BIG_FONT);
 
         final int stringWidth = metrics.stringWidth(theString);
@@ -252,35 +249,30 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     // draw the pieces.
     private void drawPiece(final Graphics2D theGraphics) {
-
-
         for (IndividualPiece piece : myTetrisPieces) {
-            // Loop through sprint 1 piece.
-            if (piece == null) {
-                continue;
-            }
+            if (piece != null && piece.block() != null) {
+                for (Point block : piece.location()) {
+                    final int x = block.x() * myBlockWidth;
+                    final int y = ((ROWS - 1) - block.y()) * myBlockHeight;
 
-            if (piece.block() == null) {
-                continue;
-            }
-            for (Point block : piece.location()) {
-                final int x = block.x() * myBlockWidth;
-                final int y = ((ROWS - 1) - block.y()) * myBlockHeight;
+                    Color blockColor = ColorSchemeManager.getBlockColor(piece.block());
+                    if (blockColor == null) {
+                        blockColor = Color.BLACK;
+                    }
 
-                Color blockColor = ColorSchemeManager.getBlockColor(piece.block());
-                if (blockColor == null) {
-                    blockColor = Color.BLACK;
+                    DrawingManager.getDrawer().drawBlock(theGraphics,
+                            x, y,
+                            myBlockWidth, myBlockHeight,
+                            blockColor);
+
+                    if (ColorSchemeFactory.getPinkModeColors()
+                            .equals(ColorSchemeManager.getCurrentColorScheme())) {
+                        DrawingFactory.drawSparkles(theGraphics,
+                                x, y,
+                                myBlockWidth, myBlockHeight);
+                    }
+
                 }
-
-                DrawingManager.getDrawer().drawBlock(theGraphics, x, y,
-                        myBlockWidth, myBlockHeight, blockColor);
-
-                if (ColorSchemeFactory.getPinkModeColors()
-                        .equals(ColorSchemeManager.getCurrentColorScheme())) {
-                    DrawingFactory.drawSparkles(theGraphics, x, y,
-                            myBlockWidth, myBlockHeight);
-                }
-
             }
         }
     }
