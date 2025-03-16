@@ -85,7 +85,7 @@ public class BaseFrame extends JFrame {
         final int storePreferences = JOptionPane.showConfirmDialog(this,
                 "Current settings differ from the stored preferences."
                         + "\nWould you like to save current changes to music and color scheme?",
-                "Setttings Differ",
+                "Settings Differ",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.WARNING_MESSAGE);
 
