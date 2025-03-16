@@ -13,7 +13,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://Z:/01 Downloads/flatlaf-3.5.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/external/flatlaf-3.5.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -22,7 +22,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://Z:/01 Downloads/flatlaf-demo-3.5.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/external/flatlaf-intellij-themes-3.5.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
