@@ -29,10 +29,11 @@ public class FileMenu extends JMenuBar {
             new JCheckBoxMenuItem("Game starts with Panic Mode");
     private boolean myPanicModeTracker;
 
-    private final String myAboutStr = "About";
-    private final JMenuItem myAbout = new JMenuItem(myAboutStr);
     private final String myReferenceStr = "References";
     private final String myControlStr = "Controls layout";
+    private final String myAboutStr = "About";
+    private final JMenuItem myAbout = new JMenuItem(myAboutStr);
+    private final JMenuItem myStartGame = new JMenuItem("Start Game");
     private final JMenuItem myReferences = new JMenuItem(myReferenceStr);
     private final JMenuItem myControls = new JMenuItem(myControlStr);
     private final JMenuItem myFileMenuExitGame = new JMenuItem("Exit");
@@ -79,10 +80,12 @@ public class FileMenu extends JMenuBar {
         // Add mnemonics
         myFileMenuExitGame.setMnemonic('x');
         myFileMenuPanicMode.setMnemonic('p');
+        myStartGame.setMnemonic('s');
 
 
         // Add items to the File menu
         myFileMenu.add(myFileMenuPanicMode);
+        myFileMenu.add(myStartGame);
         myFileMenu.add(myFileMenuExitGame);
     }
 
@@ -124,47 +127,10 @@ public class FileMenu extends JMenuBar {
                                 """, myVersion), myAboutStr, JOptionPane.PLAIN_MESSAGE));
 
         myReferences.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
-                """
-                        <html>
-                            <p>Music and soundFx were found on youtube.
-                            We do not own the rights to any of the music or soundFX
-                            used in this game.<p>
-                            <ul>
-                                <li>
-                                    ⭐Twinkling Shooting Star⭐(Cute chiptune/8bit music):
-                                    https://www.youtube.com/watch?v=3qTAGRz-GjE
-                                </li>
-                                <li>
-                                    Tetris Game SoundFX:
-                                    https://www.sounds-resource.com
-                                    /nintendo_switch/tetris99/sound/19376/
-                                </li>
-                                <li>
-                                    Trap Tetris (Da Brozz - Tetris (Original Mix)):
-                                    https://www.youtube.com/watch?v=AT7KjIOd7GQ
-                                </li>
-                                <li>
-                                    Tension - Everybody's Warming (Extended Mix):
-                                    https://www.youtube.com/watch?v=phYUedumuyE
-                                </li>
-                                <li>
-                                    Epic Tetris:  Korobeiniki by the Red Army Choir
-                                </li>
-                                <li>
-                                    Alternative Tetris: The Samovars by the Red Army Choir
-                                </li>
-                                <li>
-                                    Panic Tetris: The Legend Descends - Fatalis by Capcom Sound Team
-                                </li>
-                        <html>
-                        """,
-                myReferenceStr,
-                        JOptionPane.INFORMATION_MESSAGE
+                htmlReference(), myReferenceStr, JOptionPane.INFORMATION_MESSAGE
                 ));
         myControls.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
-                htmlControl(),
-                "Controls",
-                JOptionPane.PLAIN_MESSAGE
+                htmlControl(), "Controls", JOptionPane.PLAIN_MESSAGE
         ));
 
         myFileMenuExitGame.addActionListener(ActionEvent -> System.exit(0));
@@ -205,6 +171,8 @@ public class FileMenu extends JMenuBar {
             myPanicModeTracker = !myPanicModeTracker;
             myTetris.setPanicMode(myPanicModeTracker);
         });
+
+        myStartGame.addActionListener(theEvent -> myTetris.newGame());
     }
 
     private String htmlControl() {
@@ -227,6 +195,43 @@ public class FileMenu extends JMenuBar {
                      </table>
                 <html>
                 """;
+    }
+
+    private String htmlReference() {
+        return """
+                        <html>
+                            <p>Music and soundFx were found on youtube.
+                            We do not own the rights to any of the music or soundFX
+                            used in this game.<p>
+                            <ul>
+                                <li>
+                                    ⭐Twinkling Shooting Star⭐(Cute chiptune/8bit music):
+                                    https://www.youtube.com/watch?v=3qTAGRz-GjE
+                                </li>
+                                <li>
+                                    Tetris Game SoundFX:
+                                    https://www.sounds-resource.com
+                                    /nintendo_switch/tetris99/sound/19376/
+                                </li>
+                                <li>
+                                    Trap Tetris (Da Brozz - Tetris (Original Mix)):
+                                    https://www.youtube.com/watch?v=AT7KjIOd7GQ
+                                </li>
+                                <li>
+                                    Tension - Everybody's Warming (Extended Mix):
+                                    https://www.youtube.com/watch?v=phYUedumuyE
+                                </li>
+                                <li>
+                                    Epic Tetris:  Korobeiniki by the Red Army Choir
+                                </li>
+                                <li>
+                                    Alternative Tetris: The Samovars by the Red Army Choir
+                                </li>
+                                <li>
+                                    Panic Tetris: The Legend Descends - Fatalis by Capcom Sound Team
+                                </li>
+                        <html>
+                        """;
     }
 
 

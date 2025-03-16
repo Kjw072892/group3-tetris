@@ -43,7 +43,7 @@ public final class GameLogic implements PropertyChangeListener {
 
     /** Default millisecond delay of the timer */
     private static final int DEFAULT_DELAY = 1000;
-    private static final int DELAY_DECREMENT = 100;
+    private static final int DELAY_DECREMENT = 50;
 
     private final Timer myTimer;
     private final TetrisGame myTetrisGame;
