@@ -37,8 +37,6 @@ public final class DrawingFactory {
         };
     }
 
-
-
     /**
      * Draws the blocks in a glossy style.
      *
@@ -89,6 +87,15 @@ public final class DrawingFactory {
         //outline
         theGraphics.setColor(Color.BLACK);
         theGraphics.drawRect(theX, theY, theWidth, theHeight);
+
+
+
+        if (ColorSchemeFactory.getPinkModeColors()
+                .equals(ColorSchemeManager.getCurrentColorScheme())) {
+            DrawingFactory.drawSparkles(theGraphics,
+                    theX, theY,
+                    theWidth, theHeight);
+        }
 
     }
 
