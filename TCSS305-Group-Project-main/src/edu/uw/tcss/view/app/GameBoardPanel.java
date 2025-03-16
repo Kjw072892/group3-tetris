@@ -13,6 +13,7 @@ import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.DrawingFactory;
 import edu.uw.tcss.view.util.DrawingManager;
 import edu.uw.tcss.view.util.GraphicsHandler;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -235,6 +236,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
      */
     private void drawGrid(final Graphics2D theGraphics) {
         theGraphics.setColor(Color.BLACK);
+        theGraphics.setStroke(new BasicStroke(1));
         for (int column = 0; column <= COLUMNS; column++) { //vertical lines for column
             final int x = column * myBlockWidth;
             theGraphics.drawLine(x, 0, x, getHeight());
