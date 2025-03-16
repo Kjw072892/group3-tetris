@@ -20,7 +20,6 @@ public class AudioMusicListener implements PropertyChangeListener {
 
     private GameState myLastGameState;
     private BackgroundMusic myLastMusic = AudioMusicManager.getCurrentMusic();
-    private boolean myIsPanic;
 
     @Override
     public void propertyChange(final PropertyChangeEvent theEvent) {
@@ -33,7 +32,7 @@ public class AudioMusicListener implements PropertyChangeListener {
             case PROPERTY_COLOR_SCHEME ->
                     handleColorSchemeState((ColorScheme) theEvent.getNewValue());
             case PROPERTY_MUSIC -> {
-                if (!myIsPanic) {
+                if (GameState.PANIC.equals(myLastGameState)) {
                     myLastMusic = (BackgroundMusic) theEvent.getNewValue();
                 }
             }
@@ -51,7 +50,6 @@ public class AudioMusicListener implements PropertyChangeListener {
 
 
     private void handleGameState(final GameState theGameState) {
-        myIsPanic = false;
         if (!GameState.OVER.equals(theGameState)
                 && !GameState.PAUSED.equals(theGameState)) {
             AudioMusicManager.setForcedMute(false);
@@ -77,7 +75,6 @@ public class AudioMusicListener implements PropertyChangeListener {
                 }
             }
             case GameState.PANIC -> {
-                myIsPanic = true;
                 myLastMusic = AudioMusicManager.getCurrentMusic();
                 AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicPanic());
                 AudioMusicManager.startMusic();

@@ -35,6 +35,7 @@ public final class StyleManager {
      * Sets the static border color.
      * @param theColor the color the border should be
      */
+    @SuppressWarnings("unused")
     public static void setBorderColor(final Color theColor) {
         myBorderColor = theColor;
     }

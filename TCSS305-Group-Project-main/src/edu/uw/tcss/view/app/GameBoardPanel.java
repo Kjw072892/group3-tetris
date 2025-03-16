@@ -101,7 +101,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     private final int myBlockWidth;
     private final int myBlockHeight;
-    private IndividualPiece[] myTetrisPieces;
     private boolean myGameOverDeath;
 
     private boolean myGamePaused;
@@ -112,11 +111,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     private final Timer myAnimator;
 
+    private IndividualPiece[] myTetrisPieces = PIECES_STARTER;
     private GameControls.FrozenBlocks myFrozen = FROZEN_STARTERS;
-
-    {
-        myTetrisPieces = PIECES_STARTER;   // Store Pieces in myTetrisPiece
-    }
 
     /**
      * Constructs the game board.

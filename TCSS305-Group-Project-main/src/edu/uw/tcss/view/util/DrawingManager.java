@@ -21,6 +21,7 @@ public final class DrawingManager {
      *
      * @param theDrawer the drawing object to use hereon.
      */
+    @SuppressWarnings("unused")
     public static void setDrawer(final DrawingObject theDrawer) {
         myDrawer = theDrawer;
     }

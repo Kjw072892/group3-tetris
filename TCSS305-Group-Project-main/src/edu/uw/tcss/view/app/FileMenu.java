@@ -192,9 +192,8 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
 
         myFileMenuStartGame.addActionListener(theEvent -> myTetris.newGame());
 
-        myFeatureMenuClearPreferences.addActionListener(theEvent -> {
-            PreferencesManager.clearPreferences();
-        });
+        myFeatureMenuClearPreferences.addActionListener(theEvent ->
+            PreferencesManager.clearPreferences());
 
         myFeatureMenuMuteMusic.addActionListener(theEvent -> AudioMusicManager.toggleMute());
         myFeatureMenuMuteSFX.addActionListener(theEvent -> AudioFXManager.toggleMute());

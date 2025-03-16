@@ -191,6 +191,7 @@ public final class AudioFXManager {
     /**
      * Gets if the audio FX are mute.
      */
+    @SuppressWarnings("unused")
     public static boolean getMute() {
         return myIsMute;
     }
@@ -212,6 +213,7 @@ public final class AudioFXManager {
     /**
      * removes the specified listener from the listeners.
      */
+    @SuppressWarnings("unused")
     public static void removePropertyChangeListener(final PropertyChangeListener theListener) {
         PCS.removePropertyChangeListener(theListener);
     }

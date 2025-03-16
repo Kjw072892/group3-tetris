@@ -12,13 +12,6 @@ import java.awt.RenderingHints;
  * @version 2025-03-11
  */
 public final class GraphicsHandler {
-
-    private static DrawingObject myDrawingObject;
-
-    static {
-        myDrawingObject = DrawingFactory.getDrawingObject(BlockStyle.GLOSSY);
-    }
-
     private GraphicsHandler() {
 
     }
@@ -42,23 +35,5 @@ public final class GraphicsHandler {
         final Graphics2D g2d = (Graphics2D) theGraphics;
         enableAntiAliasing(g2d);
         return g2d;
-    }
-
-    /**
-     * Gets the current static drawing object.
-     *
-     * @return static drawing object
-     */
-    public static DrawingObject getCurrentDrawingObject() {
-        return myDrawingObject;
-    }
-
-    /**
-     * Sets the drawing static drawing object.
-     *
-     * @param theDrawingObject the drawing object to change to
-     */
-    public static void setCurrentDrawingObject(final DrawingObject theDrawingObject) {
-        myDrawingObject = theDrawingObject;
     }
 }

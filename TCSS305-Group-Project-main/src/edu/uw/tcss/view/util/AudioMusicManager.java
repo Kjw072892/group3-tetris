@@ -28,7 +28,7 @@ public final class AudioMusicManager {
 
     /** name of property when the music has changed. */
     public static final String PROPERTY_MUSIC = "The music has changed!";
-    /** name of property when the music has been muted or unmuted */
+    /** name of property when the music has been muted or unmuted. */
     public static final String PROPERTY_MUSIC_MUTING = "the music has been muted?";
 
     private static final Object PROPERTY_SOURCE_BEAN = new Object();
@@ -105,6 +105,7 @@ public final class AudioMusicManager {
     /**
      * Resets the music playback to start from the beginning. Does not stop or start playback.
      */
+    @SuppressWarnings("unused")
     public static void restartMusic() {
         myMusicChannel.setFramePosition(0);
     }
@@ -130,6 +131,7 @@ public final class AudioMusicManager {
      *
      * @param theListener the listener to remove
      */
+    @SuppressWarnings("unused")
     public static void removePropertyChangeListener(final PropertyChangeListener theListener) {
         PCS.removePropertyChangeListener(theListener);
     }
@@ -156,6 +158,7 @@ public final class AudioMusicManager {
     /**
      * Gets if the music is mute.
      */
+    @SuppressWarnings("unused")
     public static boolean getMute() {
         return myIsMute;
     }

@@ -53,6 +53,7 @@ public final class ColorSchemeManager {
      *
      * @param theListener the property change listener to remove.
      */
+    @SuppressWarnings("unused")
     public static void removePropertyChangeListener(final PropertyChangeListener theListener) {
         PCS.removePropertyChangeListener(theListener);
     }
@@ -120,17 +121,9 @@ public final class ColorSchemeManager {
      * @return primary color of the current color scheme.
      * returns null if the color for the specified main color has not been specified.
      */
-    public static Color getMainColors(final ColorSchemeFactory.MainColors theMainColor) {
+    @SuppressWarnings("unused")
+    public static Color getCurrentMainColor(final ColorSchemeFactory.MainColors theMainColor) {
         return myCurrentColorScheme.mainColors().getOrDefault(theMainColor, null);
-    }
-
-    /**
-     * Convenience method to get the map of blocks and colors.
-     *
-     * @return map of blocks and their associated colors of the current color scheme.
-     */
-    public static Map<GameControls.Block, Color> getBlockColors() {
-        return myCurrentColorScheme.blockColors();
     }
 
     /**
