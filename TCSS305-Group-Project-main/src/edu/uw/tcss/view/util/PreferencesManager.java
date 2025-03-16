@@ -37,16 +37,20 @@ public final class PreferencesManager {
     /**
      * Checks to see if the current settings differ from the stored preferences.
      *
-     * @return false if there is no difference between the preferences stored, true otherwise
+     * @return false if there is no difference between the preferences stored,
+     * or there are unset preferences, and true otherwise
      */
     public static boolean preferencesDiffer() {
+        final boolean preferencesAreNull =
+                NODE.get(KEY_COLOR_SCHEME, null) == null
+                || NODE.get(KEY_MUSIC, null) == null;
         final boolean isEqualPreferences =
                 ColorSchemeManager.getCurrentColorScheme().name()
                         .equals(NODE.get(KEY_COLOR_SCHEME, null))
                 && AudioMusicManager.getCurrentMusic().name()
                         .equals(NODE.get(KEY_MUSIC, null));
 
-        return !isEqualPreferences;
+        return !isEqualPreferences || preferencesAreNull;
     }
 
     /**
