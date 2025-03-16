@@ -7,6 +7,7 @@ import edu.uw.tcss.view.app.assets.AssetsManager;
 import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -26,12 +27,18 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author Roman Bureacov
  * @version 3.11.25
  */
-public final class AudioFXManager extends KeyAdapter {
+public final class AudioFXManager {
+
+    /** property name for when the audio FX has been muted or unmuted. */
+    public static final String PROPERTY_AUDIO_MUTING = "audio muting has changed";
 
     private static final Logger LOGGER = Logger.getLogger(AudioFXManager.class.getName());
 
     private static final Map<Channels, Clip> SOUND_CLIPS = new HashMap<>();
+    private static final Object SOURCE_BEAN = new Object();
+    private static final PropertyChangeSupport PCS = new PropertyChangeSupport(SOURCE_BEAN);
     private static boolean myIsMute;
+    private static boolean myIsForcedMute = true;
 
     static {
         LOGGER.setLevel(Level.ALL);
@@ -149,7 +156,7 @@ public final class AudioFXManager extends KeyAdapter {
      * @param theChannel the fx sound clip.
      */
     public static void playSoundFX(final Channels theChannel) {
-        if (!myIsMute) {
+        if (!myIsMute && !myIsForcedMute) {
             final Clip clip = SOUND_CLIPS.get(theChannel);
 
             if (clip != null) {
@@ -164,9 +171,17 @@ public final class AudioFXManager extends KeyAdapter {
      * Sets if the audio FX should be mute or not.
      */
     public static void setMute(final boolean theIsMute) {
+
+        PCS.firePropertyChange(new PropertyChangeEvent(
+                SOURCE_BEAN,
+                PROPERTY_AUDIO_MUTING,
+                myIsMute,
+                theIsMute
+                ));
+
         myIsMute = theIsMute;
 
-        if (myIsMute) {
+        if (myIsMute || myIsForcedMute) {
             for (Clip clip : SOUND_CLIPS.values()) {
                 clip.stop();
             }
@@ -185,6 +200,27 @@ public final class AudioFXManager extends KeyAdapter {
      */
     public static void toggleMute() {
         setMute(!myIsMute);
+    }
+
+    /**
+     * Appends a property change listener.
+     */
+    public static void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        PCS.addPropertyChangeListener(theListener);
+    }
+
+    /**
+     * removes the specified listener from the listeners.
+     */
+    public static void removePropertyChangeListener(final PropertyChangeListener theListener) {
+        PCS.removePropertyChangeListener(theListener);
+    }
+
+    /**
+     * Forces the audio FX to stay muted.
+     */
+    static void setForcedMute(final boolean theState) {
+        myIsForcedMute = theState;
     }
 
 }

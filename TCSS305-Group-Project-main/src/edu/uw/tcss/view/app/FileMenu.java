@@ -1,12 +1,14 @@
 package edu.uw.tcss.view.app;
 
 import edu.uw.tcss.model.TetrisGame;
+import edu.uw.tcss.view.util.AudioFXManager;
 import edu.uw.tcss.view.util.AudioMusicFactory;
 import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeFactory;
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.PreferencesManager;
-import java.awt.event.ComponentListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -24,7 +26,7 @@ import javax.swing.JOptionPane;
  * @author Zainab
  * @version 2.28.25
  */
-public class FileMenu extends JMenuBar {
+public class FileMenu extends JMenuBar implements PropertyChangeListener {
     private final String myVersion = "3.12.25";
 
     private final JCheckBoxMenuItem myFileMenuPanicMode =
@@ -48,6 +50,8 @@ public class FileMenu extends JMenuBar {
     private final JMenuItem myFeatureMenuBackGroundMusic = new JMenuItem("Background Music");
     private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Theme");
     private final JMenuItem myFeatureMenuClearPreferences = new JMenuItem("Clear Preferences");
+    private final JCheckBoxMenuItem myFeatureMenuMuteMusic = new JCheckBoxMenuItem("Mute Music");
+    private final JCheckBoxMenuItem myFeatureMenuMuteSFX = new JCheckBoxMenuItem("Mute SFX");
 
     private final TetrisGame myTetris;
 
@@ -95,7 +99,7 @@ public class FileMenu extends JMenuBar {
     }
 
     private void featureMenuCreation() {
-        final JMenu innerColorMenu = new JMenu("Theme's");
+        final JMenu innerColorMenu = new JMenu("Themes");
 
         // Add mnemonics
         innerColorMenu.setMnemonic('c');
@@ -107,6 +111,8 @@ public class FileMenu extends JMenuBar {
         innerColorMenu.add(myFeatureMenuColorChooser);
         myFeatureMenu.add(innerColorMenu);
         myFeatureMenu.add(myFeatureMenuBackGroundMusic);
+        myFeatureMenu.add(myFeatureMenuMuteMusic);
+        myFeatureMenu.add(myFeatureMenuMuteSFX);
         myFeatureMenu.add(myFeatureMenuClearPreferences);
     }
 
@@ -189,6 +195,20 @@ public class FileMenu extends JMenuBar {
         myFeatureMenuClearPreferences.addActionListener(theEvent -> {
             PreferencesManager.clearPreferences();
         });
+
+        myFeatureMenuMuteMusic.addActionListener(theEvent -> AudioMusicManager.toggleMute());
+        myFeatureMenuMuteSFX.addActionListener(theEvent -> AudioFXManager.toggleMute());
+    }
+
+    @Override
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+        switch (theEvent.getPropertyName()) {
+            case AudioMusicManager.PROPERTY_MUSIC_MUTING ->
+                    myFeatureMenuMuteMusic.setState((Boolean) theEvent.getNewValue());
+            case AudioFXManager.PROPERTY_AUDIO_MUTING ->
+                    myFeatureMenuMuteSFX.setState((Boolean) theEvent.getNewValue());
+            default -> { }
+        }
     }
 
     private String htmlControl() {
@@ -215,39 +235,39 @@ public class FileMenu extends JMenuBar {
 
     private String htmlReference() {
         return """
-                        <html>
-                            <p>Music and soundFx were found on youtube.
-                            We do not own the rights to any of the music or soundFX
-                            used in this game.<p>
-                            <ul>
-                                <li>
-                                    ⭐Twinkling Shooting Star⭐(Cute chiptune/8bit music):
-                                    https://www.youtube.com/watch?v=3qTAGRz-GjE
-                                </li>
-                                <li>
-                                    Tetris Game SoundFX:
-                                    https://www.sounds-resource.com
-                                    /nintendo_switch/tetris99/sound/19376/
-                                </li>
-                                <li>
-                                    Trap Tetris (Da Brozz - Tetris (Original Mix)):
-                                    https://www.youtube.com/watch?v=AT7KjIOd7GQ
-                                </li>
-                                <li>
-                                    Tension - Everybody's Warming (Extended Mix):
-                                    https://www.youtube.com/watch?v=phYUedumuyE
-                                </li>
-                                <li>
-                                    Epic Tetris:  Korobeiniki by the Red Army Choir
-                                </li>
-                                <li>
-                                    Alternative Tetris: The Samovars by the Red Army Choir
-                                </li>
-                                <li>
-                                    Panic Tetris: The Legend Descends - Fatalis by Capcom Sound Team
-                                </li>
-                        <html>
-                        """;
+                <html>
+                    <p>Music and soundFx were found on youtube.
+                    We do not own the rights to any of the music or soundFX
+                    used in this game.<p>
+                    <ul>
+                        <li>
+                            ⭐Twinkling Shooting Star⭐(Cute chiptune/8bit music):
+                            https://www.youtube.com/watch?v=3qTAGRz-GjE
+                        </li>
+                        <li>
+                            Tetris Game SoundFX:
+                            https://www.sounds-resource.com
+                            /nintendo_switch/tetris99/sound/19376/
+                        </li>
+                        <li>
+                            Trap Tetris (Da Brozz - Tetris (Original Mix)):
+                            https://www.youtube.com/watch?v=AT7KjIOd7GQ
+                        </li>
+                        <li>
+                            Tension - Everybody's Warming (Extended Mix):
+                            https://www.youtube.com/watch?v=phYUedumuyE
+                        </li>
+                        <li>
+                            Epic Tetris:  Korobeiniki by the Red Army Choir
+                        </li>
+                        <li>
+                            Alternative Tetris: The Samovars by the Red Army Choir
+                        </li>
+                        <li>
+                            Panic Tetris: The Legend Descends - Fatalis by Capcom Sound Team
+                        </li>
+                <html>
+                """;
     }
 
 

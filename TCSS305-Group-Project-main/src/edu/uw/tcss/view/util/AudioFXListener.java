@@ -16,6 +16,9 @@ import java.beans.PropertyChangeListener;
  */
 public class AudioFXListener implements PropertyChangeListener {
 
+    /** keeps track of if the last game state was new */
+    private boolean myIsLastGameStateNew;
+
     /**
      * creates a new AudioFX listener object to listen for game events
      * and play  the relevant sounds.
@@ -28,17 +31,29 @@ public class AudioFXListener implements PropertyChangeListener {
     public void propertyChange(final PropertyChangeEvent theEvent) {
         switch (theEvent.getPropertyName()) {
             case PROPERTY_GAME_STATE -> handleGameState((GameState) theEvent.getNewValue());
-            case PROPERTY_FROZEN_BLOCKS ->
-                AudioFXManager.playSoundFX(Channels.LANDING_FX);
+            case PROPERTY_FROZEN_BLOCKS -> {
+                if (!myIsLastGameStateNew) {
+                    AudioFXManager.playSoundFX(Channels.LANDING_FX);
+                }
+            }
             default -> { }
         }
     }
 
     private void handleGameState(final GameState theGameState) {
         switch (theGameState) {
-            case GameState.OVER -> AudioFXManager.playSoundFX(Channels.GAME_OVER);
-            case GameState.PAUSED -> AudioFXManager.playSoundFX(Channels.PAUSE_FX);
-            default -> { }
+            case GameState.OVER -> {
+                AudioFXManager.playSoundFX(Channels.GAME_OVER);
+                AudioFXManager.setForcedMute(true);
+            }
+            case GameState.PAUSED -> {
+                AudioFXManager.playSoundFX(Channels.PAUSE_FX);
+                AudioFXManager.setForcedMute(true);
+            }
+            default -> {
+                myIsLastGameStateNew = GameState.NEW.equals(theGameState);
+                AudioFXManager.setForcedMute(false);
+            }
         }
     }
 }

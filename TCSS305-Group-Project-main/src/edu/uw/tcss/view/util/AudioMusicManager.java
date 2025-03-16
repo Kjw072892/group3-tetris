@@ -1,6 +1,5 @@
 package edu.uw.tcss.view.util;
 
-import static edu.uw.tcss.model.GameControls.GameState;
 import static edu.uw.tcss.view.app.assets.AssetsManager.MUSIC_PATH;
 import static edu.uw.tcss.view.util.AudioMusicFactory.BackgroundMusic;
 
@@ -27,9 +26,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public final class AudioMusicManager {
 
-
     /** name of property when the music has changed. */
     public static final String PROPERTY_MUSIC = "The music has changed!";
+    /** name of property when the music has been muted or unmuted */
+    public static final String PROPERTY_MUSIC_MUTING = "the music has been muted?";
+
     private static final Object PROPERTY_SOURCE_BEAN = new Object();
     private static final PropertyChangeSupport PCS =
             new PropertyChangeSupport(PROPERTY_SOURCE_BEAN);
@@ -37,6 +38,7 @@ public final class AudioMusicManager {
     private static Clip myMusicChannel;
     private static BackgroundMusic myCurrentMusic;
     private static boolean myIsMute;
+    private static boolean myIsForcedMute = true;
 
     private static final Logger LOGGER = Logger.getLogger(AudioMusicManager.class.getName());
 
@@ -88,7 +90,7 @@ public final class AudioMusicManager {
      * Starts the music loop.
      */
     public static void startMusic() {
-        if (!myIsMute) {
+        if (!myIsMute && !myIsForcedMute) {
             myMusicChannel.loop(Clip.LOOP_CONTINUOUSLY);
         }
     }
@@ -136,12 +138,18 @@ public final class AudioMusicManager {
      * Sets if the music should be mute or not.
      */
     public static void setMute(final boolean theIsMute) {
+        PCS.firePropertyChange(new PropertyChangeEvent(
+                PROPERTY_SOURCE_BEAN,
+                PROPERTY_MUSIC_MUTING,
+                myIsMute,
+                theIsMute
+        ));
         myIsMute = theIsMute;
 
-        if (!myIsMute) {
-            startMusic();
-        } else {
+        if (myIsMute) {
             stopMusic();
+        } else {
+            startMusic();
         }
     }
 
@@ -157,5 +165,12 @@ public final class AudioMusicManager {
      */
     public static void toggleMute() {
         setMute(!myIsMute);
+    }
+
+    /**
+     * Forces the music to be muted.
+     */
+    static void setForcedMute(final boolean theState) {
+        myIsForcedMute = theState;
     }
 }

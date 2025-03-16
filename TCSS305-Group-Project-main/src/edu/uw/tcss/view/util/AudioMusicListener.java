@@ -55,14 +55,20 @@ public class AudioMusicListener implements PropertyChangeListener {
 
     private void handleGameState(final GameState theGameState) {
         myIsPanic = false;
+        if (!GameState.OVER.equals(theGameState)
+                && !GameState.PAUSED.equals(theGameState)) {
+            AudioMusicManager.setForcedMute(false);
+        }
         switch (theGameState) {
             case GameState.NEW -> {
                 AudioMusicManager.setCurrentMusic(myLastMusic);
                 AudioMusicManager.startMusic();
             }
             case GameState.PAUSED,
-                 GameState.OVER ->
+                 GameState.OVER -> {
                 AudioMusicManager.stopMusic();
+                AudioMusicManager.setForcedMute(true);
+            }
             case GameState.RUNNING,
                  GameState.WORRY -> {
                 if (GameState.PANIC.equals(myLastGameState)) {
@@ -83,6 +89,5 @@ public class AudioMusicListener implements PropertyChangeListener {
                     new EnumConstantNotPresentException(
                             GameState.class, theGameState.toString());
         }
-        //Logger.getAnonymousLogger().log(Level.INFO, theGameState.toString());
     }
 }
