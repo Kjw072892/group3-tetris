@@ -1,5 +1,7 @@
 package edu.uw.tcss.view.util;
 
+import static edu.uw.tcss.view.util.DrawingFactory.DrawingScheme;
+
 import edu.uw.tcss.view.util.DrawingFactory.BlockStyle;
 
 /**
@@ -10,7 +12,7 @@ import edu.uw.tcss.view.util.DrawingFactory.BlockStyle;
  */
 public final class DrawingManager {
 
-    private static DrawingObject myDrawer = DrawingFactory.getDrawingObject(BlockStyle.GLOSSY);
+    private static DrawingScheme myDrawer = DrawingFactory.getDrawingScheme(BlockStyle.GLOSSY);
 
     private DrawingManager() {
 
@@ -22,7 +24,7 @@ public final class DrawingManager {
      * @param theDrawer the drawing object to use hereon.
      */
     @SuppressWarnings("unused")
-    public static void setDrawer(final DrawingObject theDrawer) {
+    public static void setDrawer(final DrawingScheme theDrawer) {
         myDrawer = theDrawer;
     }
 
@@ -31,7 +33,7 @@ public final class DrawingManager {
      *
      * @return the static drawing object.
      */
-    public static DrawingObject getDrawer() {
+    public static DrawingScheme getDrawer() {
         return myDrawer;
     }
 

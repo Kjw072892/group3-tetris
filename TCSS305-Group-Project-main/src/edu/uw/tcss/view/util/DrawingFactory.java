@@ -32,23 +32,31 @@ public final class DrawingFactory {
      *
      * @param theStyle block style of interest.
      */
-    public static DrawingObject getDrawingObject(final BlockStyle theStyle) {
+    public static DrawingScheme getDrawingScheme(final BlockStyle theStyle) {
         return switch (theStyle) {
-            case BlockStyle.GLOSSY -> DrawingFactory::drawGlossy;
-            case BlockStyle.BEVELED -> DrawingFactory::drawBeveled;
+            case BlockStyle.GLOSSY -> getGlossyDrawer();
+            case BlockStyle.BEVELED -> getBeveledDrawer();
+        };
+    }
+
+    /**
+     * gets the collection of drawing objects.
+     * @return a collection of records of drawing objects.
+     */
+    public static DrawingScheme[] getDrawingObjects() {
+        return new DrawingScheme[] {
+                getGlossyDrawer(),
+                getBeveledDrawer()
         };
     }
 
     /**
      * Draws the blocks in a glossy style.
-     *
-     * @param theGraphics the drawing graphics object
-     * @param theX the x position to draw from
-     * @param theY the y position to draw from
-     * @param theWidth the width of the block
-     * @param theHeight the height of the block
-     * @param theBaseColor the base color to draw with
      */
+    public static DrawingScheme getGlossyDrawer() {
+        return new DrawingScheme("Glossy Blocks", DrawingFactory::drawGlossy);
+    }
+
     private static void drawGlossy(final Graphics2D theGraphics,
                                   final int theX, final int theY,
                                   final int theWidth, final int theHeight,
@@ -99,6 +107,13 @@ public final class DrawingFactory {
                     theWidth, theHeight);
         }
 
+    }
+
+    /**
+     *
+     */
+    public static DrawingScheme getBeveledDrawer() {
+        return new DrawingScheme("Beveled Blocks", DrawingFactory::drawBeveled);
     }
 
     private static void drawBeveled(final Graphics2D theGraphics,
@@ -162,6 +177,13 @@ public final class DrawingFactory {
                 theGraphics.fillRect(sparkleX, sparkleY, sparkleSize, sparkleSize); // small squares
             }
 
+        }
+    }
+
+    public record DrawingScheme(String name, DrawingObject drawingObject) {
+        @Override
+        public String toString() {
+            return name;
         }
     }
 

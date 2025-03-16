@@ -176,7 +176,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
         final int topLeftX = theX - (RECTANGLE_WIDTH - (STROKE_WIDTH - 1)) / 2;
         final int topLeftY = theY - (RECTANGLE_HEIGHT - (STROKE_WIDTH - 1)) / 2;
 
-        DrawingManager.getDrawer().drawBlock(theGraphics,
+        DrawingManager.getDrawer().drawingObject().drawBlock(theGraphics,
                 topLeftX, topLeftY,
                 RECTANGLE_WIDTH - 1, RECTANGLE_HEIGHT - 1,
                 theBaseColor);

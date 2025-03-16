@@ -6,6 +6,9 @@ import edu.uw.tcss.view.util.AudioMusicFactory;
 import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeFactory;
 import edu.uw.tcss.view.util.ColorSchemeManager;
+import edu.uw.tcss.view.util.DrawingFactory;
+import edu.uw.tcss.view.util.DrawingManager;
+import edu.uw.tcss.view.util.DrawingObject;
 import edu.uw.tcss.view.util.PreferencesManager;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -49,6 +52,7 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
     private final JMenu myFeatureMenu = new JMenu("Features");
     private final JMenuItem myFeatureMenuBackGroundMusic = new JMenuItem("Background Music");
     private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Theme");
+    private final JMenuItem myFeatureMenuBlockDrawing = new JMenuItem("Choose Block Look");
     private final JMenuItem myFeatureMenuClearPreferences = new JMenuItem("Clear Preferences");
     private final JCheckBoxMenuItem myFeatureMenuMuteMusic = new JCheckBoxMenuItem("Mute Music");
     private final JCheckBoxMenuItem myFeatureMenuMuteSFX = new JCheckBoxMenuItem("Mute SFX");
@@ -109,6 +113,7 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
 
         // Add items to the Feature Menu
         innerColorMenu.add(myFeatureMenuColorChooser);
+        innerColorMenu.add(myFeatureMenuBlockDrawing);
         myFeatureMenu.add(innerColorMenu);
         myFeatureMenu.add(myFeatureMenuBackGroundMusic);
         myFeatureMenu.add(myFeatureMenuMuteMusic);
@@ -197,6 +202,22 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
 
         myFeatureMenuMuteMusic.addActionListener(theEvent -> AudioMusicManager.toggleMute());
         myFeatureMenuMuteSFX.addActionListener(theEvent -> AudioFXManager.toggleMute());
+
+        myFeatureMenuBlockDrawing.addActionListener(theEvent -> {
+            final Object drawingScheme = JOptionPane.showInputDialog(
+                    this,
+                    "Choose a block look",
+                    "Block looks",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    DrawingFactory.getDrawingObjects(),
+                    DrawingManager.getDrawer()
+            );
+
+            if (drawingScheme != null) {
+                DrawingManager.setDrawer((DrawingFactory.DrawingScheme) drawingScheme);
+            }
+        });
     }
 
     @Override

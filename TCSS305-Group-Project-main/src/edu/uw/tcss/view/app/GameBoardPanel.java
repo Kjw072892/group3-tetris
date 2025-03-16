@@ -211,7 +211,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 final int x = column * myBlockWidth;
                 final int y = ((ROWS - 1) - row) * myBlockHeight;
 
-                DrawingManager.getDrawer().drawBlock(theGraphics,
+                DrawingManager.getDrawer().drawingObject().drawBlock(theGraphics,
                         x, y,
                         myBlockWidth, myBlockHeight,
                         blockColor);
@@ -253,7 +253,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                         blockColor = Color.BLACK;
                     }
 
-                    DrawingManager.getDrawer().drawBlock(theGraphics,
+                    DrawingManager.getDrawer().drawingObject().drawBlock(theGraphics,
                             x, y,
                             myBlockWidth, myBlockHeight,
                             blockColor);
