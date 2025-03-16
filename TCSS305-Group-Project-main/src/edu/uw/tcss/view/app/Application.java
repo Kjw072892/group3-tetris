@@ -2,16 +2,7 @@ package edu.uw.tcss.view.app;
 
 import static javax.swing.SwingUtilities.invokeLater;
 
-import com.formdev.flatlaf.intellijthemes.*;
-import java.awt.Color;
-import java.awt.Font;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import javax.swing.UIManager;
+import com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme;
 
 
 /**

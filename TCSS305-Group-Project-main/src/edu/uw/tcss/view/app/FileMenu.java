@@ -6,7 +6,6 @@ import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeFactory;
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.PreferencesManager;
-import java.awt.event.ComponentListener;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -186,9 +185,8 @@ public class FileMenu extends JMenuBar {
 
         myFileMenuStartGame.addActionListener(theEvent -> myTetris.newGame());
 
-        myFeatureMenuClearPreferences.addActionListener(theEvent -> {
-            PreferencesManager.clearPreferences();
-        });
+        myFeatureMenuClearPreferences.addActionListener(theEvent ->
+                PreferencesManager.clearPreferences());
     }
 
     private String htmlControl() {

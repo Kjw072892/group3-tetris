@@ -10,20 +10,13 @@ import edu.uw.tcss.view.util.DrawingFactory.BlockStyle;
  */
 public final class DrawingManager {
 
-    private static DrawingObject myDrawer = DrawingFactory.getDrawingObject(BlockStyle.GLOSSY);
+    private static final DrawingObject MY_DRAWER =
+            DrawingFactory.getDrawingObject(BlockStyle.GLOSSY);
 
     private DrawingManager() {
 
     }
 
-    /**
-     * Method to set the static drawing object.
-     *
-     * @param theDrawer the drawing object to use hereon.
-     */
-    public static void setDrawer(final DrawingObject theDrawer) {
-        myDrawer = theDrawer;
-    }
 
     /**
      * method to retrieve the static drawing object.
@@ -31,7 +24,7 @@ public final class DrawingManager {
      * @return the static drawing object.
      */
     public static DrawingObject getDrawer() {
-        return myDrawer;
+        return MY_DRAWER;
     }
 
 }
