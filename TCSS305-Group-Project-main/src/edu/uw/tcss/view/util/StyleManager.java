@@ -17,7 +17,7 @@ public final class StyleManager {
     /** the border thickness components should draw with. */
     public static final int BORDER_THICKNESS = 3;
 
-    private static Color myBorderColor = Color.BLACK;
+    private static final Color MY_BORDER_COLOR = Color.BLACK;
 
     private StyleManager() {
 
@@ -28,14 +28,7 @@ public final class StyleManager {
      * @return color of the border
      */
     public static Color getBorderColor() {
-        return myBorderColor;
+        return MY_BORDER_COLOR;
     }
 
-    /**
-     * Sets the static border color.
-     * @param theColor the color the border should be
-     */
-    public static void setBorderColor(final Color theColor) {
-        myBorderColor = theColor;
-    }
 }

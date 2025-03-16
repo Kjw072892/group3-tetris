@@ -9,8 +9,6 @@ import static edu.uw.tcss.view.util.AudioMusicFactory.BackgroundMusic;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class that acts as a property change listener for the AudioMusicManager class.
@@ -32,9 +30,8 @@ public class AudioMusicListener implements PropertyChangeListener {
                 handleGameState(newGameState);
                 myLastGameState = newGameState;
             }
-            case PROPERTY_COLOR_SCHEME -> {
-                handleColorSchemeState((ColorScheme) theEvent.getNewValue());
-            }
+            case PROPERTY_COLOR_SCHEME -> handleColorSchemeState((ColorScheme)
+                    theEvent.getNewValue());
             case PROPERTY_MUSIC -> {
                 if (!myIsPanic) {
                     myLastMusic = (BackgroundMusic) theEvent.getNewValue();

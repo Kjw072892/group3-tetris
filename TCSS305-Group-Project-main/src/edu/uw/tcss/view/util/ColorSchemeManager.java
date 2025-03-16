@@ -4,7 +4,6 @@ import static edu.uw.tcss.view.util.ColorSchemeFactory.ColorScheme;
 
 import edu.uw.tcss.model.GameControls;
 import edu.uw.tcss.view.app.AdBannerPanel;
-
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -21,12 +20,13 @@ public final class ColorSchemeManager {
 
 
     /**
-     * name of the property for when the color scheme has changed
+     * name of the property for when the color scheme has changed.
      */
     public static final String PROPERTY_COLOR_SCHEME = "The color scheme has changed";
     private static final Object PROPERTY_SOURCE_BEAN = new Object();
 
-    private static final PropertyChangeSupport PCS = new PropertyChangeSupport(PROPERTY_SOURCE_BEAN);
+    private static final PropertyChangeSupport PCS =
+            new PropertyChangeSupport(PROPERTY_SOURCE_BEAN);
 
     private static ColorScheme myCurrentColorScheme;
 
@@ -66,12 +66,12 @@ public final class ColorSchemeManager {
         myCurrentColorScheme = theScheme;
         PCS.firePropertyChange(PROPERTY_COLOR_SCHEME, null, myCurrentColorScheme);
         // TODO: this is hard coding what should be just a property change listener
-        AdBannerPanel adPanel = AdBannerPanel.getInstance();
+        final AdBannerPanel adPanel = AdBannerPanel.getInstance();
         if (adPanel != null) {
             try {
                 adPanel.loadAdvertisements();
                 adPanel.repaint();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         }

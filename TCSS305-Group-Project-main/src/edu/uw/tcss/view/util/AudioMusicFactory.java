@@ -76,8 +76,10 @@ public final class AudioMusicFactory {
         return new BackgroundMusic("Pink Mode \uD83C\uDF80✨", "pinkTheme.wav");
     }
 
+    /** some epic eurobeat music to play. */
     public static BackgroundMusic getMusicEurobeat() {
-        return new BackgroundMusic("Tension - Everybody's Warming (Extended Mix)", "Everybody's Warming (Extended Mix).wav");
+        return new BackgroundMusic("Tension - Everybody's Warming (Extended Mix)",
+                "Everybody's Warming (Extended Mix).wav");
     }
 
     /**
