@@ -34,8 +34,8 @@ public class FileMenu extends JMenuBar {
     private final String myAboutStr = "About";
 
     private final JMenu myHelpMenu = new JMenu("Help");
-    private final JMenuItem myHelpAbout = new JMenuItem(myAboutStr);
-    private final JMenuItem myHelpReferences = new JMenuItem(myReferenceStr);
+    private final JMenuItem myHelpMenuAbout = new JMenuItem(myAboutStr);
+    private final JMenuItem myHelpMenuReferences = new JMenuItem(myReferenceStr);
     private final JMenuItem myHelpControls = new JMenuItem(myControlStr);
 
     private final JMenu myFileMenu = new JMenu("File");
@@ -43,12 +43,10 @@ public class FileMenu extends JMenuBar {
     private final JMenuItem myFileMenuExitGame = new JMenuItem("Exit");
 
     private final JMenu myFeatureMenu = new JMenu("Features");
-    private final JMenuItem myFeatureBackGroundMusic = new JMenuItem("Background Music");
+    private final JMenuItem myFeatureMenuBackGroundMusic = new JMenuItem("Background Music");
     private final JMenuItem myFeatureMenuColorChooser = new JMenuItem("Choose Theme");
 
     private final TetrisGame myTetris;
-
-
 
     /**
      * Constructor for file menu class.
@@ -99,28 +97,28 @@ public class FileMenu extends JMenuBar {
         // Add mnemonics
         innerColorMenu.setMnemonic('c');
         myFeatureMenuColorChooser.setMnemonic('c');
-        myFeatureBackGroundMusic.setMnemonic('b');
+        myFeatureMenuBackGroundMusic.setMnemonic('b');
 
         // Add items to the Feature Menu
         innerColorMenu.add(myFeatureMenuColorChooser);
         myFeatureMenu.add(innerColorMenu);
-        myFeatureMenu.add(myFeatureBackGroundMusic);
+        myFeatureMenu.add(myFeatureMenuBackGroundMusic);
     }
 
     private void helpMenuCreation() {
         // Add mnemonics
-        myHelpAbout.setMnemonic('a');
-        myHelpReferences.setMnemonic('r');
+        myHelpMenuAbout.setMnemonic('a');
+        myHelpMenuReferences.setMnemonic('r');
 
 
         // Add items to the Help menu
-        myHelpMenu.add(myHelpAbout);
-        myHelpMenu.add(myHelpReferences);
+        myHelpMenu.add(myHelpMenuAbout);
+        myHelpMenu.add(myHelpMenuReferences);
         myHelpMenu.add(myHelpControls);
     }
 
     private void addListeners(final JFrame theFrame) {
-        myHelpAbout.addActionListener(ActionEvent ->
+        myHelpMenuAbout.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
                         String.format("""
                                 <html>
@@ -128,10 +126,15 @@ public class FileMenu extends JMenuBar {
                                     <p>Made by: James, Kassie, Roman, Zainab<p>
                                     <p>CurrentVersion: %s</p>
                                 </html>
-                                """, myVersion), myAboutStr, JOptionPane.PLAIN_MESSAGE));
+                                """, myVersion),
+                        myAboutStr,
+                        JOptionPane.PLAIN_MESSAGE));
 
-        myHelpReferences.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
-                htmlReference(), myReferenceStr, JOptionPane.INFORMATION_MESSAGE
+        myHelpMenuReferences.addActionListener(ActionEvent ->
+                JOptionPane.showMessageDialog(theFrame,
+                        htmlReference(),
+                        myReferenceStr,
+                        JOptionPane.INFORMATION_MESSAGE
                 ));
         myHelpControls.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
                 htmlControl(), "Controls", JOptionPane.PLAIN_MESSAGE
@@ -155,7 +158,7 @@ public class FileMenu extends JMenuBar {
             }
         });
 
-        myFeatureBackGroundMusic.addActionListener(theEvent -> {
+        myFeatureMenuBackGroundMusic.addActionListener(theEvent -> {
             final Object music = JOptionPane.showInputDialog(
                     this,
                     "Choose a song",
