@@ -1,10 +1,6 @@
 package edu.uw.tcss.view.util;
 
-import edu.uw.tcss.model.GameControls;
-import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
-import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
-import java.awt.event.KeyAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

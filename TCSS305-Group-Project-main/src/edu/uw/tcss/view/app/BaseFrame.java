@@ -3,7 +3,6 @@ package edu.uw.tcss.view.app;
 import static edu.uw.tcss.view.app.assets.AssetsManager.IMAGES_PATH;
 
 import edu.uw.tcss.model.GameControls;
-import edu.uw.tcss.model.PropertyChangeEnabledGameControls;
 import edu.uw.tcss.model.TetrisGame;
 import edu.uw.tcss.view.app.assets.AssetsManager;
 import edu.uw.tcss.view.util.AudioFXManager;
@@ -11,13 +10,10 @@ import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.PreferencesManager;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 

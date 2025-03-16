@@ -180,6 +180,11 @@ public final class DrawingFactory {
         }
     }
 
+    /**
+     * Stores the color scheme.
+     * @param name the name of color scheme.
+     * @param drawingObject the drawing object.
+     */
     public record DrawingScheme(String name, DrawingObject drawingObject) {
         @Override
         public String toString() {
