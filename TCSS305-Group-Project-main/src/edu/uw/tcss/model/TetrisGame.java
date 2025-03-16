@@ -180,6 +180,7 @@ public class TetrisGame implements PropertyChangeEnabledGameControls {
         setGameState(GameState.RUNNING);
         myWorried = false;
         myPanicking = false;
+
     }
 
     /**

@@ -33,7 +33,7 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
 
     private final JCheckBoxMenuItem myFileMenuPanicMode =
             new JCheckBoxMenuItem("Game starts with Panic Mode");
-    private boolean myPanicModeTracker;
+    private boolean myPanicModeTracker = true;
 
     private final String myReferenceStr = "References";
     private final String myControlStr = "Controls layout";
@@ -192,12 +192,12 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
             }
         });
 
-        myFileMenuPanicMode.addActionListener(theEvent -> {
-            myPanicModeTracker = !myPanicModeTracker;
-            myTetris.setPanicMode(myPanicModeTracker);
-        });
+        myFileMenuPanicMode.addActionListener(theEvent -> myPanicModeTracker = !myPanicModeTracker);
 
-        myFileMenuStartGame.addActionListener(theEvent -> myTetris.newGame());
+        myFileMenuStartGame.addActionListener(theEvent -> {
+            myTetris.setPanicMode(myPanicModeTracker);
+            myTetris.newGame();
+        });
 
         myFeatureMenuClearPreferences.addActionListener(theEvent ->
             PreferencesManager.clearPreferences());
