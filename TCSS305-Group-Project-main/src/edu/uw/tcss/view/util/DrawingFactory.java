@@ -3,6 +3,8 @@ package edu.uw.tcss.view.util;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Factory class that handles the creation of drawing objects, objects that specify
@@ -33,7 +35,7 @@ public final class DrawingFactory {
     public static DrawingObject getDrawingObject(final BlockStyle theStyle) {
         return switch (theStyle) {
             case BlockStyle.GLOSSY -> DrawingFactory::drawGlossy;
-            case BlockStyle.BEVELED -> null;
+            case BlockStyle.BEVELED -> DrawingFactory::drawBeveled;
         };
     }
 
@@ -47,7 +49,7 @@ public final class DrawingFactory {
      * @param theHeight the height of the block
      * @param theBaseColor the base color to draw with
      */
-    public static void drawGlossy(final Graphics2D theGraphics,
+    private static void drawGlossy(final Graphics2D theGraphics,
                                   final int theX, final int theY,
                                   final int theWidth, final int theHeight,
                                   final Color theBaseColor) {
@@ -99,6 +101,41 @@ public final class DrawingFactory {
 
     }
 
+    private static void drawBeveled(final Graphics2D theGraphics,
+                                    final int theX, final int theY,
+                                    final int theWidth, final int theHeight,
+                                    final Color theBaseColor) {
+
+        theGraphics.setColor(theBaseColor.brighter());
+
+        theGraphics.fillRect(theX, theY, theWidth, theHeight);
+
+        theGraphics.setColor(theBaseColor.darker());
+
+        final Polygon triangle = new Polygon();
+        triangle.addPoint(theX + theWidth, theY);
+        triangle.addPoint(theX + theWidth, theY + theHeight);
+        triangle.addPoint(theX, theY + theHeight);
+
+        theGraphics.fill(triangle);
+
+        theGraphics.setColor(theBaseColor);
+
+        final int offsetX = theWidth / 4;
+        final int offsetY = theHeight / 4;
+        final Rectangle2D innerRect = new Rectangle2D.Double(
+                theX + offsetX,
+                theY + offsetY,
+                theWidth - offsetX * 2,
+                theHeight - offsetY * 2
+                );
+
+        theGraphics.fill(innerRect);
+
+        theGraphics.setColor(Color.BLACK);
+        theGraphics.drawRect(theX, theY, theWidth, theHeight);
+    }
+
     /**
      * Draws sparkles on the blocks.
      *
@@ -108,7 +145,7 @@ public final class DrawingFactory {
      * @param theWidth the width of the block
      * @param theHeight the height of the block
      */
-    public static void drawSparkles(final Graphics2D theGraphics,
+    private static void drawSparkles(final Graphics2D theGraphics,
                                     final int theX, final int theY,
                                     final int theWidth, final int theHeight) {
         theGraphics.setColor(Color.WHITE);

@@ -181,11 +181,6 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
                 RECTANGLE_WIDTH - 1, RECTANGLE_HEIGHT - 1,
                 theBaseColor);
 
-        if (ColorSchemeFactory.getPinkModeColors()
-                .equals(ColorSchemeManager.getCurrentColorScheme())) {
-            DrawingFactory.drawSparkles(theGraphics, topLeftX, topLeftY,
-                    RECTANGLE_WIDTH - 1, RECTANGLE_HEIGHT - 1);
-        }
     }
 }
 
