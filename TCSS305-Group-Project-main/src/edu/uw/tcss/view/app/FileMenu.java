@@ -29,10 +29,11 @@ public class FileMenu extends JMenuBar {
             new JCheckBoxMenuItem("Game starts with Panic Mode");
     private boolean myPanicModeTracker;
 
-    private final String myAboutStr = "About";
-    private final JMenuItem myAbout = new JMenuItem(myAboutStr);
     private final String myReferenceStr = "References";
     private final String myControlStr = "Controls layout";
+    private final String myAboutStr = "About";
+    private final JMenuItem myAbout = new JMenuItem(myAboutStr);
+    private final JMenuItem myStartGame = new JMenuItem("Start Game");
     private final JMenuItem myReferences = new JMenuItem(myReferenceStr);
     private final JMenuItem myControls = new JMenuItem(myControlStr);
     private final JMenuItem myFileMenuExitGame = new JMenuItem("Exit");
@@ -83,6 +84,7 @@ public class FileMenu extends JMenuBar {
 
         // Add items to the File menu
         myFileMenu.add(myFileMenuPanicMode);
+        myFileMenu.add(myStartGame);
         myFileMenu.add(myFileMenuExitGame);
     }
 
@@ -205,6 +207,8 @@ public class FileMenu extends JMenuBar {
             myPanicModeTracker = !myPanicModeTracker;
             myTetris.setPanicMode(myPanicModeTracker);
         });
+
+        myStartGame.addActionListener(theEvent -> myTetris.newGame());
     }
 
     private String htmlControl() {
