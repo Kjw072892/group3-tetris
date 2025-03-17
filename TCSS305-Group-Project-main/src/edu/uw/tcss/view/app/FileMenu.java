@@ -9,6 +9,9 @@ import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.DrawingFactory;
 import edu.uw.tcss.view.util.DrawingManager;
 import edu.uw.tcss.view.util.PreferencesManager;
+import java.awt.EventQueue;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JCheckBoxMenuItem;
@@ -17,6 +20,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 
 /**
@@ -212,7 +216,12 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
                 HTML_CONTROL, "Controls", JOptionPane.PLAIN_MESSAGE
         ));
 
-        myFileMenuExitGame.addActionListener(ActionEvent -> System.exit(0));
+        myFileMenuExitGame.addActionListener(ActionEvent -> {
+            final JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
+            Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(
+                    new WindowEvent(parent, WindowEvent.WINDOW_CLOSING)
+            );
+        });
 
         myFeatureMenuColorChooser.addActionListener(ActionEvent -> {
             final Object scheme = JOptionPane.showInputDialog(
@@ -249,10 +258,7 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
         myFileMenuPanicMode.addActionListener(theEvent ->
                 myTetris.setPanicMode(myFileMenuPanicMode.getState()));
 
-        myFileMenuStartGame.addActionListener(theEvent -> {
-            //myTetris.setPanicMode(myFileMenuPanicMode.getState());
-            myTetris.newGame();
-        });
+        myFileMenuStartGame.addActionListener(theEvent -> myTetris.newGame());
 
         myFeatureMenuClearPreferences.addActionListener(theEvent ->
             PreferencesManager.clearPreferences());
