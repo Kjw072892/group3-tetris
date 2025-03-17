@@ -41,32 +41,36 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     // for starter screen
     private static final GameControls.FrozenBlocks FROZEN_STARTERS =
         new GameControls.FrozenBlocks(List.of(
+            new Block[]{null, null, null, null, null, null, null, null, null, null},
+            new Block[]{null, null, null, null, null, null, null, null, null, null},
             new Block[]{null, null, null, null, null, null, null, Block.J, Block.J, null},
             new Block[]{null, null, null, null, null, null, null, null, Block.J, null},
-            new Block[]{null, null, null, null, Block.T, Block.T, Block.T, null, Block.J, null},
-            new Block[]{null, null, null, null, null, Block.T, null, null, Block.J, null},
-            new Block[]{null, null, Block.L, null, null, Block.T, null, null, Block.J, null},
-            new Block[]{Block.I, null, Block.L, null, null, Block.T, null, null, Block.J, Block.J},
-            new Block[]{Block.I, Block.L, Block.L, null, Block.T, Block.T, Block.T, null, null, null},
+            new Block[]{null, null, null, null, null, null, null, null, Block.J, null},
+            new Block[]{null, null, Block.L, null, Block.T, Block.T, Block.T, null, Block.J, null},
+            new Block[]{Block.I, null, Block.L, null, null, Block.T, null, null, Block.J, null},
+            new Block[]{Block.I, Block.L, Block.L, null, null, Block.T, null, null, Block.J, Block.J},
+            new Block[]{Block.I, Block.O, Block.O, null, Block.T, Block.T, Block.T, null, null, null},
             new Block[]{Block.I, Block.O, Block.O, null, null, null, null, null, null, null},
-            new Block[]{Block.I, Block.O, Block.O, null, null, null, null, null, null, null},
-            new Block[]{null, null,    null, null, null, null, null, Block.I, null, null},
+            new Block[]{null, null,    null, null, null, null, null, null, null, null},
             new Block[]{null, null,    null, Block.J, Block.J, Block.J, null, Block.I, null, null},
             new Block[]{null, null,    null, Block.J, null, null, null, Block.I, null, null},
-            new Block[]{null, null,    null, Block.T, null, null, null, Block.I, null, null},
-            new Block[]{null, Block.I, null, Block.T, Block.T, null, null, Block.T, null, null},
-            new Block[]{null, Block.I, null, Block.T, null, null, Block.T, Block.T, Block.T, null},
-            new Block[]{null, Block.I, null, Block.L, null, null, null, null, null, null},
-            new Block[]{null, Block.I, null, Block.L, Block.L, Block.L, null, null, null, null},
-            new Block[]{null, Block.T, null, null, null, null, null, null, null, null},
+            new Block[]{null, Block.I, null, Block.T, null, null, null, Block.I, null, null},
+            new Block[]{null, Block.I, null, Block.T, Block.T, null, null, Block.I, null, null},
+            new Block[]{null, Block.I, null, Block.T, null, null, null, Block.T, null, null},
+            new Block[]{null, Block.I, null, Block.L, null, null, Block.T, Block.T, Block.T, null},
+            new Block[]{null, Block.T, null, Block.L, Block.L, Block.L, null, null, null, null},
             new Block[]{Block.T, Block.T, Block.T, null, null, null, null, null, null, null},
             new Block[]{null, null, null, null, null, null, null, null, null, null}));
 
     private static final IndividualPiece[] PIECES_STARTER = new IndividualPiece[]{
-        new IndividualPiece(new GameControls.Point[]{new Point(9, 17),
-            new Point(7, 16), new Point(8, 16), new Point(9, 16)}, Block.L),
+        new IndividualPiece(new GameControls.Point[]{new Point(9, 19),
+            new Point(7, 18), new Point(8, 18), new Point(9, 18)}, Block.L),
         new IndividualPiece(new GameControls.Point[]{new Point(0, 2),
-            new Point(0, 1), new Point(1, 1), new Point(2, 1)}, Block.J)
+            new Point(0, 1), new Point(1, 1), new Point(2, 1)}, Block.J),
+        new IndividualPiece(new GameControls.Point[]{new Point(4, 0),
+            new Point(5, 0), new Point(4, 1), new Point(5, 1)}, Block.O),
+        new IndividualPiece(new GameControls.Point[]{new Point(2, 3),
+            new Point(3, 3), new Point(4, 3), new Point(5, 3)}, Block.I)
     };
 
     //Properties of the board & blocks.
