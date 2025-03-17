@@ -13,7 +13,7 @@
 ### Winter 2025
 
 ## Sprint 3 Meeting Agenda
-
+[Sprint3 SCRUM](https://docs.google.com/document/d/1uMo-cxY1tNU1H5duFhw1mXEeVkjqPRwN_DeSIhanTlY/edit?tab=t.0#heading=h.5yd95uxiv8hb)
 
 ## Sprint 3 Contribution
 For sprint 3, we updated the scoring algorithm, we created an adBanner that shows ads made by Kassie, Roman, and Zainab. 
@@ -36,7 +36,10 @@ darker if the pieces go over a certain height. He also helped fix a couple of ch
 a game over effect where the background flashes a color.
 
 ## Roman
-
+Finalized the manager classes. Created a drawing manager/factory with a functional interface `DrawingObject` to make it easier to 
+draw blocks on the game board and the panel for the next piece. Debugged audio stuff, fixed bug where music would play if you
+hit unmute and the game was over or paused. Worked with Kassie to implement the ad panel. Provided insight on
+some programming styles.
 
 ## Zainab 
 
