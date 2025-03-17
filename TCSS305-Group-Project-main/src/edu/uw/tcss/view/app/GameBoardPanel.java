@@ -278,6 +278,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             }
             case TetrisGame.PROPERTY_GAME_STATE ->
                     gameStateSwitches((GameState) theEvent.getNewValue());
+            case DrawingManager.PROPERTY_DRAWING_OBJECT -> repaint();
             default -> { }
         }
 

@@ -128,6 +128,7 @@ public class NextPiecePanel extends JPanel implements PropertyChangeListener {
                 setBackground(ColorSchemeManager.getCurrentSecondaryColor());
                 repaint();
             }
+            case DrawingManager.PROPERTY_DRAWING_OBJECT -> repaint();
             default -> { }
         }
     }

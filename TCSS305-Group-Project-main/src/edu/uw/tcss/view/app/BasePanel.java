@@ -16,6 +16,7 @@ import edu.uw.tcss.view.util.AudioFXListener;
 import edu.uw.tcss.view.util.AudioMusicListener;
 import edu.uw.tcss.view.util.AudioMusicManager;
 import edu.uw.tcss.view.util.ColorSchemeManager;
+import edu.uw.tcss.view.util.DrawingManager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
@@ -125,12 +126,15 @@ public final class BasePanel extends JPanel {
         myTetrisGame.addPropertyChangeListener(nextPiecePanel);
         myTetrisGame.addPropertyChangeListener(musicListener);
         myTetrisGame.addPropertyChangeListener(new AudioFXListener());
+
         ColorSchemeManager.addPropertyChangeListener(gameBoard);
         ColorSchemeManager.addPropertyChangeListener(nextPiecePanel);
         ColorSchemeManager.addPropertyChangeListener(scoreInfoPanel);
         ColorSchemeManager.addPropertyChangeListener(controlsInfoPanel);
         ColorSchemeManager.addPropertyChangeListener(musicListener);
         AudioMusicManager.addPropertyChangeListener(musicListener);
+        DrawingManager.addPropertyChangeListener(gameBoard);
+        DrawingManager.addPropertyChangeListener(nextPiecePanel);
     }
 
     private void setupKeys() {
