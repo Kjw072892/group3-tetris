@@ -320,9 +320,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
             }
 
-            case GameState.PAUSED -> {
-                repaint();
-            }
+            case GameState.PAUSED -> repaint();
 
             default -> { }
         }
