@@ -3,14 +3,9 @@ package edu.uw.tcss.view.util;
 import static edu.uw.tcss.view.util.ColorSchemeFactory.ColorScheme;
 
 import edu.uw.tcss.model.GameControls;
-import edu.uw.tcss.view.app.AdBannerPanel;
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.IOException;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class that manages the static color scheme.
@@ -27,8 +22,6 @@ public final class ColorSchemeManager {
     public static final String PROPERTY_COLOR_SCHEME = "The color scheme has changed";
     private static final Object PROPERTY_SOURCE_BEAN = new Object();
 
-    private static final Logger LOGGER = Logger.getLogger(ColorSchemeManager.class.getName());
-
     private static final PropertyChangeSupport PCS =
             new PropertyChangeSupport(PROPERTY_SOURCE_BEAN);
 
@@ -40,11 +33,7 @@ public final class ColorSchemeManager {
     }
 
     private ColorSchemeManager() {
-        final ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setLevel(Level.ALL);
-        LOGGER.addHandler(consoleHandler);
-        LOGGER.setLevel(Level.ALL);
-        LOGGER.setUseParentHandlers(false); // Disable default console output
+
     }
 
 
