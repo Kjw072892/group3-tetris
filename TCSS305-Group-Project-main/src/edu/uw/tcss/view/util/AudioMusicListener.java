@@ -50,47 +50,61 @@ public class AudioMusicListener implements PropertyChangeListener {
 
 
     private void handleGameState(final GameState theGameState) {
-        if (!GameState.OVER.equals(theGameState)
-                && !GameState.PAUSED.equals(theGameState)) {
-            AudioMusicManager.setForcedMute(false);
-        }
+        handleForcedMute(theGameState);
         switch (theGameState) {
-            case GameState.NEW -> {
-                if (GameState.PANIC.equals(myLastGameState)) {
-                    AudioMusicManager.setCurrentMusic(myLastMusic);
-                }
-                AudioMusicManager.startMusic();
-            }
-            case GameState.PAUSED -> {
-                AudioMusicManager.stopMusic();
-                AudioMusicManager.setForcedMute(true);
-            }
+            case GameState.NEW -> handleOnGameNew();
+            case GameState.PAUSED -> stopAllMusic();
             case GameState.OVER -> {
-                AudioMusicManager.stopMusic();
-                AudioMusicManager.setForcedMute(true);
-                if (GameState.PANIC.equals(myLastGameState)) {
-                    AudioMusicManager.setCurrentMusic(myLastMusic);
-                }
+                stopAllMusic();
+                handleGameOver();
             }
             case GameState.RUNNING,
-                 GameState.WORRY -> {
-                if (GameState.PANIC.equals(myLastGameState)) {
-                    AudioMusicManager.setCurrentMusic(myLastMusic);
-                    AudioMusicManager.startMusic();
-                } else if (GameState.PAUSED.equals(myLastGameState)) {
-                    AudioMusicManager.startMusic();
-                }
-            }
-            case GameState.PANIC -> {
-                if (!GameState.PAUSED.equals(myLastGameState)) {
-                    myLastMusic = AudioMusicManager.getCurrentMusic();
-                    AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicPanic());
-                }
-                AudioMusicManager.startMusic();
-            }
+                 GameState.WORRY -> handleRunningGameMusic();
+            case GameState.PANIC -> handlePanicMode();
             default -> throw
                     new EnumConstantNotPresentException(
                             GameState.class, theGameState.toString());
         }
+    }
+
+    private void handleForcedMute(final GameState theGameState) {
+        if (!GameState.OVER.equals(theGameState) && !GameState.PAUSED.equals(theGameState)) {
+            AudioMusicManager.setForcedMute(false);
+        }
+    }
+
+    private void handleOnGameNew() {
+        if (GameState.PANIC.equals(myLastGameState)) {
+            AudioMusicManager.setCurrentMusic(myLastMusic);
+        }
+        AudioMusicManager.startMusic();
+    }
+
+    private void handleRunningGameMusic() {
+        if (GameState.PANIC.equals(myLastGameState)) {
+            AudioMusicManager.setCurrentMusic(myLastMusic);
+            AudioMusicManager.startMusic();
+        } else if (GameState.PAUSED.equals(myLastGameState)) {
+            AudioMusicManager.startMusic();
+        }
+    }
+
+    private void handlePanicMode() {
+        if (!GameState.PAUSED.equals(myLastGameState)) {
+            myLastMusic = AudioMusicManager.getCurrentMusic();
+            AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicPanic());
+        }
+        AudioMusicManager.startMusic();
+    }
+
+    private void handleGameOver() {
+        if (GameState.PANIC.equals(myLastGameState)) {
+            AudioMusicManager.setCurrentMusic(myLastMusic);
+        }
+    }
+
+    private void stopAllMusic() {
+        AudioMusicManager.stopMusic();
+        AudioMusicManager.setForcedMute(true);
     }
 }
