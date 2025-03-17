@@ -99,9 +99,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
 
     private final int myBlockWidth;
     private final int myBlockHeight;
-    private boolean myGameOverDeath;
 
-    private boolean myGamePaused;
+    private GameState myLastGameState;
 
     private boolean myFlashColor;
 
@@ -139,11 +138,11 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
         drawFrozenBlocks(g2d);
         drawPiece(g2d); // Draws all Sprint 1 pieces on board.
         drawGrid(g2d); //draw the grid lines on the board.
-        if (myGameOverDeath) {
+        if (GameState.OVER.equals(myLastGameState)) {
             drawGameOver(g2d);
         }
 
-        if (myGamePaused) {
+        if (GameState.PAUSED.equals(myLastGameState)) {
             drawPaused(g2d);
         }
     }
@@ -276,8 +275,10 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
                 repaint();
             }
-            case TetrisGame.PROPERTY_GAME_STATE ->
-                    gameStateSwitches((GameState) theEvent.getNewValue());
+            case TetrisGame.PROPERTY_GAME_STATE -> {
+                gameStateSwitches((GameState) theEvent.getNewValue());
+                myLastGameState = (GameState) theEvent.getNewValue();
+            }
             case DrawingManager.PROPERTY_DRAWING_OBJECT -> repaint();
             default -> { }
         }
@@ -287,9 +288,7 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private void gameStateSwitches(final GameState theState) {
         switch (theState) {
             case GameState.NEW -> {
-                myGamePaused = false;
                 myTetrisPieces = new IndividualPiece[1];
-                myGameOverDeath = false;
                 if (myAnimator.isRunning()) {
                     myAnimator.stop();
                     setBackground(ColorSchemeManager.getCurrentPrimaryColor());
@@ -297,8 +296,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
                 repaint();
             }
             case GameState.OVER -> {
-                myGamePaused = false;
-                myGameOverDeath = true;
                 if (!myAnimator.isRunning()) {
                     myAnimator.start();
                 }
@@ -327,7 +324,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             }
 
             case GameState.PAUSED -> {
-                myGamePaused = true;
                 repaint();
             }
 
@@ -336,9 +332,8 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     }
 
     private void checkPaused() {
-        if (myGamePaused) {
+        if (GameState.PAUSED.equals(myLastGameState)) {
             repaint();
-            myGamePaused = false;
         }
     }
 
