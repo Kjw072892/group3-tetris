@@ -9,7 +9,6 @@ import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.DrawingFactory;
 import edu.uw.tcss.view.util.DrawingManager;
 import edu.uw.tcss.view.util.PreferencesManager;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
