@@ -29,6 +29,61 @@ import javax.swing.JOptionPane;
  * @version 2.28.25
  */
 public class FileMenu extends JMenuBar implements PropertyChangeListener {
+    private static final String HTML_CONTROL = """
+            <html>
+                <style>
+                    td.right {text-align: right}
+                </style>
+                 <table style="width: 180px; border-spacing:10px 5px;">
+                       <tr><td><b>New Game:</b></td> <td class="right">N/n</td></tr>
+                       <tr><td><b>Move Left:</b></td>  <td class="right">Left or A/a</td></tr>
+                       <tr><td><b>Move Right:</b></td> <td class="right">Right or D/d</td></tr>
+                       <tr><td><b>Move Down:</b></td>  <td class="right">Down or S/s</td></tr>
+                       <tr><td><b>Move CCW:</b></td>   <td class="right">Q/q</td></tr>
+                       <tr><td><b>Move CW:</b></td>   <td class="right">E/e</td></tr>
+                       <tr><td><b>Drop:</b></td>  <td class="right">Spacebar</td></tr>
+                       <tr><td><b>Pause:</b></td>  <td class="right">P/p</td></tr>
+                       <tr><td><b>Quit:</b></td>   <td class="right">K/k</td></tr>
+                       <tr><td><b>Mute:</b></td>  <td class="right">M/m</td></tr>
+                 </table>
+            <html>
+            """;
+
+    private static final String HTML_REFERENCE = """
+                <html>
+                    <p>Music and soundFx were found on youtube.
+                    We do not own the rights to any of the music or soundFX
+                    used in this game.<p>
+                    <ul>
+                        <li>
+                            ⭐Twinkling Shooting Star⭐(Cute chiptune/8bit music):
+                            https://www.youtube.com/watch?v=3qTAGRz-GjE
+                        </li>
+                        <li>
+                            Tetris Game SoundFX:
+                            https://www.sounds-resource.com
+                            /nintendo_switch/tetris99/sound/19376/
+                        </li>
+                        <li>
+                            Trap Tetris (Da Brozz - Tetris (Original Mix)):
+                            https://www.youtube.com/watch?v=AT7KjIOd7GQ
+                        </li>
+                        <li>
+                            Tension - Everybody's Warming (Extended Mix):
+                            https://www.youtube.com/watch?v=phYUedumuyE
+                        </li>
+                        <li>
+                            Epic Tetris:  Korobeiniki by the Red Army Choir
+                        </li>
+                        <li>
+                            Alternative Tetris: The Samovars by the Red Army Choir
+                        </li>
+                        <li>
+                            Panic Tetris: The Legend Descends - Fatalis by Capcom Sound Team
+                        </li>
+                <html>
+                """;
+
     private final String myVersion = "3.12.25";
 
     private final JCheckBoxMenuItem myFileMenuPanicMode =
@@ -149,12 +204,12 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
 
         myHelpMenuReferences.addActionListener(ActionEvent ->
                 JOptionPane.showMessageDialog(theFrame,
-                        htmlReference(),
+                        HTML_REFERENCE,
                         myReferenceStr,
                         JOptionPane.INFORMATION_MESSAGE
                 ));
         myHelpControls.addActionListener(ActionEvent -> JOptionPane.showMessageDialog(theFrame,
-                htmlControl(), "Controls", JOptionPane.PLAIN_MESSAGE
+                HTML_CONTROL, "Controls", JOptionPane.PLAIN_MESSAGE
         ));
 
         myFileMenuExitGame.addActionListener(ActionEvent -> System.exit(0));
@@ -231,65 +286,6 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
                     myFeatureMenuMuteSFX.setState((Boolean) theEvent.getNewValue());
             default -> { }
         }
-    }
-
-    private String htmlControl() {
-        return """
-                <html>
-                    <style>
-                        td.right {text-align: right}
-                    </style>
-                     <table style="width: 180px; border-spacing:10px 5px;">
-                           <tr><td><b>New Game:</b></td> <td class="right">N/n</td></tr>
-                           <tr><td><b>Move Left:</b></td>  <td class="right">Left or A/a</td></tr>
-                           <tr><td><b>Move Right:</b></td> <td class="right">Right or D/d</td></tr>
-                           <tr><td><b>Move Down:</b></td>  <td class="right">Down or S/s</td></tr>
-                           <tr><td><b>Move CCW:</b></td>   <td class="right">Q/q</td></tr>
-                           <tr><td><b>Move CW:</b></td>   <td class="right">E/e</td></tr>
-                           <tr><td><b>Drop:</b></td>  <td class="right">Spacebar</td></tr>
-                           <tr><td><b>Pause:</b></td>  <td class="right">P/p</td></tr>
-                           <tr><td><b>Quit:</b></td>   <td class="right">K/k</td></tr>
-                           <tr><td><b>Mute:</b></td>  <td class="right">M/m</td></tr>
-                     </table>
-                <html>
-                """;
-    }
-
-    private String htmlReference() {
-        return """
-                <html>
-                    <p>Music and soundFx were found on youtube.
-                    We do not own the rights to any of the music or soundFX
-                    used in this game.<p>
-                    <ul>
-                        <li>
-                            ⭐Twinkling Shooting Star⭐(Cute chiptune/8bit music):
-                            https://www.youtube.com/watch?v=3qTAGRz-GjE
-                        </li>
-                        <li>
-                            Tetris Game SoundFX:
-                            https://www.sounds-resource.com
-                            /nintendo_switch/tetris99/sound/19376/
-                        </li>
-                        <li>
-                            Trap Tetris (Da Brozz - Tetris (Original Mix)):
-                            https://www.youtube.com/watch?v=AT7KjIOd7GQ
-                        </li>
-                        <li>
-                            Tension - Everybody's Warming (Extended Mix):
-                            https://www.youtube.com/watch?v=phYUedumuyE
-                        </li>
-                        <li>
-                            Epic Tetris:  Korobeiniki by the Red Army Choir
-                        </li>
-                        <li>
-                            Alternative Tetris: The Samovars by the Red Army Choir
-                        </li>
-                        <li>
-                            Panic Tetris: The Legend Descends - Fatalis by Capcom Sound Team
-                        </li>
-                <html>
-                """;
     }
 
 
