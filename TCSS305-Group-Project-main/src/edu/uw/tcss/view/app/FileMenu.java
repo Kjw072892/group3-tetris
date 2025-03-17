@@ -165,10 +165,14 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
         final JMenu innerColorMenu = new JMenu("Themes");
 
         // Add mnemonics
-        innerColorMenu.setMnemonic('c');
+        innerColorMenu.setMnemonic('t');
+        myFeatureMenuBlockDrawing.setMnemonic('b');
         myFeatureMenuColorChooser.setMnemonic('c');
+
         myFeatureMenuBackGroundMusic.setMnemonic('b');
         myFeatureMenuClearPreferences.setMnemonic('l');
+        myFeatureMenuMuteSFX.setMnemonic('s');
+        myFeatureMenuMuteMusic.setMnemonic('m');
 
         // Add items to the Feature Menu
         innerColorMenu.add(myFeatureMenuColorChooser);
