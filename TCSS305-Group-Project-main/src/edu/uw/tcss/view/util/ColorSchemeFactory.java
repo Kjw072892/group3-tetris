@@ -98,12 +98,11 @@ public final class ColorSchemeFactory {
         final Color pinkJBlock = new Color(243, 160, 226);
         final Color pinkLBlock = new Color(255, 172, 246);
         final Color pinkOBlock = new Color(250, 207, 17);
-        final Color pinkSBlock = new Color(224, 169, 123, 255);
+        final Color pinkSBlock = new Color(224, 169, 123);
         final Color pinkTBlock = new Color(222, 72, 231);
         final Color pinkZBlock = new Color(255, 250, 250);
-        final Color pinkPrimary = new Color(243, 172, 180, 255);
-        final Color pinkPanel = new  Color(231, 207, 223, 228)
-               ;
+        final Color pinkPrimary = new Color(243, 172, 180);
+        final Color pinkPanel = new  Color(231, 207, 223);
         return new ColorScheme(
                "Pink Mode \uD83C\uDF80✨",
                Map.of(
