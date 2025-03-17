@@ -191,8 +191,11 @@ public class FileMenu extends JMenuBar implements PropertyChangeListener {
             }
         });
 
+        myFileMenuPanicMode.addActionListener(theEvent ->
+                myTetris.setPanicMode(myFileMenuPanicMode.getState()));
+
         myFileMenuStartGame.addActionListener(theEvent -> {
-            myTetris.setPanicMode(myFileMenuPanicMode.getState());
+            //myTetris.setPanicMode(myFileMenuPanicMode.getState());
             myTetris.newGame();
         });
 
