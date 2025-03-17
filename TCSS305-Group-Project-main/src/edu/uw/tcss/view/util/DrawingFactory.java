@@ -101,7 +101,8 @@ public final class DrawingFactory {
 
 
         if (ColorSchemeFactory.getPinkModeColors()
-                .equals(ColorSchemeManager.getCurrentColorScheme())) {
+                .equals(ColorSchemeManager.getCurrentColorScheme()) || ColorSchemeFactory.
+                getPrettyColors().equals(ColorSchemeManager.getCurrentColorScheme())) {
             DrawingFactory.drawSparkles(theGraphics,
                     theX, theY,
                     theWidth, theHeight);
