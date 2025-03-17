@@ -88,7 +88,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     //Properties of the board & blocks.
     private static final int COLUMNS = 10;         // Number of columns & rows.
     private static final int ROWS = 20;
-    private static final int COLOR_TO_FLASH = 0xa9b66767;
     private static final int DELAY = 1000;
 
     private static final int BLACK_SCREEN_Y = 350;
@@ -101,8 +100,6 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     private final int myBlockHeight;
 
     private GameState myLastGameState;
-
-    private boolean myFlashColor;
 
     private final ImageIcon myDeathIcon;
 
@@ -338,9 +335,13 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
     }
 
     private final class BackGroundColorAnimator implements ActionListener {
+
+        private static final int COLOR_TO_FLASH = 0xa9b66767;
+        private boolean myFlashColor;
+
         public void actionPerformed(final ActionEvent theEvent) {
             if (!myFlashColor) {
-                setBackground(new Color(COLOR_TO_FLASH, true));
+                setBackground(new Color(COLOR_TO_FLASH));
             } else {
                 setBackground(ColorSchemeManager.getCurrentPrimaryColor());
             }
