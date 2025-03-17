@@ -10,10 +10,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -25,11 +26,10 @@ import javax.swing.Timer;
  * @author Roman
  * @version 3.14.25
  */
-public class AdBannerPanel extends JPanel {
+public class AdBannerPanel extends JPanel implements PropertyChangeListener {
 
     private static final int BANNER_WIDTH = 500;
     private static final int BANNER_HEIGHT = 100;
-    private static AdBannerPanel instance;
 
     private final List<BufferedImage> myAdvertisements = new ArrayList<>();
     private int myAdvertisementIndex;
@@ -41,15 +41,9 @@ public class AdBannerPanel extends JPanel {
      */
     public AdBannerPanel() {
         super();
-        instance = this;
 
-        try {
-            loadAdvertisements();
-        } catch (final IOException e) {
-            Logger.getAnonymousLogger().log(Level.WARNING, "File not found", e.getStackTrace());
-        }
+        loadAdvertisements();
         setStyle();
-        instance = this;
 
         final Timer timer = new Timer(5000, theEvent -> changeAdvertisement());
         timer.start();
@@ -65,39 +59,34 @@ public class AdBannerPanel extends JPanel {
     }
 
     /**
-     * just gets instance.
-     * @return gives instance.
-     */
-    public static AdBannerPanel getInstance() {
-        return instance;
-    }
-
-    /**
      * loads advertisements.
-     * @throws IOException ensures unloadable images don't cause trouble.
      */
-    public void loadAdvertisements() throws IOException {
+    public void loadAdvertisements()  {
         myAdvertisements.clear();
         myAdvertisementIndex = 0;
 
-        // 🎀✨ add the special ads
-        if (ColorSchemeManager.getCurrentColorScheme().
-                name().contains("Pink Mode \uD83C\uDF80✨")) {
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "cute ad.png")));
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "CoolGirlsCode.png")));
-        } else {
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "adBanner.jpg")));
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "SampleAdvertisement.png")));
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "adBanner2.jpeg")));
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "adBanner3.jpg")));
-            myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                    "dairyQueenAd.png")));
+        try {
+            // 🎀✨ add the special ads
+            if (ColorSchemeManager.getCurrentColorScheme().
+                    name().contains("Pink Mode \uD83C\uDF80✨")) {
+                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                        "cute ad.png")));
+                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                        "CoolGirlsCode.png")));
+            } else {
+                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                        "adBanner.jpg")));
+                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                        "SampleAdvertisement.png")));
+                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                        "adBanner2.jpeg")));
+                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                        "adBanner3.jpg")));
+                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
+                        "dairyQueenAd.png")));
+            }
+        } catch (final IOException e) {
+            Logger.getAnonymousLogger().info(() -> "could not load image: " + e.getMessage());
         }
         myCurrentAdvertisement = myAdvertisements.getFirst();
         repaint();
@@ -112,7 +101,7 @@ public class AdBannerPanel extends JPanel {
     }
 
     @Override
-    protected void paintComponent(final Graphics theGraphics) {
+    public void paintComponent(final Graphics theGraphics) {
         super.paintComponent(theGraphics);
         final Graphics2D g2d = (Graphics2D) theGraphics;
         GraphicsHandler.enableAntiAliasing(g2d);
@@ -120,4 +109,10 @@ public class AdBannerPanel extends JPanel {
         g2d.drawImage(myCurrentAdvertisement, 0, 0, getWidth(), getHeight(), this);
     }
 
+    @Override
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+        if (ColorSchemeManager.PROPERTY_COLOR_SCHEME.equals(theEvent.getPropertyName())) {
+            loadAdvertisements();
+        }
+    }
 }

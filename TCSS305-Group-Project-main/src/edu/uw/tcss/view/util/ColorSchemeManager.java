@@ -75,16 +75,6 @@ public final class ColorSchemeManager {
     public static void setCurrentColorScheme(final ColorScheme theScheme) {
         myCurrentColorScheme = theScheme;
         PCS.firePropertyChange(PROPERTY_COLOR_SCHEME, null, myCurrentColorScheme);
-        // TODO: this is hard coding what should be just a property change listener
-        final AdBannerPanel adPanel = AdBannerPanel.getInstance();
-        if (adPanel != null) {
-            try {
-                adPanel.loadAdvertisements();
-                adPanel.repaint();
-            } catch (final IOException e) {
-                LOGGER.warning(e.getMessage());
-            }
-        }
     }
 
 

@@ -110,8 +110,8 @@ public final class BasePanel extends JPanel {
         add(westPanel, BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
 
-        final AdBannerPanel banner = new AdBannerPanel();
-        add(banner, BorderLayout.SOUTH);
+        final AdBannerPanel adBanner = new AdBannerPanel();
+        add(adBanner, BorderLayout.SOUTH);
 
         // add property change listeners
         final AudioMusicListener musicListener = new AudioMusicListener();
@@ -132,6 +132,7 @@ public final class BasePanel extends JPanel {
         ColorSchemeManager.addPropertyChangeListener(scoreInfoPanel);
         ColorSchemeManager.addPropertyChangeListener(controlsInfoPanel);
         ColorSchemeManager.addPropertyChangeListener(musicListener);
+        ColorSchemeManager.addPropertyChangeListener(adBanner);
         AudioMusicManager.addPropertyChangeListener(musicListener);
         DrawingManager.addPropertyChangeListener(gameBoard);
         DrawingManager.addPropertyChangeListener(nextPiecePanel);
