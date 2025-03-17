@@ -1,0 +1,184 @@
+<html>
+<head>
+<title>NextPiecePanel.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c88cdc;}
+.s1 { color: #afb9c3;}
+.s2 { color: #808080;}
+.s3 { color: #96be78;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+NextPiecePanel.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">edu.uw.tcss.app;</span>
+
+<span class="s0">import </span><span class="s1">edu.uw.tcss.model.GameControls.IndividualPiece;</span>
+<span class="s0">import </span><span class="s1">edu.uw.tcss.model.GameControls.Point;</span>
+<span class="s0">import </span><span class="s1">java.awt.BasicStroke;</span>
+<span class="s0">import </span><span class="s1">java.awt.Color;</span>
+<span class="s0">import </span><span class="s1">java.awt.Dimension;</span>
+<span class="s0">import </span><span class="s1">java.awt.Graphics;</span>
+<span class="s0">import </span><span class="s1">java.awt.Graphics2D;</span>
+<span class="s0">import </span><span class="s1">java.awt.RenderingHints;</span>
+<span class="s0">import </span><span class="s1">java.awt.Shape;</span>
+<span class="s0">import </span><span class="s1">java.awt.geom.Rectangle2D;</span>
+<span class="s0">import </span><span class="s1">java.beans.PropertyChangeEvent;</span>
+<span class="s0">import </span><span class="s1">java.beans.PropertyChangeListener;</span>
+<span class="s0">import </span><span class="s1">javax.swing.JPanel;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* The Panel that draws the next tetris piece upcoming.</span>
+ <span class="s2">*</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">James Parker Strand</span>
+ <span class="s2">* </span><span class="s0">@version </span><span class="s2">1</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">NextPiecePanel </span><span class="s0">extends </span><span class="s1">JPanel </span><span class="s0">implements </span><span class="s1">PropertyChangeListener {</span>
+
+    <span class="s2">// TODO: might want to refrain from hard-coding these dimensions - RB</span>
+    <span class="s2">/** The width of the panel. */</span>
+    <span class="s0">private static final int </span><span class="s1">WIDTH = </span><span class="s3">100</span><span class="s1">;</span>
+
+    <span class="s2">/** The height of the panel. */</span>
+    <span class="s0">private static final int </span><span class="s1">HEIGHT = </span><span class="s3">133</span><span class="s1">;</span>
+
+    <span class="s2">/** The stroke width in pixels. */</span>
+    <span class="s0">private static final int </span><span class="s1">STROKE_WIDTH = </span><span class="s3">3</span><span class="s1">;</span>
+
+    <span class="s2">/** The width for the rectangle. */</span>
+    <span class="s0">private static final int </span><span class="s1">RECTANGLE_WIDTH = </span><span class="s3">30</span><span class="s1">;</span>
+
+    <span class="s2">/** The height for the rectangle. */</span>
+    <span class="s0">private static final int </span><span class="s1">RECTANGLE_HEIGHT = </span><span class="s3">30</span><span class="s1">;</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* Constructs a new ellipse panel.</span>
+     <span class="s2">*/</span>
+    <span class="s0">public </span><span class="s1">NextPiecePanel() {</span>
+        <span class="s0">super</span><span class="s1">();</span>
+        <span class="s1">layoutComponents();</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* Lay out the components and makes this frame visible.</span>
+     <span class="s2">*/</span>
+    <span class="s0">private void </span><span class="s1">layoutComponents() {</span>
+        <span class="s1">setBackground(Color.BLUE);</span>
+        <span class="s1">setPreferredSize(</span><span class="s0">new </span><span class="s1">Dimension(WIDTH, HEIGHT));</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* helper method for drawing the rectangle center styled,</span>
+     <span class="s2">* rather than x to width, and y to height</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theX where the rectangle goes in the x coordinate.</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theY where the rectangle goes in the y coordinate.</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theWidth width rectangle has</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theHeight height the rectangle has</span>
+     <span class="s2">* </span><span class="s0">@return </span><span class="s2">gives you you you the rectangle object in the</span>
+     <span class="s2">* form the rectangle is drawn in the middle.</span>
+     <span class="s2">*/</span>
+    <span class="s0">private </span><span class="s1">Rectangle2D.Double createCenteredRectangle(</span><span class="s0">final double </span><span class="s1">theX, </span><span class="s0">final double </span><span class="s1">theY,</span>
+                                                       <span class="s0">final double </span><span class="s1">theWidth,</span>
+                                                       <span class="s0">final double </span><span class="s1">theHeight) {</span>
+        <span class="s0">final double </span><span class="s1">topLeftX = theX - theWidth / </span><span class="s3">2d</span><span class="s1">;</span>
+        <span class="s0">final double </span><span class="s1">topLeftY = theY - theHeight / </span><span class="s3">2d</span><span class="s1">;</span>
+        <span class="s0">return new </span><span class="s1">Rectangle2D.Double(topLeftX, topLeftY, theWidth, theHeight);</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* helper method for taking a single point, and making</span>
+     <span class="s2">* sure to center on screen like the regular cartesian coordinate</span>
+     <span class="s2">* plane.</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">thePoint the point to convert to center.</span>
+     <span class="s2">* </span><span class="s0">@return </span><span class="s2">the point is now converted to cartesian coordinate point.</span>
+     <span class="s2">*/</span>
+    <span class="s0">private </span><span class="s1">Point takePointToCenter(</span><span class="s0">final </span><span class="s1">Point thePoint) {</span>
+
+        <span class="s0">final int </span><span class="s1">centeredX = (</span><span class="s0">this</span><span class="s1">.getWidth() / </span><span class="s3">2</span><span class="s1">) + thePoint.x();</span>
+
+        <span class="s0">final int </span><span class="s1">centeredY = (</span><span class="s0">this</span><span class="s1">.getHeight() / </span><span class="s3">2</span><span class="s1">) + thePoint.y();</span>
+
+        <span class="s0">return new </span><span class="s1">Point(centeredX, centeredY);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private double</span><span class="s1">[] findOffsetPoint(</span><span class="s0">final </span><span class="s1">Point[] thePoints) {</span>
+        <span class="s0">double </span><span class="s1">minX = thePoints[</span><span class="s3">0</span><span class="s1">].x();</span>
+        <span class="s0">double </span><span class="s1">maxX = minX;</span>
+        <span class="s0">double </span><span class="s1">minY = thePoints[</span><span class="s3">0</span><span class="s1">].y();</span>
+        <span class="s0">double </span><span class="s1">maxY = minY;</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">1</span><span class="s1">; i &lt; thePoints.length; i++) {</span>
+            <span class="s1">minX = Math.min(thePoints[i].x(), minX);</span>
+            <span class="s1">maxX = Math.max(thePoints[i].x(), maxX);</span>
+            <span class="s1">minY = Math.min(thePoints[i].y(), minY);</span>
+            <span class="s1">maxY = Math.max(thePoints[i].y(), maxY);</span>
+        <span class="s1">}</span>
+
+        <span class="s0">return new double</span><span class="s1">[] {(minX + maxX) / </span><span class="s3">2</span><span class="s1">, (minY + maxY) / </span><span class="s3">2</span><span class="s1">};</span>
+    <span class="s1">}</span>
+
+
+
+    <span class="s2">/**</span>
+     <span class="s2">* Paints the puzzle piece for Tetris.</span>
+     <span class="s2">*</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theGraphics The graphics context to use for painting.</span>
+     <span class="s2">*/</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">paintComponent(</span><span class="s0">final </span><span class="s1">Graphics theGraphics) {</span>
+        <span class="s0">super</span><span class="s1">.paintComponent(theGraphics);</span>
+        <span class="s0">final </span><span class="s1">Graphics2D g2d = (Graphics2D) theGraphics;</span>
+
+        <span class="s2">// for better graphics display</span>
+        <span class="s1">g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,</span>
+                <span class="s1">RenderingHints.VALUE_ANTIALIAS_ON);</span>
+
+        <span class="s0">final </span><span class="s1">IndividualPiece nextPieceTest = Sprint1_values.nextPiece();</span>
+
+        <span class="s0">final double</span><span class="s1">[] pointOffset = findOffsetPoint(nextPieceTest.location());</span>
+
+        <span class="s2">// individual pieces have offsets to ensure they are centered</span>
+        <span class="s0">final double </span><span class="s1">xOffset = pointOffset[</span><span class="s3">0</span><span class="s1">];</span>
+        <span class="s0">final double </span><span class="s1">yOffset = pointOffset[</span><span class="s3">1</span><span class="s1">];</span>
+
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; nextPieceTest.location().length; i++) {</span>
+
+            <span class="s2">// point in space is not centered to screen yet, but let's</span>
+            <span class="s2">// just get our points seperated into equal spaces for our drawing.</span>
+            <span class="s0">final int </span><span class="s1">xToPlace = (</span><span class="s0">int</span><span class="s1">) ((nextPieceTest.location()[i].x() - xOffset)</span>
+                    <span class="s1">* RECTANGLE_WIDTH);</span>
+            <span class="s0">final int </span><span class="s1">yToPlace = (</span><span class="s0">int</span><span class="s1">) ((nextPieceTest.location()[i].y() - yOffset)</span>
+                    <span class="s1">* RECTANGLE_HEIGHT);</span>
+
+            <span class="s0">final </span><span class="s1">Point pointToPlace = </span><span class="s0">new </span><span class="s1">Point(xToPlace, -yToPlace);</span>
+
+            <span class="s2">// finally, ensures it's centered</span>
+            <span class="s0">final </span><span class="s1">Point pointToTakeCenter = takePointToCenter(pointToPlace);</span>
+
+            <span class="s0">final </span><span class="s1">Shape rectangle = createCenteredRectangle(pointToTakeCenter.x(),</span>
+                    <span class="s1">pointToTakeCenter.y(),</span>
+                    <span class="s1">RECTANGLE_WIDTH - (STROKE_WIDTH - </span><span class="s3">1</span><span class="s1">), RECTANGLE_HEIGHT</span>
+                            <span class="s1">- (STROKE_WIDTH - </span><span class="s3">1</span><span class="s1">));</span>
+
+            <span class="s1">g2d.setPaint(Color.BLACK);</span>
+            <span class="s1">g2d.setStroke(</span><span class="s0">new </span><span class="s1">BasicStroke(STROKE_WIDTH));</span>
+            <span class="s1">g2d.draw(rectangle);</span>
+            <span class="s2">// TODO: we'll need a way to later set up how to get the piece color automatically</span>
+            <span class="s1">g2d.setPaint(Color.MAGENTA);</span>
+            <span class="s1">g2d.fill(rectangle);</span>
+
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">propertyChange(</span><span class="s0">final </span><span class="s1">PropertyChangeEvent theEvent) {</span>
+        <span class="s2">// TODO: the event</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>GameLogic.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c88cdc;}
+.s1 { color: #afb9c3;}
+.s2 { color: #96be78;}
+.s3 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+GameLogic.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">edu.uw.tcss.app;</span>
+
+<span class="s0">import </span><span class="s1">edu.uw.tcss.model.PropertyChangeEnabledGameControls;</span>
+<span class="s0">import </span><span class="s1">edu.uw.tcss.model.TetrisGame;</span>
+<span class="s0">import </span><span class="s1">java.beans.PropertyChangeEvent;</span>
+<span class="s0">import </span><span class="s1">java.beans.PropertyChangeListener;</span>
+<span class="s0">import </span><span class="s1">javax.swing.Timer;</span>
+
+<span class="s0">final class </span><span class="s1">GameLogic </span><span class="s0">implements </span><span class="s1">PropertyChangeListener {</span>
+
+    <span class="s0">private static final int </span><span class="s1">SCORE_PER_ROW_CLEARED = </span><span class="s2">100</span><span class="s1">;</span>
+    <span class="s0">private static final int </span><span class="s1">SCORE_PER_ADD_ROW = </span><span class="s2">50</span><span class="s1">;</span>
+    <span class="s0">private static final int </span><span class="s1">LINES_PER_LEVEL = </span><span class="s2">5</span><span class="s1">;</span>
+
+    <span class="s3">/** Default millisecond delay of the timer */</span>
+    <span class="s0">private static final int </span><span class="s1">DEFAULT_DELAY = </span><span class="s2">1000</span><span class="s1">;</span>
+    <span class="s0">private static final int </span><span class="s1">DELAY_DECREMENT = </span><span class="s2">25</span><span class="s1">;</span>
+
+    <span class="s0">private final </span><span class="s1">Timer myTimer;</span>
+    <span class="s0">private final </span><span class="s1">TetrisGame myTetrisGame;</span>
+    <span class="s0">private int </span><span class="s1">myCurrentLevel;</span>
+    <span class="s0">private int </span><span class="s1">myScore;</span>
+    <span class="s0">private int </span><span class="s1">myLinesCleared;</span>
+
+    <span class="s1">GameLogic(</span><span class="s0">final </span><span class="s1">TetrisGame theTetrisGame) {</span>
+        <span class="s1">myTetrisGame = theTetrisGame;</span>
+        <span class="s1">myTimer = </span><span class="s0">new </span><span class="s1">Timer(DEFAULT_DELAY, theEvent -&gt; myTetrisGame.step());</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">propertyChange(</span><span class="s0">final </span><span class="s1">PropertyChangeEvent theEvent) {</span>
+        <span class="s0">if </span><span class="s1">(theEvent.getPropertyName()</span>
+                <span class="s1">.equals(PropertyChangeEnabledGameControls.PROPERTY_ROWS_CLEARED)) {</span>
+
+            <span class="s0">final </span><span class="s1">Integer rowsCleared = (Integer) theEvent.getNewValue();</span>
+
+            <span class="s1">myLinesCleared += rowsCleared;</span>
+
+            <span class="s1">updateLevel();</span>
+            <span class="s1">updateScore(rowsCleared);</span>
+
+            <span class="s1">myCurrentLevel = </span><span class="s2">1</span><span class="s1">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Method to get the current level dictated by the game logic.</span>
+     <span class="s3">*</span>
+     <span class="s3">* </span><span class="s0">@return </span><span class="s3">the current level of the game.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public int </span><span class="s1">getLevel() {</span>
+        <span class="s0">return </span><span class="s1">myCurrentLevel;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">updateLevel() {</span>
+        <span class="s0">final int </span><span class="s1">newLevel = myLinesCleared / LINES_PER_LEVEL + </span><span class="s2">1</span><span class="s1">;</span>
+
+        <span class="s0">if </span><span class="s1">(newLevel &gt; myCurrentLevel) {</span>
+            <span class="s1">myTimer.setDelay(DEFAULT_DELAY - myCurrentLevel * DELAY_DECREMENT);</span>
+        <span class="s1">}</span>
+
+        <span class="s1">myCurrentLevel = newLevel;</span>
+    <span class="s1">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Method to get the current score dictated by the game logic.</span>
+     <span class="s3">*</span>
+     <span class="s3">* </span><span class="s0">@return </span><span class="s3">the current score of the game.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public int </span><span class="s1">getScore() {</span>
+        <span class="s0">return </span><span class="s1">myScore;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">updateScore(</span><span class="s0">final int </span><span class="s1">theLinesCleared) {</span>
+        <span class="s1">myScore += SCORE_PER_ROW_CLEARED * theLinesCleared;</span>
+        <span class="s1">myScore += SCORE_PER_ADD_ROW * (theLinesCleared - </span><span class="s2">1</span><span class="s1">);</span>
+    <span class="s1">}</span>
+
+    <span class="s3">/**</span>
+     <span class="s3">* Gets the current amount of lines cleared in the tetris game.</span>
+     <span class="s3">*</span>
+     <span class="s3">* </span><span class="s0">@return </span><span class="s3">the number of lines cleared in the tetris game thus far.</span>
+     <span class="s3">*/</span>
+    <span class="s0">public int </span><span class="s1">getLinesCleared() {</span>
+        <span class="s0">return </span><span class="s1">myLinesCleared;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span></pre>
+</body>
+</html>

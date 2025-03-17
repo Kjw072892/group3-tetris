@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Application.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c88cdc;}
+.s1 { color: #afb9c3;}
+.s2 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Application.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">edu.uw.tcss.app;</span>
+
+<span class="s0">import static </span><span class="s1">javax.swing.SwingUtilities.invokeLater;</span>
+
+<span class="s0">import </span><span class="s1">javax.swing.JPanel;</span>
+
+
+<span class="s2">/**</span>
+ <span class="s2">* Group Project 3 Tetris.</span>
+ <span class="s2">*</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Kassie Whitney</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">James Strand</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Roman Bureacov</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Zainab Stanikzy</span>
+ <span class="s2">* </span><span class="s0">@version </span><span class="s2">2.26.25</span>
+ <span class="s2">*/</span>
+<span class="s0">public final class </span><span class="s1">Application </span><span class="s0">extends </span><span class="s1">JPanel {</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* The main method initialized the game, takes user input in a loop.</span>
+     <span class="s2">* Updates the game state. The loop continues until the user Quits the game.</span>
+     <span class="s2">*</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theArgs (unused)</span>
+     <span class="s2">*/</span>
+    <span class="s0">public static void </span><span class="s1">main(</span><span class="s0">final </span><span class="s1">String[] theArgs) {</span>
+
+        <span class="s1">invokeLater(BaseLayout::createAndShowGui);</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>FileMenu.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c88cdc;}
+.s1 { color: #afb9c3;}
+.s2 { color: #808080;}
+.s3 { color: #96be78;}
+.s4 { color: #17bbdd;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FileMenu.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">edu.uw.tcss.app;</span>
+
+<span class="s0">import </span><span class="s1">edu.uw.tcss.model.TetrisGame;</span>
+<span class="s0">import </span><span class="s1">javax.swing.JFrame;</span>
+<span class="s0">import </span><span class="s1">javax.swing.JMenu;</span>
+<span class="s0">import </span><span class="s1">javax.swing.JMenuBar;</span>
+<span class="s0">import </span><span class="s1">javax.swing.JMenuItem;</span>
+<span class="s0">import </span><span class="s1">javax.swing.JOptionPane;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* FileMenu creation class.</span>
+ <span class="s2">*</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">James</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Kassie</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Roman</span>
+ <span class="s2">* </span><span class="s0">@author </span><span class="s2">Zainab</span>
+ <span class="s2">* </span><span class="s0">@version </span><span class="s2">2.28.25</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">FileMenu </span><span class="s0">extends </span><span class="s1">JMenuBar {</span>
+    <span class="s0">private final </span><span class="s1">String myVersion = </span><span class="s3">&quot;2.28.25&quot;</span><span class="s1">;</span>
+
+    <span class="s0">private final </span><span class="s1">JMenuItem myGameStart = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s3">&quot;Start Game&quot;</span><span class="s1">);</span>
+    <span class="s0">private final </span><span class="s1">JMenuItem myAbout = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s3">&quot;About&quot;</span><span class="s1">);</span>
+    <span class="s0">private final </span><span class="s1">JMenuItem myExitGame = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s3">&quot;Exit&quot;</span><span class="s1">);</span>
+    <span class="s0">private final </span><span class="s1">JMenuItem myColorChooser = </span><span class="s0">new </span><span class="s1">JMenuItem(</span><span class="s3">&quot;Choose Color&quot;</span><span class="s1">);</span>
+    <span class="s0">private final </span><span class="s1">JMenu myFileMenu = </span><span class="s0">new </span><span class="s1">JMenu(</span><span class="s3">&quot;File&quot;</span><span class="s1">);</span>
+    <span class="s0">private final </span><span class="s1">JMenu myFeatureMenu = </span><span class="s0">new </span><span class="s1">JMenu(</span><span class="s3">&quot;Feature&quot;</span><span class="s1">);</span>
+    <span class="s0">private final </span><span class="s1">JMenu myHelpMenu = </span><span class="s0">new </span><span class="s1">JMenu(</span><span class="s3">&quot;Help&quot;</span><span class="s1">);</span>
+    <span class="s0">private final </span><span class="s1">TetrisGame myTetris;</span>
+
+
+    <span class="s2">/**</span>
+     <span class="s2">* Constructor for file menu class.</span>
+     <span class="s2">* </span><span class="s0">@param </span><span class="s2">theFrame the main JFrame object.</span>
+     <span class="s2">*/</span>
+    <span class="s0">public </span><span class="s1">FileMenu(</span><span class="s0">final </span><span class="s1">JFrame theFrame, </span><span class="s0">final </span><span class="s1">TetrisGame theGame) {</span>
+        <span class="s0">super</span><span class="s1">();</span>
+        <span class="s1">myTetris = theGame;</span>
+        <span class="s2">// Adds the file menu items on the bar</span>
+        <span class="s1">fileMenuCreation();</span>
+        <span class="s1">featureMenuCreation();</span>
+        <span class="s1">helpMenuCreation();</span>
+
+        <span class="s2">//invokes the listeners</span>
+        <span class="s1">addListeners(theFrame);</span>
+
+        <span class="s2">// Add a File menu to menu bar</span>
+        <span class="s1">add(myFileMenu);</span>
+        <span class="s1">add(myFeatureMenu);</span>
+        <span class="s1">add(myHelpMenu);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">fileMenuCreation() {</span>
+        <span class="s2">// Add items to the File menu</span>
+        <span class="s1">myFileMenu.add(myGameStart);</span>
+        <span class="s1">myFileMenu.add(myExitGame);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">featureMenuCreation() {</span>
+        <span class="s2">// Add items to the Feature Menu</span>
+        <span class="s0">final </span><span class="s1">JMenu innerColorMenu = </span><span class="s0">new </span><span class="s1">JMenu(</span><span class="s3">&quot;Color&quot;</span><span class="s1">);</span>
+        <span class="s1">innerColorMenu.add(myColorChooser);</span>
+        <span class="s1">myFeatureMenu.add(innerColorMenu);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">helpMenuCreation() {</span>
+        <span class="s2">// Add items to the Help menu</span>
+
+        <span class="s1">myHelpMenu.add(myAbout);</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">addListeners(</span><span class="s0">final </span><span class="s1">JFrame theFrame) {</span>
+         <span class="s2">// Add action listeners</span>
+        <span class="s2">//myGameStart.addActionListener(ActionEvent -&gt; setGameShouldStart(theFrame));</span>
+
+        <span class="s1">myAbout.addActionListener(ActionEvent -&gt;</span>
+                <span class="s1">JOptionPane.showMessageDialog(theFrame,</span>
+                <span class="s3">&quot;Made by James, Kassie, Roman, Zainab. </span><span class="s4">\n</span><span class="s3">Current version: &quot;</span>
+                        <span class="s1">+ myVersion));</span>
+
+        <span class="s1">myExitGame.addActionListener(ActionEvent -&gt; System.exit(</span><span class="s3">0</span><span class="s1">));</span>
+
+        <span class="s1">myColorChooser.addActionListener(ActionEvent -&gt;</span>
+                <span class="s1">JOptionPane.showMessageDialog(theFrame,</span>
+                <span class="s3">&quot;This option is currently unavailable in this version!&quot;</span><span class="s1">));</span>
+
+       <span class="s2">//myGameStart.addActionListener(e-&gt;setGameShouldStart(theFrame));</span>
+    <span class="s1">}</span>
+
+    <span class="s2">//  This method currently does nothing, will use later.</span>
+
+
+<span class="s1">}</span></pre>
+</body>
+</html>

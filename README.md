@@ -12,43 +12,48 @@
 
 ### Winter 2025
 
-## Sprint 2 Meeting Agenda
-[Sprint2 SCRUM](https://docs.google.com/document/d/1Ym6V50Ek3UeEYz6Bx8C-IV6a5gg_2qsMza1JJ3IMQBc/edit?usp=sharing)
+## Sprint 3 Meeting Agenda
+[Sprint3 SCRUM](https://docs.google.com/document/d/1uMo-cxY1tNU1H5duFhw1mXEeVkjqPRwN_DeSIhanTlY/edit?tab=t.0#heading=h.5yd95uxiv8hb)
 
-
-## Sprint 1 Contribution
-For sprint 2, we were tasked to make the game board functional by implementing property change listeners.
-Roman was in charge of overseeing the final production of our code for sprint 2, Kassie was in charge of creating the SCRUM document, and to be acting scribe of the SCRUM meeting. 
-She was also responsible for adding change listeners to the score panel. Zainab was responsible for making necessary changes to her game board code production, while also implementing property change listeners. James was responsible for implementing the property change listeners for next-piece.
+## Sprint 3 Contribution
+For sprint 3, we updated the scoring algorithm, we created an adBanner that shows ads made by Kassie, Roman, and Zainab. 
+We also created sound fx by using existing tetris sound fx files. 
+Roman, Kassie, and Zainab also created different themes and added different background music that the user can choose.
+We also fixed a ton of checkstyle warnings, reorganized our code. 
 
 ## Kassie 
-Kassie and the rest of the members worked cohesively together 
-to come up with the design layout of our code to implement the property change listeners. 
-She struggled with the conception of property change listeners, and Roman and James guided her through it. 
-She was responsible for implementing what she learned about property change listeners to the Score panel, 
-even though it's not a requirement for sprint 3. She still hasn't gotten the score to increment yet, 
-so she will be responsible for seeing that through in sprint 3. She did however layout the property change listener foundation for the score panel, so now all she has to do is to get the labels to change when a player scores by clearing a line. 
-She and Roman made the game logic class that produces these changes. She also helped Zainab navigate github 
-when she was facing git issues, which was very helpful.
+Kassie was in charge of creating the score panel, control instructions panel, and to create some ad banners. 
+She also created the in game file menu, and she created the About file menu item and the control scheme file menu item.
+Kassie also created the in game sound fx. 
+She found a tetris sound fx file online, and she selected which sounds would be appropriate for our game. 
+She also wrote up the scoring algorithm so that it uses the algorithm given to us in the API. 
+Lastly, she was involved in the decision of finalizing the overall layout and the Frame theme.
 
 ## James 
-James implemented property change listener into gameboard and nextpiece. He also made the filemenu
-be able to start a game once a button inside there is clicked to "start game". He then also made sure 
-the nextpiece panel properly draws whatever next piece gets thrown by property changes. He also had fixed 
-a big where gameboard wouldn't properly draw the frozen pieces upon start of the game, and the gameboard functions properly.
+James contributed by adding in a game over screen and pause screen. James also added in the backend to add 
+functionality of a panic mode. He also then used the backend to make front end changes to make the background
+darker if the pieces go over a certain height. He also helped fix a couple of checkstyle errors. He added in
+a game over effect where the background flashes a color.
 
 ## Roman
-Implemented the key handling, specifically via the `InputMap` and `ActionMap` API of Swing JComponents. Implemented, 
-with the help of Kassie, the `GameLogic` class that handles the game logic. Worked with Kassie to improve
-the `ScorePanel` class. 
+Finalized the manager classes. Created a drawing manager/factory with a functional interface `DrawingObject` to make it easier to 
+draw blocks on the game board and the panel for the next piece. Debugged audio stuff, fixed bug where music would play if you
+hit unmute and the game was over or paused. Worked with Kassie to implement the ad panel. Provided insight on
+some programming styles.
 
 ## Zainab 
-Zainab worked on integrating property change listeners into the game board panel. 
-She faced some initial challenges with getting into the project due to version control issues.
-She then focused on the timer functionality and making sure that the game board would update properly
-y based on the property change events. she collaborated with the team to optimize the existing functionality,
-improving the overall responsiveness of the game.
+Zainab worked on enhancing the visual design of the blocks by adding glossy effects 3-D shading, 
+Sparkles gradient shading to make them look more polished and visually appealing. She also designed an implemented
+The pink mode which introduced a custom pink theme animated glitter effects and a unique background music track
+Which automatically plays when the pink mode is activated. She also created three ad banners
+With a "cool girls code" theme. And implemented custom ad filtering logic so that when pink mode isn't able
+Only those specific ads appear. With all other themes all add banners are displayed. She designed and styled the blocks
+And Roman helped move them into the drawing factory class to help keep things clean and organized.
+She also helped to refine the color scheme logic ensuring smooth transitions between themes. she also
+Worked on optimizing the direction labels panel and game board panel layout for better readability 
+along with Cleaning all check style warnings and magic numbers with Constance from style manager making
+Overall code base cleaner and maintainable.
+
 
 
 ## Sprint 2 Comments
-How much abstraction can sometimes be too much abstraction? - Roman Bureacov
