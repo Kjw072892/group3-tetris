@@ -42,6 +42,18 @@ hit unmute and the game was over or paused. Worked with Kassie to implement the 
 some programming styles.
 
 ## Zainab 
+Zainab worked on enhancing the visual design of the blocks by adding glossy effects 3-D shading, 
+Sparkles gradient shading to make them look more polished and visually appealing. She also designed an implemented
+The pink mode which introduced a custom pink theme animated glitter effects and a unique background music track
+Which automatically plays when the pink mode is activated. She also created three ad banners
+With a "cool girls code" theme. And implemented custom ad filtering logic so that when pink mode isn't able
+Only those specific ads appear. With all other themes all add banners are displayed. She designed and styled the blocks
+And Roman helped move them into the drawing factory class to help keep things clean and organized.
+She also helped to refine the color scheme logic ensuring smooth transitions between themes. she also
+Worked on optimizing the direction labels panel and game board panel layout for better readability 
+along with Cleaning all check style warnings and magic numbers with Constance from style manager making
+Overall code base cleaner and maintainable.
+
 
 
 ## Sprint 2 Comments
