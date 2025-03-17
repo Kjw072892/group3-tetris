@@ -51,9 +51,9 @@ Only those specific ads appear. With all other themes all add banners are displa
 And Roman helped move them into the drawing factory class to help keep things clean and organized.
 She also helped to refine the color scheme logic ensuring smooth transitions between themes. she also
 Worked on optimizing the direction labels panel and game board panel layout for better readability 
-along with Cleaning all check style warnings and magic numbers with Constance from style manager making
+along with Cleaning all check style warnings and magic numbers with constants from style manager making
 Overall code base cleaner and maintainable.
 
-
-
-## Sprint 2 Comments
+## Sprint 3 Comments
+- Roman: is there a potentially easier way to work with files than the current implementation in this project
+with the `AssetManager` under `view/app/assets`?
