@@ -48,8 +48,10 @@ public class GameBoardPanel extends JPanel implements PropertyChangeListener {
             new Block[]{null, null, null, null, null, null, null, null, Block.J, null},
             new Block[]{null, null, Block.L, null, Block.T, Block.T, Block.T, null, Block.J, null},
             new Block[]{Block.I, null, Block.L, null, null, Block.T, null, null, Block.J, null},
-            new Block[]{Block.I, Block.L, Block.L, null, null, Block.T, null, null, Block.J, Block.J},
-            new Block[]{Block.I, Block.O, Block.O, null, Block.T, Block.T, Block.T, null, null, null},
+            new Block[]
+                {Block.I, Block.L, Block.L, null, null, Block.T, null, null, Block.J, Block.J},
+            new Block[]
+                {Block.I, Block.O, Block.O, null, Block.T, Block.T, Block.T, null, null, null},
             new Block[]{Block.I, Block.O, Block.O, null, null, null, null, null, null, null},
             new Block[]{null, null,    null, null, null, null, null, null, null, null},
             new Block[]{null, null,    null, Block.J, Block.J, Block.J, null, Block.I, null, null},
