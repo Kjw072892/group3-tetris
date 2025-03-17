@@ -56,13 +56,21 @@ public class AudioMusicListener implements PropertyChangeListener {
         }
         switch (theGameState) {
             case GameState.NEW -> {
-                AudioMusicManager.setCurrentMusic(myLastMusic);
+                if (GameState.PANIC.equals(myLastGameState)) {
+                    AudioMusicManager.setCurrentMusic(myLastMusic);
+                }
                 AudioMusicManager.startMusic();
             }
-            case GameState.PAUSED,
-                 GameState.OVER -> {
+            case GameState.PAUSED -> {
                 AudioMusicManager.stopMusic();
                 AudioMusicManager.setForcedMute(true);
+            }
+            case GameState.OVER -> {
+                AudioMusicManager.stopMusic();
+                AudioMusicManager.setForcedMute(true);
+                if (GameState.PANIC.equals(myLastGameState)) {
+                    AudioMusicManager.setCurrentMusic(myLastMusic);
+                }
             }
             case GameState.RUNNING,
                  GameState.WORRY -> {
@@ -70,13 +78,14 @@ public class AudioMusicListener implements PropertyChangeListener {
                     AudioMusicManager.setCurrentMusic(myLastMusic);
                     AudioMusicManager.startMusic();
                 } else if (GameState.PAUSED.equals(myLastGameState)) {
-                    myLastMusic = AudioMusicManager.getCurrentMusic();
                     AudioMusicManager.startMusic();
                 }
             }
             case GameState.PANIC -> {
-                myLastMusic = AudioMusicManager.getCurrentMusic();
-                AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicPanic());
+                if (!GameState.PAUSED.equals(myLastGameState)) {
+                    myLastMusic = AudioMusicManager.getCurrentMusic();
+                    AudioMusicManager.setCurrentMusic(AudioMusicFactory.getMusicPanic());
+                }
                 AudioMusicManager.startMusic();
             }
             default -> throw
