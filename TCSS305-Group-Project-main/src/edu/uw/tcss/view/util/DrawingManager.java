@@ -30,7 +30,6 @@ public final class DrawingManager {
      *
      * @param theDrawer the drawing object to use hereon.
      */
-    @SuppressWarnings("unused")
     public static void setDrawer(final DrawingScheme theDrawer) {
         myDrawer = theDrawer;
         PCS.firePropertyChange(PROPERTY_DRAWING_OBJECT, null, myDrawer);
@@ -55,7 +54,7 @@ public final class DrawingManager {
     /**
      * Removes the property change listener from the collection of listeners.
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings("unused") // part of the design pattern (add/remove)
     public static void removePropertyChangeListener(final PropertyChangeListener theListener) {
         PCS.removePropertyChangeListener(theListener);
     }

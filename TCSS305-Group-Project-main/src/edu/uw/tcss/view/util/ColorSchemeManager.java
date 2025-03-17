@@ -62,7 +62,7 @@ public final class ColorSchemeManager {
      *
      * @param theListener the property change listener to remove.
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings("unused") // part of the design pattern (add/remove)
     public static void removePropertyChangeListener(final PropertyChangeListener theListener) {
         PCS.removePropertyChangeListener(theListener);
     }
@@ -130,7 +130,7 @@ public final class ColorSchemeManager {
      * @return primary color of the current color scheme.
      * returns null if the color for the specified main color has not been specified.
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings("unused") // part of the design pattern (getter/setter)
     public static Color getCurrentMainColor(final ColorSchemeFactory.MainColors theMainColor) {
         return myCurrentColorScheme.mainColors().getOrDefault(theMainColor, null);
     }

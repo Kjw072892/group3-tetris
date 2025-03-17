@@ -109,7 +109,7 @@ public final class AudioMusicManager {
     /**
      * Resets the music playback to start from the beginning. Does not stop or start playback.
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings("unused") // part of the design pattern (start, stop, restart)
     public static void restartMusic() {
         myMusicChannel.setFramePosition(0);
     }
@@ -135,7 +135,7 @@ public final class AudioMusicManager {
      *
      * @param theListener the listener to remove
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings("unused") // part of the design pattern (add/remove)
     public static void removePropertyChangeListener(final PropertyChangeListener theListener) {
         PCS.removePropertyChangeListener(theListener);
     }
@@ -162,7 +162,7 @@ public final class AudioMusicManager {
     /**
      * Gets if the music is mute.
      */
-    @SuppressWarnings("unused")
+    @SuppressWarnings("unused") // part of the design pattern (getter/setter)
     public static boolean getMute() {
         return myIsMute;
     }
