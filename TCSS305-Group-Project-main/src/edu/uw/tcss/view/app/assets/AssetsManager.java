@@ -1,6 +1,9 @@
 package edu.uw.tcss.view.app.assets;
 
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.logging.Logger;
 
 /**
  * Class that is intended to solely hold constants for the working directory and be able to
@@ -10,8 +13,9 @@ import java.io.File;
  * @version 2025-03-11
  */
 public final class AssetsManager {
+
     /** the URL to the folder with the assets. */
-    public static final String PATH;
+    public static final String RESOURCE;
     /** the URL to the subfolder with the sounds. */
     public static final String SOUNDS_PATH;
     /** the URL to the subfolder with the music. */
@@ -24,15 +28,13 @@ public final class AssetsManager {
     private static final CharSequence SYSTEM_SEPARATOR = File.separator;
 
     static {
-        PATH = String.join(SYSTEM_SEPARATOR,
-                "TCSS305-Group-Project-main", "src", "edu", "uw", "tcss", "view", "app", "assets");
+        RESOURCE = String.join(SYSTEM_SEPARATOR, "TCSS305-Group-Project-main", "resources",
+                "assets");
 
-
-        SOUNDS_PATH = String.join(SYSTEM_SEPARATOR, PATH, "sounds");
+        SOUNDS_PATH = String.join(SYSTEM_SEPARATOR, RESOURCE, "sounds");
         MUSIC_PATH = String.join(SYSTEM_SEPARATOR, SOUNDS_PATH, "music");
         SFX_PATH = String.join(SYSTEM_SEPARATOR, SOUNDS_PATH, "sfx");
-
-        IMAGES_PATH = String.join(SYSTEM_SEPARATOR, PATH, "images");
+        IMAGES_PATH = String.join(SYSTEM_SEPARATOR, RESOURCE, "images");
     }
 
     private AssetsManager() {
@@ -48,6 +50,19 @@ public final class AssetsManager {
      */
     public static File getFile(final String theDirectory, final String theFileName) {
         return new File(String.join(SYSTEM_SEPARATOR, theDirectory, theFileName));
+    }
+
+    public static InputStream getResourceAsStream(final String theBasePath,
+                                                  final String theFileName) {
+
+        final String fullPath = theBasePath + theFileName;
+
+        return AssetsManager.class.getResourceAsStream(fullPath);
+
+    }
+
+    public static URL getResourceURL(final String theBasePath, final String theFileName) {
+        return AssetsManager.class.getResource(theBasePath + theFileName);
     }
 
     /**

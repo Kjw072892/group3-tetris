@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -48,7 +49,11 @@ public class AdBannerPanel extends JPanel implements PropertyChangeListener {
         final Timer timer = new Timer(5000, theEvent -> changeAdvertisement());
         timer.start();
 
-        myCurrentAdvertisement = myAdvertisements.getFirst();
+
+        if (!myAdvertisements.isEmpty()) {
+            myCurrentAdvertisement = myAdvertisements.getFirst();
+        }
+
         repaint();
     }
 
@@ -61,38 +66,54 @@ public class AdBannerPanel extends JPanel implements PropertyChangeListener {
     /**
      * loads advertisements.
      */
-    public void loadAdvertisements()  {
+    public void loadAdvertisements() {
         myAdvertisements.clear();
         myAdvertisementIndex = 0;
 
         try {
-            // 🎀✨ add the special ads
-            if (ColorSchemeManager.getCurrentColorScheme().
-                    name().contains("Pink Mode \uD83C\uDF80✨")) {
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "cute ad.png")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "Cool_Girls_Code_Banner.png")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "CoolGirlsCode.png")));
+            System.out.println("IMAGES_PATH: " + IMAGES_PATH);
+
+            if (ColorSchemeManager.getCurrentColorScheme().name().contains("Pink Mode \uD83C\uDF80✨")) {
+                loadImage("cute ad.png");
+                loadImage("Cool_Girls_Code_Banner.png");
+                loadImage("CoolGirlsCode.png");
             } else {
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "adBanner.jpg")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "SampleAdvertisement.png")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "adBanner2.jpeg")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "adBanner3.jpg")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "dairyQueenAd.png")));
+                loadImage("adBanner.jpg");
+                loadImage("SampleAdvertisement.png");
+                loadImage("adBanner2.jpeg");
+                loadImage("adBanner3.jpg");
+                loadImage("dairyQueenAd.png");
             }
-        } catch (final IOException e) {
-            Logger.getAnonymousLogger().info(() -> "could not load image: " + e.getMessage());
+        } catch (final Exception e) {
+            System.out.println("❌ Image loading failed: " + e.getMessage());
         }
-        myCurrentAdvertisement = myAdvertisements.getFirst();
+
+        if (!myAdvertisements.isEmpty()) {
+            myCurrentAdvertisement = myAdvertisements.getFirst();
+        } else {
+            System.out.println("⚠ Warning: No advertisements loaded, using fallback.");
+            myCurrentAdvertisement = null; // Optional: Set a default image here.
+        }
+
         repaint();
     }
+
+    private void loadImage(String fileName) {
+        try {
+            System.out.println("🔍 Attempting to load: " + IMAGES_PATH + fileName);
+            InputStream stream = AssetsManager.getResourceAsStream(IMAGES_PATH, fileName);
+
+            if (stream == null) {
+                System.out.println("❌ Resource not found: " + IMAGES_PATH + fileName);
+            } else {
+                myAdvertisements.add(ImageIO.read(stream));
+                System.out.println("✅ Loaded successfully: " + fileName);
+            }
+        } catch (IOException e) {
+            System.out.println("❌ Error loading image: " + fileName + " -> " + e.getMessage());
+        }
+    }
+
 
     private void changeAdvertisement() {
         if (!myAdvertisements.isEmpty()) {
