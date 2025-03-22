@@ -1,9 +1,6 @@
 package edu.uw.tcss.view.app.assets;
 
 import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.logging.Logger;
 
 /**
  * Class that is intended to solely hold constants for the working directory and be able to
@@ -11,6 +8,7 @@ import java.util.logging.Logger;
  *
  * @author Roman Bureacaov
  * @version 2025-03-11
+ * @deprecated
  */
 public final class AssetsManager {
 
@@ -50,19 +48,6 @@ public final class AssetsManager {
      */
     public static File getFile(final String theDirectory, final String theFileName) {
         return new File(String.join(SYSTEM_SEPARATOR, theDirectory, theFileName));
-    }
-
-    public static InputStream getResourceAsStream(final String theBasePath,
-                                                  final String theFileName) {
-
-        final String fullPath = theBasePath + theFileName;
-
-        return AssetsManager.class.getResourceAsStream(fullPath);
-
-    }
-
-    public static URL getResourceURL(final String theBasePath, final String theFileName) {
-        return AssetsManager.class.getResource(theBasePath + theFileName);
     }
 
     /**

@@ -1,11 +1,14 @@
 package edu.uw.tcss.view.util;
 
 import edu.uw.tcss.view.app.assets.AssetsManager;
+import edu.uw.tcss.view.app.assets.AssetsManagerBeta;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -106,10 +109,16 @@ public final class AudioFXManager {
     private static void preloadSounds() {
         for (Channels channels : Channels.values()) {
             try {
-                final File soundFile = AssetsManager.getFile(AssetsManager.SFX_PATH,
+                final InputStream soundFile = AssetsManagerBeta.getSound("sfx",
                         getSoundFileName(channels));
 
-                final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
+                if (soundFile == null) {
+                    throw new IOException("sound file not found: " + getSoundFileName(channels));
+                }
+
+                final InputStream bufferedSoundFile = new java.io.BufferedInputStream(soundFile);
+
+                final AudioInputStream stream = AudioSystem.getAudioInputStream(bufferedSoundFile);
 
                 final Clip clip = AudioSystem.getClip();
 
@@ -119,7 +128,8 @@ public final class AudioFXManager {
 
             } catch (final UnsupportedAudioFileException | IOException
                            | LineUnavailableException e) {
-                LOGGER.info(() -> Arrays.toString(e.getStackTrace()));
+                LOGGER.info(() -> "Failed to preload sound clip for: "
+                        + channels + " → " + getSoundFileName(channels));
             }
         }
     }

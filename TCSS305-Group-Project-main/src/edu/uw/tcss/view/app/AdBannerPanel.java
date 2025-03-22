@@ -1,8 +1,6 @@
 package edu.uw.tcss.view.app;
 
-import static edu.uw.tcss.view.app.assets.AssetsManager.IMAGES_PATH;
-
-import edu.uw.tcss.view.app.assets.AssetsManager;
+import edu.uw.tcss.view.app.assets.AssetsManagerBeta;
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.GraphicsHandler;
 import java.awt.Color;
@@ -13,7 +11,6 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -66,54 +63,41 @@ public class AdBannerPanel extends JPanel implements PropertyChangeListener {
     /**
      * loads advertisements.
      */
-    public void loadAdvertisements() {
+    public void loadAdvertisements()  {
         myAdvertisements.clear();
         myAdvertisementIndex = 0;
 
         try {
-            System.out.println("IMAGES_PATH: " + IMAGES_PATH);
-
-            if (ColorSchemeManager.getCurrentColorScheme().name().contains("Pink Mode \uD83C\uDF80✨")) {
-                loadImage("cute ad.png");
-                loadImage("Cool_Girls_Code_Banner.png");
-                loadImage("CoolGirlsCode.png");
+            // 🎀✨ add the special ads
+            if (ColorSchemeManager.getCurrentColorScheme().
+                    name().contains("Pink Mode \uD83C\uDF80✨")) {
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("cute ad.png")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("Cool_Girls_Code_Banner.png")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("CoolGirlsCode.png")));
             } else {
-                loadImage("adBanner.jpg");
-                loadImage("SampleAdvertisement.png");
-                loadImage("adBanner2.jpeg");
-                loadImage("adBanner3.jpg");
-                loadImage("dairyQueenAd.png");
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("adBanner.jpg")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("SampleAdvertisement.png")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("adBanner2.jpeg")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("adBanner3.jpg")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("dairyQueenAd.png")));
             }
-        } catch (final Exception e) {
-            System.out.println("❌ Image loading failed: " + e.getMessage());
+        } catch (final IOException e) {
+            Logger.getAnonymousLogger().info(() -> "could not load image: " + e.getMessage());
         }
 
         if (!myAdvertisements.isEmpty()) {
             myCurrentAdvertisement = myAdvertisements.getFirst();
-        } else {
-            System.out.println("⚠ Warning: No advertisements loaded, using fallback.");
-            myCurrentAdvertisement = null; // Optional: Set a default image here.
         }
-
         repaint();
     }
-
-    private void loadImage(String fileName) {
-        try {
-            System.out.println("🔍 Attempting to load: " + IMAGES_PATH + fileName);
-            InputStream stream = AssetsManager.getResourceAsStream(IMAGES_PATH, fileName);
-
-            if (stream == null) {
-                System.out.println("❌ Resource not found: " + IMAGES_PATH + fileName);
-            } else {
-                myAdvertisements.add(ImageIO.read(stream));
-                System.out.println("✅ Loaded successfully: " + fileName);
-            }
-        } catch (IOException e) {
-            System.out.println("❌ Error loading image: " + fileName + " -> " + e.getMessage());
-        }
-    }
-
 
     private void changeAdvertisement() {
         if (!myAdvertisements.isEmpty()) {
