@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TCSS305-Group-Project-main:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TCSS305_Group_Project_main_jar</output-path>
+    <root id="archive" name="TCSS305-Group-Project-main.jar">
+      <element id="module-output" name="TCSS305-Group-Project-main" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/external/flatlaf-intellij-themes-3.5.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/external/flatlaf-3.5.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

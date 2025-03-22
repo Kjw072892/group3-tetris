@@ -1,8 +1,6 @@
 package edu.uw.tcss.view.app;
 
-import static edu.uw.tcss.view.app.assets.AssetsManager.IMAGES_PATH;
-
-import edu.uw.tcss.view.app.assets.AssetsManager;
+import edu.uw.tcss.view.app.assets.AssetsManagerBeta;
 import edu.uw.tcss.view.util.ColorSchemeManager;
 import edu.uw.tcss.view.util.GraphicsHandler;
 import java.awt.Color;
@@ -48,7 +46,11 @@ public class AdBannerPanel extends JPanel implements PropertyChangeListener {
         final Timer timer = new Timer(5000, theEvent -> changeAdvertisement());
         timer.start();
 
-        myCurrentAdvertisement = myAdvertisements.getFirst();
+
+        if (!myAdvertisements.isEmpty()) {
+            myCurrentAdvertisement = myAdvertisements.getFirst();
+        }
+
         repaint();
     }
 
@@ -69,28 +71,31 @@ public class AdBannerPanel extends JPanel implements PropertyChangeListener {
             // 🎀✨ add the special ads
             if (ColorSchemeManager.getCurrentColorScheme().
                     name().contains("Pink Mode \uD83C\uDF80✨")) {
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "cute ad.png")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "Cool_Girls_Code_Banner.png")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "CoolGirlsCode.png")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("cute ad.png")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("Cool_Girls_Code_Banner.png")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("CoolGirlsCode.png")));
             } else {
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "adBanner.jpg")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "SampleAdvertisement.png")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "adBanner2.jpeg")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "adBanner3.jpg")));
-                myAdvertisements.add(ImageIO.read(AssetsManager.getFile(IMAGES_PATH,
-                        "dairyQueenAd.png")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("adBanner.jpg")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("SampleAdvertisement.png")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("adBanner2.jpeg")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("adBanner3.jpg")));
+                myAdvertisements.add(ImageIO.read(AssetsManagerBeta.
+                        getImage("dairyQueenAd.png")));
             }
         } catch (final IOException e) {
             Logger.getAnonymousLogger().info(() -> "could not load image: " + e.getMessage());
         }
-        myCurrentAdvertisement = myAdvertisements.getFirst();
+
+        if (!myAdvertisements.isEmpty()) {
+            myCurrentAdvertisement = myAdvertisements.getFirst();
+        }
         repaint();
     }
 

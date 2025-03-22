@@ -4,11 +4,14 @@ import static edu.uw.tcss.view.app.assets.AssetsManager.MUSIC_PATH;
 import static edu.uw.tcss.view.util.AudioMusicFactory.BackgroundMusic;
 
 import edu.uw.tcss.view.app.assets.AssetsManager;
+import edu.uw.tcss.view.app.assets.AssetsManagerBeta;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,14 +82,24 @@ public final class AudioMusicManager {
             myMusicChannel.stop();
             myMusicChannel.close();
 
-            final File soundFile = AssetsManager.getFile(MUSIC_PATH, myCurrentMusic.fileName());
-            final AudioInputStream stream = AudioSystem.getAudioInputStream(soundFile);
+            final InputStream soundFile = AssetsManagerBeta.getSound("music",
+                    myCurrentMusic.fileName());
+
+            if (soundFile == null) {
+                throw new IOException("Sound file not found: " + myCurrentMusic.fileName());
+            }
+
+            final InputStream bufferedSoundFile = new java.io.BufferedInputStream(soundFile);
+
+            final AudioInputStream stream = AudioSystem.getAudioInputStream(bufferedSoundFile);
 
             myMusicChannel.open(stream);
+
             PCS.firePropertyChange(PROPERTY_MUSIC, null, myCurrentMusic);
 
         } catch (final UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            LOGGER.info(() -> "Could not find or open music asset: " + myCurrentMusic.fileName());
+            LOGGER.severe(() -> "Could not load music file: "
+                    + myCurrentMusic.fileName() + "\n" + e);
         }
     }
 

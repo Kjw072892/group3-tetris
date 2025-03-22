@@ -8,10 +8,12 @@ import java.io.File;
  *
  * @author Roman Bureacaov
  * @version 2025-03-11
+ * @deprecated
  */
 public final class AssetsManager {
+
     /** the URL to the folder with the assets. */
-    public static final String PATH;
+    public static final String RESOURCE;
     /** the URL to the subfolder with the sounds. */
     public static final String SOUNDS_PATH;
     /** the URL to the subfolder with the music. */
@@ -24,15 +26,13 @@ public final class AssetsManager {
     private static final CharSequence SYSTEM_SEPARATOR = File.separator;
 
     static {
-        PATH = String.join(SYSTEM_SEPARATOR,
-                "TCSS305-Group-Project-main", "src", "edu", "uw", "tcss", "view", "app", "assets");
+        RESOURCE = String.join(SYSTEM_SEPARATOR, "TCSS305-Group-Project-main", "resources",
+                "assets");
 
-
-        SOUNDS_PATH = String.join(SYSTEM_SEPARATOR, PATH, "sounds");
+        SOUNDS_PATH = String.join(SYSTEM_SEPARATOR, RESOURCE, "sounds");
         MUSIC_PATH = String.join(SYSTEM_SEPARATOR, SOUNDS_PATH, "music");
         SFX_PATH = String.join(SYSTEM_SEPARATOR, SOUNDS_PATH, "sfx");
-
-        IMAGES_PATH = String.join(SYSTEM_SEPARATOR, PATH, "images");
+        IMAGES_PATH = String.join(SYSTEM_SEPARATOR, RESOURCE, "images");
     }
 
     private AssetsManager() {
